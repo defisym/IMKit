@@ -171,6 +171,7 @@
     <ClCompile Include="implot\implot_demo.cpp" />
     <ClCompile Include="implot\implot_items.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Utilities\LoadFileToWStr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\imguiDemo.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="imgui\imgui_internal.h" />
     <ClInclude Include="implot\implot.h" />
     <ClInclude Include="implot\implot_internal.h" />
+    <ClInclude Include="Utilities\LoadFileToWStr.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

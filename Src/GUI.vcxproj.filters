@@ -31,6 +31,12 @@
     <Filter Include="源文件\imguiInterface\implot">
       <UniqueIdentifier>{3c6639d8-c948-4be6-b4dc-9a5d0ccca639}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Utilities">
+      <UniqueIdentifier>{23f12405-de80-49ca-bb77-1a03d737e6b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Utilities">
+      <UniqueIdentifier>{856452c3-7a92-4c05-91ce-0c249f7c75ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -69,6 +75,9 @@
     <ClCompile Include="implot\implot_items.cpp">
       <Filter>源文件\imguiInterface\implot</Filter>
     </ClCompile>
+    <ClCompile Include="Utilities\LoadFileToWStr.cpp">
+      <Filter>源文件\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\imguiInterface.h">
@@ -97,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="imguiInterface\imguiDemo.h">
       <Filter>头文件\imguiInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\LoadFileToWStr.h">
+      <Filter>头文件\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
