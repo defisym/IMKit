@@ -30,12 +30,20 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // Main code
 int imguiInterface(GUIContext* pCtx,
-    const std::function<void(GUIContext*)>& cb) {
+    const std::function<void(GUIContext*)>& gui) {
     // Create application window
-    //ImGui_ImplWin32_EnableDpiAwareness();
+
+    if (pCtx->bDPIAware) {
+        ImGui_ImplWin32_EnableDpiAwareness();
+    }
     WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"ImGui Example", nullptr };
     ::RegisterClassExW(&wc);
-    HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"Dear ImGui DirectX11 Example", WS_OVERLAPPEDWINDOW, 100, 100, 1280, 800, nullptr, nullptr, wc.hInstance, nullptr);
+    HWND hwnd = ::CreateWindowW(wc.lpszClassName,
+        pCtx->pWindowName,
+        WS_OVERLAPPEDWINDOW,
+        100, 100,
+        pCtx->width, pCtx->height,
+        nullptr, nullptr, wc.hInstance, nullptr);
 
     // Initialize Direct3D
     if (!CreateDeviceD3D(hwnd)) {
@@ -51,6 +59,8 @@ int imguiInterface(GUIContext* pCtx,
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
+    pCtx->CreateContext();
+
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
@@ -108,7 +118,7 @@ int imguiInterface(GUIContext* pCtx,
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
 
-        cb(pCtx);
+        gui(pCtx);
 
         // Rendering
         ImGui::Render();
@@ -128,6 +138,8 @@ int imguiInterface(GUIContext* pCtx,
     // Cleanup
     ImGui_ImplDX11_Shutdown();
     ImGui_ImplWin32_Shutdown();
+
+    pCtx->DestroyContext();
     ImGui::DestroyContext();
 
     CleanupDeviceD3D();
