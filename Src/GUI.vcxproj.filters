@@ -25,6 +25,12 @@
     <Filter Include="源文件\imguiInterface\imgui">
       <UniqueIdentifier>{8a6314d3-3d22-4bd3-9c38-e7e929e8749f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\imguiInterface\implot">
+      <UniqueIdentifier>{f1cab211-b61f-460e-aac8-b6c26fda1c50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\imguiInterface\implot">
+      <UniqueIdentifier>{3c6639d8-c948-4be6-b4dc-9a5d0ccca639}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -54,6 +60,15 @@
     <ClCompile Include="imgui\backends\imgui_impl_win32.cpp">
       <Filter>源文件\imguiInterface\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="implot\implot.cpp">
+      <Filter>源文件\imguiInterface\implot</Filter>
+    </ClCompile>
+    <ClCompile Include="implot\implot_demo.cpp">
+      <Filter>源文件\imguiInterface\implot</Filter>
+    </ClCompile>
+    <ClCompile Include="implot\implot_items.cpp">
+      <Filter>源文件\imguiInterface\implot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\imguiInterface.h">
@@ -73,6 +88,15 @@
     </ClInclude>
     <ClInclude Include="imgui\backends\imgui_impl_win32.h">
       <Filter>头文件\imguiInterface\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="implot\implot.h">
+      <Filter>头文件\imguiInterface\implot</Filter>
+    </ClInclude>
+    <ClInclude Include="implot\implot_internal.h">
+      <Filter>头文件\imguiInterface\implot</Filter>
+    </ClInclude>
+    <ClInclude Include="imguiInterface\imguiDemo.h">
+      <Filter>头文件\imguiInterface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
