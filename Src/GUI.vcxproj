@@ -104,6 +104,13 @@
     <PostBuildEvent>
       <Command>copy $(OutputPath)$(ProjectName).exe "$(SolutionDir)$(ProjectName).exe"</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
+xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Copy dll</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -127,6 +134,11 @@
     <PostBuildEvent>
       <Command>copy $(OutputPath)$(ProjectName).exe "$(SolutionDir)$(ProjectName).exe"</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
+xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S</Command>
+      <Message>Copy dll</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -146,6 +158,13 @@
     <PostBuildEvent>
       <Command>copy $(OutputPath)$(ProjectName).exe "$(SolutionDir)$(ProjectName).exe"</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
+xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Copy dll</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -169,6 +188,13 @@
     <PostBuildEvent>
       <Command>copy $(OutputPath)$(ProjectName).exe "$(SolutionDir)$(ProjectName).exe"</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
+xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Copy dll</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="imguiInterface\imguiInterface.cpp" />

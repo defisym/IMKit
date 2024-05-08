@@ -4,5 +4,7 @@ imgui.ini
 implot
 
 GUI.exe
+OTDR.dll
+Modules/
 
 freq.csv
