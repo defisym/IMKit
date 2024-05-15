@@ -106,7 +106,7 @@
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
-xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S</Command>
+xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
@@ -136,7 +136,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
-xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S</Command>
+xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <Message>Copy dll</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -160,7 +160,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
-xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S</Command>
+xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
@@ -190,7 +190,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
-xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S</Command>
+xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
