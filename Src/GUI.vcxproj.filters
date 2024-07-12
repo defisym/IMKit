@@ -78,6 +78,9 @@
     <ClCompile Include="Utilities\LoadFileToWStr.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Utilities\AudioPlayer.cpp">
+      <Filter>源文件\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\imguiInterface.h">
@@ -108,6 +111,9 @@
       <Filter>头文件\imguiInterface</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\LoadFileToWStr.h">
+      <Filter>头文件\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\AudioPlayer.h">
       <Filter>头文件\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
