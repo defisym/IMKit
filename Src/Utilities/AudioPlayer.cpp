@@ -35,6 +35,7 @@ bool AudioPlayer::InitAudio() {
 
 // Convert data for AUDIO_S16SYS, signed int16_t
 // Source is single channel
+// https://stackoverflow.com/questions/5890499/pcm-audio-amplitude-values
 void AudioPlayer::ConvertData(const SourceInfo& srcInfo, const DestInfo& destInfo) {
 	constexpr auto maxValue = std::numeric_limits<int16_t>::max();
 	const auto sampleCount = static_cast<uint16_t>(static_cast<double>(srcInfo.duration) / 1000.0 * MIX_DEFAULT_FREQUENCY);

@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+
 #include "../../Src/Module/General/Definition.h"
 
 // PCM data:
@@ -27,4 +29,9 @@ struct AudioPlayer {
     };
 
     inline static void ConvertData(const SourceInfo& srcInfo, const DestInfo& destInfo);
+
+    struct AudioInfo {
+        std::string audioName;
+
+    };
 };
