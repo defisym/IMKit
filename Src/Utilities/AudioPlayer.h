@@ -1,7 +1,39 @@
 #pragma once
+
+#include <format>
 #include <string>
 
+#include <_DeLib/ThreadSafeRingBuffer.h>
+
+#include "DataConverter.h"
 #include "../../Src/Module/General/Definition.h"
+
+constexpr auto SDL_BUFFER_SIZE = 4096;
+constexpr auto CHUNK_SIZE = 4 * SDL_BUFFER_SIZE;
+constexpr auto PCM_BUFFER_SIZE = 4 * CHUNK_SIZE;
+
+struct AudioData {
+	struct AudioChunk {
+		uint8_t chunk[CHUNK_SIZE] = {};
+		Mix_Chunk* pChunk = nullptr;
+
+		AudioChunk() {
+			pChunk = Mix_QuickLoad_RAW(chunk, CHUNK_SIZE);
+			if (pChunk) { return; }
+
+			throw std::exception(std::format("{}", SDL_GetError()).c_str());
+		}
+		~AudioChunk() {
+			Mix_FreeChunk(pChunk);
+		}
+	};
+
+	std::string audioName;
+	AudioChunk audioChunk;
+	ThreadSafeRingBuffer<int16_t> ringBuffer;
+
+	AudioData() :ringBuffer(PCM_BUFFER_SIZE) {}
+};
 
 // PCM data:
 //  16 bit mono:
@@ -13,25 +45,14 @@
 // Sample rate:
 //  Point per second
 struct AudioPlayer {
-    inline static bool InitAudio();
+    static bool InitAudio();
+    static void CloseAudio();
 
-	struct SourceInfo {
-        // pBuffer should be normalized to -1.0f ~ 1.0f
-        OTDRProcessValueType* pBuffer;
-    	size_t bufferSz;
-        // in ms
-        size_t duration;
-    };
+	AudioPlayer() { InitAudio(); }
+    ~AudioPlayer() { CloseAudio(); }
 
-    struct DestInfo {
-        int16_t* pBuffer;
-        size_t bufferSz;
-    };
+    void StartAudio(AudioData& audioData);
 
-    inline static void ConvertData(const SourceInfo& srcInfo, const DestInfo& destInfo);
-
-    struct AudioInfo {
-        std::string audioName;
-
-    };
+    DataConverter dataConverter = {};
+    void AddData(AudioData& audioInfo, const DataConverter::SourceInfo& sourceInfo);
 };

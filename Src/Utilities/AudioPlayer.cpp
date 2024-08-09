@@ -2,9 +2,10 @@
 
 #include <SDL.h>
 #include <SDL_mixer.h>
-#include <limits>
 
-constexpr auto SDL_BUFFER_SIZE = 4096;
+#pragma comment(lib, "SDL2.lib")
+#pragma comment(lib, "SDL2_mixer_ext.lib")
+
 
 bool AudioPlayer::InitAudio() {
 	if (!SDL_WasInit(SDL_INIT_AUDIO | SDL_INIT_TIMER)) {
@@ -33,20 +34,28 @@ bool AudioPlayer::InitAudio() {
 	return true;
 }
 
-// Convert data for AUDIO_S16SYS, signed int16_t
-// Source is single channel
-// https://stackoverflow.com/questions/5890499/pcm-audio-amplitude-values
-void AudioPlayer::ConvertData(const SourceInfo& srcInfo, const DestInfo& destInfo) {
-	constexpr auto maxValue = std::numeric_limits<int16_t>::max();
-	const auto sampleCount = static_cast<uint16_t>(static_cast<double>(srcInfo.duration) / 1000.0 * MIX_DEFAULT_FREQUENCY);
+void AudioPlayer::CloseAudio() {
+	Mix_CloseAudio();
+	SDL_Quit();
+}
 
-	auto pBuffer = destInfo.pBuffer;
-	for (size_t index = 0; index < srcInfo.bufferSz; index++) {
-		const auto convertResult = static_cast<int16_t>(srcInfo.pBuffer[index] * maxValue);
-		const auto repeat = sampleCount * 2; // both channels are the same
+void AudioPlayer::StartAudio(AudioData& audioData) {
+	auto channel = Mix_PlayChannel(-1, audioData.audioChunk.pChunk, -1);
+	Mix_RegisterEffect(channel,
+	   [] (int chan, void* stream, int len, void* udata) {
+		   const auto pAudioData = static_cast<AudioData*>(udata);
+		   SDL_memset(stream, 0, len);
+		   pAudioData->ringBuffer.ReadData((int16_t*)stream, len / sizeof(int16_t));
+	   },
+	   [] (int chan, void* udata) {
+		   //OutputDebugString(L"Finish");
+	   },
+	   &audioData);
+}
 
-		for (uint16_t repIdx = 0; repIdx < repeat; repIdx++, pBuffer++) {
-			*pBuffer = convertResult;
-		}
-	}
+void AudioPlayer::AddData(AudioData& audioInfo, const DataConverter::SourceInfo& sourceInfo) {
+	dataConverter.ConvertData(sourceInfo);
+	const auto convBuf = dataConverter._destInfo;
+
+	audioInfo.ringBuffer.WriteData(convBuf.pBuffer, convBuf.bufferSz);
 }
