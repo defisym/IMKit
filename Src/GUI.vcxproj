@@ -240,6 +240,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="implot\implot.h" />
     <ClInclude Include="implot\implot_internal.h" />
     <ClInclude Include="Utilities\AudioPlayer.h" />
+    <ClInclude Include="Utilities\DataConverter.h" />
     <ClInclude Include="Utilities\LoadFileToWStr.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

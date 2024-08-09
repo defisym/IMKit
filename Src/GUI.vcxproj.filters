@@ -116,5 +116,8 @@
     <ClInclude Include="Utilities\AudioPlayer.h">
       <Filter>头文件\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities\DataConverter.h">
+      <Filter>头文件\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
