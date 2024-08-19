@@ -37,6 +37,9 @@
     <Filter Include="源文件\Utilities">
       <UniqueIdentifier>{856452c3-7a92-4c05-91ce-0c249f7c75ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Tests">
+      <UniqueIdentifier>{362c614e-3a8c-4dff-9e18-4a83ed6e9bec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -80,6 +83,12 @@
     </ClCompile>
     <ClCompile Include="Utilities\AudioPlayer.cpp">
       <Filter>源文件\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\AudioPlayerTest.cpp">
+      <Filter>源文件\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\RingBufferTest.cpp">
+      <Filter>源文件\Tests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

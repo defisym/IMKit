@@ -226,6 +226,8 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="implot\implot_demo.cpp" />
     <ClCompile Include="implot\implot_items.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Tests\AudioPlayerTest.cpp" />
+    <ClCompile Include="Tests\RingBufferTest.cpp" />
     <ClCompile Include="Utilities\AudioPlayer.cpp" />
     <ClCompile Include="Utilities\LoadFileToWStr.cpp" />
   </ItemGroup>
