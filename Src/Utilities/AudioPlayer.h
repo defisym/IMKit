@@ -55,5 +55,5 @@ struct AudioPlayer {
     void StartAudio(AudioData& audioData);
 
     DataConverter dataConverter = {};
-    void AddData(AudioData& audioInfo, const DataConverter::SourceInfo& sourceInfo);
+    void AddData(AudioData& audioData, const DataConverter::SourceInfo& sourceInfo);
 };
