@@ -53,9 +53,9 @@ void AudioPlayer::StartAudio(AudioData& audioData) {
 	   &audioData);
 }
 
-void AudioPlayer::AddData(AudioData& audioInfo, const DataConverter::SourceInfo& sourceInfo) {
+void AudioPlayer::AddData(AudioData& audioData, const DataConverter::SourceInfo& sourceInfo) {
 	dataConverter.ConvertData(sourceInfo);
 	const auto convBuf = dataConverter._destInfo;
 
-	audioInfo.ringBuffer.WriteData(convBuf.pBuffer, convBuf.bufferSz);
+	audioData.ringBuffer.WriteData(convBuf.pBuffer, convBuf.bufferSz);
 }

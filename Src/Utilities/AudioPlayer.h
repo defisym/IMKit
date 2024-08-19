@@ -33,6 +33,7 @@ struct AudioData {
 	ThreadSafeRingBuffer<int16_t> ringBuffer;
 
 	AudioData() :ringBuffer(PCM_BUFFER_SIZE) {}
+	explicit AudioData(const size_t sz) :ringBuffer(sz) {}
 };
 
 // PCM data:
