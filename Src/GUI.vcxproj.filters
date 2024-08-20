@@ -40,6 +40,12 @@
     <Filter Include="源文件\Tests">
       <UniqueIdentifier>{362c614e-3a8c-4dff-9e18-4a83ed6e9bec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\IMGuiEx">
+      <UniqueIdentifier>{d747c6be-5021-40c2-8c5b-21703947a8d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\IMGuiEx">
+      <UniqueIdentifier>{c98e1dec-cb25-443b-9f11-6754b6c81dc0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -127,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="Utilities\DataConverter.h">
       <Filter>头文件\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGuiEx\DisableHelper.h">
+      <Filter>头文件\IMGuiEx</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
