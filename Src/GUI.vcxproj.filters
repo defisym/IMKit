@@ -140,5 +140,8 @@
     <ClInclude Include="IMGuiEx\AddSpin.h">
       <Filter>头文件\IMGuiEx</Filter>
     </ClInclude>
+    <ClInclude Include="IMGuiEx\DisplayPlot.h">
+      <Filter>头文件\IMGuiEx</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

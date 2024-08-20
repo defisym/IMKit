@@ -244,6 +244,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
   <ItemGroup>
     <ClInclude Include="IMGuiEx\AddSpin.h" />
     <ClInclude Include="IMGuiEx\DisableHelper.h" />
+    <ClInclude Include="IMGuiEx\DisplayPlot.h" />
     <ClInclude Include="imguiInterface\imguiDemo.h" />
     <ClInclude Include="imguiInterface\imguiInterface.h" />
     <ClInclude Include="imgui\backends\imgui_impl_dx11.h" />
