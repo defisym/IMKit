@@ -46,6 +46,24 @@
     <Filter Include="源文件\IMGuiEx">
       <UniqueIdentifier>{c98e1dec-cb25-443b-9f11-6754b6c81dc0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\GUIContext">
+      <UniqueIdentifier>{f413dc41-5a54-42be-9fc5-5c07e9dd3c1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContext">
+      <UniqueIdentifier>{56114c6b-d035-45b1-8441-490cc8b2dec2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\GUIContext\Handler">
+      <UniqueIdentifier>{a6980bcc-65a6-4b62-b1dc-3fca81349e36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContext\Handler">
+      <UniqueIdentifier>{cab55633-8990-4d16-832f-2b4c72ca5b57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContext\Params">
+      <UniqueIdentifier>{ef27c309-cdb8-466b-ba45-ba523b1a88ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\GUIContext\Params">
+      <UniqueIdentifier>{fbf51b95-5e0a-423a-a667-36d39c30a67e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -96,6 +114,15 @@
     <ClCompile Include="Tests\RingBufferTest.cpp">
       <Filter>源文件\Tests</Filter>
     </ClCompile>
+    <ClCompile Include="GUIContext\Handler\OTDRHandler.cpp">
+      <Filter>源文件\GUIContext\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContext\Handler\DeviceHandler.cpp">
+      <Filter>源文件\GUIContext\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContext\Handler\AudioHandler.cpp">
+      <Filter>源文件\GUIContext\Handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\imguiInterface.h">
@@ -142,6 +169,21 @@
     </ClInclude>
     <ClInclude Include="IMGuiEx\DisplayPlot.h">
       <Filter>头文件\IMGuiEx</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContext\Handler\OTDRHandler.h">
+      <Filter>头文件\GUIContext\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContext\Handler\DeviceHandler.h">
+      <Filter>头文件\GUIContext\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContext\Handler\AudioHandler.h">
+      <Filter>头文件\GUIContext\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContext\Params\Params.h">
+      <Filter>头文件\GUIContext\Params</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContext\Context.h">
+      <Filter>头文件\GUIContext</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

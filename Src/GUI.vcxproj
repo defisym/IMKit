@@ -214,6 +214,9 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GUIContext\Handler\AudioHandler.cpp" />
+    <ClCompile Include="GUIContext\Handler\DeviceHandler.cpp" />
+    <ClCompile Include="GUIContext\Handler\OTDRHandler.cpp" />
     <ClCompile Include="imguiInterface\imguiInterface.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_win32.cpp" />
@@ -242,6 +245,11 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="Utilities\LoadFileToWStr.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GUIContext\Context.h" />
+    <ClInclude Include="GUIContext\Handler\AudioHandler.h" />
+    <ClInclude Include="GUIContext\Handler\DeviceHandler.h" />
+    <ClInclude Include="GUIContext\Handler\OTDRHandler.h" />
+    <ClInclude Include="GUIContext\Params\Params.h" />
     <ClInclude Include="IMGuiEx\AddSpin.h" />
     <ClInclude Include="IMGuiEx\DisableHelper.h" />
     <ClInclude Include="IMGuiEx\DisplayPlot.h" />
