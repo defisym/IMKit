@@ -64,6 +64,18 @@
     <Filter Include="头文件\GUIContext\Params">
       <UniqueIdentifier>{fbf51b95-5e0a-423a-a667-36d39c30a67e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\GUIContent">
+      <UniqueIdentifier>{5a2e1460-a324-4abc-9c94-5559d0ec8fca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContent">
+      <UniqueIdentifier>{cc97d140-cc06-4c75-893a-2dad7d2d5551}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\GUIContent\Components">
+      <UniqueIdentifier>{bbe560bd-52f4-4842-8a65-3a0412ce291c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContent\Components">
+      <UniqueIdentifier>{ddc0510e-c383-43f4-817f-2229242151a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -122,6 +134,24 @@
     </ClCompile>
     <ClCompile Include="GUIContext\Handler\AudioHandler.cpp">
       <Filter>源文件\GUIContext\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\GUIContent.cpp">
+      <Filter>源文件\GUIContent</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\ComponentFrameRate.cpp">
+      <Filter>源文件\GUIContent\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\ComponentFiber.cpp">
+      <Filter>源文件\GUIContent\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\ComponentConfig.cpp">
+      <Filter>源文件\GUIContent\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\ComponentConfigDevice.cpp">
+      <Filter>源文件\GUIContent\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\ComponentConfigParam.cpp">
+      <Filter>源文件\GUIContent\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +214,30 @@
     </ClInclude>
     <ClInclude Include="GUIContext\Context.h">
       <Filter>头文件\GUIContext</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\GUIContent.h">
+      <Filter>头文件\GUIContent</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\ComponentBase.h">
+      <Filter>头文件\GUIContent\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\ComponentWindow.h">
+      <Filter>头文件\GUIContent\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\ComponentFrameRate.h">
+      <Filter>头文件\GUIContent\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\ComponentFiber.h">
+      <Filter>头文件\GUIContent\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\ComponentConfig.h">
+      <Filter>头文件\GUIContent\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\ComponentConfigDevice.h">
+      <Filter>头文件\GUIContent\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\ComponentConfigParam.h">
+      <Filter>头文件\GUIContent\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
