@@ -219,6 +219,8 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContent\Components\ComponentConfigParam.cpp" />
     <ClCompile Include="GUIContent\Components\ComponentFiber.cpp" />
     <ClCompile Include="GUIContent\Components\ComponentFrameRate.cpp" />
+    <ClCompile Include="GUIContent\Components\ComponentWavefroms.cpp" />
+    <ClCompile Include="GUIContent\Components\ComponentWavefromsProcess.cpp" />
     <ClCompile Include="GUIContent\GUIContent.cpp" />
     <ClCompile Include="GUIContext\Handler\AudioHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\DeviceHandler.cpp" />
@@ -257,6 +259,8 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContent\Components\ComponentConfigParam.h" />
     <ClInclude Include="GUIContent\Components\ComponentFiber.h" />
     <ClInclude Include="GUIContent\Components\ComponentFrameRate.h" />
+    <ClInclude Include="GUIContent\Components\ComponentWavefroms.h" />
+    <ClInclude Include="GUIContent\Components\ComponentWavefromsProcess.h" />
     <ClInclude Include="GUIContent\Components\ComponentWindow.h" />
     <ClInclude Include="GUIContent\GUIContent.h" />
     <ClInclude Include="GUIContext\Context.h" />

@@ -153,6 +153,12 @@
     <ClCompile Include="GUIContent\Components\ComponentConfigParam.cpp">
       <Filter>源文件\GUIContent\Components</Filter>
     </ClCompile>
+    <ClCompile Include="GUIContent\Components\ComponentWavefroms.cpp">
+      <Filter>源文件\GUIContent\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\ComponentWavefromsProcess.cpp">
+      <Filter>源文件\GUIContent\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\imguiInterface.h">
@@ -237,6 +243,12 @@
       <Filter>头文件\GUIContent\Components</Filter>
     </ClInclude>
     <ClInclude Include="GUIContent\Components\ComponentConfigParam.h">
+      <Filter>头文件\GUIContent\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\ComponentWavefroms.h">
+      <Filter>头文件\GUIContent\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\ComponentWavefromsProcess.h">
       <Filter>头文件\GUIContent\Components</Filter>
     </ClInclude>
   </ItemGroup>
