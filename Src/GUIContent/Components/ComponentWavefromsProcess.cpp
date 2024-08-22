@@ -2,6 +2,7 @@
 
 #include "../../IMGuiEx/DisplayPlot.h"
 #include "../../IMGuiEx/AddSpin.h"
+#include "../../IMGuiEx/DisableHelper.h"
 
 void ComponentWavefromsProcess::Raw() const {
 	if (!ImGui::BeginTabItem("Raw")) { return; }
@@ -98,7 +99,7 @@ void ComponentWavefromsProcess::Shake() const {
 	ImGui::EndTabItem();
 }
 
-void ComponentWavefromsProcess::Wave() const {
+void ComponentWavefromsProcess::Wave() {
 	if (ImGui::BeginTabItem("Wave")) {
 		const auto pProcess = Context_GetProcessBuffer(hContext, 0);
 
@@ -147,18 +148,44 @@ void ComponentWavefromsProcess::WaveNormalization(OTDRProcessValueType* pProcess
 
 }
 
-void ComponentWavefromsProcess::WaveRestore(OTDRProcessValueType* pProcess) const {
+void ComponentWavefromsProcess::WaveRestore(OTDRProcessValueType* pProcess) {
 	const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
 	const auto& deviceParams = pCtx->deviceParams;
 
-	// ------------------------------------
-	// Iterate frames
-	// ------------------------------------
-	static bool diff = false;
-	ImGui::Checkbox("use diff", &diff);
-
 	// TODO find the possible shake start position
 	static ImGuiSliderFlags flags = ImGuiSliderFlags_AlwaysClamp;
+
+	// ------------------------------------
+	// Reference
+	// ------------------------------------
+
+	static bool reference = false;
+	ImGui::Checkbox("use reference", &reference);
+	ImGui::SameLine();
+	ImGui::TextUnformatted("reference shares the range & unwrap settings");
+
+	auto disableReference = ManualDisableHelper();
+
+	disableReference.Disable(!reference);
+
+	static int referenceStart = 50;
+	ImGui::SliderInt("##reference start", &referenceStart,
+					 0, static_cast<int>(bufferInfo.frameSize),
+					 "%d", flags);
+	AddSpin("reference start", &referenceStart,
+			0, static_cast<int>(bufferInfo.frameSize));
+	ImGui::SameLine();
+	ImGui::TextUnformatted("reference start");
+
+	disableReference.Enable();
+
+
+	// ------------------------------------
+	// Shake
+	// ------------------------------------
+
+	static bool diff = false;
+	ImGui::Checkbox("use diff", &diff);
 
 	static int shakeStart = 50;
 	ImGui::SliderInt("##shake start", &shakeStart,
@@ -178,17 +205,6 @@ void ComponentWavefromsProcess::WaveRestore(OTDRProcessValueType* pProcess) cons
 	ImGui::SameLine();
 	ImGui::TextUnformatted("shake range");
 
-	Util_IterateFrames(pProcess, bufferInfo.frameCount, bufferInfo.frameSize,
-					   [] (OTDRProcessValueType* pFrame, const size_t frameSz, void* pUserData) {
-						   const auto pCtx = static_cast<Ctx*>(pUserData);
-						   const auto pStart = pFrame + shakeStart;
-
-						   Util_EliminateInitialInterference(pStart, shakeRange);
-						   Util_Unwrap(pStart, shakeRange, PI);
-						   if (!diff) { return; }
-						   Util_Diff(pStart, shakeRange);
-					   }, pCtx);
-
 	// ------------------------------------
 	// Unwarp 2D
 	// ------------------------------------
@@ -201,7 +217,68 @@ void ComponentWavefromsProcess::WaveRestore(OTDRProcessValueType* pProcess) cons
 	ImGui::SameLine();
 	ImGui::TextUnformatted("unwrap 2D start");
 
-	static std::vector<OTDRProcessValueType> waveBuffer;
+	// ------------------------------------
+	// Wave Restore
+	// ------------------------------------
+	this->WaveRestoreProcess(pProcess,
+		{ diff,shakeStart,shakeRange,unwrap2DStart },
+		restoreWaveBuffer);
+
+	// remove system noise by reference point
+	if(reference) {
+		this->WaveRestoreProcess(pProcess,
+			{ diff,referenceStart,shakeRange,unwrap2DStart },
+			referenceWaveBuffer);
+
+		for (size_t index = 0; index < referenceWaveBuffer.size(); index++) {
+			restoreWaveBuffer[index] -= referenceWaveBuffer[index];
+		}
+	}
+
+	if (ImPlot::BeginPlot("ImPlot/Wave/Wave Shake", plotSize)) {
+		DisplayPlot(std::format("ImPlot/Wave/Wave Shake").c_str(),
+					restoreWaveBuffer.data(), static_cast<int>(restoreWaveBuffer.size()));
+
+		ImPlot::EndPlot();
+	}
+
+	// ------------------------------------
+	// Audio
+	// ------------------------------------
+	bool bPlayAudio = false;
+	ImGui::Checkbox("ImPlot/Wave/Play Wave", &bPlayAudio);
+
+	if (bPlayAudio) {
+		memcpy(pCtx->audioHandler.pBuffer,
+			restoreWaveBuffer.data(),
+			sizeof(OTDRProcessValueType) * restoreWaveBuffer.size());
+	}
+
+	// ------------------------------------
+	// FFT
+	// ------------------------------------
+	this->WaveFFT(restoreWaveBuffer);
+}
+
+void ComponentWavefromsProcess::WaveRestoreProcess(OTDRProcessValueType* pProcess, const ShakeInfo& shakeInfo,
+	std::vector<OTDRProcessValueType>& waveBuffer) const {
+	const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
+	const auto& [diff, 
+		shakeStart, 
+		shakeRange,
+		unwrap2DStart] = shakeInfo;
+
+	Util_IterateFrames(pProcess, bufferInfo.frameCount, bufferInfo.frameSize,
+					   [] (OTDRProcessValueType* pFrame, const size_t frameSz, void* pUserData) {
+						   const auto pShakeInfo = static_cast<ShakeInfo* const>(pUserData);
+						   const auto pStart = pFrame + pShakeInfo->shakeStart;
+
+						   Util_EliminateInitialInterference(pStart, pShakeInfo->shakeRange);
+						   Util_Unwrap(pStart, pShakeInfo->shakeRange, PI);
+						   if (!pShakeInfo->diff) { return; }
+						   Util_Diff(pStart, pShakeInfo->shakeRange);
+					   }, const_cast<ShakeInfo*>(&shakeInfo));
+				
 	waveBuffer.resize(bufferInfo.frameCount);
 
 	const auto pStart = pProcess + shakeStart + unwrap2DStart;
@@ -209,22 +286,11 @@ void ComponentWavefromsProcess::WaveRestore(OTDRProcessValueType* pProcess) cons
 		waveBuffer[index] = pStart[index * bufferInfo.frameSize];
 	}
 
-	bool bPlayAudio = false;
-	ImGui::Checkbox("ImPlot/Wave/Play Wave", &bPlayAudio);
-
 	Util_Unwrap(waveBuffer.data(), waveBuffer.size(), PI);
+}
 
-	if (ImPlot::BeginPlot("ImPlot/Wave/Wave Shake", plotSize)) {
-		DisplayPlot(std::format("ImPlot/Wave/Wave Shake").c_str(),
-					waveBuffer.data(), static_cast<int>(waveBuffer.size()));
-
-		ImPlot::EndPlot();
-	}
-
-	if (bPlayAudio) {
-		memcpy(pCtx->audioHandler.pBuffer, waveBuffer.data(), sizeof(OTDRProcessValueType) * waveBuffer.size());
-	}
-
+void ComponentWavefromsProcess::WaveFFT(std::vector<OTDRProcessValueType>& waveBuffer) const {
+	const auto& deviceParams = pCtx->deviceParams;
 	const auto fftElement = Util_FFT_Amplitude(waveBuffer.data(), waveBuffer.size());
 
 	if (ImPlot::BeginPlot("ImPlot/Wave/Wave FFT Amplitude", plotSize)) {

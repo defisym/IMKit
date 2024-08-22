@@ -28,7 +28,7 @@ struct ComponentWavefromsProcess :ComponentBase {
 
 	}
 
-	void WaveformTab() const {
+	void WaveformTab() {
 		if (!ImGui::BeginTabBar("Wavefroms/Tab", tab_bar_flags)) { return; }
 
 		this->Raw();
@@ -40,7 +40,23 @@ struct ComponentWavefromsProcess :ComponentBase {
 
 	void Raw() const;
 	void Shake() const;
-	void Wave() const;
+	void Wave();
 	void WaveNormalization(OTDRProcessValueType* pProcess) const;
-	void WaveRestore(OTDRProcessValueType* pProcess) const;
+	void WaveRestore(OTDRProcessValueType* pProcess);
+
+	struct ShakeInfo {
+		bool diff = false;
+		int shakeStart = 50;
+		int shakeRange = 20;
+		int unwrap2DStart = 1;
+	};
+
+	std::vector<OTDRProcessValueType> restoreWaveBuffer;
+	std::vector<OTDRProcessValueType> referenceWaveBuffer;
+
+	void WaveRestoreProcess(OTDRProcessValueType* pProcess,
+		const ShakeInfo& shakeInfo,
+		std::vector<OTDRProcessValueType>& waveBuffer) const;
+
+	void WaveFFT(std::vector<OTDRProcessValueType>& waveBuffer) const;
 };
