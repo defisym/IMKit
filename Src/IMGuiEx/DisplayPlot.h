@@ -3,13 +3,12 @@
 #include <algorithm>
 #include <functional>
 
-#include "imgui.h"
 #include "./../implot/implot.h"
 
 using CoordUpdater = std::function<double(const double)>;
 
 template<typename T>
-inline void DisplayPlot (const char* pLabel,
+inline void DisplayPlot(const char* pLabel,
     const T * pData, int dataCount, const int stride = 1,
     const CoordUpdater & xUpdater = nullptr,
     const CoordUpdater & yUpdater = nullptr) {
