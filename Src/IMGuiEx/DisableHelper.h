@@ -2,6 +2,7 @@
 
 #include "imgui_internal.h"
 
+// RAII
 struct DisableHelper {  // NOLINT(cppcoreguidelines-special-member-functions)
     bool bDisabled = false;
 
@@ -19,5 +20,19 @@ struct DisableHelper {  // NOLINT(cppcoreguidelines-special-member-functions)
 
         ImGui::PopItemFlag();
         ImGui::PopStyleVar();
+    }
+};
+
+
+struct ManualDisableHelper {  // NOLINT(cppcoreguidelines-special-member-functions)
+    DisableHelper* pDisableHelper = nullptr;
+    ~ManualDisableHelper() { Enable(); }
+
+    void Disable(const bool bDisabled) {
+        pDisableHelper = new DisableHelper(bDisabled);
+    }
+    void Enable() {
+        delete pDisableHelper;
+        pDisableHelper = nullptr;
     }
 };
