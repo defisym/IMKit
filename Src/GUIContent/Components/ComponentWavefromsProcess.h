@@ -24,7 +24,7 @@ struct ComponentWavefromsProcess :ComponentBase {
 		pCtx->audioHandler.audioPlayer.AddData(pCtx->audioHandler.audioData,
 			{ pCtx->audioHandler.pBuffer,
 				pCtx->audioHandler.bufferSz,
-				static_cast<size_t>((1000.0 * deviceParams.frame) / deviceParams.scanRate) });
+				static_cast<size_t>((1000.0 * deviceParams.processFrameCount) / deviceParams.scanRate) });
 
 	}
 

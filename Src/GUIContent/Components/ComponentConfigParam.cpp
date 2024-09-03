@@ -16,7 +16,17 @@ bool UpdateParam(Ctx* pCtx) {
 	// ------------------------
 	// Frame
 	// ------------------------
-	ImGui::InputInt("Frame", &deviceParams.frame, 64, 256);
+
+	ImGui::Checkbox("Use context", &deviceParams.bUseCountext);
+	ManualDisableHelper frameHelper;
+	frameHelper.Disable(!deviceParams.bUseCountext);
+	ImGui::InputInt("Frame to update", &deviceParams.updateFrameCount, 64, 256);
+	frameHelper.Enable();
+	ImGui::InputInt("Frame to process", &deviceParams.processFrameCount, 64, 256);
+
+	const auto frameToRead = deviceParams.bUseCountext
+		? deviceParams.updateFrameCount
+		: deviceParams.processFrameCount;
 
 	ImGui::SameLine();
 	ImGui::TextUnformatted([] (const double frame, const double scanRate) {
@@ -31,7 +41,8 @@ bool UpdateParam(Ctx* pCtx) {
 			: std::format("(Update {} times per second)", updateCount);
 
 		return frameLabel;
-	}(deviceParams.frame, deviceParams.scanRate).c_str());
+	}(frameToRead,
+		deviceParams.scanRate).c_str());
 
 	// ------------------------
 	// Point num per scan
@@ -48,6 +59,10 @@ bool UpdateParam(Ctx* pCtx) {
 
 	param.uint32_tParam = deviceParams.pointNumPerScan;
 	Param_Set(hParam, L"point_num_per_scan", param);
+
+	deviceParams.pointNumToRead = frameToRead * deviceParams.pointNumPerScan;
+	param.uint32_tParam = deviceParams.pointNumToRead;
+	Param_Set(hParam, L"pointNumToRead", param);
 
 	// ------------------------
 	// Scan rate
@@ -88,19 +103,17 @@ bool UpdateParam(Ctx* pCtx) {
 	param.uint32_tParam = deviceParams.uploadRateSel;
 	Param_Set(hParam, L"upload_rate_sel", param);
 
-	param.uint32_tParam = deviceParams.pointNumPerScan * deviceParams.frame;
-	Param_Set(hParam, L"pointNum", param);
-
 	bEnable = bEnable && (Param_Valid(hParam) == 0);
 
 	return bEnable;
 }
+
 void StartStopDevice(Ctx* pCtx, const bool bEnable) {
 	const auto disableStart = DisableHelper(!bEnable);
 
 	if (ImGui::Button("Start Device")) {
 		pCtx->deviceHandler.StartDevice();
-		pCtx->audioHandler.ResizeBuffer(pCtx->deviceParams.frame);
+		pCtx->audioHandler.ResizeBuffer(pCtx->deviceParams.processFrameCount);
 		pCtx->audioHandler.ResetBuffer();
 	}
 

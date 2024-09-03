@@ -31,7 +31,7 @@ void ComponentWavefroms(Ctx* pCtx) {
 				pCtx->deviceHandler.bufferInfo =
 					BufferInfo{ pBuffer,
 						bufferSz / bufferStride, bufferStride,
-						static_cast<size_t>(pCtx->deviceParams.frame),
+						static_cast<size_t>(pCtx->deviceParams.processFrameCount),
 						static_cast<size_t>(pCtx->deviceParams.pointNumPerScan) };
 				pCtx->deviceHandler.bContextUpdated = true;
 
