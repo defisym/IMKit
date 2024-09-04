@@ -1,3 +1,4 @@
+// ReSharper disable CppClangTidyCppcoreguidelinesSpecialMemberFunctions
 #pragma once
 
 #include <format>
@@ -49,10 +50,10 @@ struct AudioPlayer {
     static bool InitAudio();
     static void CloseAudio();
 
-	AudioPlayer() { InitAudio(); }
+    AudioPlayer() { InitAudio(); }
     ~AudioPlayer() { CloseAudio(); }
 
-    void StartAudio(AudioData& audioData);
+    static void StartAudio(AudioData& audioData);
 
     DataConverter dataConverter = {};
     void AddData(AudioData& audioData, const DataConverter::SourceInfo& sourceInfo);
