@@ -219,6 +219,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContent\Components\ComponentConfigParam.cpp" />
     <ClCompile Include="GUIContent\Components\ComponentFiber.cpp" />
     <ClCompile Include="GUIContent\Components\ComponentFrameRate.cpp" />
+    <ClCompile Include="GUIContent\Components\ComponentVibrationLocalization.cpp" />
     <ClCompile Include="GUIContent\Components\ComponentWavefroms.cpp" />
     <ClCompile Include="GUIContent\Components\ComponentWavefromsProcess.cpp" />
     <ClCompile Include="GUIContent\GUIContent.cpp" />
@@ -259,6 +260,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContent\Components\ComponentConfigParam.h" />
     <ClInclude Include="GUIContent\Components\ComponentFiber.h" />
     <ClInclude Include="GUIContent\Components\ComponentFrameRate.h" />
+    <ClInclude Include="GUIContent\Components\ComponentVibrationLocalization.h" />
     <ClInclude Include="GUIContent\Components\ComponentWavefroms.h" />
     <ClInclude Include="GUIContent\Components\ComponentWavefromsProcess.h" />
     <ClInclude Include="GUIContent\Components\ComponentWindow.h" />
