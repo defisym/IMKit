@@ -4,6 +4,22 @@
 #include "../../IMGuiEx/AddSpin.h"
 #include "../../IMGuiEx/DisableHelper.h"
 
+#include "../../Src/Utilities/Buffer.h"
+
+ComponentWavefromsProcess::ComponentWavefromsProcess(Ctx* p, const OTDRContextHandle h):ComponentBase(p), hContext(h) {
+	const auto& deviceParams = pCtx->deviceParams;
+	const auto& processParams = pCtx->processParams;
+
+	if (!deviceParams.bUseCountext) { return; }
+	Util_VibrationLocalizationContext_Create(deviceParams.processFrameCount, deviceParams.pointNumPerScan,
+											 processParams.movingAvgRange, processParams.movingDiffRange);
+	pAudioBuffer = new IndexBuffer();
+}
+
+ComponentWavefromsProcess::~ComponentWavefromsProcess() {
+	Util_VibrationLocalizationContext_Delete(&hVibrationLocalization);
+}
+
 void ComponentWavefromsProcess::Raw() const {
 	if (!ImGui::BeginTabItem("Raw")) { return; }
 

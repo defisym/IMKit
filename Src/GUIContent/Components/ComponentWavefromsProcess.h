@@ -4,24 +4,19 @@
 
 #include "ComponentBase.h"
 
-struct ComponentWavefromsProcess :ComponentBase {
+struct ComponentWavefromsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-special-member-functions)
 	OTDRContextHandle hContext = nullptr;
 	constexpr static ImVec2 plotSize = { -1.0f, 300.0f };
 	constexpr static ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_TabListPopupButton;
 
 	VibrationLocalizationContextHandle hVibrationLocalization = nullptr;
 
-	ComponentWavefromsProcess(Ctx* p, const OTDRContextHandle h) :ComponentBase(p), hContext(h) {
-		const auto& deviceParams = pCtx->deviceParams;
-		const auto& processParams = pCtx->processParams;
+	using BufferHandle = void*;
+	BufferHandle pAudioBuffer = nullptr;
 
-		if (!deviceParams.bUseCountext) { return; }
-		Util_VibrationLocalizationContext_Create(deviceParams.processFrameCount, deviceParams.pointNumPerScan,
-			processParams.movingAvgRange, processParams.movingDiffRange);
-	}
-	~ComponentWavefromsProcess() {
-		Util_VibrationLocalizationContext_Delete(&hVibrationLocalization);
-	}
+	ComponentWavefromsProcess(Ctx* p, const OTDRContextHandle h);
+
+	~ComponentWavefromsProcess();
 
 	void StartProcess() const {
 		Context_Update(hContext, &pCtx->deviceHandler.bufferInfo);
