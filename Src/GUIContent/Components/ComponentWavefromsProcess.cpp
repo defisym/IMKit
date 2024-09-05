@@ -195,7 +195,6 @@ void ComponentWavefromsProcess::WaveRestore(OTDRProcessValueType* pProcess) {
 	// ------------------------------------
 	// Reference
 	// ------------------------------------
-
 	static bool reference = false;
 	ImGui::Checkbox("use reference", &reference);
 	ImGui::SameLine();
@@ -216,11 +215,9 @@ void ComponentWavefromsProcess::WaveRestore(OTDRProcessValueType* pProcess) {
 
 	disableReference.Enable();
 
-
 	// ------------------------------------
 	// Shake
 	// ------------------------------------
-
 	static bool diff = false;
 	ImGui::Checkbox("use diff", &diff);
 

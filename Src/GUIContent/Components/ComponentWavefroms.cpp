@@ -2,6 +2,8 @@
 
 #include "ComponentWavefromsProcess.h"
 
+// Note: ImGui call this each frame
+//       if move to other UI lib should change the read logic
 void ComponentWavefroms(Ctx* pCtx) {
 	if (!ImGui::CollapsingHeader("Wavefroms", ImGuiTreeNodeFlags_DefaultOpen)) {
 		return;
