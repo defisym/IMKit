@@ -3,39 +3,47 @@
 
 #include "ComponentBase.h"
 
-struct ComponentVibrationLocalization  {
-    ComponentVibrationLocalization() = default;
+struct VibrationLocalizationParam {
+    OTDRProcessValueType* pBuffer = nullptr;
+    size_t frameCount = 0;
+    size_t frameSize = 0;
+    size_t maRange = 0;
+    size_t mdRange = 0;
+};
+
+struct VibrationLocalizationReturn {
+    const OTDRProcessValueType* pBuffer = nullptr;
+    size_t frameCount = 0;
+};
+
+struct ComponentVibrationLocalization {
+    VibrationLocalizationParam m_param = {};
+    bool bFilled = false;
+
+    ComponentVibrationLocalization(const VibrationLocalizationParam& param);
     virtual ~ComponentVibrationLocalization() = default;
 
-    using ReturnType = decltype(std::make_tuple(static_cast<OTDRProcessValueType*>(nullptr), static_cast<size_t>(0)));
+    using ReturnType = const VibrationLocalizationReturn;
 
-    virtual ReturnType MovingAverage(OTDRProcessValueType* pBuffer,
-        const size_t frameCount, const size_t frameSize,
-        const size_t maRange);
-    virtual ReturnType MovingDifference(OTDRProcessValueType* pBuffer,
-        const size_t frameCount, const size_t frameSize,
-        const size_t mdRange);
+    virtual ReturnType MovingAverage() = 0;
+    virtual ReturnType MovingDifference() = 0;
 };
 
-struct ComponentVibrationLocalizationTradition
+struct ComponentVibrationLocalizationTradition final
     :ComponentVibrationLocalization {
-    ReturnType MovingAverage(OTDRProcessValueType* pBuffer,
-    const size_t frameCount, const size_t frameSize,
-    const size_t maRange) override {
-        const auto count = Util_MovingAverage(pBuffer,
-            frameCount, frameSize,
-            maRange);
+    ComponentVibrationLocalizationTradition(const VibrationLocalizationParam& param);
 
-        return std::make_tuple(pBuffer, count);
-    }
-    ReturnType MovingDifference(OTDRProcessValueType* pBuffer,
-        const size_t frameCount, const size_t frameSize,
-        const size_t mdRange) override {
-        const auto count = Util_MovingDifference(pBuffer,
-            frameCount, frameSize,
-            mdRange);
-
-        return std::make_tuple(pBuffer, count);
-    }
+    ReturnType MovingAverage() override;
+    ReturnType MovingDifference() override;
 };
 
+struct ComponentVibrationLocalizationContext final
+    :ComponentVibrationLocalization {
+    VibrationLocalizationContextHandle m_hVibrationLocalization = nullptr;
+
+    ComponentVibrationLocalizationContext(const VibrationLocalizationParam& param,
+        VibrationLocalizationContextHandle hVibrationLocalization);
+
+    ReturnType MovingAverage() override;
+    ReturnType MovingDifference() override;
+};
