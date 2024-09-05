@@ -37,12 +37,17 @@ struct ComponentVibrationLocalizationTradition final
     ReturnType MovingDifference() override;
 };
 
+struct VibrationLocalizationContextParam {
+    bool bUpdated = false;
+    VibrationLocalizationContextHandle m_hVibrationLocalization = nullptr;
+};
+
 struct ComponentVibrationLocalizationContext final
     :ComponentVibrationLocalization {
     VibrationLocalizationContextHandle m_hVibrationLocalization = nullptr;
 
     ComponentVibrationLocalizationContext(const VibrationLocalizationParam& param,
-        VibrationLocalizationContextHandle hVibrationLocalization);
+        const VibrationLocalizationContextParam& contextParam);
 
     ReturnType MovingAverage() override;
     ReturnType MovingDifference() override;

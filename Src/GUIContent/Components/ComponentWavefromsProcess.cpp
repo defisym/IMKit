@@ -14,7 +14,6 @@ ComponentWavefromsProcess::ComponentWavefromsProcess(Ctx* p, const OTDRContextHa
 
 	Util_VibrationLocalizationContext_Create(deviceParams.processFrameCount, deviceParams.pointNumPerScan,
 											 processParams.movingAvgRange, processParams.movingDiffRange);
-
     pAudioBuffer = new IndexBuffer();
 }
 
@@ -70,7 +69,9 @@ void ComponentWavefromsProcess::Shake() const {
     auto pComponentVibrationLocalization
     = [&] ()->std::unique_ptr<ComponentVibrationLocalization> {        
         if (deviceParams.bUseCountext) {
-            return std::make_unique<ComponentVibrationLocalizationContext>(param, hVibrationLocalization);
+            VibrationLocalizationContextParam contextParam
+                = { pCtx->deviceHandler.bContextUpdated,hVibrationLocalization };
+            return std::make_unique<ComponentVibrationLocalizationContext>(param, contextParam);
         }
 
         return std::make_unique<ComponentVibrationLocalizationTradition>(param);

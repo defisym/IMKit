@@ -26,9 +26,14 @@ ComponentVibrationLocalization::ReturnType ComponentVibrationLocalizationTraditi
 }
 
 ComponentVibrationLocalizationContext::ComponentVibrationLocalizationContext(const VibrationLocalizationParam& param,
-    VibrationLocalizationContextHandle hVibrationLocalization):ComponentVibrationLocalization(param),
-                                                               m_hVibrationLocalization(hVibrationLocalization) {
-    bFilled = Util_VibrationLocalizationContext_AddFrame(m_hVibrationLocalization, m_param.pBuffer);
+     const VibrationLocalizationContextParam& contextParam)
+    :ComponentVibrationLocalization(param),
+    m_hVibrationLocalization(contextParam.m_hVibrationLocalization) {
+    // not updated, don't need to add this frame
+    if (!contextParam.bUpdated) { return; }
+
+    bFilled
+        = Util_VibrationLocalizationContext_AddFrame(m_hVibrationLocalization, m_param.pBuffer) == 0;
 }
 
 ComponentVibrationLocalization::ReturnType ComponentVibrationLocalizationContext::MovingAverage() {
