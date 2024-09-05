@@ -1,4 +1,5 @@
 #include "ComponentWavefromsProcess.h"
+#include "ComponentVibrationLocalization.h"
 
 #include "../../IMGuiEx/DisplayPlot.h"
 #include "../../IMGuiEx/AddSpin.h"
@@ -9,11 +10,12 @@
 ComponentWavefromsProcess::ComponentWavefromsProcess(Ctx* p, const OTDRContextHandle h):ComponentBase(p), hContext(h) {
 	const auto& deviceParams = pCtx->deviceParams;
 	const auto& processParams = pCtx->processParams;
+    if (!deviceParams.bUseCountext) { return; }
 
-	if (!deviceParams.bUseCountext) { return; }
 	Util_VibrationLocalizationContext_Create(deviceParams.processFrameCount, deviceParams.pointNumPerScan,
 											 processParams.movingAvgRange, processParams.movingDiffRange);
-	pAudioBuffer = new IndexBuffer();
+
+    pAudioBuffer = new IndexBuffer();
 }
 
 ComponentWavefromsProcess::~ComponentWavefromsProcess() {
@@ -60,55 +62,74 @@ void ComponentWavefromsProcess::Shake() const {
 	const auto& deviceParams = pCtx->deviceParams;
 	const auto& processParams = pCtx->processParams;
 
-	const auto pProcess = Context_GetProcessBuffer(hContext, 1);
+    const VibrationLocalizationParam param = 
+    { Context_GetProcessBuffer(hContext, 1),
+        bufferInfo.frameCount, bufferInfo.frameSize,
+        processParams.movingAvgRange, processParams.movingDiffRange };
+        
+    auto pComponentVibrationLocalization
+    = [&] ()->std::unique_ptr<ComponentVibrationLocalization> {        
+        if (deviceParams.bUseCountext) {
+            return std::make_unique<ComponentVibrationLocalizationContext>(param, hVibrationLocalization);
+        }
+
+        return std::make_unique<ComponentVibrationLocalizationTradition>(param);
+        }();
+
+    if(!pComponentVibrationLocalization->bFilled) {
+        ImGui::TextUnformatted("Data not enough");
+
+        return;
+    }
 
 	if (ImGui::BeginTabBar("Shake/Tab", tab_bar_flags)) {
-		auto frameCount = bufferInfo.frameCount;
+        // Handle Moving Average
+        {
+            auto [pResult, frameCount]
+                = pComponentVibrationLocalization->MovingAverage();
 
-		frameCount = Util_MovingAverage(pProcess,
-										frameCount, bufferInfo.frameSize,
-										processParams.movingAvgRange);
-		if (ImGui::BeginTabItem("Shake MA")) {
-			if (ImPlot::BeginPlot("ImPlot/Shake/MA", plotSize)) {
-				for (size_t frameIdx = 0; frameIdx < frameCount; frameIdx++) {
-					DisplayPlot(std::format("ImPlot/Shake/MA/Plot_{}", frameIdx).c_str(),
-								Context_GetFrameBuffer(pProcess,
-						bufferInfo.frameSize, frameIdx),
-								deviceParams.pointNumPerScan);
-				}
+            if (ImGui::BeginTabItem("Shake MA")) {
+                if (ImPlot::BeginPlot("ImPlot/Shake/MA", plotSize)) {
+                    for (size_t frameIdx = 0; frameIdx < frameCount; frameIdx++) {
+                        DisplayPlot(std::format("ImPlot/Shake/MA/Plot_{}", frameIdx).c_str(),
+                            Context_GetConstFrameBuffer(pResult, param.frameSize, frameIdx),
+                            static_cast<int>(param.frameSize));
+                    }
 
-				ImPlot::EndPlot();
-			}
-			ImGui::EndTabItem();
-		}
+                    ImPlot::EndPlot();
+                }
+                ImGui::EndTabItem();
+            }
+        }
 
-		frameCount = Util_MovingDifference(pProcess,
-										   frameCount, bufferInfo.frameSize,
-										   processParams.movingDiffRange);
-		if (ImGui::BeginTabItem("Shake MD")) {
-			if (ImPlot::BeginPlot("ImPlot/Shake/MD", plotSize)) {
-				for (size_t frameIdx = 0; frameIdx < frameCount - 1; frameIdx++) {
-					DisplayPlot(std::format("ImPlot/Shake/MD/Plot_{}", frameIdx).c_str(),
-								Context_GetFrameBuffer(pProcess,
-						bufferInfo.frameSize, frameIdx),
-								deviceParams.pointNumPerScan);
-				}
+        // Handle Moving Difference
+        {
+            auto [pResult, frameCount]
+                = pComponentVibrationLocalization->MovingDifference();
+            const auto accumulateFrameIndex = frameCount - 1;
 
-				ImPlot::EndPlot();
-			}
-			ImGui::EndTabItem();
-		}
-		if (ImGui::BeginTabItem("Shake MD Accumulate")) {
-			if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", plotSize)) {
-				ImPlot::PlotLine("ImPlot/Shake/MD/Accumulate/Plot",
-								 Context_GetFrameBuffer(pProcess,
-					bufferInfo.frameSize, frameCount - 1),
-								 deviceParams.pointNumPerScan);
-				ImPlot::EndPlot();
-			}
-			ImGui::EndTabItem();
-		}
+            if (ImGui::BeginTabItem("Shake MD")) {
+                if (ImPlot::BeginPlot("ImPlot/Shake/MD", plotSize)) {
+                    for (size_t frameIdx = 0; frameIdx < accumulateFrameIndex; frameIdx++) {
+                        DisplayPlot(std::format("ImPlot/Shake/MD/Plot_{}", frameIdx).c_str(),
+                            Context_GetConstFrameBuffer(pResult, param.frameSize, frameIdx),
+                            static_cast<int>(param.frameSize));
+                    }
 
+                    ImPlot::EndPlot();
+                }
+                ImGui::EndTabItem();
+            }
+            if (ImGui::BeginTabItem("Shake MD Accumulate")) {
+                if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", plotSize)) {
+                    DisplayPlot("ImPlot/Shake/MD/Accumulate/Plot",
+                          Context_GetConstFrameBuffer(pResult, param.frameSize, accumulateFrameIndex),
+                          static_cast<int>(param.frameSize));
+                    ImPlot::EndPlot();
+                }
+                ImGui::EndTabItem();
+            }
+        }
 		ImGui::EndTabBar();
 	}
 
