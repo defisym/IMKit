@@ -7,7 +7,8 @@
 struct ComponentWavefromsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-special-member-functions)
 	OTDRContextHandle hContext = nullptr;
 	constexpr static ImVec2 plotSize = { -1.0f, 300.0f };
-	constexpr static ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_TabListPopupButton;
+	constexpr static ImGuiTabBarFlags tabBarFlags = ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_TabListPopupButton;
+    constexpr static ImGuiSliderFlags sliderFlags = ImGuiSliderFlags_AlwaysClamp;
 
 	VibrationLocalizationContextHandle hVibrationLocalization = nullptr;
 
@@ -36,7 +37,7 @@ struct ComponentWavefromsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 	}
 
 	void WaveformTab() {
-		if (!ImGui::BeginTabBar("Wavefroms/Tab", tab_bar_flags)) { return; }
+		if (!ImGui::BeginTabBar("Wavefroms/Tab", tabBarFlags)) { return; }
 
 		this->Raw();
 		this->Shake();
@@ -48,8 +49,8 @@ struct ComponentWavefromsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 	void Raw() const;
 	void Shake() const;
 	void Wave();
+
 	void WaveNormalization(OTDRProcessValueType* pProcess) const;
-	void WaveRestore(OTDRProcessValueType* pProcess);
 
 	struct ShakeInfo {
 		bool diff = false;
@@ -58,12 +59,23 @@ struct ComponentWavefromsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 		int unwrap2DStart = 1;
 	};
 
+    struct WaveRestoreOpt :ShakeInfo {
+        bool bUseReference = false;
+        int referenceStart = 50;
+        bool bPlayAudio = false;
+    };
+
+    [[nodiscard]] WaveRestoreOpt WaveRestoreOpt() const;
+    void WaveProcess(OTDRProcessValueType* pProcess, const struct WaveRestoreOpt& opt);
+    void WaveRestore(OTDRProcessValueType* pProcess, const struct WaveRestoreOpt& opt);
+
 	std::vector<OTDRProcessValueType> restoreWaveBuffer;
+	std::vector<OTDRProcessValueType> restoreWaveFFTBuffer;
 	std::vector<OTDRProcessValueType> referenceWaveBuffer;
 
 	void WaveRestoreProcess(OTDRProcessValueType* pProcess,
 		const ShakeInfo& shakeInfo,
 		std::vector<OTDRProcessValueType>& waveBuffer) const;
 
-	void WaveFFT(std::vector<OTDRProcessValueType>& waveBuffer) const;
+    void WaveDisplay() const;
 };

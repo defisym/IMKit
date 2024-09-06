@@ -65,8 +65,8 @@ void ComponentWavefromsProcess::Shake() const {
     { Context_GetProcessBuffer(hContext, 1),
         bufferInfo.frameCount, bufferInfo.frameSize,
         processParams.movingAvgRange, processParams.movingDiffRange };
-        
-    auto pComponentVibrationLocalization
+
+    const auto pComponentVibrationLocalization
     = [&] ()->std::unique_ptr<ComponentVibrationLocalization> {        
         if (deviceParams.bUseCountext) {
             VibrationLocalizationContextParam contextParam
@@ -83,7 +83,7 @@ void ComponentWavefromsProcess::Shake() const {
         return;
     }
 
-	if (ImGui::BeginTabBar("Shake/Tab", tab_bar_flags)) {
+	if (ImGui::BeginTabBar("Shake/Tab", tabBarFlags)) {
         // Handle Moving Average
         {
             auto [pResult, frameCount]
@@ -138,24 +138,31 @@ void ComponentWavefromsProcess::Shake() const {
 }
 
 void ComponentWavefromsProcess::Wave() {
-	if (ImGui::BeginTabItem("Wave")) {
-		const auto pProcess = Context_GetProcessBuffer(hContext, 0);
+    if (!ImGui::BeginTabItem("Wave")) { return; }
 
-		if (ImGui::BeginTabBar("Wave/Tab", tab_bar_flags)) {
+    auto pProcess = Context_GetProcessBuffer(hContext, 0);
+    const auto bContextUpdated = pCtx->deviceHandler.bContextUpdated;
 
-			this->WaveNormalization(pProcess);
+    do {
+        if (!pCtx->deviceParams.bUseCountext) { break; }
 
-			if (ImGui::BeginTabItem("Wave Shake")) {
-				this->WaveRestore(pProcess);
+        const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
+        auto pIndexAudioBuffer = static_cast<IndexBuffer<>*>(pAudioBuffer);
 
-				ImGui::EndTabItem();
-			}
+        if (pIndexAudioBuffer->Filled()) { pIndexAudioBuffer->Reset(); }
+        pIndexAudioBuffer->AddData(pProcess, bufferInfo.frameSize);
 
-			ImGui::EndTabItem();
-		}
+        if(!pIndexAudioBuffer->Filled()) {
+            
+        }
 
-		ImGui::EndTabBar();
-	}
+        pProcess = pIndexAudioBuffer->_pBuf;
+    } while (false);
+
+    const auto waveRestoreOpt = WaveRestoreOpt();
+    WaveProcess(pProcess, waveRestoreOpt);
+
+    ImGui::EndTabBar();
 }
 
 void ComponentWavefromsProcess::WaveNormalization(OTDRProcessValueType* pProcess) const {
@@ -171,12 +178,12 @@ void ComponentWavefromsProcess::WaveNormalization(OTDRProcessValueType* pProcess
 	}
 
 	if (ImGui::BeginTabItem("Wave Unprocessed")) {
-		if (ImPlot::BeginPlot("ImPlot/Wave/Wave Unprocessed", plotSize)) {
-			for (size_t frameIdx = 0; frameIdx < bufferInfo.frameCount; frameIdx++) {
-				DisplayPlot(std::format("ImPlot/Wave/Wave Unprocessed/Plot_{}", frameIdx).c_str(),
-							Context_GetFrameBuffer(pProcess,
-					bufferInfo.frameSize, frameIdx),
-							deviceParams.pointNumPerScan);
+        if (ImPlot::BeginPlot("ImPlot/Wave/Wave Unprocessed", plotSize)) {
+            for (size_t frameIdx = 0; frameIdx < bufferInfo.frameCount; frameIdx++) {
+                DisplayPlot(std::format("ImPlot/Wave/Wave Unprocessed/Plot_{}", frameIdx).c_str(),
+                            Context_GetFrameBuffer(pProcess,
+                    bufferInfo.frameSize, frameIdx),
+                            deviceParams.pointNumPerScan);
 			}
 
 			ImPlot::EndPlot();
@@ -186,117 +193,135 @@ void ComponentWavefromsProcess::WaveNormalization(OTDRProcessValueType* pProcess
 
 }
 
-void ComponentWavefromsProcess::WaveRestore(OTDRProcessValueType* pProcess) {
-	const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
-	const auto& deviceParams = pCtx->deviceParams;
+struct ComponentWavefromsProcess::WaveRestoreOpt ComponentWavefromsProcess::WaveRestoreOpt() const {
+    // ------------------------------------
+    // Params
+    // ------------------------------------
+    const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
 
-	// TODO find the possible shake start position
-	static ImGuiSliderFlags flags = ImGuiSliderFlags_AlwaysClamp;
+    // ------------------------------------
+    // Reference
+    // ------------------------------------
+    static bool bUseReference = false;
+    ImGui::Checkbox("use reference", &bUseReference);
+    ImGui::SameLine();
+    ImGui::TextUnformatted("reference shares the range & unwrap settings");
 
-	// ------------------------------------
-	// Reference
-	// ------------------------------------
-	static bool reference = false;
-	ImGui::Checkbox("use reference", &reference);
-	ImGui::SameLine();
-	ImGui::TextUnformatted("reference shares the range & unwrap settings");
+    auto disableReference = ManualDisableHelper();
 
-	auto disableReference = ManualDisableHelper();
+    disableReference.Disable(!bUseReference);
 
-	disableReference.Disable(!reference);
+    static int referenceStart = 50;
+    ImGui::SliderInt("##reference start", &referenceStart,
+                     0, static_cast<int>(bufferInfo.frameSize),
+                     "%d", sliderFlags);
+    AddSpin("reference start", &referenceStart,
+            0, static_cast<int>(bufferInfo.frameSize));
+    ImGui::SameLine();
+    ImGui::TextUnformatted("reference start");
 
-	static int referenceStart = 50;
-	ImGui::SliderInt("##reference start", &referenceStart,
-					 0, static_cast<int>(bufferInfo.frameSize),
-					 "%d", flags);
-	AddSpin("reference start", &referenceStart,
-			0, static_cast<int>(bufferInfo.frameSize));
-	ImGui::SameLine();
-	ImGui::TextUnformatted("reference start");
+    disableReference.Enable();
 
-	disableReference.Enable();
+    // ------------------------------------
+    // Shake
+    // ------------------------------------
+    static bool diff = false;
+    ImGui::Checkbox("use diff", &diff);
 
-	// ------------------------------------
-	// Shake
-	// ------------------------------------
-	static bool diff = false;
-	ImGui::Checkbox("use diff", &diff);
+    // TODO find the possible shake start position
+    static int shakeStart = 50;
+    ImGui::SliderInt("##shake start", &shakeStart,
+                     0, static_cast<int>(bufferInfo.frameSize),
+                     "%d", sliderFlags);
+    AddSpin("shake start", &shakeStart,
+            0, static_cast<int>(bufferInfo.frameSize));
+    ImGui::SameLine();
+    ImGui::TextUnformatted("shake start");
 
-	static int shakeStart = 50;
-	ImGui::SliderInt("##shake start", &shakeStart,
-					 0, static_cast<int>(bufferInfo.frameSize),
-					 "%d", flags);
-	AddSpin("shake start", &shakeStart,
-			0, static_cast<int>(bufferInfo.frameSize));
-	ImGui::SameLine();
-	ImGui::TextUnformatted("shake start");
+    static int shakeRange = 20;
+    ImGui::SliderInt("##shake range", &shakeRange,
+                     0, static_cast<int>(bufferInfo.frameSize) - shakeStart,
+                     "%d", sliderFlags);
+    AddSpin("shake range", &shakeRange,
+            0, static_cast<int>(bufferInfo.frameSize) - shakeStart);
+    ImGui::SameLine();
+    ImGui::TextUnformatted("shake range");
 
-	static int shakeRange = 20;
-	ImGui::SliderInt("##shake range", &shakeRange,
-					 0, static_cast<int>(bufferInfo.frameSize) - shakeStart,
-					 "%d", flags);
-	AddSpin("shake range", &shakeRange,
-			0, static_cast<int>(bufferInfo.frameSize) - shakeStart);
-	ImGui::SameLine();
-	ImGui::TextUnformatted("shake range");
+    // ------------------------------------
+    // Unwarp 2D
+    // ------------------------------------
+    static int unwrap2DStart = 1;
+    ImGui::SliderInt("##unwrap 2D start", &unwrap2DStart,
+                     1, shakeRange,
+                     "%d", sliderFlags);
+    AddSpin("unwrap 2D start", &unwrap2DStart,
+            1, shakeRange);
+    ImGui::SameLine();
+    ImGui::TextUnformatted("unwrap 2D start");
 
-	// ------------------------------------
-	// Unwarp 2D
-	// ------------------------------------
-	static int unwrap2DStart = 1;
-	ImGui::SliderInt("##unwrap 2D start", &unwrap2DStart,
-					 1, shakeRange,
-					 "%d", flags);
-	AddSpin("unwrap 2D start", &unwrap2DStart,
-			1, shakeRange);
-	ImGui::SameLine();
-	ImGui::TextUnformatted("unwrap 2D start");
+    // ------------------------------------
+    // Audio
+    // ------------------------------------
+    bool bPlayAudio = false;
+    ImGui::Checkbox("ImPlot/Wave/Play Wave", &bPlayAudio);
 
-	// ------------------------------------
-	// Wave Restore
-	// ------------------------------------
-	this->WaveRestoreProcess(pProcess,
-		{ diff,shakeStart,shakeRange,unwrap2DStart },
-		restoreWaveBuffer);
+    // ------------------------------------
+    // Return
+    // ------------------------------------
+    return { {diff,shakeStart,shakeRange,unwrap2DStart},
+        bUseReference,referenceStart,bPlayAudio };
+}
 
-	// remove system noise by reference point
-	if(reference) {
-		this->WaveRestoreProcess(pProcess,
-			{ diff,referenceStart,shakeRange,unwrap2DStart },
-			referenceWaveBuffer);
+void ComponentWavefromsProcess::WaveProcess(OTDRProcessValueType* pProcess, const struct WaveRestoreOpt& opt) {
+    if (!ImGui::BeginTabBar("Wave/Tab", tabBarFlags)) { return; }
 
-		for (size_t index = 0; index < referenceWaveBuffer.size(); index++) {
-			restoreWaveBuffer[index] -= referenceWaveBuffer[index];
-		}
-	}
+    this->WaveNormalization(pProcess);
 
-	if (ImPlot::BeginPlot("ImPlot/Wave/Wave Shake", plotSize)) {
-		DisplayPlot(std::format("ImPlot/Wave/Wave Shake").c_str(),
-					restoreWaveBuffer.data(), static_cast<int>(restoreWaveBuffer.size()));
+    if (ImGui::BeginTabItem("Wave Shake")) {
+        this->WaveRestore(pProcess, opt);
 
-		ImPlot::EndPlot();
-	}
+        ImGui::EndTabItem();
+    }
 
-	// ------------------------------------
-	// Audio
-	// ------------------------------------
-	bool bPlayAudio = false;
-	ImGui::Checkbox("ImPlot/Wave/Play Wave", &bPlayAudio);
+    ImGui::EndTabItem();
+}
 
-	if (bPlayAudio) {
-		memcpy(pCtx->audioHandler.pBuffer,
-			restoreWaveBuffer.data(),
-			sizeof(OTDRProcessValueType) * restoreWaveBuffer.size());
-	}
+void ComponentWavefromsProcess::WaveRestore(OTDRProcessValueType* pProcess, const struct WaveRestoreOpt& opt) {
+    // ------------------------------------
+    // Wave Restore
+    // ------------------------------------
+    this->WaveRestoreProcess(pProcess,
+        { opt.diff,opt.shakeStart,opt.shakeRange,opt.unwrap2DStart },
+        restoreWaveBuffer);
 
-	// ------------------------------------
-	// FFT
-	// ------------------------------------
-	this->WaveFFT(restoreWaveBuffer);
+    // remove system noise by reference point
+    if (opt.bUseReference) {
+        this->WaveRestoreProcess(pProcess,
+            { opt.diff,opt.referenceStart,opt.shakeRange,opt.unwrap2DStart },
+            referenceWaveBuffer);
+
+        for (size_t index = 0; index < referenceWaveBuffer.size(); index++) {
+            restoreWaveBuffer[index] -= referenceWaveBuffer[index];
+        }
+    }
+
+    // ------------------------------------
+    // FFT
+    // ------------------------------------
+    restoreWaveFFTBuffer = restoreWaveBuffer;
+    [[maybe_unused]] const auto fftElement = Util_FFT_Amplitude(restoreWaveFFTBuffer.data(), restoreWaveFFTBuffer.size());
+
+    // ------------------------------------
+    // Handle Audio Data
+    // ------------------------------------
+    if (!opt.bPlayAudio) { return; }
+    memcpy(pCtx->audioHandler.pBuffer,
+        restoreWaveBuffer.data(),
+        sizeof(OTDRProcessValueType) * restoreWaveBuffer.size());
 }
 
 void ComponentWavefromsProcess::WaveRestoreProcess(OTDRProcessValueType* pProcess, const ShakeInfo& shakeInfo,
-	std::vector<OTDRProcessValueType>& waveBuffer) const {
+                                                   std::vector<OTDRProcessValueType>& waveBuffer) const {
 	const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
 	const auto& [diff, 
 		shakeStart, 
@@ -324,18 +349,24 @@ void ComponentWavefromsProcess::WaveRestoreProcess(OTDRProcessValueType* pProces
 	Util_Unwrap(waveBuffer.data(), waveBuffer.size(), PI);
 }
 
-void ComponentWavefromsProcess::WaveFFT(std::vector<OTDRProcessValueType>& waveBuffer) const {
-	const auto& deviceParams = pCtx->deviceParams;
-	const auto fftElement = Util_FFT_Amplitude(waveBuffer.data(), waveBuffer.size());
+void ComponentWavefromsProcess::WaveDisplay() const {
+    const auto& deviceParams = pCtx->deviceParams;
 
-	if (ImPlot::BeginPlot("ImPlot/Wave/Wave FFT Amplitude", plotSize)) {
-		DisplayPlot(std::format("ImPlot/Wave/Wave FFT Amplitude").c_str(),
-					waveBuffer.data(), static_cast<int>(waveBuffer.size()), 1,
-					[&] (const double index) {
-						return static_cast<double>(Util_FFT_GetFrequency(static_cast<size_t>(index),
-							waveBuffer.size(), static_cast<float>(deviceParams.scanRate)));
-					});
+    if (ImPlot::BeginPlot("ImPlot/Wave/Wave Shake", plotSize)) {
+        DisplayPlot(std::format("ImPlot/Wave/Wave Shake").c_str(),
+                    restoreWaveBuffer.data(), static_cast<int>(restoreWaveBuffer.size()));
 
-		ImPlot::EndPlot();
-	}
+        ImPlot::EndPlot();
+    }
+
+    if (ImPlot::BeginPlot("ImPlot/Wave/Wave FFT Amplitude", plotSize)) {
+        DisplayPlot(std::format("ImPlot/Wave/Wave FFT Amplitude").c_str(),
+                    restoreWaveFFTBuffer.data(), static_cast<int>(restoreWaveFFTBuffer.size()), 1,
+                    [&] (const double index) {
+                        return static_cast<double>(Util_FFT_GetFrequency(static_cast<size_t>(index),
+                            restoreWaveFFTBuffer.size(), static_cast<float>(deviceParams.scanRate)));
+                    });
+
+        ImPlot::EndPlot();
+    }
 }
