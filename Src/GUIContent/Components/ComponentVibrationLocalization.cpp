@@ -32,8 +32,12 @@ ComponentVibrationLocalizationContext::ComponentVibrationLocalizationContext(con
     // not updated, don't need to add this frame
     if (!contextParam.bUpdated) { return; }
 
-    bFilled
-        = Util_VibrationLocalizationContext_AddFrame(m_hVibrationLocalization, m_param.pBuffer) == 0;
+    auto pFrame = m_param.pBuffer;
+    for (size_t frameIndex = 0; frameIndex < m_param.frameCount; frameIndex++) {
+        bFilled
+            = Util_VibrationLocalizationContext_AddFrame(m_hVibrationLocalization, pFrame) == 0;
+        pFrame += m_param.frameSize;
+    }
 }
 
 ComponentVibrationLocalization::ReturnType ComponentVibrationLocalizationContext::MovingAverage() {
