@@ -181,16 +181,14 @@ void ComponentWavefromsProcess::WaveNormalization(OTDRProcessValueType* pProcess
         if (ImPlot::BeginPlot("ImPlot/Wave/Wave Unprocessed", plotSize)) {
             for (size_t frameIdx = 0; frameIdx < bufferInfo.frameCount; frameIdx++) {
                 DisplayPlot(std::format("ImPlot/Wave/Wave Unprocessed/Plot_{}", frameIdx).c_str(),
-                            Context_GetFrameBuffer(pProcess,
-                    bufferInfo.frameSize, frameIdx),
-                            deviceParams.pointNumPerScan);
+                    Context_GetFrameBuffer(pProcess, bufferInfo.frameSize, frameIdx),
+                    deviceParams.pointNumPerScan);
 			}
 
 			ImPlot::EndPlot();
 		}
 		ImGui::EndTabItem();
 	}
-
 }
 
 struct ComponentWavefromsProcess::WaveRestoreOpt ComponentWavefromsProcess::WaveRestoreOpt() const {
@@ -354,18 +352,18 @@ void ComponentWavefromsProcess::WaveDisplay() const {
 
     if (ImPlot::BeginPlot("ImPlot/Wave/Wave Shake", plotSize)) {
         DisplayPlot(std::format("ImPlot/Wave/Wave Shake").c_str(),
-                    restoreWaveBuffer.data(), static_cast<int>(restoreWaveBuffer.size()));
+            restoreWaveBuffer.data(), static_cast<int>(restoreWaveBuffer.size()));
 
         ImPlot::EndPlot();
     }
 
     if (ImPlot::BeginPlot("ImPlot/Wave/Wave FFT Amplitude", plotSize)) {
         DisplayPlot(std::format("ImPlot/Wave/Wave FFT Amplitude").c_str(),
-                    restoreWaveFFTBuffer.data(), static_cast<int>(restoreWaveFFTBuffer.size()), 1,
-                    [&] (const double index) {
-                        return static_cast<double>(Util_FFT_GetFrequency(static_cast<size_t>(index),
-                            restoreWaveFFTBuffer.size(), static_cast<float>(deviceParams.scanRate)));
-                    });
+            restoreWaveFFTBuffer.data(), static_cast<int>(restoreWaveFFTBuffer.size()), 1,
+            [&] (const double index) {
+                return static_cast<double>(Util_FFT_GetFrequency(static_cast<size_t>(index),
+                    restoreWaveFFTBuffer.size(), static_cast<float>(deviceParams.scanRate)));
+            });
 
         ImPlot::EndPlot();
     }

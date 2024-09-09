@@ -4,9 +4,11 @@
 #include "ComponentBase.h"
 
 struct VibrationLocalizationParam {
+    // info of read buffer
     OTDRProcessValueType* pBuffer = nullptr;
     size_t frameCount = 0;
     size_t frameSize = 0;
+    // info of process
     size_t maRange = 0;
     size_t mdRange = 0;
 };
