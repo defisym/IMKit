@@ -316,7 +316,7 @@ void ComponentWavefromsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
     // Handle Audio Data
     // ------------------------------------
     if (!opt.bPlayAudio) { return; }
-    memcpy(pCtx->audioHandler.pBuffer,
+    memcpy(pCtx->audioHandler.GetBuffer(),
         restoreWaveBuffer.data(),
         sizeof(OTDRProcessValueType) * restoreWaveBuffer.size());
 }

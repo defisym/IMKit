@@ -31,10 +31,9 @@ struct ComponentWavefromsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 		const auto& deviceParams = pCtx->deviceParams;
 
 		pCtx->audioHandler.audioPlayer.AddData(pCtx->audioHandler.audioData,
-			{ pCtx->audioHandler.pBuffer,
+			{ pCtx->audioHandler.GetBuffer(),
 				pCtx->audioHandler.bufferSz,
 				static_cast<size_t>((1000.0 * deviceParams.processFrameCount) / deviceParams.scanRate) });
-
 	}
 
 	void WaveformTab() {
