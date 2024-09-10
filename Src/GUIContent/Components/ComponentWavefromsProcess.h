@@ -13,7 +13,8 @@ struct ComponentWavefromsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 	VibrationLocalizationContextHandle hVibrationLocalization = nullptr;
 
 	using BufferHandle = void*;
-	BufferHandle pAudioBuffer = nullptr;
+	BufferHandle pWaveBuffer = nullptr;             // for processing
+	BufferHandle pWaveDisplayBuffer = nullptr;      // for raw data displaying
 
 	ComponentWavefromsProcess(Ctx* p, const OTDRContextHandle h);
 
@@ -50,9 +51,7 @@ struct ComponentWavefromsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 	void Shake() const;
 	void Wave();
 
-	void WaveNormalization(OTDRProcessValueType* pProcess) const;
-
-	struct ShakeInfo {
+    struct ShakeInfo {
 		bool diff = false;
 		int shakeStart = 50;
 		int shakeRange = 20;
@@ -65,17 +64,16 @@ struct ComponentWavefromsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
         bool bPlayAudio = false;
     };
 
-    [[nodiscard]] WaveRestoreOpt WaveRestoreOpt() const;
-    void WaveProcess(OTDRProcessValueType* pProcess, const struct WaveRestoreOpt& opt);
+    [[nodiscard]] WaveRestoreOpt GetWaveRestoreOpt() const;
+    bool WaveProcess(const struct WaveRestoreOpt& opt);
+
+    std::vector<OTDRProcessValueType> restoreWaveBuffer;
+    std::vector<OTDRProcessValueType> restoreWaveFFTBuffer;
+    std::vector<OTDRProcessValueType> referenceWaveBuffer;
+
+    void WaveRestoreProcess(OTDRProcessValueType* pProcess,
+        const ShakeInfo& shakeInfo,
+        std::vector<OTDRProcessValueType>& waveBuffer) const;
     void WaveRestore(OTDRProcessValueType* pProcess, const struct WaveRestoreOpt& opt);
-
-	std::vector<OTDRProcessValueType> restoreWaveBuffer;
-	std::vector<OTDRProcessValueType> restoreWaveFFTBuffer;
-	std::vector<OTDRProcessValueType> referenceWaveBuffer;
-
-	void WaveRestoreProcess(OTDRProcessValueType* pProcess,
-		const ShakeInfo& shakeInfo,
-		std::vector<OTDRProcessValueType>& waveBuffer) const;
-
     void WaveDisplay() const;
 };
