@@ -113,7 +113,10 @@ void StartStopDevice(Ctx* pCtx, const bool bEnable) {
 
 	if (ImGui::Button("Start Device")) {
 		pCtx->deviceHandler.StartDevice();
-		pCtx->audioHandler.ResizeBuffer(pCtx->deviceParams.processFrameCount);
+
+        const auto& deviceParams = pCtx->deviceParams;
+        const auto bufferSz = deviceParams.processFrameCount * deviceParams.pointNumPerScan;
+		pCtx->audioHandler.ResizeBuffer(bufferSz);
 		pCtx->audioHandler.ResetBuffer();
 	}
 
