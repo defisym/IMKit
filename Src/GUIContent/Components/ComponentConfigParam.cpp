@@ -4,6 +4,9 @@
 
 // TODO config items changes according to the device
 bool UpdateParam(Ctx* pCtx) {
+    // ------------------------
+    // Basic info
+    // ------------------------
 	if (pCtx->deviceHandler.hParam == nullptr) { return false; }
 
 	const auto hParam = pCtx->deviceHandler.hParam;
@@ -113,16 +116,11 @@ void StartStopDevice(Ctx* pCtx, const bool bEnable) {
 
 	if (ImGui::Button("Start Device")) {
 		pCtx->deviceHandler.StartDevice();
-
-        const auto& deviceParams = pCtx->deviceParams;
-        const auto bufferSz = deviceParams.processFrameCount * deviceParams.pointNumPerScan;
-		pCtx->audioHandler.ResizeBuffer(bufferSz);
-		pCtx->audioHandler.ResetBuffer();
 	}
 
 	ImGui::SameLine();
 	if (ImGui::Button("Stop Device")) {
-		const auto err = pCtx->deviceHandler.StopDevice();
+        [[maybe_unused]] const auto err = pCtx->deviceHandler.StopDevice();
 		Context_Delete(&pCtx->deviceHandler.hContext);
 	}
 }

@@ -251,6 +251,9 @@ bool ComponentWavefromsProcess::WaveProcess(const WaveRestoreOpt& opt) {
     // Basic info
     // ------------------------
 
+    auto& audioHandler = pCtx->audioHandler;
+
+    const auto& deviceParams = pCtx->deviceParams;
     const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
 
     const auto bContextUpdated = pCtx->deviceHandler.bContextUpdated;
@@ -260,6 +263,9 @@ bool ComponentWavefromsProcess::WaveProcess(const WaveRestoreOpt& opt) {
     // ------------------------
     // Update & Process buffer
     // ------------------------
+
+    // reset audio buffer
+    if (!opt.bPlayAudio) { audioHandler.audioData.ringBuffer.ResetBuffer(); }
 
     // always update buffer in both modes
     do {
@@ -282,6 +288,11 @@ bool ComponentWavefromsProcess::WaveProcess(const WaveRestoreOpt& opt) {
 
         pIndexWaveDisplayBuffer->Copy(pIndexWaveBuffer);
         WaveRestore(pIndexWaveBuffer->_pBuf, opt);
+
+        if (!opt.bPlayAudio) { break; }
+        audioHandler.audioPlayer.AddData(audioHandler.audioData,
+        { restoreWaveBuffer.data(), restoreWaveBuffer.size(),
+            static_cast<size_t>(1000.0 * deviceParams.processFrameCount / deviceParams.scanRate) });        
     } while (false);
 
     return pIndexWaveBuffer->Filled();  
@@ -311,14 +322,6 @@ void ComponentWavefromsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
     // ------------------------------------
     restoreWaveFFTBuffer = restoreWaveBuffer;
     [[maybe_unused]] const auto fftElement = Util_FFT_Amplitude(restoreWaveFFTBuffer.data(), restoreWaveFFTBuffer.size());
-
-    // ------------------------------------
-    // Handle Audio Data
-    // ------------------------------------
-    if (!opt.bPlayAudio) { return; }
-    memcpy(pCtx->audioHandler.GetBuffer(),
-        restoreWaveBuffer.data(),
-        sizeof(OTDRProcessValueType) * restoreWaveBuffer.size());
 }
 
 void ComponentWavefromsProcess::WaveRestoreProcess(OTDRProcessValueType* pProcess, const ShakeInfo& shakeInfo,

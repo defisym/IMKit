@@ -17,24 +17,7 @@ struct ComponentWavefromsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 	BufferHandle pWaveDisplayBuffer = nullptr;      // for raw data displaying
 
 	ComponentWavefromsProcess(Ctx* p, const OTDRContextHandle h);
-
 	~ComponentWavefromsProcess();
-
-	void StartProcess() const {
-		Context_Update(hContext, &pCtx->deviceHandler.bufferInfo);
-		pCtx->audioHandler.ResetBuffer();
-	}
-	void EndProcess() const {
-		if (!pCtx->deviceHandler.bContextUpdated) { return; }
-
-		// context updated, add new audio data
-		const auto& deviceParams = pCtx->deviceParams;
-
-		pCtx->audioHandler.audioPlayer.AddData(pCtx->audioHandler.audioData,
-			{ pCtx->audioHandler.GetBuffer(),
-				pCtx->audioHandler.bufferSz,
-				static_cast<size_t>((1000.0 * deviceParams.processFrameCount) / deviceParams.scanRate) });
-	}
 
 	void WaveformTab() {
 		if (!ImGui::BeginTabBar("Wavefroms/Tab", tabBarFlags)) { return; }
