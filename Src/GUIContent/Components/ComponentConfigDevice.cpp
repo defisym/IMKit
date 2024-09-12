@@ -4,10 +4,20 @@
 
 #include "../../IMGuiEx/DisableHelper.h"
 
-void DeleteDevice(Ctx* pCtx) {
-	const auto disableDelete = DisableHelper(!pCtx->deviceHandler.bInit);
+void CreateDevice(Ctx* pCtx, const wchar_t* pDeviceName) {
+    const auto disable = DisableHelper(pCtx->deviceHandler.bInit);
 
-	ImGui::SameLine();
+    if (ImGui::Button("Create Device")) {
+        const bool bRet = pCtx->deviceHandler.CreateDevice(pDeviceName);
+
+        if (!bRet) {
+            ImGui::OpenPopup("Create Device Failed");
+        }
+    }
+}
+void DeleteDevice(Ctx* pCtx) {
+	const auto disable = DisableHelper(!pCtx->deviceHandler.bInit);
+
 	if (ImGui::Button("Delete Device")) {
 		const auto err = pCtx->deviceHandler.StopDevice();
 		Context_Delete(&pCtx->deviceHandler.hContext);
@@ -36,33 +46,23 @@ void CreateDeviceFailedPopUp(Ctx* pCtx) {
 void ComponentConfigDevice(Ctx* pCtx) {
 	const auto deviceNames = pCtx->dllHandler.deviceNames;
 
-	static size_t device_current_idx = 0;
-	const char* device_preview_value = deviceNames[device_current_idx].c_str();
-
-	if (ImGui::BeginCombo("Config/Device", device_preview_value)) {
+	static size_t deviceCurrentIdx = 0;
+	if (ImGui::BeginCombo("Config/Device", deviceNames[deviceCurrentIdx].c_str())) {
 		for (size_t idx = 0; idx < deviceNames.size(); idx++) {
-			const bool is_selected = device_current_idx == idx;
-			if (ImGui::Selectable(deviceNames[idx].c_str(), is_selected)) {
-				device_current_idx = idx;
+			const bool bSelected = deviceCurrentIdx == idx;
+			if (ImGui::Selectable(deviceNames[idx].c_str(), bSelected)) {
+				deviceCurrentIdx = idx;
 			}
 
-			if (is_selected) {
-				ImGui::SetItemDefaultFocus();
-			}
+            if (bSelected) { ImGui::SetItemDefaultFocus(); }
 		}
 
 		ImGui::EndCombo();
 	}
 
-	if (ImGui::Button("Create Device")) {
-		const bool bRet = pCtx->deviceHandler.CreateDevice(
-			to_wide_string(deviceNames[device_current_idx]).c_str());
-
-		if (!bRet) {
-			ImGui::OpenPopup("Create Device Failed");
-		}
-	}
-
+    CreateDevice(pCtx, to_wide_string(deviceNames[deviceCurrentIdx]).c_str());
+    ImGui::SameLine();
 	DeleteDevice(pCtx);
+
 	CreateDeviceFailedPopUp(pCtx);
 }
