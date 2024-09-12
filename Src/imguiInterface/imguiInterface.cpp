@@ -32,7 +32,6 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 int ImguiInterface(GUIContext* pCtx,
     const std::function<void(GUIContext*)>& gui) {
     // Create application window
-
     if (pCtx->bDPIAware) {
         ImGui_ImplWin32_EnableDpiAwareness();
     }
