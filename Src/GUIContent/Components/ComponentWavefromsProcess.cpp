@@ -150,10 +150,10 @@ void ComponentWavefromsProcess::Shake() const {
 }
 
 void ComponentWavefromsProcess::Wave() {
-    if (!ImGui::BeginTabItem("Wave")) { return; }
-
     const auto waveRestoreOpt = GetWaveRestoreOpt();
     const auto bFilled = WaveProcess(waveRestoreOpt);
+
+    if (!ImGui::BeginTabItem("Wave")) { return; }
 
     do {
         if (!bFilled) {
