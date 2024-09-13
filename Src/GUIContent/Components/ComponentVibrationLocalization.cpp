@@ -35,7 +35,7 @@ ComponentVibrationLocalizationContext::ComponentVibrationLocalizationContext(con
     auto pFrame = m_param.pBuffer;
     for (size_t frameIndex = 0; frameIndex < m_param.frameCount; frameIndex++) {
         bFilled
-            = Util_VibrationLocalizationContext_AddFrame(m_hVibrationLocalization, pFrame) != 0;
+            = Util_VibrationLocalizationContext_AddFrame(m_hVibrationLocalization, pFrame) == 0;
         pFrame += m_param.frameSize;
     }
 }
