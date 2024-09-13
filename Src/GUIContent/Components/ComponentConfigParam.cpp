@@ -116,12 +116,22 @@ void StartStopDevice(Ctx* pCtx, const bool bEnable) {
 
 	if (ImGui::Button("Start Device")) {
 		pCtx->deviceHandler.StartDevice();
+
+		const auto& deviceParams = pCtx->deviceParams;
+		const auto& processParams = pCtx->processParams;
+
+		if (deviceParams.bUseCountext) {
+			pCtx->processHandler.hVibrationLocalization
+				= Util_VibrationLocalizationContext_Create(deviceParams.processFrameCount, deviceParams.pointNumPerScan,
+														 processParams.movingAvgRange, processParams.movingDiffRange);
+		}
 	}
 
 	ImGui::SameLine();
 	if (ImGui::Button("Stop Device")) {
         [[maybe_unused]] const auto err = pCtx->deviceHandler.StopDevice();
 		Context_Delete(&pCtx->deviceHandler.hContext);
+		Util_VibrationLocalizationContext_Delete(&pCtx->processHandler.hVibrationLocalization);
 	}
 }
 

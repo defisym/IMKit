@@ -22,18 +22,12 @@ ComponentWaveformsProcess::ComponentWaveformsProcess(Ctx* p, const OTDRContextHa
 
     pWaveBuffer = new IndexBuffer(bufferSz);
     pWaveDisplayBuffer = new IndexBuffer(bufferSz);
-
-    if (!deviceParams.bUseCountext) { return; }
-    hVibrationLocalization
-        = Util_VibrationLocalizationContext_Create(deviceParams.processFrameCount, deviceParams.pointNumPerScan,
-                                                 processParams.movingAvgRange, processParams.movingDiffRange);
+    hVibrationLocalization = pCtx->processHandler.hVibrationLocalization;
 }
 
 ComponentWaveformsProcess::~ComponentWaveformsProcess() {
     delete CastBufferPointer(pWaveBuffer);
     delete CastBufferPointer(pWaveDisplayBuffer);
-
-	Util_VibrationLocalizationContext_Delete(&hVibrationLocalization);
 }
 
 void ComponentWaveformsProcess::Raw() const {

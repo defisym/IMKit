@@ -269,6 +269,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContext\Handler\AudioHandler.h" />
     <ClInclude Include="GUIContext\Handler\DeviceHandler.h" />
     <ClInclude Include="GUIContext\Handler\OTDRHandler.h" />
+    <ClInclude Include="GUIContext\Handler\ProcessHandler.h" />
     <ClInclude Include="GUIContext\Params\Params.h" />
     <ClInclude Include="IMGuiEx\AddSpin.h" />
     <ClInclude Include="IMGuiEx\DisableHelper.h" />
