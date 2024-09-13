@@ -23,8 +23,9 @@ ComponentWaveformsProcess::ComponentWaveformsProcess(Ctx* p, const OTDRContextHa
     pWaveDisplayBuffer = new IndexBuffer(bufferSz);
 
     if (!deviceParams.bUseCountext) { return; }
-	Util_VibrationLocalizationContext_Create(deviceParams.processFrameCount, deviceParams.pointNumPerScan,
-											 processParams.movingAvgRange, processParams.movingDiffRange);
+    hVibrationLocalization
+        = Util_VibrationLocalizationContext_Create(deviceParams.processFrameCount, deviceParams.pointNumPerScan,
+                                                 processParams.movingAvgRange, processParams.movingDiffRange);
 }
 
 ComponentWaveformsProcess::~ComponentWaveformsProcess() {
