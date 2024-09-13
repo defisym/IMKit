@@ -4,6 +4,7 @@
 #include "../../IMGuiEx/DisplayPlot.h"
 #include "../../IMGuiEx/AddSpin.h"
 #include "../../IMGuiEx/DisableHelper.h"
+#include "../../IMGuiEx/EmbraceHelper.h"
 
 #include "../../Src/Utilities/Buffer.h"
 
@@ -69,7 +70,8 @@ void ComponentWaveformsProcess::Raw() const {
 }
 
 void ComponentWaveformsProcess::Shake() const {
-	if (!ImGui::BeginTabItem("Shake")) { return; }
+    const EmbraceHelper tabHelper = { ImGui::BeginTabItem("Shake"), ImGui::EndTabItem };
+	if (!tabHelper.State()) { return; }
 
 	const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
 	const auto& deviceParams = pCtx->deviceParams;
