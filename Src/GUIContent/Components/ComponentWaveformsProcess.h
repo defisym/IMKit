@@ -4,7 +4,7 @@
 
 #include "ComponentBase.h"
 
-struct ComponentWavefromsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-special-member-functions)
+struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-special-member-functions)
 	OTDRContextHandle hContext = nullptr;
 	constexpr static ImVec2 plotSize = { -1.0f, 300.0f };
 	constexpr static ImGuiTabBarFlags tabBarFlags = ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_TabListPopupButton;
@@ -16,11 +16,11 @@ struct ComponentWavefromsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 	BufferHandle pWaveBuffer = nullptr;             // for processing
 	BufferHandle pWaveDisplayBuffer = nullptr;      // for raw data displaying
 
-	ComponentWavefromsProcess(Ctx* p, const OTDRContextHandle h);
-	~ComponentWavefromsProcess();
+	ComponentWaveformsProcess(Ctx* p, const OTDRContextHandle h);
+	~ComponentWaveformsProcess();
 
 	void WaveformTab() {
-		if (!ImGui::BeginTabBar("Wavefroms/Tab", tabBarFlags)) { return; }
+		if (!ImGui::BeginTabBar("Waveforms/Tab", tabBarFlags)) { return; }
 
 		this->Raw();
 		this->Shake();

@@ -1,11 +1,11 @@
-#include "ComponentWavefroms.h"
+#include "ComponentWaveforms.h"
 
-#include "ComponentWavefromsProcess.h"
+#include "ComponentWaveformsProcess.h"
 
 // Note: ImGui call this each frame
 //       if move to other UI lib should change the read logic
-void ComponentWavefroms(Ctx* pCtx) {
-	if (!ImGui::CollapsingHeader("Wavefroms", ImGuiTreeNodeFlags_DefaultOpen)) {
+void ComponentWaveforms(Ctx* pCtx) {
+	if (!ImGui::CollapsingHeader("Waveforms", ImGuiTreeNodeFlags_DefaultOpen)) {
 		return;
 	}
 
@@ -48,7 +48,7 @@ void ComponentWavefroms(Ctx* pCtx) {
 		}
 
 	    Context_Update(hContext, &pCtx->deviceHandler.bufferInfo);
-		ComponentWavefromsProcess wavefromsProcess = { pCtx,hContext };
-		wavefromsProcess.WaveformTab();
+		ComponentWaveformsProcess waveformsProcess = { pCtx,hContext };
+		waveformsProcess.WaveformTab();
 	} while (false);
 }

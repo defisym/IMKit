@@ -153,10 +153,10 @@
     <ClCompile Include="GUIContent\Components\ComponentConfigParam.cpp">
       <Filter>源文件\GUIContent\Components</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\ComponentWavefroms.cpp">
+    <ClCompile Include="GUIContent\Components\ComponentWaveforms.cpp">
       <Filter>源文件\GUIContent\Components</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\ComponentWavefromsProcess.cpp">
+    <ClCompile Include="GUIContent\Components\ComponentWaveformsProcess.cpp">
       <Filter>源文件\GUIContent\Components</Filter>
     </ClCompile>
     <ClCompile Include="GUIContent\Components\ComponentVibrationLocalization.cpp">
@@ -248,14 +248,17 @@
     <ClInclude Include="GUIContent\Components\ComponentConfigParam.h">
       <Filter>头文件\GUIContent\Components</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\ComponentWavefroms.h">
+    <ClInclude Include="GUIContent\Components\ComponentWaveforms.h">
       <Filter>头文件\GUIContent\Components</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\ComponentWavefromsProcess.h">
+    <ClInclude Include="GUIContent\Components\ComponentWaveformsProcess.h">
       <Filter>头文件\GUIContent\Components</Filter>
     </ClInclude>
     <ClInclude Include="GUIContent\Components\ComponentVibrationLocalization.h">
       <Filter>头文件\GUIContent\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGuiEx\EmbraceHelper.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

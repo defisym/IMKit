@@ -1,4 +1,4 @@
-#include "ComponentWavefromsProcess.h"
+#include "ComponentWaveformsProcess.h"
 #include "ComponentVibrationLocalization.h"
 
 #include "../../IMGuiEx/DisplayPlot.h"
@@ -7,11 +7,11 @@
 
 #include "../../Src/Utilities/Buffer.h"
 
-inline auto CastBufferPointer(const ComponentWavefromsProcess::BufferHandle h) {
+inline auto CastBufferPointer(const ComponentWaveformsProcess::BufferHandle h) {
     return static_cast<IndexBuffer<>*>(h);
 }
 
-ComponentWavefromsProcess::ComponentWavefromsProcess(Ctx* p, const OTDRContextHandle h)
+ComponentWaveformsProcess::ComponentWaveformsProcess(Ctx* p, const OTDRContextHandle h)
 :ComponentBase(p), hContext(h) {
 	const auto& deviceParams = pCtx->deviceParams;
 	const auto& processParams = pCtx->processParams;
@@ -27,13 +27,13 @@ ComponentWavefromsProcess::ComponentWavefromsProcess(Ctx* p, const OTDRContextHa
 											 processParams.movingAvgRange, processParams.movingDiffRange);
 }
 
-ComponentWavefromsProcess::~ComponentWavefromsProcess() {
+ComponentWaveformsProcess::~ComponentWaveformsProcess() {
     delete CastBufferPointer(pWaveBuffer);
     delete CastBufferPointer(pWaveDisplayBuffer);
 	Util_VibrationLocalizationContext_Delete(&hVibrationLocalization);
 }
 
-void ComponentWavefromsProcess::Raw() const {
+void ComponentWaveformsProcess::Raw() const {
 	if (!ImGui::BeginTabItem("Raw")) { return; }
 
 	const auto& [pBuffer,
@@ -66,7 +66,7 @@ void ComponentWavefromsProcess::Raw() const {
 
 }
 
-void ComponentWavefromsProcess::Shake() const {
+void ComponentWaveformsProcess::Shake() const {
 	if (!ImGui::BeginTabItem("Shake")) { return; }
 
 	const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
@@ -149,7 +149,7 @@ void ComponentWavefromsProcess::Shake() const {
 	ImGui::EndTabItem();
 }
 
-void ComponentWavefromsProcess::Wave() {
+void ComponentWaveformsProcess::Wave() {
     const auto waveRestoreOpt = GetWaveRestoreOpt();
     const auto bFilled = WaveProcess(waveRestoreOpt);
 
@@ -167,7 +167,7 @@ void ComponentWavefromsProcess::Wave() {
     ImGui::EndTabBar();
 }
 
-ComponentWavefromsProcess::WaveRestoreOpt ComponentWavefromsProcess::GetWaveRestoreOpt() const {
+ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRestoreOpt() const {
     // ------------------------------------
     // Params
     // ------------------------------------
@@ -246,7 +246,7 @@ ComponentWavefromsProcess::WaveRestoreOpt ComponentWavefromsProcess::GetWaveRest
         bUseReference,referenceStart,bPlayAudio };
 }
 
-bool ComponentWavefromsProcess::WaveProcess(const WaveRestoreOpt& opt) {
+bool ComponentWaveformsProcess::WaveProcess(const WaveRestoreOpt& opt) {
     // ------------------------
     // Basic info
     // ------------------------
@@ -298,7 +298,7 @@ bool ComponentWavefromsProcess::WaveProcess(const WaveRestoreOpt& opt) {
     return pIndexWaveBuffer->Filled();  
 }
 
-void ComponentWavefromsProcess::WaveRestore(OTDRProcessValueType* pProcess, const WaveRestoreOpt& opt) {
+void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, const WaveRestoreOpt& opt) {
     // ------------------------------------
     // Wave Restore
     // ------------------------------------
@@ -324,7 +324,7 @@ void ComponentWavefromsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
     [[maybe_unused]] const auto fftElement = Util_FFT_Amplitude(restoreWaveFFTBuffer.data(), restoreWaveFFTBuffer.size());
 }
 
-void ComponentWavefromsProcess::WaveRestoreProcess(OTDRProcessValueType* pProcess, const ShakeInfo& shakeInfo,
+void ComponentWaveformsProcess::WaveRestoreProcess(OTDRProcessValueType* pProcess, const ShakeInfo& shakeInfo,
                                                    std::vector<OTDRProcessValueType>& waveBuffer) const {
 	const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
 	const auto& [diff, 
@@ -353,7 +353,7 @@ void ComponentWavefromsProcess::WaveRestoreProcess(OTDRProcessValueType* pProces
 	Util_Unwrap(waveBuffer.data(), waveBuffer.size(), PI);
 }
 
-void ComponentWavefromsProcess::WaveDisplay() const {
+void ComponentWaveformsProcess::WaveDisplay() const {
     if (!ImGui::BeginTabBar("Wave/Tab", tabBarFlags)) { return; }
 
     const auto& deviceParams = pCtx->deviceParams;
