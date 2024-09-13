@@ -78,9 +78,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>资源文件</Filter>
-    </ClCompile>
     <ClCompile Include="imguiInterface\imguiInterface.cpp">
       <Filter>源文件\imguiInterface</Filter>
     </ClCompile>
@@ -161,6 +158,9 @@
     </ClCompile>
     <ClCompile Include="GUIContent\Components\ComponentVibrationLocalization.cpp">
       <Filter>源文件\GUIContent\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -258,7 +258,7 @@
       <Filter>头文件\GUIContent\Components</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiEx\EmbraceHelper.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\IMGuiEx</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

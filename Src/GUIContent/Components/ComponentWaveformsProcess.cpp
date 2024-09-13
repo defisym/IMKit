@@ -12,12 +12,12 @@ inline auto CastBufferPointer(const ComponentWaveformsProcess::BufferHandle h) {
 }
 
 ComponentWaveformsProcess::ComponentWaveformsProcess(Ctx* p, const OTDRContextHandle h)
-:ComponentBase(p), hContext(h) {
+    :ComponentBase(p), hContext(h) {
 	const auto& deviceParams = pCtx->deviceParams;
 	const auto& processParams = pCtx->processParams;
 
     // alloc buffer
-    const auto bufferSz = deviceParams.processFrameCount* deviceParams.pointNumPerScan;
+    const auto bufferSz = deviceParams.processFrameCount * deviceParams.pointNumPerScan;
 
     pWaveBuffer = new IndexBuffer(bufferSz);
     pWaveDisplayBuffer = new IndexBuffer(bufferSz);
@@ -31,6 +31,7 @@ ComponentWaveformsProcess::ComponentWaveformsProcess(Ctx* p, const OTDRContextHa
 ComponentWaveformsProcess::~ComponentWaveformsProcess() {
     delete CastBufferPointer(pWaveBuffer);
     delete CastBufferPointer(pWaveDisplayBuffer);
+
 	Util_VibrationLocalizationContext_Delete(&hVibrationLocalization);
 }
 

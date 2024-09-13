@@ -48,7 +48,7 @@ void ComponentWaveforms(Ctx* pCtx) {
 		}
 
 	    Context_Update(hContext, &pCtx->deviceHandler.bufferInfo);
-		ComponentWaveformsProcess waveformsProcess = { pCtx,hContext };
+        ComponentWaveformsProcess waveformsProcess = { pCtx,hContext };
 		waveformsProcess.WaveformTab();
 	} while (false);
 }
