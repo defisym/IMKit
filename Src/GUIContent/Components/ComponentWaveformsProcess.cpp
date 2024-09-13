@@ -165,7 +165,7 @@ void ComponentWaveformsProcess::Wave() {
         WaveDisplay();
     } while (false);
 
-    ImGui::EndTabBar();
+    ImGui::EndTabItem();
 }
 
 ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRestoreOpt() const {
@@ -397,5 +397,5 @@ void ComponentWaveformsProcess::WaveDisplay() const {
         ImGui::EndTabItem();
     }
 
-    ImGui::EndTabItem();
+    ImGui::EndTabBar();
 }
