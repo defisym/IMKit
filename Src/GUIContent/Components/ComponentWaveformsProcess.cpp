@@ -22,7 +22,6 @@ ComponentWaveformsProcess::ComponentWaveformsProcess(Ctx* p, const OTDRContextHa
 
     pWaveBuffer = new IndexBuffer(bufferSz);
     pWaveDisplayBuffer = new IndexBuffer(bufferSz);
-    hVibrationLocalization = pCtx->processHandler.hVibrationLocalization;
 }
 
 ComponentWaveformsProcess::~ComponentWaveformsProcess() {
@@ -80,7 +79,7 @@ void ComponentWaveformsProcess::Shake() const {
     = [&] ()->std::unique_ptr<ComponentVibrationLocalization> {        
         if (deviceParams.bUseCountext) {
             VibrationLocalizationContextParam contextParam
-                = { pCtx->deviceHandler.bContextUpdated,hVibrationLocalization };
+                = { pCtx->deviceHandler.bContextUpdated, pCtx->processHandler.hVibrationLocalization };
             return std::make_unique<ComponentVibrationLocalizationContext>(param, contextParam);
         }
 
@@ -143,8 +142,6 @@ void ComponentWaveformsProcess::Shake() const {
         }
 		ImGui::EndTabBar();
 	}
-
-	ImGui::EndTabItem();
 }
 
 void ComponentWaveformsProcess::Wave() {

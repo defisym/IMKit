@@ -10,8 +10,6 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 	constexpr static ImGuiTabBarFlags tabBarFlags = ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_TabListPopupButton;
     constexpr static ImGuiSliderFlags sliderFlags = ImGuiSliderFlags_AlwaysClamp;
 
-	VibrationLocalizationContextHandle hVibrationLocalization = nullptr;
-
 	using BufferHandle = void*;
 	BufferHandle pWaveBuffer = nullptr;             // for processing
 	BufferHandle pWaveDisplayBuffer = nullptr;      // for raw data displaying
