@@ -20,20 +20,25 @@ bool UpdateParam(Ctx* pCtx) {
 	// Frame
 	// ------------------------
 
+	DisableHelper deviceStart = { pCtx->deviceHandler.bStart };
+
 	ImGui::Checkbox("Use context", &deviceParams.bUseCountext);
+	
 	ManualDisableHelper frameHelper;
 	frameHelper.Disable(!deviceParams.bUseCountext);
-	ImGui::InputInt("Frame to update", &deviceParams.updateFrameCount, 64, 256);
+	static int updateFrameCount = 64;
+	ImGui::InputInt("Frame to update", &updateFrameCount, 64, 256);
 	frameHelper.Enable();
-	ImGui::InputInt("Frame to process", &deviceParams.processFrameCount, 64, 256);
+	
+	static int processFrameCount = 256;
+	ImGui::InputInt("Frame to process", &processFrameCount, 64, 256);
 
+	deviceParams.processFrameCount = processFrameCount;
 	deviceParams.updateFrameCount = deviceParams.bUseCountext
-		? deviceParams.updateFrameCount
-		: deviceParams.processFrameCount;
+		? updateFrameCount
+		: processFrameCount;
 
-	const auto frameToRead = deviceParams.bUseCountext
-		? deviceParams.updateFrameCount
-		: deviceParams.processFrameCount;
+	const auto frameToRead = deviceParams.updateFrameCount;
 
 	ImGui::SameLine();
 	ImGui::TextUnformatted([] (const double frame, const double scanRate) {
@@ -116,13 +121,16 @@ bool UpdateParam(Ctx* pCtx) {
 }
 
 void StartStopDevice(Ctx* pCtx, const bool bEnable) {
-	const auto disableStart = DisableHelper(!bEnable);
+	ManualDisableHelper disableHelper;
 
+	disableHelper.Disable(!bEnable || pCtx->deviceHandler.bStart);
 	if (ImGui::Button("Start Device")) {
 		pCtx->deviceHandler.StartDevice();
 
 		const auto& deviceParams = pCtx->deviceParams;
 		const auto& processParams = pCtx->processParams;
+
+		pCtx->processHandler.CreateWaveformsProcess(pCtx);
 
 		if (deviceParams.bUseCountext) {
 			pCtx->processHandler.hVibrationLocalization
@@ -130,13 +138,16 @@ void StartStopDevice(Ctx* pCtx, const bool bEnable) {
 														 processParams.movingAvgRange, processParams.movingDiffRange);
 		}
 	}
+	disableHelper.Enable();
 
 	ImGui::SameLine();
+
+	disableHelper.Disable(!bEnable || !pCtx->deviceHandler.bStart);
 	if (ImGui::Button("Stop Device")) {
         [[maybe_unused]] const auto err = pCtx->deviceHandler.StopDevice();
-		Context_Delete(&pCtx->deviceHandler.hContext);
 		Util_VibrationLocalizationContext_Delete(&pCtx->processHandler.hVibrationLocalization);
 	}
+	disableHelper.Enable();
 }
 
 void ComponentConfigParam(Ctx* pCtx) {	
