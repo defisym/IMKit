@@ -143,10 +143,10 @@ void ComponentWaveformsProcess::Shake() const {
 }
 
 void ComponentWaveformsProcess::Wave() {
+    if (!ImGui::BeginTabItem("Wave")) { return; }
+
     const auto waveRestoreOpt = GetWaveRestoreOpt();
     const auto bDisplayBufferFilled = WaveProcess(waveRestoreOpt);
-
-    if (!ImGui::BeginTabItem("Wave")) { return; }
 
     do {
         if (!bDisplayBufferFilled) {
@@ -230,7 +230,7 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     // Audio
     // ------------------------------------
     bool bPlayAudio = false;
-    ImGui::Checkbox("ImPlot/Wave/Play Wave", &bPlayAudio);
+    ImGui::Checkbox("Play Wave", &bPlayAudio);
 
     // ------------------------------------
     // Return
