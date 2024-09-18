@@ -24,10 +24,7 @@ void ComponentWaveforms(Ctx* pCtx) {
 			void* pUserData) {
 				// info
 				auto pCtx = static_cast<Ctx*>(pUserData);
-				auto& hContext = pCtx->deviceHandler.hContext;
-
-				// init context
-				if (hContext == nullptr) { hContext = Context_Create(); }
+				pCtx->deviceHandler.bContextInit = true;
 
 				// update context
 				pCtx->deviceHandler.bufferInfo =
@@ -41,15 +38,12 @@ void ComponentWaveforms(Ctx* pCtx) {
 			},
 			pCtx);
 
-		const auto hContext = pCtx->deviceHandler.hContext;
-		if (hContext == nullptr) {
+		if (!pCtx->deviceHandler.bContextInit) {
 			ImGui::TextUnformatted("Context not created");
 			break;
 		}
 
-	    Context_Update(hContext, &pCtx->deviceHandler.bufferInfo);
-        // TODO should not create each time update, memory allocate of wave buffer will cost unnecessary time
-        ComponentWaveformsProcess waveformsProcess = { pCtx,hContext };
-		waveformsProcess.WaveformTab();
+	    Context_Update(pCtx->deviceHandler.hContext, &pCtx->deviceHandler.bufferInfo);
+		pCtx->processHandler.pWaveformsProcess->WaveformTab();
 	} while (false);
 }

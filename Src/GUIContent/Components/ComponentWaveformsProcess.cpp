@@ -12,8 +12,8 @@ inline auto CastBufferPointer(const ComponentWaveformsProcess::BufferHandle h) {
     return static_cast<IndexBuffer<>*>(h);
 }
 
-ComponentWaveformsProcess::ComponentWaveformsProcess(Ctx* p, const OTDRContextHandle h)
-    :ComponentBase(p), hContext(h) {
+ComponentWaveformsProcess::ComponentWaveformsProcess(Ctx* p)
+    :ComponentBase(p), hContext(p->deviceHandler.hContext) {
 	const auto& deviceParams = pCtx->deviceParams;
 	const auto& processParams = pCtx->processParams;
 
