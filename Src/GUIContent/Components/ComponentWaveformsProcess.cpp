@@ -144,12 +144,12 @@ void ComponentWaveformsProcess::Shake() const {
 
 void ComponentWaveformsProcess::Wave() {
     const auto waveRestoreOpt = GetWaveRestoreOpt();
-    const auto bFilled = WaveProcess(waveRestoreOpt);
+    const auto bDisplayBufferFilled = WaveProcess(waveRestoreOpt);
 
     if (!ImGui::BeginTabItem("Wave")) { return; }
 
     do {
-        if (!bFilled) {
+        if (!bDisplayBufferFilled) {
             ImGui::TextUnformatted("Data not enough");
             break;
         }
@@ -288,7 +288,10 @@ bool ComponentWaveformsProcess::WaveProcess(const WaveRestoreOpt& opt) {
             static_cast<size_t>(1000.0 * deviceParams.processFrameCount / deviceParams.scanRate) });        
     } while (false);
 
-    return pIndexWaveBuffer->Filled();  
+    // should return the fill state of display buffer
+    // the buffer used to receive data's state will change periodically
+    // and cause jitter
+    return pIndexWaveDisplayBuffer->Filled();
 }
 
 void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, const WaveRestoreOpt& opt) {

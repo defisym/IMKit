@@ -45,7 +45,7 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
     };
 
     [[nodiscard]] WaveRestoreOpt GetWaveRestoreOpt() const;
-    bool WaveProcess(const struct WaveRestoreOpt& opt);
+    bool WaveProcess(const WaveRestoreOpt& opt);
 
     std::vector<OTDRProcessValueType> restoreWaveBuffer;
     std::vector<OTDRProcessValueType> restoreWaveFFTBuffer;
@@ -54,6 +54,6 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
     void WaveRestoreProcess(OTDRProcessValueType* pProcess,
         const ShakeInfo& shakeInfo,
         std::vector<OTDRProcessValueType>& waveBuffer) const;
-    void WaveRestore(OTDRProcessValueType* pProcess, const struct WaveRestoreOpt& opt);
+    void WaveRestore(OTDRProcessValueType* pProcess, const WaveRestoreOpt& opt);
     void WaveDisplay() const;
 };

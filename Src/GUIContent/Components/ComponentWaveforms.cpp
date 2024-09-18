@@ -48,6 +48,7 @@ void ComponentWaveforms(Ctx* pCtx) {
 		}
 
 	    Context_Update(hContext, &pCtx->deviceHandler.bufferInfo);
+        // TODO should not create each time update, memory allocate of wave buffer will cost unnecessary time
         ComponentWaveformsProcess waveformsProcess = { pCtx,hContext };
 		waveformsProcess.WaveformTab();
 	} while (false);

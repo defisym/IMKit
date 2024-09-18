@@ -15,5 +15,5 @@ struct EmbraceHelper {  // NOLINT(cppcoreguidelines-special-member-functions)
         if (_bOpen && _pExit != nullptr) { _pExit(); }
     }
 
-    bool State() const { return _bOpen; }
+    [[nodiscard]] bool State() const { return _bOpen; }
 };
