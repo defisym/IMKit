@@ -229,7 +229,7 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     // ------------------------------------
     // Audio
     // ------------------------------------
-    bool bPlayAudio = false;
+    static bool bPlayAudio = false;
     ImGui::Checkbox("Play Wave", &bPlayAudio);
 
     // ------------------------------------
