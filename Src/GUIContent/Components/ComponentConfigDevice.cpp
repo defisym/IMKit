@@ -15,11 +15,6 @@ void CreateDevice(Ctx* pCtx, const wchar_t* pDeviceName) {
             ImGui::OpenPopup("Create Device Failed");
 			return;
         }
-
-		auto& pWaveformsProcess = pCtx->processHandler.pWaveformsProcess;
-
-		delete pWaveformsProcess;
-		pWaveformsProcess = new ComponentWaveformsProcess{ pCtx };
     }
 }
 void DeleteDevice(Ctx* pCtx) {
@@ -27,7 +22,6 @@ void DeleteDevice(Ctx* pCtx) {
 
 	if (ImGui::Button("Delete Device")) {
 		const auto err = pCtx->deviceHandler.StopDevice();
-		Context_Delete(&pCtx->deviceHandler.hContext);
 		pCtx->deviceHandler.DeleteDevice();
 	}
 }
