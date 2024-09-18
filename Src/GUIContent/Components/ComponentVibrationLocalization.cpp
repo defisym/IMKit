@@ -14,7 +14,11 @@ ComponentVibrationLocalization::ReturnType ComponentVibrationLocalizationTraditi
                                             m_param.frameCount, m_param.frameSize,
                                             m_param.maRange);
 
-    return { m_param.pBuffer, m_param.frameCount };
+    return { m_param.frameCount };
+}
+
+const OTDRProcessValueType* ComponentVibrationLocalizationTradition::GetMovingAverageFrame(const size_t index) {
+    return Context_GetConstFrameBuffer(m_param.pBuffer, m_param.frameSize, index);
 }
 
 ComponentVibrationLocalization::ReturnType ComponentVibrationLocalizationTradition::MovingDifference() {
@@ -22,7 +26,11 @@ ComponentVibrationLocalization::ReturnType ComponentVibrationLocalizationTraditi
                                                m_param.frameCount, m_param.frameSize,
                                                m_param.mdRange);
 
-    return { m_param.pBuffer, m_param.frameCount };
+    return { m_param.frameCount };
+}
+
+const OTDRProcessValueType* ComponentVibrationLocalizationTradition::GetMovingDifferenceFrame(const size_t index) {
+   return Context_GetConstFrameBuffer(m_param.pBuffer, m_param.frameSize, index);
 }
 
 ComponentVibrationLocalizationContext::ComponentVibrationLocalizationContext(const VibrationLocalizationParam& param,
@@ -30,6 +38,7 @@ ComponentVibrationLocalizationContext::ComponentVibrationLocalizationContext(con
     :ComponentVibrationLocalization(param),
     m_hVibrationLocalization(contextParam.m_hVibrationLocalization) {
     // not updated, don't need to add this frame
+    bFilled = Util_VibrationLocalizationContext_Filled(m_hVibrationLocalization) == 0;
     if (!contextParam.bUpdated) { return; }
 
     auto pFrame = m_param.pBuffer;
@@ -41,19 +50,25 @@ ComponentVibrationLocalizationContext::ComponentVibrationLocalizationContext(con
 }
 
 ComponentVibrationLocalization::ReturnType ComponentVibrationLocalizationContext::MovingAverage() {
-    if (!bFilled) { return { nullptr,0 }; }
+    if (!bFilled) { return { 0 }; }
 
-    const auto pBuffer = Util_VibrationLocalizationContext_GetMovingAverageBuffer(m_hVibrationLocalization);
     const auto frameCount = Util_VibrationLocalizationContext_GetMovingAverageBufferFrameCount(m_hVibrationLocalization);
 
-    return { pBuffer,frameCount };
+    return { frameCount };
+}
+
+const OTDRProcessValueType* ComponentVibrationLocalizationContext::GetMovingAverageFrame(const size_t index) {
+    return Util_VibrationLocalizationContext_GetMovingAverageFrame(m_hVibrationLocalization, index);
 }
 
 ComponentVibrationLocalization::ReturnType ComponentVibrationLocalizationContext::MovingDifference() {
-    if (!bFilled) { return { nullptr,0 }; }
+    if (!bFilled) { return { 0 }; }
 
-    const auto pBuffer = Util_VibrationLocalizationContext_GetMovingDifferenceBuffer(m_hVibrationLocalization);
     const auto frameCount = Util_VibrationLocalizationContext_GetMovingDifferenceBufferFrameCount(m_hVibrationLocalization);
 
-    return { pBuffer,frameCount };
+    return { frameCount };
+}
+
+const OTDRProcessValueType* ComponentVibrationLocalizationContext::GetMovingDifferenceFrame(const size_t index) {
+    return Util_VibrationLocalizationContext_GetMovingDifferenceFrame(m_hVibrationLocalization, index);
 }

@@ -95,14 +95,13 @@ void ComponentWaveformsProcess::Shake() const {
 	if (ImGui::BeginTabBar("Shake/Tab", tabBarFlags)) {
         // Handle Moving Average
         {
-            auto [pResult, frameCount]
-                = pComponentVibrationLocalization->MovingAverage();
+            auto frameCount = pComponentVibrationLocalization->MovingAverage();
 
             if (ImGui::BeginTabItem("Shake MA")) {
                 if (ImPlot::BeginPlot("ImPlot/Shake/MA", plotSize)) {
                     for (size_t frameIdx = 0; frameIdx < frameCount; frameIdx++) {
                         DisplayPlot(std::format("ImPlot/Shake/MA/Plot_{}", frameIdx).c_str(),
-                            Context_GetConstFrameBuffer(pResult, param.frameSize, frameIdx),
+                            pComponentVibrationLocalization->GetMovingAverageFrame(frameIdx),
                             static_cast<int>(param.frameSize));
                     }
 
@@ -114,15 +113,14 @@ void ComponentWaveformsProcess::Shake() const {
 
         // Handle Moving Difference
         {
-            auto [pResult, frameCount]
-                = pComponentVibrationLocalization->MovingDifference();
+            auto frameCount = pComponentVibrationLocalization->MovingDifference();
             const auto accumulateFrameIndex = frameCount - 1;
 
             if (ImGui::BeginTabItem("Shake MD")) {
                 if (ImPlot::BeginPlot("ImPlot/Shake/MD", plotSize)) {
                     for (size_t frameIdx = 0; frameIdx < accumulateFrameIndex; frameIdx++) {
                         DisplayPlot(std::format("ImPlot/Shake/MD/Plot_{}", frameIdx).c_str(),
-                            Context_GetConstFrameBuffer(pResult, param.frameSize, frameIdx),
+                            pComponentVibrationLocalization->GetMovingDifferenceFrame(frameIdx),
                             static_cast<int>(param.frameSize));
                     }
 
@@ -133,7 +131,7 @@ void ComponentWaveformsProcess::Shake() const {
             if (ImGui::BeginTabItem("Shake MD Accumulate")) {
                 if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", plotSize)) {
                     DisplayPlot("ImPlot/Shake/MD/Accumulate/Plot",
-                          Context_GetConstFrameBuffer(pResult, param.frameSize, accumulateFrameIndex),
+                          pComponentVibrationLocalization->GetMovingDifferenceFrame(accumulateFrameIndex),
                           static_cast<int>(param.frameSize));
                     ImPlot::EndPlot();
                 }

@@ -25,10 +25,12 @@ struct ComponentVibrationLocalization {
     ComponentVibrationLocalization(const VibrationLocalizationParam& param);
     virtual ~ComponentVibrationLocalization() = default;
 
-    using ReturnType = const VibrationLocalizationReturn;
+    using ReturnType = const size_t;
 
     virtual ReturnType MovingAverage() = 0;
+    virtual const OTDRProcessValueType* GetMovingAverageFrame(const size_t index) = 0;
     virtual ReturnType MovingDifference() = 0;
+    virtual const OTDRProcessValueType* GetMovingDifferenceFrame(const size_t index) = 0;
 };
 
 struct ComponentVibrationLocalizationTradition final
@@ -36,7 +38,9 @@ struct ComponentVibrationLocalizationTradition final
     ComponentVibrationLocalizationTradition(const VibrationLocalizationParam& param);
 
     ReturnType MovingAverage() override;
+    const OTDRProcessValueType* GetMovingAverageFrame(const size_t index) override;
     ReturnType MovingDifference() override;
+    const OTDRProcessValueType* GetMovingDifferenceFrame(const size_t index) override;
 };
 
 struct VibrationLocalizationContextParam {
@@ -52,5 +56,7 @@ struct ComponentVibrationLocalizationContext final
         const VibrationLocalizationContextParam& contextParam);
 
     ReturnType MovingAverage() override;
+    const OTDRProcessValueType* GetMovingAverageFrame(const size_t index) override;
     ReturnType MovingDifference() override;
+    const OTDRProcessValueType* GetMovingDifferenceFrame(const size_t index) override;
 };
