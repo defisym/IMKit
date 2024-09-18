@@ -323,13 +323,13 @@ void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
 
 void ComponentWaveformsProcess::WaveRestoreProcess(OTDRProcessValueType* pProcess, const ShakeInfo& shakeInfo,
                                                    std::vector<OTDRProcessValueType>& waveBuffer) const {
-	const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
+	const auto& deviceParams = pCtx->deviceParams;
 	const auto& [diff, 
 		shakeStart, 
 		shakeRange,
 		unwrap2DStart] = shakeInfo;
 
-	Util_IterateFrames(pProcess, bufferInfo.frameCount, bufferInfo.frameSize,
+	Util_IterateFrames(pProcess, deviceParams.processFrameCount, deviceParams.pointNumPerScan,
 					   [] (OTDRProcessValueType* pFrame, const size_t frameSz, void* pUserData) {
 						   const auto pShakeInfo = static_cast<ShakeInfo* const>(pUserData);
 						   const auto pStart = pFrame + pShakeInfo->shakeStart;
@@ -340,11 +340,11 @@ void ComponentWaveformsProcess::WaveRestoreProcess(OTDRProcessValueType* pProces
 						   Util_Diff(pStart, pShakeInfo->shakeRange);
 					   }, const_cast<ShakeInfo*>(&shakeInfo));
 				
-	waveBuffer.resize(bufferInfo.frameCount);
+	waveBuffer.resize(deviceParams.processFrameCount);
 
 	const auto pStart = pProcess + shakeStart + unwrap2DStart;
-	for (size_t index = 0; index < bufferInfo.frameCount; index++) {
-		waveBuffer[index] = pStart[index * bufferInfo.frameSize];
+	for (size_t index = 0; index < deviceParams.processFrameCount; index++) {
+		waveBuffer[index] = pStart[index * deviceParams.pointNumPerScan];
 	}
 
 	Util_Unwrap(waveBuffer.data(), waveBuffer.size(), PI);
