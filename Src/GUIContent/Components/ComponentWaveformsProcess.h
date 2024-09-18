@@ -14,7 +14,7 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 	BufferHandle pWaveBuffer = nullptr;             // for processing
 	BufferHandle pWaveDisplayBuffer = nullptr;      // for raw data displaying
 
-	ComponentWaveformsProcess(Ctx* p, const OTDRContextHandle h);
+	ComponentWaveformsProcess(Ctx* p);
 	~ComponentWaveformsProcess();
 
 	void WaveformTab() {

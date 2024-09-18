@@ -226,6 +226,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContext\Handler\AudioHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\DeviceHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\OTDRHandler.cpp" />
+    <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp" />
     <ClCompile Include="imguiInterface\imguiInterface.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_win32.cpp" />

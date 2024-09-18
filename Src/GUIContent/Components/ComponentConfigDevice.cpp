@@ -3,6 +3,7 @@
 #include <_DeLib/GeneralDefinition.h>
 
 #include "../../IMGuiEx/DisableHelper.h"
+#include "../../GUIContent/Components/ComponentWaveformsProcess.h"
 
 void CreateDevice(Ctx* pCtx, const wchar_t* pDeviceName) {
     const auto disable = DisableHelper(pCtx->deviceHandler.bInit);
@@ -12,7 +13,13 @@ void CreateDevice(Ctx* pCtx, const wchar_t* pDeviceName) {
 
         if (!bRet) {
             ImGui::OpenPopup("Create Device Failed");
+			return;
         }
+
+		auto& pWaveformsProcess = pCtx->processHandler.pWaveformsProcess;
+
+		delete pWaveformsProcess;
+		pWaveformsProcess = new ComponentWaveformsProcess{ pCtx };
     }
 }
 void DeleteDevice(Ctx* pCtx) {
