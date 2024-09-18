@@ -314,7 +314,8 @@ void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
     // FFT
     // ------------------------------------
     restoreWaveFFTBuffer = restoreWaveBuffer;
-    [[maybe_unused]] const auto fftElement = Util_FFT_Amplitude(restoreWaveFFTBuffer.data(), restoreWaveFFTBuffer.size());
+    const auto fftElement = Util_FFT_Amplitude(restoreWaveFFTBuffer.data(), restoreWaveFFTBuffer.size());
+    restoreWaveFFTBuffer.resize(fftElement);
 }
 
 void ComponentWaveformsProcess::WaveRestoreProcess(OTDRProcessValueType* pProcess, const ShakeInfo& shakeInfo,
