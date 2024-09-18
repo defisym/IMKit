@@ -27,6 +27,10 @@ bool UpdateParam(Ctx* pCtx) {
 	frameHelper.Enable();
 	ImGui::InputInt("Frame to process", &deviceParams.processFrameCount, 64, 256);
 
+	deviceParams.updateFrameCount = deviceParams.bUseCountext
+		? deviceParams.updateFrameCount
+		: deviceParams.processFrameCount;
+
 	const auto frameToRead = deviceParams.bUseCountext
 		? deviceParams.updateFrameCount
 		: deviceParams.processFrameCount;
