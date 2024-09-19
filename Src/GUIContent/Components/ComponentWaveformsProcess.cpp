@@ -29,6 +29,21 @@ ComponentWaveformsProcess::~ComponentWaveformsProcess() {
     delete CastBufferPointer(pWaveDisplayBuffer);
 }
 
+size_t ComponentWaveformsProcess::GetDisplayFrame(const size_t frameCount) {
+    constexpr size_t MAX_DISPLAY_FRAME = 15;
+    return std::min(frameCount, MAX_DISPLAY_FRAME);
+}
+
+void ComponentWaveformsProcess::WaveformTab() {
+    if (!ImGui::BeginTabBar("Waveforms/Tab", tabBarFlags)) { return; }
+
+    this->Raw();
+    this->Shake();
+    this->Wave();
+
+    ImGui::EndTabBar();
+}
+
 void ComponentWaveformsProcess::Raw() const {
 	if (!ImGui::BeginTabItem("Raw")) { return; }
 
@@ -98,8 +113,8 @@ void ComponentWaveformsProcess::Shake() const {
             auto frameCount = pComponentVibrationLocalization->MovingAverage();
 
             if (ImGui::BeginTabItem("Shake MA")) {
-                if (ImPlot::BeginPlot("ImPlot/Shake/MA", plotSize)) {
-                    for (size_t frameIdx = 0; frameIdx < frameCount; frameIdx++) {
+                if (ImPlot::BeginPlot("ImPlot/Shake/MA", plotSize)) {                    
+                    for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(frameCount); frameIdx++) {
                         DisplayPlot(std::format("ImPlot/Shake/MA/Plot_{}", frameIdx).c_str(),
                             pComponentVibrationLocalization->GetMovingAverageFrame(frameIdx),
                             static_cast<int>(param.frameSize));
@@ -118,7 +133,7 @@ void ComponentWaveformsProcess::Shake() const {
 
             if (ImGui::BeginTabItem("Shake MD")) {
                 if (ImPlot::BeginPlot("ImPlot/Shake/MD", plotSize)) {
-                    for (size_t frameIdx = 0; frameIdx < accumulateFrameIndex; frameIdx++) {
+                    for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(accumulateFrameIndex); frameIdx++) {
                         DisplayPlot(std::format("ImPlot/Shake/MD/Plot_{}", frameIdx).c_str(),
                             pComponentVibrationLocalization->GetMovingDifferenceFrame(frameIdx),
                             static_cast<int>(param.frameSize));
@@ -343,7 +358,7 @@ void ComponentWaveformsProcess::WaveRestoreProcess(OTDRProcessValueType* pProces
 	waveBuffer.resize(deviceParams.processFrameCount);
 
 	const auto pStart = pProcess + shakeStart + unwrap2DStart;
-	for (size_t index = 0; index < deviceParams.processFrameCount; index++) {
+	for (size_t index = 0; index < static_cast<size_t>(deviceParams.processFrameCount); index++) {
 		waveBuffer[index] = pStart[index * deviceParams.pointNumPerScan];
 	}
 
@@ -358,7 +373,7 @@ void ComponentWaveformsProcess::WaveDisplay() const {
     if (ImGui::BeginTabItem("Wave Unprocessed")) {
         if (ImPlot::BeginPlot("ImPlot/Wave/Wave Unprocessed", plotSize)) {
             for (size_t frameIdx = 0;
-                frameIdx < static_cast<size_t>(deviceParams.processFrameCount);
+                frameIdx < GetDisplayFrame(deviceParams.processFrameCount);
                 frameIdx++) {
                 DisplayPlot(std::format("ImPlot/Wave/Wave Unprocessed/Plot_{}", frameIdx).c_str(),
                     Context_GetFrameBuffer(CastBufferPointer(pWaveDisplayBuffer)->_pBuf,
