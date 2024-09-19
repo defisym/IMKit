@@ -330,8 +330,7 @@ void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
     // FFT
     // ------------------------------------
     restoreWaveFFTBuffer = restoreWaveBuffer;
-    const auto fftElement = Util_FFT_Amplitude(restoreWaveFFTBuffer.data(), restoreWaveFFTBuffer.size());
-    restoreWaveFFTBuffer.resize(fftElement);
+    fftElement = Util_FFT_Amplitude(restoreWaveFFTBuffer.data(), restoreWaveFFTBuffer.size());
 }
 
 void ComponentWaveformsProcess::WaveRestoreProcess(OTDRProcessValueType* pProcess, const ShakeInfo& shakeInfo,
@@ -394,10 +393,12 @@ void ComponentWaveformsProcess::WaveDisplay() const {
 
         if (ImPlot::BeginPlot("ImPlot/Wave/Wave FFT Amplitude", plotSize)) {
             DisplayPlot(std::format("ImPlot/Wave/Wave FFT Amplitude").c_str(),
-                restoreWaveFFTBuffer.data(), static_cast<int>(restoreWaveFFTBuffer.size()), 1,
+                restoreWaveFFTBuffer.data(), static_cast<int>(fftElement), 1,
                 [&] (const double index) {
-                        return static_cast<double>(Util_FFT_GetFrequency(static_cast<size_t>(index),
-                            restoreWaveFFTBuffer.size(), static_cast<float>(deviceParams.scanRate)));
+                    // use the original element size for frequency calculation
+                    return static_cast<double>(Util_FFT_GetFrequency(static_cast<size_t>(index),
+                        restoreWaveFFTBuffer.size(),
+                        static_cast<float>(deviceParams.scanRate)));
                 });
 
             ImPlot::EndPlot();
