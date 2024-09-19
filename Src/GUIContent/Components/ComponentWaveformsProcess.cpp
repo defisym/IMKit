@@ -15,7 +15,6 @@ inline auto CastBufferPointer(const ComponentWaveformsProcess::BufferHandle h) {
 ComponentWaveformsProcess::ComponentWaveformsProcess(Ctx* p)
     :ComponentBase(p), hContext(p->deviceHandler.hContext) {
 	const auto& deviceParams = pCtx->deviceParams;
-	const auto& processParams = pCtx->processParams;
 
     // alloc buffer
     const auto bufferSz = deviceParams.processFrameCount * deviceParams.pointNumPerScan;
@@ -54,7 +53,7 @@ void ComponentWaveformsProcess::Raw() const {
 		bufferFrameSize] = pCtx->deviceHandler.bufferInfo;
 
 	using DataType = std::remove_cvref_t<std::remove_pointer_t<decltype(pBuffer)>>;
-	auto stride = static_cast<int>(sizeof(DataType) * bufferStride);
+    [[maybe_unused]] auto stride = static_cast<int>(sizeof(DataType) * bufferStride);
 
 	if (ImPlot::BeginPlot("ImPlot/Raw/CH1", plotSize)) {
 		DisplayPlot("ImPlot/Raw/CH1/Plot",
@@ -74,7 +73,6 @@ void ComponentWaveformsProcess::Raw() const {
 	}
 
 	ImGui::EndTabItem();
-
 }
 
 void ComponentWaveformsProcess::Shake() const {

@@ -9,25 +9,21 @@ void CreateDevice(Ctx* pCtx, const wchar_t* pDeviceName) {
     const auto disable = DisableHelper(pCtx->deviceHandler.bInit);
 
     if (ImGui::Button("Create Device")) {
-        const bool bRet = pCtx->deviceHandler.CreateDevice(pDeviceName);
-
-        if (!bRet) {
-            ImGui::OpenPopup("Create Device Failed");
-			return;
-        }
+        if (pCtx->deviceHandler.CreateDevice(pDeviceName)) { return; }
+        ImGui::OpenPopup("Create Device Failed");
     }
 }
 void DeleteDevice(Ctx* pCtx) {
 	const auto disable = DisableHelper(!pCtx->deviceHandler.bInit);
 
 	if (ImGui::Button("Delete Device")) {
-		const auto err = pCtx->deviceHandler.StopDevice();
+        [[maybe_unused]] const auto err = pCtx->deviceHandler.StopDevice();
 		pCtx->deviceHandler.DeleteDevice();
 	}
 }
 void CreateDeviceFailedPopUp(Ctx* pCtx) {
 	// model should out of the button
-	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    const ImVec2 center = ImGui::GetMainViewport()->GetCenter();
 	ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
 	ImGui::SetNextWindowSize(ImVec2(150.0f, 75.0f));
 

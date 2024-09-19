@@ -17,20 +17,13 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 	ComponentWaveformsProcess(Ctx* p);
 	~ComponentWaveformsProcess();
 
-	void WaveformTab() {
-		if (!ImGui::BeginTabBar("Waveforms/Tab", tabBarFlags)) { return; }
     // do not display more than MAX_DISPLAY_FRAME
     // for raw data -> nobody cares!
     static size_t GetDisplayFrame(const size_t frameCount);
 
-		this->Raw();
-		this->Shake();
-		this->Wave();
+    void WaveformTab();
 
-		ImGui::EndTabBar();
-	}
-
-	void Raw() const;
+    void Raw() const;
 	void Shake() const;
 	void Wave();
 
