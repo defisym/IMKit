@@ -121,33 +121,35 @@ bool UpdateParam(Ctx* pCtx) {
 }
 
 void StartStopDevice(Ctx* pCtx, const bool bEnable) {
-	ManualDisableHelper disableHelper;
+    ManualDisableHelper disableHelper;
 
-	disableHelper.Disable(!bEnable || pCtx->deviceHandler.bStart);
-	if (ImGui::Button("Start Device")) {
-		pCtx->deviceHandler.StartDevice();
+    disableHelper.Disable(!bEnable || pCtx->deviceHandler.bStart);
+    if (ImGui::Button("Start Device")) {
+        [[maybe_unused]] const auto err = pCtx->deviceHandler.StartDevice();
+        pCtx->audioHandler.ResetBuffer();
+        pCtx->processHandler.CreateWaveformsProcess(pCtx);
 
-		const auto& deviceParams = pCtx->deviceParams;
-		const auto& processParams = pCtx->processParams;
+        const auto& deviceParams = pCtx->deviceParams;
+        const auto& processParams = pCtx->processParams;
+        if (deviceParams.bUseCountext) {
+            pCtx->processHandler.hVibrationLocalization
+                = Util_VibrationLocalizationContext_Create(deviceParams.processFrameCount, deviceParams.pointNumPerScan,
+                                                         processParams.movingAvgRange, processParams.movingDiffRange);
+        }
+    }
+    disableHelper.Enable();
 
-		pCtx->processHandler.CreateWaveformsProcess(pCtx);
+    ImGui::SameLine();
 
-		if (deviceParams.bUseCountext) {
-			pCtx->processHandler.hVibrationLocalization
-				= Util_VibrationLocalizationContext_Create(deviceParams.processFrameCount, deviceParams.pointNumPerScan,
-														 processParams.movingAvgRange, processParams.movingDiffRange);
-		}
-	}
-	disableHelper.Enable();
-
-	ImGui::SameLine();
-
-	disableHelper.Disable(!bEnable || !pCtx->deviceHandler.bStart);
-	if (ImGui::Button("Stop Device")) {
+    disableHelper.Disable(!bEnable || !pCtx->deviceHandler.bStart);
+    if (ImGui::Button("Stop Device")) {
         [[maybe_unused]] const auto err = pCtx->deviceHandler.StopDevice();
-		Util_VibrationLocalizationContext_Delete(&pCtx->processHandler.hVibrationLocalization);
-	}
-	disableHelper.Enable();
+        pCtx->audioHandler.ResetBuffer();
+        pCtx->processHandler.DeleteWaveformsProcess();
+
+        Util_VibrationLocalizationContext_Delete(&pCtx->processHandler.hVibrationLocalization);
+    }
+    disableHelper.Enable();
 }
 
 void ComponentConfigParam(Ctx* pCtx) {	
