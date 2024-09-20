@@ -162,6 +162,9 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp">
+      <Filter>源文件\GUIContext\Handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\imguiInterface.h">
@@ -259,6 +262,9 @@
     </ClInclude>
     <ClInclude Include="IMGuiEx\EmbraceHelper.h">
       <Filter>头文件\IMGuiEx</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContext\Handler\ProcessHandler.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
