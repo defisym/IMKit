@@ -14,8 +14,9 @@
 #include "./../Utilities/AudioPlayer.h"
 
 namespace AudioTest {
-    constexpr auto DEFAULT_BUFFER_SZ = 16000;
+    constexpr auto DEFAULT_BUFFER_SZ = 24000;
     constexpr auto DEFAULT_FREQ = 200.0;
+    constexpr auto DEFAULT_DURA = 1000;
 
     const OTDRProcessValueType* AllocBuffer(const size_t sz = DEFAULT_BUFFER_SZ) {
 #ifdef USE_CONSOLE
@@ -25,14 +26,14 @@ namespace AudioTest {
         freopen("CONOUT$", "w", stderr);
 #endif
         const auto p = new OTDRProcessValueType[sz];
-        const auto dt= 1.0 / static_cast<double>(sz);
+        const auto dt = 1.0 / static_cast<double>(sz);
 
         for (size_t index = 0; index < sz; index++) {
             p[index] = static_cast<OTDRProcessValueType>(std::sin(2 * PI * DEFAULT_FREQ * dt * static_cast<double>(index)));
 
 #ifdef USE_CONSOLE
             std::cout << p[index] << ", ";
-            if (index % 20 == 0) { std::cout << '\n'; }
+            //if (index % 20 == 0) { std::cout << '\n'; }
 #endif
         }
 
@@ -45,25 +46,22 @@ namespace AudioTest {
         AudioPlayer player;
         AudioData audioData;
         AudioPlayer::StartAudio(audioData);
-        Sleep(500 + rand() % 10);
 
         for (;;) {
-            player.AddData(audioData, { p,DEFAULT_BUFFER_SZ,500 });
-            Sleep(500 + rand() % 10);
+            player.AddData(audioData, { p,DEFAULT_BUFFER_SZ,DEFAULT_DURA });
+            Sleep(DEFAULT_DURA + rand() % 10);
         }
     }
 
     [[noreturn]] void AudioHandlerTest() {
         const auto p = AllocBuffer();
 
-        AudioHandler handler = { 1000 };
-        handler.AddData({ p,DEFAULT_BUFFER_SZ,1000 });
-
-        //Sleep(500 + rand() % 10);
+        AudioHandler handler = { DEFAULT_DURA };
+        handler.AddData({ p,DEFAULT_BUFFER_SZ,DEFAULT_DURA });
 
         for (;;) {
-            //handler.AddData({ p,1000,500 });
-            //Sleep(500 + rand() % 10);
+            //handler.AddData({ p,DEFAULT_BUFFER_SZ,DEFAULT_DURA });
+            //Sleep(DEFAULT_DURA + rand() % 10);
         }
     }
 }
