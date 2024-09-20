@@ -18,6 +18,8 @@ inline void DisplayPlot(const char* pLabel,
 
     if (dataCount <= threshold && !xUpdater && !yUpdater) {
         ImPlot::PlotLine(pLabel, pData, dataCount);
+
+        return;
     }
 
     struct Data {
