@@ -4,7 +4,7 @@ uint32_t DataConverter::ConvertData(const SourceInfo& srcInfo, const DestInfo& d
     constexpr auto maxValue = std::numeric_limits<int16_t>::max();
     const auto sampleCount = GetSampleCount(srcInfo.duration);
     const auto repeat = sampleCount / srcInfo.bufferSz;
-    const auto remain = sampleCount % srcInfo.bufferSz;
+    auto remain = sampleCount % srcInfo.bufferSz;
 
     auto pBuffer = destInfo.pBuffer;
     auto copyData = [&] (const int16_t convertResult, const size_t repeatTimes) {
@@ -14,13 +14,16 @@ uint32_t DataConverter::ConvertData(const SourceInfo& srcInfo, const DestInfo& d
             *pBuffer = convertResult;
         }
     };
+    auto updateRemain = [&] () {
+        if (remain == 0) { return 0; }
+
+        remain--;
+        return 1;
+    };
 
     for (size_t index = 0; index < srcInfo.bufferSz; index++) {
-        copyData(static_cast<int16_t>(srcInfo.pBuffer[index] * maxValue), repeat);
-    }
-
-    if (remain != 0) {
-        copyData(pBuffer[-1], remain);
+        copyData(static_cast<int16_t>(srcInfo.pBuffer[index] * maxValue),
+            repeat + updateRemain());
     }
 
     return sampleCount;
