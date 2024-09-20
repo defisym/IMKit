@@ -252,6 +252,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Utilities\AudioPlayer.cpp" />
+    <ClCompile Include="Utilities\DataConverter.cpp" />
     <ClCompile Include="Utilities\LoadFileToWStr.cpp" />
   </ItemGroup>
   <ItemGroup>

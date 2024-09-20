@@ -165,6 +165,9 @@
     <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp">
       <Filter>源文件\GUIContext\Handler</Filter>
     </ClCompile>
+    <ClCompile Include="Utilities\DataConverter.cpp">
+      <Filter>源文件\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\imguiInterface.h">

@@ -5,10 +5,10 @@
 
 #include "../../Src/Module/General/Definition.h"
 
-struct DataConverter {
+struct DataConverter {  // NOLINT(cppcoreguidelines-special-member-functions)
 	struct SourceInfo {
 		// pBuffer should be normalized to -1.0f ~ 1.0f
-		OTDRProcessValueType* pBuffer;
+		const OTDRProcessValueType* pBuffer;
 		size_t bufferSz;
 		// in ms
 		size_t duration;
@@ -21,9 +21,7 @@ struct DataConverter {
 
 	// in ms
 	static constexpr uint32_t GetSampleCount(const size_t duration) {
-		const auto sampleCount = static_cast<uint32_t>(static_cast<double>(duration) / 1000.0 * MIX_DEFAULT_FREQUENCY);
-
-		return sampleCount;
+		return static_cast<uint32_t>(static_cast<double>(duration) / 1000.0 * MIX_DEFAULT_FREQUENCY);
 	}
 
 	static constexpr uint32_t GetBufferCount(const size_t duration) {
@@ -33,42 +31,10 @@ struct DataConverter {
 	// Convert data for AUDIO_S16SYS, signed int16_t
 	// Source is single channel
 	// https://stackoverflow.com/questions/5890499/pcm-audio-amplitude-values
-	static uint32_t ConvertData(const SourceInfo& srcInfo, const DestInfo& destInfo) {
-		const auto sampleCount = GetSampleCount(srcInfo.duration);
-		constexpr auto maxValue = std::numeric_limits<int16_t>::max();
+	static uint32_t ConvertData(const SourceInfo& srcInfo, const DestInfo& destInfo);
+    void ConvertData(const SourceInfo& srcInfo);
 
-		auto pBuffer = destInfo.pBuffer;
-		for (size_t index = 0; index < srcInfo.bufferSz; index++) {
-			const auto convertResult = static_cast<int16_t>(srcInfo.pBuffer[index] * maxValue);
+    DestInfo _destInfo = {};
 
-			for (uint32_t repIdx = 0;
-				repIdx < MIX_DEFAULT_CHANNELS; // both channels are the same
-				repIdx++, pBuffer++) {
-				*pBuffer = convertResult;
-			}
-		}
-
-		return sampleCount;
-	}
-
-	DestInfo _destInfo = {};
-
-	~DataConverter() {
-		delete[] _destInfo.pBuffer;
-	}
-
-	void ConvertData(const SourceInfo& srcInfo) {
-		const auto bufferSz = GetBufferCount(srcInfo.duration);
-
-		do {
-			if (bufferSz <= _destInfo.bufferSz) { break; }
-
-			delete[] _destInfo.pBuffer;
-			_destInfo.pBuffer = new int16_t[bufferSz];
-			memset(_destInfo.pBuffer, 0, sizeof(int16_t) * bufferSz);
-		} while (false);
-
-		_destInfo.bufferSz = bufferSz;
-		ConvertData(srcInfo, _destInfo);
-	}
+	~DataConverter();
 };
