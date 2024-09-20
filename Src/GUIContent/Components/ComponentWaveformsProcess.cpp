@@ -271,7 +271,7 @@ bool ComponentWaveformsProcess::WaveProcess(const WaveRestoreOpt& opt) {
     // ------------------------
 
     // reset audio buffer
-    if (!opt.bPlayAudio) { audioHandler.audioData.ringBuffer.ResetBuffer(); }
+    if (!opt.bPlayAudio) { audioHandler.ResetBuffer(); }
 
     // always update buffer in both modes
     do {
@@ -296,9 +296,8 @@ bool ComponentWaveformsProcess::WaveProcess(const WaveRestoreOpt& opt) {
         WaveRestore(pIndexWaveBuffer->_pBuf, opt);
 
         if (!opt.bPlayAudio) { break; }
-        audioHandler.audioPlayer.AddData(audioHandler.audioData,
-        { restoreWaveBuffer.data(), restoreWaveBuffer.size(),
-            static_cast<size_t>(1000.0 * deviceParams.processFrameCount / deviceParams.scanRate) });        
+        audioHandler.AddData({ restoreWaveBuffer.data(), restoreWaveBuffer.size(),
+            static_cast<size_t>(1000.0 * deviceParams.processFrameCount / deviceParams.scanRate) });
     } while (false);
 
     // should return the fill state of display buffer
