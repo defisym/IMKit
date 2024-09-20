@@ -117,7 +117,7 @@
     <ClCompile Include="Utilities\AudioPlayer.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="Tests\AudioPlayerTest.cpp">
+    <ClCompile Include="Tests\AudioTest.cpp">
       <Filter>源文件\Tests</Filter>
     </ClCompile>
     <ClCompile Include="Tests\RingBufferTest.cpp">
