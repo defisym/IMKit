@@ -12,6 +12,7 @@
 
 #include "./../../Src/DLL/include/OTDR.h"
 #include "./../Utilities/AudioPlayer.h"
+#include "./../GUIContext/Handler/AudioHandler.h"
 
 namespace AudioTest {
     // TODO
