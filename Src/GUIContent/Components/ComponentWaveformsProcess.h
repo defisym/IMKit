@@ -43,6 +43,7 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
     [[nodiscard]] WaveRestoreOpt GetWaveRestoreOpt() const;
     bool WaveProcess(const WaveRestoreOpt& opt);
 
+    std::vector<OTDRProcessValueType> audioBuffer;
     std::vector<OTDRProcessValueType> restoreWaveBuffer;
     std::vector<OTDRProcessValueType> referenceWaveBuffer;
 

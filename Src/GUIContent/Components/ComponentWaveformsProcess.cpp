@@ -298,7 +298,10 @@ bool ComponentWaveformsProcess::WaveProcess(const WaveRestoreOpt& opt) {
         WaveRestore(pIndexWaveBuffer->_pBuf, opt);
 
         if (!opt.bPlayAudio) { break; }
-        audioHandler.AddData({ restoreWaveBuffer.data(), restoreWaveBuffer.size(),
+        audioBuffer = restoreWaveBuffer;
+        // Normalization: audio accepts data [ -1.0 ~ 1.0 ]
+        Util_MeanNormalization(audioBuffer.data(), audioBuffer.size(), &offset, &scale);
+        audioHandler.AddData({ audioBuffer.data(), audioBuffer.size(),
             static_cast<size_t>(1000.0 * deviceParams.processFrameCount / deviceParams.scanRate) });
     } while (false);
 
