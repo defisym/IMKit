@@ -322,8 +322,14 @@ void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
             { opt.diff,opt.referenceStart,opt.shakeRange,opt.unwrap2DStart },
             referenceWaveBuffer);
 
-        for (size_t index = 0; index < referenceWaveBuffer.size(); index++) {
-            restoreWaveBuffer[index] -= referenceWaveBuffer[index];
+        OTDRProcessValueType accumulate = 0.0f;
+        for (const float& element : referenceWaveBuffer) {
+            accumulate += element;
+        }
+
+        const OTDRProcessValueType average = accumulate / static_cast<OTDRProcessValueType>(referenceWaveBuffer.size());
+        for (float& element : restoreWaveBuffer) {
+            element -= average;
         }
     }
 
