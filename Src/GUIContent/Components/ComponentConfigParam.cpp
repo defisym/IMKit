@@ -35,6 +35,9 @@ bool UpdateParam(Ctx* pCtx) {
 	static int processFrameCount = 256;
 	ImGui::InputInt("Frame to process", &processFrameCount, 64, 256);
 
+	// crash when adding data if process frame is not the integer multiply of update frame
+	bEnable = bEnable && (!deviceParams.bUseCountext || ((processFrameCount % updateFrameCount) == 0));
+
 	deviceParams.processFrameCount = processFrameCount;
 	deviceParams.updateFrameCount = deviceParams.bUseCountext
 		? updateFrameCount
