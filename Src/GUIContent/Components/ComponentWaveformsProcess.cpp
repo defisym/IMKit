@@ -1,6 +1,8 @@
 #include "ComponentWaveformsProcess.h"
 #include "ComponentVibrationLocalization.h"
 
+#include <format>
+
 #include "../../IMGuiEx/DisplayPlot.h"
 #include "../../IMGuiEx/AddSpin.h"
 #include "../../IMGuiEx/DisableHelper.h"

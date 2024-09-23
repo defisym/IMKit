@@ -1,5 +1,7 @@
 #include "ComponentConfigParam.h"
 
+#include <format>
+
 #include "../../IMGuiEx/DisableHelper.h"
 
 // TODO config items changes according to the device
