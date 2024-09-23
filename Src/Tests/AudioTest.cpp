@@ -14,7 +14,12 @@
 #include "./../Utilities/AudioPlayer.h"
 
 namespace AudioTest {
-    constexpr auto DEFAULT_BUFFER_SZ = 24000;
+    // TODO
+    // 44100 has no issue, so it's a resample issue
+    // try using interpolation?
+
+    //constexpr auto DEFAULT_BUFFER_SZ = 44100; 
+    constexpr auto DEFAULT_BUFFER_SZ = 2560;
     constexpr auto DEFAULT_FREQ = 200.0;
     constexpr auto DEFAULT_DURA = 1000;
 
@@ -56,12 +61,12 @@ namespace AudioTest {
     [[noreturn]] void AudioHandlerTest() {
         const auto p = AllocBuffer();
 
-        AudioHandler handler = { DEFAULT_DURA };
+        AudioHandler handler = { 4 * DEFAULT_DURA };
         handler.AddData({ p,DEFAULT_BUFFER_SZ,DEFAULT_DURA });
 
         for (;;) {
-            //handler.AddData({ p,DEFAULT_BUFFER_SZ,DEFAULT_DURA });
-            //Sleep(DEFAULT_DURA + rand() % 10);
+            handler.AddData({ p,DEFAULT_BUFFER_SZ,DEFAULT_DURA });
+            Sleep(DEFAULT_DURA + rand() % 10);
         }
     }
 }
