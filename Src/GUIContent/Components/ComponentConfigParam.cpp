@@ -1,9 +1,14 @@
 #include "ComponentConfigParam.h"
 
+#include <format>
+
 #include "../../IMGuiEx/DisableHelper.h"
 
 // TODO config items changes according to the device
 bool UpdateParam(Ctx* pCtx) {
+    // ------------------------
+    // Basic info
+    // ------------------------
 	if (pCtx->deviceHandler.hParam == nullptr) { return false; }
 
 	const auto hParam = pCtx->deviceHandler.hParam;
@@ -17,16 +22,28 @@ bool UpdateParam(Ctx* pCtx) {
 	// Frame
 	// ------------------------
 
+	DisableHelper deviceStart = { pCtx->deviceHandler.bStart };
+
 	ImGui::Checkbox("Use context", &deviceParams.bUseCountext);
+	
 	ManualDisableHelper frameHelper;
 	frameHelper.Disable(!deviceParams.bUseCountext);
-	ImGui::InputInt("Frame to update", &deviceParams.updateFrameCount, 64, 256);
+	static int updateFrameCount = 64;
+	ImGui::InputInt("Frame to update", &updateFrameCount, 64, 256);
 	frameHelper.Enable();
-	ImGui::InputInt("Frame to process", &deviceParams.processFrameCount, 64, 256);
+	
+	static int processFrameCount = 256;
+	ImGui::InputInt("Frame to process", &processFrameCount, 64, 256);
 
-	const auto frameToRead = deviceParams.bUseCountext
-		? deviceParams.updateFrameCount
-		: deviceParams.processFrameCount;
+	// crash when adding data if process frame is not the integer multiply of update frame
+	bEnable = bEnable && (!deviceParams.bUseCountext || ((processFrameCount % updateFrameCount) == 0));
+
+	deviceParams.processFrameCount = processFrameCount;
+	deviceParams.updateFrameCount = deviceParams.bUseCountext
+		? updateFrameCount
+		: processFrameCount;
+
+	const auto frameToRead = deviceParams.updateFrameCount;
 
 	ImGui::SameLine();
 	ImGui::TextUnformatted([] (const double frame, const double scanRate) {
@@ -109,19 +126,35 @@ bool UpdateParam(Ctx* pCtx) {
 }
 
 void StartStopDevice(Ctx* pCtx, const bool bEnable) {
-	const auto disableStart = DisableHelper(!bEnable);
+    ManualDisableHelper disableHelper;
 
-	if (ImGui::Button("Start Device")) {
-		pCtx->deviceHandler.StartDevice();
-		pCtx->audioHandler.ResizeBuffer(pCtx->deviceParams.processFrameCount);
-		pCtx->audioHandler.ResetBuffer();
-	}
+    disableHelper.Disable(!bEnable || pCtx->deviceHandler.bStart);
+    if (ImGui::Button("Start Device")) {
+        [[maybe_unused]] const auto err = pCtx->deviceHandler.StartDevice();
+        pCtx->audioHandler.ResetBuffer();
+        pCtx->processHandler.CreateWaveformsProcess(pCtx);
 
-	ImGui::SameLine();
-	if (ImGui::Button("Stop Device")) {
-		const auto err = pCtx->deviceHandler.StopDevice();
-		Context_Delete(&pCtx->deviceHandler.hContext);
-	}
+        const auto& deviceParams = pCtx->deviceParams;
+        const auto& processParams = pCtx->processParams;
+        if (deviceParams.bUseCountext) {
+            pCtx->processHandler.hVibrationLocalization
+                = Util_VibrationLocalizationContext_Create(deviceParams.processFrameCount, deviceParams.pointNumPerScan,
+                                                         processParams.movingAvgRange, processParams.movingDiffRange);
+        }
+    }
+    disableHelper.Enable();
+
+    ImGui::SameLine();
+
+    disableHelper.Disable(!bEnable || !pCtx->deviceHandler.bStart);
+    if (ImGui::Button("Stop Device")) {
+        [[maybe_unused]] const auto err = pCtx->deviceHandler.StopDevice();
+        pCtx->audioHandler.ResetBuffer();
+        pCtx->processHandler.DeleteWaveformsProcess();
+
+        Util_VibrationLocalizationContext_Delete(&pCtx->processHandler.hVibrationLocalization);
+    }
+    disableHelper.Enable();
 }
 
 void ComponentConfigParam(Ctx* pCtx) {	

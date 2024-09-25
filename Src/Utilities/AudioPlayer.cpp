@@ -1,16 +1,35 @@
 #include "AudioPlayer.h"
 
+#include <format>
+
 #include <SDL.h>
 #include <SDL_mixer.h>
 
 #pragma comment(lib, "SDL2.lib")
 #pragma comment(lib, "SDL2_mixer_ext.lib")
 
+AudioData::AudioChunk::AudioChunk() {
+    pChunk = Mix_QuickLoad_RAW(chunk, CHUNK_SIZE);
+    if (pChunk) { return; }
+
+    throw std::exception(std::format("{}", SDL_GetError()).c_str());
+}
+
+AudioData::AudioChunk::~AudioChunk() {
+    Mix_FreeChunk(pChunk);
+}
+
+void AudioData::AddData(const DataConverter::SourceInfo& sourceInfo) {
+    dataConverter.ConvertData(sourceInfo);
+    const auto convBuf = dataConverter._destInfo;
+
+    ringBuffer.WriteData(convBuf.pBuffer, convBuf.bufferSz);
+}
 
 bool AudioPlayer::InitAudio() {
 	if (!SDL_WasInit(SDL_INIT_AUDIO | SDL_INIT_TIMER)) {
 		if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_TIMER)) {
-			auto error = SDL_GetError();
+			[[maybe_unused]] auto error = SDL_GetError();
 
 			return false;
 		}
@@ -23,7 +42,7 @@ bool AudioPlayer::InitAudio() {
 			MIX_DEFAULT_CHANNELS,
 			SDL_BUFFER_SIZE,
 			nullptr, 0) == -1) {
-			auto error = SDL_GetError();
+			[[maybe_unused]] auto error = SDL_GetError();
 
 			return false;
 		}
@@ -40,22 +59,15 @@ void AudioPlayer::CloseAudio() {
 }
 
 void AudioPlayer::StartAudio(AudioData& audioData) {
-	auto channel = Mix_PlayChannel(-1, audioData.audioChunk.pChunk, -1);
+	const auto channel = Mix_PlayChannel(-1, audioData.audioChunk.pChunk, -1);
 	Mix_RegisterEffect(channel,
 	   [] (int chan, void* stream, int len, void* udata) {
 		   const auto pAudioData = static_cast<AudioData*>(udata);
 		   SDL_memset(stream, 0, len);
-		   pAudioData->ringBuffer.ReadData((int16_t*)stream, len / sizeof(int16_t));
+		   pAudioData->ringBuffer.ReadData(static_cast<int16_t*>(stream), len / sizeof(int16_t));
 	   },
 	   [] (int chan, void* udata) {
 		   //OutputDebugString(L"Finish");
 	   },
 	   &audioData);
-}
-
-void AudioPlayer::AddData(AudioData& audioData, const DataConverter::SourceInfo& sourceInfo) {
-	dataConverter.ConvertData(sourceInfo);
-	const auto convBuf = dataConverter._destInfo;
-
-	audioData.ringBuffer.WriteData(convBuf.pBuffer, convBuf.bufferSz);
 }

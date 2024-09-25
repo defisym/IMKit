@@ -1,9 +1,11 @@
-#include "ComponentWavefroms.h"
+#include "ComponentWaveforms.h"
 
-#include "ComponentWavefromsProcess.h"
+#include "ComponentWaveformsProcess.h"
 
-void ComponentWavefroms(Ctx* pCtx) {
-	if (!ImGui::CollapsingHeader("Wavefroms", ImGuiTreeNodeFlags_DefaultOpen)) {
+// Note: ImGui call this each frame
+//       if move to other UI lib should change the read logic
+void ComponentWaveforms(Ctx* pCtx) {
+	if (!ImGui::CollapsingHeader("Waveforms", ImGuiTreeNodeFlags_DefaultOpen)) {
 		return;
 	}
 
@@ -22,16 +24,13 @@ void ComponentWavefroms(Ctx* pCtx) {
 			void* pUserData) {
 				// info
 				auto pCtx = static_cast<Ctx*>(pUserData);
-				auto& hContext = pCtx->deviceHandler.hContext;
-
-				// init context
-				if (hContext == nullptr) { hContext = Context_Create(); }
+				pCtx->deviceHandler.bContextInit = true;
 
 				// update context
 				pCtx->deviceHandler.bufferInfo =
 					BufferInfo{ pBuffer,
 						bufferSz / bufferStride, bufferStride,
-						static_cast<size_t>(pCtx->deviceParams.processFrameCount),
+						static_cast<size_t>(pCtx->deviceParams.updateFrameCount),
 						static_cast<size_t>(pCtx->deviceParams.pointNumPerScan) };
 				pCtx->deviceHandler.bContextUpdated = true;
 
@@ -39,16 +38,12 @@ void ComponentWavefroms(Ctx* pCtx) {
 			},
 			pCtx);
 
-		const auto hContext = pCtx->deviceHandler.hContext;
-		if (hContext == nullptr) {
+		if (!pCtx->deviceHandler.bContextInit) {
 			ImGui::TextUnformatted("Context not created");
 			break;
 		}
 
-		ComponentWavefromsProcess wavefromsProcess = { pCtx,hContext };
-
-		wavefromsProcess.StartProcess();
-		wavefromsProcess.WaveformTab();
-		wavefromsProcess.EndProcess();
+	    Context_Update(pCtx->deviceHandler.hContext, &pCtx->deviceHandler.bufferInfo);
+		pCtx->processHandler.pWaveformsProcess->WaveformTab();
 	} while (false);
 }

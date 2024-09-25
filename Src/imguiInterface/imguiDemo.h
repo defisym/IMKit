@@ -51,5 +51,5 @@ inline int imguiDemo() {
         }
         };
 
-    return imguiInterface(&defaultCtx, defaultGui);
+    return ImguiInterface(&defaultCtx, defaultGui);
 }

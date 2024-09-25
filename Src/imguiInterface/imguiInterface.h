@@ -25,5 +25,5 @@ struct GUIContext {
     virtual bool DestroyContext() { return true; }
 };
 
-int imguiInterface(GUIContext* pCtx,
+int ImguiInterface(GUIContext* pCtx,
 	const std::function<void(GUIContext*)>& gui);

@@ -2,4 +2,4 @@
 
 #include "../GUIContext/Context.h"
 
-void ComponentWavefroms(Ctx* pCtx);
+void ComponentWaveforms(Ctx* pCtx);

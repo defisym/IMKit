@@ -1,6 +1,6 @@
+// ReSharper disable CppClangTidyCppcoreguidelinesSpecialMemberFunctions
 #pragma once
 
-#include <format>
 #include <string>
 
 #include <_DeLib/ThreadSafeRingBuffer.h>
@@ -17,16 +17,9 @@ struct AudioData {
 		uint8_t chunk[CHUNK_SIZE] = {};
 		Mix_Chunk* pChunk = nullptr;
 
-		AudioChunk() {
-			pChunk = Mix_QuickLoad_RAW(chunk, CHUNK_SIZE);
-			if (pChunk) { return; }
-
-			throw std::exception(std::format("{}", SDL_GetError()).c_str());
-		}
-		~AudioChunk() {
-			Mix_FreeChunk(pChunk);
-		}
-	};
+		AudioChunk();
+        ~AudioChunk();
+    };
 
 	std::string audioName;
 	AudioChunk audioChunk;
@@ -34,6 +27,9 @@ struct AudioData {
 
 	AudioData() :ringBuffer(PCM_BUFFER_SIZE) {}
 	explicit AudioData(const size_t sz) :ringBuffer(sz) {}
+
+    DataConverter dataConverter = {};
+    void AddData(const DataConverter::SourceInfo& sourceInfo);
 };
 
 // PCM data:
@@ -49,11 +45,8 @@ struct AudioPlayer {
     static bool InitAudio();
     static void CloseAudio();
 
-	AudioPlayer() { InitAudio(); }
+    AudioPlayer() { InitAudio(); }
     ~AudioPlayer() { CloseAudio(); }
 
-    void StartAudio(AudioData& audioData);
-
-    DataConverter dataConverter = {};
-    void AddData(AudioData& audioData, const DataConverter::SourceInfo& sourceInfo);
+    static void StartAudio(AudioData& audioData);
 };

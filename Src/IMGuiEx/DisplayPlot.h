@@ -18,6 +18,8 @@ inline void DisplayPlot(const char* pLabel,
 
     if (dataCount <= threshold && !xUpdater && !yUpdater) {
         ImPlot::PlotLine(pLabel, pData, dataCount);
+
+        return;
     }
 
     struct Data {
@@ -29,21 +31,21 @@ inline void DisplayPlot(const char* pLabel,
         const CoordUpdater* pYUpdater = nullptr;
     };
 
-    Data data = { pData, stride,
+    Data plotData = { pData, stride,
         (std::max)(minOffset, dataCount / threshold),
         xUpdater ? &xUpdater : &defaultUpdater,
         yUpdater ? &yUpdater : &defaultUpdater };
 
     ImPlot::PlotLineG(pLabel,
         [] (int idx, void* user_data) {
-        auto pData = static_cast<Data*>(user_data);
-        auto pElement = pData->pData + pData->stride * pData->offset * idx;
+        auto pPlotData = static_cast<Data*>(user_data);
+        auto pElement = pPlotData->pData + pPlotData->stride * pPlotData->offset * idx;
 
-        ImPlotPoint point = { (*pData->pXUpdater)(static_cast<double>(idx * pData->offset)),
-            (*pData->pXUpdater)(static_cast<double>(*pElement)) };
+        ImPlotPoint point = { (*pPlotData->pXUpdater)(static_cast<double>(idx * pPlotData->offset)),
+            (*pPlotData->pYUpdater)(static_cast<double>(*pElement)) };
 
         return point;
         },
-        &data, (std::min)(dataCount, threshold), ImPlotLineFlags_None);
+        &plotData, (std::min)(dataCount, threshold), ImPlotLineFlags_None);
 };
 

@@ -78,9 +78,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>资源文件</Filter>
-    </ClCompile>
     <ClCompile Include="imguiInterface\imguiInterface.cpp">
       <Filter>源文件\imguiInterface</Filter>
     </ClCompile>
@@ -120,7 +117,7 @@
     <ClCompile Include="Utilities\AudioPlayer.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="Tests\AudioPlayerTest.cpp">
+    <ClCompile Include="Tests\AudioTest.cpp">
       <Filter>源文件\Tests</Filter>
     </ClCompile>
     <ClCompile Include="Tests\RingBufferTest.cpp">
@@ -153,11 +150,23 @@
     <ClCompile Include="GUIContent\Components\ComponentConfigParam.cpp">
       <Filter>源文件\GUIContent\Components</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\ComponentWavefroms.cpp">
+    <ClCompile Include="GUIContent\Components\ComponentWaveforms.cpp">
       <Filter>源文件\GUIContent\Components</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\ComponentWavefromsProcess.cpp">
+    <ClCompile Include="GUIContent\Components\ComponentWaveformsProcess.cpp">
       <Filter>源文件\GUIContent\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\ComponentVibrationLocalization.cpp">
+      <Filter>源文件\GUIContent\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp">
+      <Filter>源文件\GUIContext\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\DataConverter.cpp">
+      <Filter>源文件\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,11 +254,20 @@
     <ClInclude Include="GUIContent\Components\ComponentConfigParam.h">
       <Filter>头文件\GUIContent\Components</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\ComponentWavefroms.h">
+    <ClInclude Include="GUIContent\Components\ComponentWaveforms.h">
       <Filter>头文件\GUIContent\Components</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\ComponentWavefromsProcess.h">
+    <ClInclude Include="GUIContent\Components\ComponentWaveformsProcess.h">
       <Filter>头文件\GUIContent\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\ComponentVibrationLocalization.h">
+      <Filter>头文件\GUIContent\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGuiEx\EmbraceHelper.h">
+      <Filter>头文件\IMGuiEx</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContext\Handler\ProcessHandler.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

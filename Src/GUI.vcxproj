@@ -219,12 +219,14 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContent\Components\ComponentConfigParam.cpp" />
     <ClCompile Include="GUIContent\Components\ComponentFiber.cpp" />
     <ClCompile Include="GUIContent\Components\ComponentFrameRate.cpp" />
-    <ClCompile Include="GUIContent\Components\ComponentWavefroms.cpp" />
-    <ClCompile Include="GUIContent\Components\ComponentWavefromsProcess.cpp" />
+    <ClCompile Include="GUIContent\Components\ComponentVibrationLocalization.cpp" />
+    <ClCompile Include="GUIContent\Components\ComponentWaveforms.cpp" />
+    <ClCompile Include="GUIContent\Components\ComponentWaveformsProcess.cpp" />
     <ClCompile Include="GUIContent\GUIContent.cpp" />
     <ClCompile Include="GUIContext\Handler\AudioHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\DeviceHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\OTDRHandler.cpp" />
+    <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp" />
     <ClCompile Include="imguiInterface\imguiInterface.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_win32.cpp" />
@@ -237,7 +239,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="implot\implot_demo.cpp" />
     <ClCompile Include="implot\implot_items.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Tests\AudioPlayerTest.cpp">
+    <ClCompile Include="Tests\AudioTest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -250,6 +252,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Utilities\AudioPlayer.cpp" />
+    <ClCompile Include="Utilities\DataConverter.cpp" />
     <ClCompile Include="Utilities\LoadFileToWStr.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -259,18 +262,21 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContent\Components\ComponentConfigParam.h" />
     <ClInclude Include="GUIContent\Components\ComponentFiber.h" />
     <ClInclude Include="GUIContent\Components\ComponentFrameRate.h" />
-    <ClInclude Include="GUIContent\Components\ComponentWavefroms.h" />
-    <ClInclude Include="GUIContent\Components\ComponentWavefromsProcess.h" />
+    <ClInclude Include="GUIContent\Components\ComponentVibrationLocalization.h" />
+    <ClInclude Include="GUIContent\Components\ComponentWaveforms.h" />
+    <ClInclude Include="GUIContent\Components\ComponentWaveformsProcess.h" />
     <ClInclude Include="GUIContent\Components\ComponentWindow.h" />
     <ClInclude Include="GUIContent\GUIContent.h" />
     <ClInclude Include="GUIContext\Context.h" />
     <ClInclude Include="GUIContext\Handler\AudioHandler.h" />
     <ClInclude Include="GUIContext\Handler\DeviceHandler.h" />
     <ClInclude Include="GUIContext\Handler\OTDRHandler.h" />
+    <ClInclude Include="GUIContext\Handler\ProcessHandler.h" />
     <ClInclude Include="GUIContext\Params\Params.h" />
     <ClInclude Include="IMGuiEx\AddSpin.h" />
     <ClInclude Include="IMGuiEx\DisableHelper.h" />
     <ClInclude Include="IMGuiEx\DisplayPlot.h" />
+    <ClInclude Include="IMGuiEx\EmbraceHelper.h" />
     <ClInclude Include="imguiInterface\imguiDemo.h" />
     <ClInclude Include="imguiInterface\imguiInterface.h" />
     <ClInclude Include="imgui\backends\imgui_impl_dx11.h" />
