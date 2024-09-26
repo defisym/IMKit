@@ -168,9 +168,6 @@
     <ClCompile Include="Utilities\DataConverter.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="IMGuiEx\ComboEx.cpp">
-      <Filter>源文件\IMGuiEx</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\imguiInterface.h">
