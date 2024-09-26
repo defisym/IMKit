@@ -227,6 +227,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContext\Handler\DeviceHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\OTDRHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp" />
+    <ClCompile Include="IMGuiEx\ComboEx.cpp" />
     <ClCompile Include="imguiInterface\imguiInterface.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_win32.cpp" />
@@ -274,6 +275,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContext\Handler\ProcessHandler.h" />
     <ClInclude Include="GUIContext\Params\Params.h" />
     <ClInclude Include="IMGuiEx\AddSpin.h" />
+    <ClInclude Include="IMGuiEx\ComboEx.h" />
     <ClInclude Include="IMGuiEx\DisableHelper.h" />
     <ClInclude Include="IMGuiEx\DisplayPlot.h" />
     <ClInclude Include="IMGuiEx\EmbraceHelper.h" />
