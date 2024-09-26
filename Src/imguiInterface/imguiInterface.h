@@ -1,8 +1,19 @@
 #pragma once
 
+#include "imgui.h"
+
+#define NOMINMAX
+#include <d3d11.h>
 #include <functional>
 
-#include "imgui.h"
+struct D3DContext {
+    ID3D11Device* pD3DDevice = nullptr;
+    ID3D11DeviceContext* pD3DDeviceContext = nullptr;
+    IDXGISwapChain* pSwapChain = nullptr;
+    UINT resizeWidth = 0;
+    UINT resizeHeight = 0;
+    ID3D11RenderTargetView* pRenderTargetView = nullptr;
+};
 
 struct GUIContext {
     const wchar_t* pWindowName = L"Dear ImGui DirectX11 Example";
@@ -12,6 +23,8 @@ struct GUIContext {
 
     ImGuiIO* pIO = nullptr;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+    D3DContext renderContext = {};
 
     GUIContext() = default;
     virtual ~GUIContext() = default;
