@@ -42,9 +42,10 @@ void CreateDeviceFailedPopUp(Ctx* pCtx) {
 }
 
 void ComponentConfigDevice(Ctx* pCtx) {
-	const auto deviceNames = pCtx->dllHandler.deviceNames;
+	const auto& deviceNames = pCtx->dllHandler.deviceNames;
 
-    const auto pDeviceName = ComboEx("Config/Device_Ex", deviceNames);
+	static ComboContext deviceComboCtx = {};
+	const auto pDeviceName = ComboEx({ "Config/Device", &deviceComboCtx }, deviceNames);
 
     CreateDevice(pCtx, to_wide_string(pDeviceName).c_str());
     ImGui::SameLine();

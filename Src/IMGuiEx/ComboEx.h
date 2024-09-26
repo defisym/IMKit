@@ -5,34 +5,57 @@
 
 #include "imgui.h"
 
-struct ComboInfo {
-    const char* label = nullptr;
-    size_t defaultIndex = 0;
-    ImGuiComboFlags flags = 0;
+struct ComboContext {
+    bool bInit = false;
+    size_t currentIdx = 0;
+};
 
-    ComboInfo(const char* label, size_t defaultIndex = 0, ImGuiComboFlags flags = 0) {
+struct ComboInfoBase {
+    const char* label = nullptr;
+    ImGuiComboFlags flags = 0;
+    ComboContext* pCtx = nullptr;
+
+    ComboInfoBase(const char* label, ComboContext* pCtx, ImGuiComboFlags flags = 0) {
         this->label = label;
-        this->defaultIndex = defaultIndex;
         this->flags = flags;
+        this->pCtx = pCtx;
+    }
+};
+
+struct ComboInfo :ComboInfoBase {
+    size_t defaultIndex = 0u;
+
+    ComboInfo(const char* label, ComboContext* pCtx,
+        size_t defaultIndex = 0, ImGuiComboFlags flags = 0)
+        :ComboInfoBase(label, pCtx, flags) {
+        this->defaultIndex = defaultIndex;
+    }
+};
+
+template<typename T>
+struct ComboInfoEx :ComboInfoBase {
+    T defaultValue = {};
+
+    ComboInfoEx(const char* label, ComboContext* pCtx,
+        T defaultValue, ImGuiComboFlags flags = 0)
+        :ComboInfoBase(label, pCtx, flags) {
+        this->defaultValue = defaultValue;
     }
 };
 
 template<typename T>
 struct ComboItem {
     const char* displayName = "Undefined";
-    T value = T{};
+    T value = {};
 };
 
 namespace ComboExImpl {
     template<typename ReturnType, typename ItemType>
     ReturnType ComboEx(const ComboInfo& comboInfo, const std::vector<ItemType>& comboItems) {
-        static bool bInit = false;
-        static size_t currentIdx = 0;
-
-        if (!bInit) [[unlikely]] {
+        if (!comboInfo.pCtx->bInit) [[unlikely]] {
             assert(comboInfo.defaultIndex < comboItems.size());
-            currentIdx = comboInfo.defaultIndex;
-            bInit = true;
+            comboInfo.pCtx->currentIdx = comboInfo.defaultIndex;
+            comboInfo.pCtx->bInit = true;
         }
 
         auto GetName = [&] (size_t index)->const char* {
@@ -74,12 +97,14 @@ namespace ComboExImpl {
             }
             };
 
+        auto& currentIdx = comboInfo.pCtx->currentIdx;
+
         if (ImGui::BeginCombo(comboInfo.label,
             GetName(currentIdx),
             comboInfo.flags)) {
             for (size_t idx = 0; idx < comboItems.size(); idx++) {
                 const bool bSelected = currentIdx == idx;
-                if (ImGui::Selectable(GetName(currentIdx), bSelected)) {
+                if (ImGui::Selectable(GetName(idx), bSelected)) {
                     currentIdx = idx;
                 }
 
@@ -103,5 +128,21 @@ inline const char* ComboEx(const ComboInfo& comboInfo, const std::vector<std::st
 
 template<typename T>
 inline T ComboEx(const ComboInfo& comboInfo, const std::vector<ComboItem<T>>& comboItems) {
+    return ComboExImpl::ComboEx<T, ComboItem<T>>(comboInfo, comboItems);
+}
+
+template<typename T>
+inline T ComboEx(const ComboInfoEx<T>& comboInfoEx, const std::vector<ComboItem<T>>& comboItems) {
+    size_t defaultIndex = 0;
+    
+    for (size_t index = 0; index < comboItems.size(); index++) {
+        if (comboItems[index].value == comboInfoEx.defaultValue) {
+            defaultIndex = index;
+            break;
+        }
+    }
+
+    ComboInfo comboInfo = { comboInfoEx.label,comboInfoEx.pCtx,defaultIndex,comboInfoEx.flags };
+
     return ComboExImpl::ComboEx<T, ComboItem<T>>(comboInfo, comboItems);
 }

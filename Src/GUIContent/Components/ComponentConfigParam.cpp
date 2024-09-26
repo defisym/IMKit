@@ -112,9 +112,10 @@ bool UpdateParam(Ctx* pCtx) {
     // ------------------------
     // Data Src
     // ------------------------
+	static ComboContext dataSrcSelComboCtx = {};
     deviceParams.dataSrcSel
-        = ComboEx<int>({ "Data Src", DSS_DEM },
-        { {"Raw", DSS_RAW}, {"Low Pass Filter", DSS_FILTER}, {"Demodulate", DSS_DEM} });
+        = static_cast<int>(ComboEx(ComboInfoEx{ "Data Src", &dataSrcSelComboCtx, DSS_DEM },
+        { {"Raw", DSS_RAW}, {"Low Pass Filter", DSS_FILTER}, {"Demodulate", DSS_DEM} }));
     param.uint32_tParam = deviceParams.dataSrcSel;
     Param_Set(hParam, L"data_src_sel", param);
 
@@ -123,9 +124,11 @@ bool UpdateParam(Ctx* pCtx) {
     // ------------------------
     {
         DisableHelper ignoreCHQuantity = { deviceParams.dataSrcSel == DSS_RAW };
-        deviceParams.demCHQuantity
-            = ComboEx<int>({ "Demodulation Channel Quantity", DCQ_CH1 },
-            { {"Channel One", DCQ_CH1}, {"Channel One & Two", DCQ_CH1_CH2} });
+		
+		static ComboContext demCHQuantityComboCtx = {};
+		deviceParams.demCHQuantity
+            = static_cast<int>(ComboEx(ComboInfoEx{ "Demodulation Channel Quantity",&demCHQuantityComboCtx, DCQ_CH1 },
+            { {"Channel One", DCQ_CH1}, {"Channel One & Two", DCQ_CH1_CH2} }));
         param.uint32_tParam = deviceParams.demCHQuantity;
         Param_Set(hParam, L"demodulation_ch_quantity", param);
     }
@@ -133,13 +136,14 @@ bool UpdateParam(Ctx* pCtx) {
     // ------------------------
     // upload_rate_sel
     // ------------------------
-    deviceParams.demCHQuantity
-        = ComboEx<int>({ "Upload Rate", URS_50M_2M },
+	static ComboContext uploadRateSelComboCtx = {};
+    deviceParams.uploadRateSel
+		= static_cast<int>(ComboEx(ComboInfoEx{ "Upload Rate",&uploadRateSelComboCtx, URS_50M_2M },
         { {"Upload Rate 250M -> Resolution 0.4M", URS_250M_0_4M},
             {"Upload Rate 125M -> Resolution 0.8M", URS_125M_0_8M},
             {"Upload Rate 83.3M -> Resolution 1.2M", URS_83_3M_1_2M},
             {"Upload Rate 62.5M -> Resolution 1.6M", URS_62_5M_1_6M},
-            {"Upload Rate 50M -> Resolution 2M", URS_50M_2M} });
+            {"Upload Rate 50M -> Resolution 2M", URS_50M_2M} }));
 	param.uint32_tParam = deviceParams.uploadRateSel;
 	Param_Set(hParam, L"upload_rate_sel", param);
 
