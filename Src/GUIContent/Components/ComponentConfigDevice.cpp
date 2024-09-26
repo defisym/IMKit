@@ -2,6 +2,7 @@
 
 #include <_DeLib/GeneralDefinition.h>
 
+#include "../../IMGuiEx/ComboEx.h"
 #include "../../IMGuiEx/DisableHelper.h"
 #include "../../GUIContent/Components/ComponentWaveformsProcess.h"
 
@@ -43,21 +44,9 @@ void CreateDeviceFailedPopUp(Ctx* pCtx) {
 void ComponentConfigDevice(Ctx* pCtx) {
 	const auto deviceNames = pCtx->dllHandler.deviceNames;
 
-	static size_t deviceCurrentIdx = 0;
-	if (ImGui::BeginCombo("Config/Device", deviceNames[deviceCurrentIdx].c_str())) {
-		for (size_t idx = 0; idx < deviceNames.size(); idx++) {
-			const bool bSelected = deviceCurrentIdx == idx;
-			if (ImGui::Selectable(deviceNames[idx].c_str(), bSelected)) {
-				deviceCurrentIdx = idx;
-			}
+    const auto pDeviceName = ComboEx("Config/Device_Ex", deviceNames);
 
-            if (bSelected) { ImGui::SetItemDefaultFocus(); }
-		}
-
-		ImGui::EndCombo();
-	}
-
-    CreateDevice(pCtx, to_wide_string(deviceNames[deviceCurrentIdx]).c_str());
+    CreateDevice(pCtx, to_wide_string(pDeviceName).c_str());
     ImGui::SameLine();
 	DeleteDevice(pCtx);
 
