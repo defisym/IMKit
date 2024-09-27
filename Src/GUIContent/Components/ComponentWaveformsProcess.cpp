@@ -23,11 +23,15 @@ ComponentWaveformsProcess::ComponentWaveformsProcess(Ctx* p)
 
     pWaveBuffer = new IndexBuffer(bufferSz);
     pWaveDisplayBuffer = new IndexBuffer(bufferSz);
+
+    hFilter = Util_Filter_CreateFilter(3, p->deviceParams.scanRate, 20.0);
 }
 
 ComponentWaveformsProcess::~ComponentWaveformsProcess() {
     delete CastBufferPointer(pWaveBuffer);
     delete CastBufferPointer(pWaveDisplayBuffer);
+
+    Util_Filter_DeleteFilter(&hFilter);
 }
 
 size_t ComponentWaveformsProcess::GetDisplayFrame(const size_t frameCount) {
@@ -242,6 +246,12 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     ImGui::TextUnformatted("unwrap 2D start");
 
     // ------------------------------------
+    // Filter
+    // ------------------------------------
+    static bool bFilter = false;
+    ImGui::Checkbox("Filter", &bFilter);
+
+    // ------------------------------------
     // Audio
     // ------------------------------------
     static bool bPlayAudio = false;
@@ -251,7 +261,7 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     // Return
     // ------------------------------------
     return { {diff,shakeStart,shakeRange,unwrap2DStart},
-        bUseReference,referenceStart,bPlayAudio };
+        bUseReference,bFilter,referenceStart,bPlayAudio };
 }
 
 bool ComponentWaveformsProcess::WaveProcess(const WaveRestoreOpt& opt) {
@@ -334,6 +344,13 @@ void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
         for (float& element : restoreWaveBuffer) {
             element -= average;
         }
+    }
+
+    // ------------------------------------
+    // Filter
+    // ------------------------------------
+    if(opt.bFilter) {
+        Util_Filter_Filter(hFilter, restoreWaveBuffer.data(), restoreWaveBuffer.size());
     }
 
     // ------------------------------------

@@ -14,6 +14,8 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 	BufferHandle pWaveBuffer = nullptr;             // for processing
 	BufferHandle pWaveDisplayBuffer = nullptr;      // for raw data displaying
 
+    FilterHandle hFilter = nullptr;
+
 	ComponentWaveformsProcess(Ctx* p);
 	~ComponentWaveformsProcess();
 
@@ -35,6 +37,7 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 	};
 
     struct WaveRestoreOpt :ShakeInfo {
+        bool bFilter = false;
         bool bUseReference = false;
         int referenceStart = 50;
         bool bPlayAudio = false;
