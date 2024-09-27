@@ -23,8 +23,6 @@ ComponentWaveformsProcess::ComponentWaveformsProcess(Ctx* p)
 
     pWaveBuffer = new IndexBuffer(bufferSz);
     pWaveDisplayBuffer = new IndexBuffer(bufferSz);
-
-    hFilter = Util_Filter_CreateFilter(3, p->deviceParams.scanRate, 20.0);
 }
 
 ComponentWaveformsProcess::~ComponentWaveformsProcess() {
@@ -183,6 +181,7 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     // ------------------------------------
     // Params
     // ------------------------------------
+    const auto& deviceParams = pCtx->deviceParams;
     const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
 
     // ------------------------------------
@@ -251,6 +250,20 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     static bool bFilter = false;
     ImGui::Checkbox("Filter", &bFilter);
 
+
+    auto disableFilterStopFrequency = ManualDisableHelper();
+
+    disableFilterStopFrequency.Disable(!bFilter);
+
+    static int filterStopFrequency = 20;
+    ImGui::SliderInt("##Filter Stop Frequency", &filterStopFrequency,
+                     1, (int)deviceParams.scanRate,
+                     "%d", sliderFlags);
+    AddSpin("Filter Stop Frequency", &filterStopFrequency,
+            1, (int)deviceParams.scanRate);
+
+    disableFilterStopFrequency.Enable();
+
     // ------------------------------------
     // Audio
     // ------------------------------------
@@ -261,7 +274,9 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     // Return
     // ------------------------------------
     return { {diff,shakeStart,shakeRange,unwrap2DStart},
-        bUseReference,bFilter,referenceStart,bPlayAudio };
+        bUseReference,referenceStart,
+        bFilter,filterStopFrequency,
+        bPlayAudio };
 }
 
 bool ComponentWaveformsProcess::WaveProcess(const WaveRestoreOpt& opt) {
@@ -349,7 +364,15 @@ void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
     // ------------------------------------
     // Filter
     // ------------------------------------
+    //TODO White noise should be removed
     if(opt.bFilter) {
+        static int oldFilterStopFrequency = 0;
+        if (opt.filterStopFrequency != oldFilterStopFrequency) {
+            oldFilterStopFrequency = opt.filterStopFrequency;
+            Util_Filter_DeleteFilter(&hFilter);
+            hFilter = Util_Filter_CreateFilter(5, pCtx->deviceParams.scanRate, opt.filterStopFrequency);
+        }
+
         Util_Filter_Filter(hFilter, restoreWaveBuffer.data(), restoreWaveBuffer.size());
     }
 

@@ -37,9 +37,10 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 	};
 
     struct WaveRestoreOpt :ShakeInfo {
-        bool bFilter = false;
         bool bUseReference = false;
         int referenceStart = 50;
+        bool bFilter = false;
+        int filterStopFrequency = 20;
         bool bPlayAudio = false;
     };
 
