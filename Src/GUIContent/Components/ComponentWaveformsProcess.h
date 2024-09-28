@@ -14,7 +14,8 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 	BufferHandle pWaveBuffer = nullptr;             // for processing
 	BufferHandle pWaveDisplayBuffer = nullptr;      // for raw data displaying
 
-    FilterHandle hFilter = nullptr;
+    FilterHandle hHighPassFilter = nullptr;
+    FilterHandle hMeanFilter = nullptr;
 
 	ComponentWaveformsProcess(Ctx* p);
 	~ComponentWaveformsProcess();

@@ -23,13 +23,16 @@ ComponentWaveformsProcess::ComponentWaveformsProcess(Ctx* p)
 
     pWaveBuffer = new IndexBuffer(bufferSz);
     pWaveDisplayBuffer = new IndexBuffer(bufferSz);
+
+    hMeanFilter = Util_Filter_CreateMeanFilter(5);
 }
 
 ComponentWaveformsProcess::~ComponentWaveformsProcess() {
     delete CastBufferPointer(pWaveBuffer);
     delete CastBufferPointer(pWaveDisplayBuffer);
 
-    Util_Filter_DeleteFilter(&hFilter);
+    Util_Filter_DeleteFilter(&hHighPassFilter);
+    Util_Filter_DeleteFilter(&hMeanFilter);
 }
 
 size_t ComponentWaveformsProcess::GetDisplayFrame(const size_t frameCount) {
@@ -379,11 +382,12 @@ void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
         static int oldFilterStopFrequency = 0;
         if (opt.filterStopFrequency != oldFilterStopFrequency) {
             oldFilterStopFrequency = opt.filterStopFrequency;
-            Util_Filter_DeleteFilter(&hFilter);
-            hFilter = Util_Filter_CreateHighPassFilter(5, pCtx->deviceParams.scanRate, opt.filterStopFrequency);
+            Util_Filter_DeleteFilter(&hHighPassFilter);
+            hHighPassFilter = Util_Filter_CreateHighPassFilter(5, pCtx->deviceParams.scanRate, opt.filterStopFrequency);
         }
 
-        Util_Filter_Filter(hFilter, restoreWaveBuffer.data(), restoreWaveBuffer.size());
+        Util_Filter_Filter(hMeanFilter, restoreWaveBuffer.data(), restoreWaveBuffer.size());
+        Util_Filter_Filter(hHighPassFilter, restoreWaveBuffer.data(), restoreWaveBuffer.size());
     }
 
     // ------------------------------------
