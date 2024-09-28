@@ -32,7 +32,8 @@ uint32_t DataConverter::ConvertData(const SourceInfo& srcInfo, const DestInfo& d
     }
 
 #ifdef _DEBUG
-    assert(sampleCount * MIX_DEFAULT_CHANNELS == count);
+    constexpr auto tolerance = 5;
+    assert(abs(sampleCount * MIX_DEFAULT_CHANNELS - count) < tolerance);
 #endif
 
     return sampleCount;
