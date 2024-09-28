@@ -16,6 +16,7 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 
     FilterHandle hHighPassFilter = nullptr;
     FilterHandle hMeanFilter = nullptr;
+    bool bOptChanged = false;
 
 	ComponentWaveformsProcess(Ctx* p);
 	~ComponentWaveformsProcess();
@@ -46,7 +47,7 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
         bool bPlayAudio = false;
     };
 
-    [[nodiscard]] WaveRestoreOpt GetWaveRestoreOpt() const;
+    [[nodiscard]] WaveRestoreOpt GetWaveRestoreOpt();
     bool WaveProcess(const WaveRestoreOpt& opt);
 
     std::vector<OTDRProcessValueType> audioBuffer;
