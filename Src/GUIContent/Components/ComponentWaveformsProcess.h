@@ -34,6 +34,7 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 		int shakeStart = 50;
 		int shakeRange = 20;
 		int unwrap2DStart = 1;
+		int averageRange = 1;
 	};
 
     struct WaveRestoreOpt :ShakeInfo {

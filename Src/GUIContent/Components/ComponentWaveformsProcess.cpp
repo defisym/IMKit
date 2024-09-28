@@ -244,6 +244,15 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     ImGui::SameLine();
     ImGui::TextUnformatted("unwrap 2D start");
 
+    static int averageRange = 1;
+    ImGui::SliderInt("##average range", &averageRange,
+                     1, shakeRange - unwrap2DStart,
+                     "%d", sliderFlags);
+    AddSpin("average range", &averageRange,
+            1, shakeRange - unwrap2DStart);
+    ImGui::SameLine();
+    ImGui::TextUnformatted("average range");
+
     // ------------------------------------
     // Filter
     // ------------------------------------
@@ -257,10 +266,10 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
 
     static int filterStopFrequency = 20;
     ImGui::SliderInt("##Filter Stop Frequency", &filterStopFrequency,
-                     1, (int)deviceParams.scanRate,
-                     "%d", sliderFlags);
+        1, static_cast<int>(deviceParams.scanRate),
+        "%d", sliderFlags);
     AddSpin("Filter Stop Frequency", &filterStopFrequency,
-            1, (int)deviceParams.scanRate);
+            1, static_cast<int>(deviceParams.scanRate));
 
     disableFilterStopFrequency.Enable();
 
@@ -273,7 +282,9 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     // ------------------------------------
     // Return
     // ------------------------------------
-    return { {diff,shakeStart,shakeRange,unwrap2DStart},
+    return { {diff,
+        shakeStart,shakeRange,
+        unwrap2DStart,averageRange},
         bUseReference,referenceStart,
         bFilter,filterStopFrequency,
         bPlayAudio };
@@ -340,15 +351,14 @@ void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
     // ------------------------------------
     // Wave Restore
     // ------------------------------------
-    this->WaveRestoreProcess(pProcess,
-        { opt.diff,opt.shakeStart,opt.shakeRange,opt.unwrap2DStart },
-        restoreWaveBuffer);
+    auto shakeInfo = static_cast<ShakeInfo>(opt);
+
+    this->WaveRestoreProcess(pProcess, shakeInfo, restoreWaveBuffer);
 
     // remove system noise by reference point
     if (opt.bUseReference) {
-        this->WaveRestoreProcess(pProcess,
-            { opt.diff,opt.referenceStart,opt.shakeRange,opt.unwrap2DStart },
-            referenceWaveBuffer);
+        shakeInfo.shakeStart = opt.referenceStart;
+        this->WaveRestoreProcess(pProcess, shakeInfo, referenceWaveBuffer);
 
         OTDRProcessValueType accumulate = 0.0f;
         for (const float& element : referenceWaveBuffer) {
@@ -370,7 +380,7 @@ void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
         if (opt.filterStopFrequency != oldFilterStopFrequency) {
             oldFilterStopFrequency = opt.filterStopFrequency;
             Util_Filter_DeleteFilter(&hFilter);
-            hFilter = Util_Filter_CreateFilter(5, pCtx->deviceParams.scanRate, opt.filterStopFrequency);
+            hFilter = Util_Filter_CreateHighPassFilter(5, pCtx->deviceParams.scanRate, opt.filterStopFrequency);
         }
 
         Util_Filter_Filter(hFilter, restoreWaveBuffer.data(), restoreWaveBuffer.size());
@@ -386,10 +396,9 @@ void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
 void ComponentWaveformsProcess::WaveRestoreProcess(OTDRProcessValueType* pProcess, const ShakeInfo& shakeInfo,
                                                    std::vector<OTDRProcessValueType>& waveBuffer) const {
 	const auto& deviceParams = pCtx->deviceParams;
-	const auto& [diff, 
-		shakeStart, 
-		shakeRange,
-		unwrap2DStart] = shakeInfo;
+    const auto& [diff,
+        shakeStart, shakeRange,
+        unwrap2DStart, averageRange] = shakeInfo;
 
 	Util_IterateFrames(pProcess, deviceParams.processFrameCount, deviceParams.pointNumPerScan,
 					   [] (OTDRProcessValueType* pFrame, const size_t frameSz, void* pUserData) {
@@ -403,11 +412,16 @@ void ComponentWaveformsProcess::WaveRestoreProcess(OTDRProcessValueType* pProces
 					   }, const_cast<ShakeInfo*>(&shakeInfo));
 				
 	waveBuffer.resize(deviceParams.processFrameCount);
+    for (auto& it : waveBuffer) { it = 0.0f; }
 
-	const auto pStart = pProcess + shakeStart + unwrap2DStart;
-	for (size_t index = 0; index < static_cast<size_t>(deviceParams.processFrameCount); index++) {
-		waveBuffer[index] = pStart[index * deviceParams.pointNumPerScan];
-	}
+    for (size_t averageIndex = 0; averageIndex < averageRange; averageIndex++) {
+        const auto pStart = pProcess + shakeStart + unwrap2DStart + averageIndex;
+        for (size_t index = 0; index < static_cast<size_t>(deviceParams.processFrameCount); index++) {
+            waveBuffer[index] += pStart[index * deviceParams.pointNumPerScan];
+        }
+    }
+
+    for (auto& it : waveBuffer) { it /= averageRange; }
 
 	Util_Unwrap(waveBuffer.data(), waveBuffer.size(), PI);
 }
