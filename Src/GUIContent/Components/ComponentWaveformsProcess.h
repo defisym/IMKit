@@ -6,17 +6,33 @@
 
 struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-special-member-functions)
 	OTDRContextHandle hContext = nullptr;
-	constexpr static ImVec2 plotSize = { -1.0f, 300.0f };
-	constexpr static ImGuiTabBarFlags tabBarFlags = ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_TabListPopupButton;
-    constexpr static ImGuiSliderFlags sliderFlags = ImGuiSliderFlags_AlwaysClamp;
+	constexpr static ImVec2 PLOT_SIZE = { -1.0f, 300.0f };
+	constexpr static ImGuiTabBarFlags TAB_BAR_FLAGS = ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_TabListPopupButton;
+    constexpr static ImGuiSliderFlags SLIDER_FLAGS = ImGuiSliderFlags_AlwaysClamp;
 
 	using BufferHandle = void*;
 	BufferHandle pWaveBuffer = nullptr;             // for processing
 	BufferHandle pWaveDisplayBuffer = nullptr;      // for raw data displaying
 
     FilterHandle hHighPassFilter = nullptr;
+    constexpr static int DEFAULT_ORDER = 5;
+    constexpr static double DEFAULT_CUTOFF_FREQUENCY = 10.0;
+
     FilterHandle hMeanFilter = nullptr;
-    bool bOptChanged = false;
+    constexpr static size_t DEFAULT_MEAN_RADIUS = 3;
+
+    struct FilterParamBase {
+        bool bEnable = false;
+        bool bUpdate = false;
+    };
+
+    struct HighPassFilterParam :FilterParamBase {
+        int filterStopFrequency = 20;
+    };
+
+    struct MeanFilterParam :FilterParamBase {
+        int radius = 3;
+    };
 
 	ComponentWaveformsProcess(Ctx* p);
 	~ComponentWaveformsProcess();
@@ -40,12 +56,15 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 	};
 
     struct WaveRestoreOpt :ShakeInfo {
+        bool bPlayAudio = false;
         bool bUseReference = false;
         int referenceStart = 50;
-        bool bFilter = false;
-        int filterStopFrequency = 20;
-        bool bPlayAudio = false;
+
+        HighPassFilterParam highPassFilterParam = {};
+        MeanFilterParam meanFilterParam = {};
     };
+
+    bool bOptChanged = false;
 
     [[nodiscard]] WaveRestoreOpt GetWaveRestoreOpt();
     bool WaveProcess(const WaveRestoreOpt& opt);

@@ -24,7 +24,10 @@ ComponentWaveformsProcess::ComponentWaveformsProcess(Ctx* p)
     pWaveBuffer = new IndexBuffer(bufferSz);
     pWaveDisplayBuffer = new IndexBuffer(bufferSz);
 
-    hMeanFilter = Util_Filter_CreateMeanFilter(5);
+    hHighPassFilter = Util_Filter_CreateHighPassFilter(DEFAULT_ORDER,
+        pCtx->deviceParams.scanRate,
+        DEFAULT_CUTOFF_FREQUENCY);
+    hMeanFilter = Util_Filter_CreateMeanFilter(DEFAULT_MEAN_RADIUS);
 }
 
 ComponentWaveformsProcess::~ComponentWaveformsProcess() {
@@ -41,7 +44,7 @@ size_t ComponentWaveformsProcess::GetDisplayFrame(const size_t frameCount) {
 }
 
 void ComponentWaveformsProcess::WaveformTab() {
-    if (!ImGui::BeginTabBar("Waveforms/Tab", tabBarFlags)) { return; }
+    if (!ImGui::BeginTabBar("Waveforms/Tab", TAB_BAR_FLAGS)) { return; }
 
     this->Raw();
     this->Shake();
@@ -62,7 +65,7 @@ void ComponentWaveformsProcess::Raw() const {
 	using DataType = std::remove_cvref_t<std::remove_pointer_t<decltype(pBuffer)>>;
     [[maybe_unused]] auto stride = static_cast<int>(sizeof(DataType) * bufferStride);
 
-	if (ImPlot::BeginPlot("ImPlot/Raw/CH1", plotSize)) {
+	if (ImPlot::BeginPlot("ImPlot/Raw/CH1", PLOT_SIZE)) {
 		DisplayPlot("ImPlot/Raw/CH1/Plot",
 					pBuffer,
 					static_cast<int>(bufferFrameSize),
@@ -70,7 +73,7 @@ void ComponentWaveformsProcess::Raw() const {
 
 		ImPlot::EndPlot();
 	}
-	if (ImPlot::BeginPlot("ImPlot/Raw/CH2", plotSize)) {
+	if (ImPlot::BeginPlot("ImPlot/Raw/CH2", PLOT_SIZE)) {
 		DisplayPlot("ImPlot/Raw/CH2/Plot",
 					pBuffer + 1,
 					static_cast<int>(bufferFrameSize),
@@ -112,13 +115,13 @@ void ComponentWaveformsProcess::Shake() const {
         return;
     }
 
-	if (ImGui::BeginTabBar("Shake/Tab", tabBarFlags)) {
+	if (ImGui::BeginTabBar("Shake/Tab", TAB_BAR_FLAGS)) {
         // Handle Moving Average
         {
             auto frameCount = pComponentVibrationLocalization->MovingAverage();
 
             if (ImGui::BeginTabItem("Shake MA")) {
-                if (ImPlot::BeginPlot("ImPlot/Shake/MA", plotSize)) {                    
+                if (ImPlot::BeginPlot("ImPlot/Shake/MA", PLOT_SIZE)) {                    
                     for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(frameCount); frameIdx++) {
                         DisplayPlot(std::format("ImPlot/Shake/MA/Plot_{}", frameIdx).c_str(),
                             pComponentVibrationLocalization->GetMovingAverageFrame(frameIdx),
@@ -137,7 +140,7 @@ void ComponentWaveformsProcess::Shake() const {
             const auto accumulateFrameIndex = frameCount - 1;
 
             if (ImGui::BeginTabItem("Shake MD")) {
-                if (ImPlot::BeginPlot("ImPlot/Shake/MD", plotSize)) {
+                if (ImPlot::BeginPlot("ImPlot/Shake/MD", PLOT_SIZE)) {
                     for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(accumulateFrameIndex); frameIdx++) {
                         DisplayPlot(std::format("ImPlot/Shake/MD/Plot_{}", frameIdx).c_str(),
                             pComponentVibrationLocalization->GetMovingDifferenceFrame(frameIdx),
@@ -149,7 +152,7 @@ void ComponentWaveformsProcess::Shake() const {
                 ImGui::EndTabItem();
             }
             if (ImGui::BeginTabItem("Shake MD Accumulate")) {
-                if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", plotSize)) {
+                if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", PLOT_SIZE)) {
                     DisplayPlot("ImPlot/Shake/MD/Accumulate/Plot",
                           pComponentVibrationLocalization->GetMovingDifferenceFrame(accumulateFrameIndex),
                           static_cast<int>(param.frameSize));
@@ -203,7 +206,7 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     static int referenceStart = 50;
     bOptChanged &= ImGui::SliderInt("##reference start", &referenceStart,
                      0, static_cast<int>(bufferInfo.frameSize),
-                     "%d", sliderFlags);
+                     "%d", SLIDER_FLAGS);
     bOptChanged &= AddSpin("reference start", &referenceStart,
             0, static_cast<int>(bufferInfo.frameSize));
     ImGui::SameLine();
@@ -221,7 +224,7 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     static int shakeStart = 50;
     bOptChanged &= ImGui::SliderInt("##shake start", &shakeStart,
                      0, static_cast<int>(bufferInfo.frameSize),
-                     "%d", sliderFlags);
+                     "%d", SLIDER_FLAGS);
     bOptChanged &= AddSpin("shake start", &shakeStart,
             0, static_cast<int>(bufferInfo.frameSize));
     ImGui::SameLine();
@@ -230,7 +233,7 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     static int shakeRange = 20;
     bOptChanged &= ImGui::SliderInt("##shake range", &shakeRange,
                      0, static_cast<int>(bufferInfo.frameSize) - shakeStart,
-                     "%d", sliderFlags);
+                     "%d", SLIDER_FLAGS);
     bOptChanged &= AddSpin("shake range", &shakeRange,
             0, static_cast<int>(bufferInfo.frameSize) - shakeStart);
     ImGui::SameLine();
@@ -242,7 +245,7 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     static int unwrap2DStart = 1;
     bOptChanged &= ImGui::SliderInt("##unwrap 2D start", &unwrap2DStart,
                      1, shakeRange,
-                     "%d", sliderFlags);
+                     "%d", SLIDER_FLAGS);
     bOptChanged &= AddSpin("unwrap 2D start", &unwrap2DStart,
             1, shakeRange);
     ImGui::SameLine();
@@ -251,7 +254,7 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     static int averageRange = 1;
     bOptChanged &= ImGui::SliderInt("##average range", &averageRange,
                      1, shakeRange - unwrap2DStart,
-                     "%d", sliderFlags);
+                     "%d", SLIDER_FLAGS);
     bOptChanged &= AddSpin("average range", &averageRange,
             1, shakeRange - unwrap2DStart);
     ImGui::SameLine();
@@ -260,21 +263,45 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     // ------------------------------------
     // Filter
     // ------------------------------------
-    static bool bFilter = false;
-    bOptChanged &= ImGui::Checkbox("Filter", &bFilter);
+    auto disableFilter = ManualDisableHelper();
 
-    auto disableFilterStopFrequency = ManualDisableHelper();
+    // ------------------------
+    // High Pass Filter
+    // ------------------------
+    static bool bHighPassFilter = false;
+    bOptChanged &= ImGui::Checkbox("High Pass Filter", &bHighPassFilter);
 
-    disableFilterStopFrequency.Disable(!bFilter);
+    disableFilter.Disable(!bHighPassFilter);
 
     static int filterStopFrequency = 20;
-    bOptChanged &= ImGui::SliderInt("##Filter Stop Frequency", &filterStopFrequency,
+    static bool bHighPassFilterChanged = false;
+    bHighPassFilterChanged &= ImGui::SliderInt("##Filter Stop Frequency", &filterStopFrequency,
         1, static_cast<int>(deviceParams.scanRate),
-        "%d", sliderFlags);
-    bOptChanged &= AddSpin("Filter Stop Frequency", &filterStopFrequency,
-            1, static_cast<int>(deviceParams.scanRate));
+        "%d", SLIDER_FLAGS);
+    bHighPassFilterChanged &= AddSpin("Filter Stop Frequency", &filterStopFrequency,
+        1, static_cast<int>(deviceParams.scanRate));
+    bOptChanged &= bHighPassFilterChanged;
 
-    disableFilterStopFrequency.Enable();
+    disableFilter.Enable();
+
+    // ------------------------
+    // Mean Filter
+    // ------------------------
+    static bool bMeanFilter = false;
+    bOptChanged &= ImGui::Checkbox("High Pass Filter", &bMeanFilter);
+
+    disableFilter.Disable(!bMeanFilter);
+
+    static int filterMeanRadius = 5;
+    static bool bMeanFilterChanged = false;
+    bMeanFilterChanged &= ImGui::SliderInt("##Filter Stop Frequency", &filterMeanRadius,
+        1, deviceParams.processFrameCount,
+        "%d", SLIDER_FLAGS);
+    bMeanFilterChanged &= AddSpin("Filter Stop Frequency", &filterMeanRadius,
+        1, deviceParams.processFrameCount);
+    bOptChanged &= bMeanFilterChanged;
+
+    disableFilter.Enable();
 
     // ------------------------------------
     // Audio
@@ -288,9 +315,11 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     return { {diff,
         shakeStart,shakeRange,
         unwrap2DStart,averageRange},
+        bPlayAudio,
         bUseReference,referenceStart,
-        bFilter,filterStopFrequency,
-        bPlayAudio };
+        { { bHighPassFilter,bHighPassFilterChanged },filterStopFrequency },
+        { { bMeanFilter,bMeanFilterChanged }, filterMeanRadius }
+    };
 }
 
 bool ComponentWaveformsProcess::WaveProcess(const WaveRestoreOpt& opt) {
@@ -379,16 +408,22 @@ void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
     // Filter
     // ------------------------------------
     //TODO White noise should be removed
-    if(opt.bFilter) {
-        static int oldFilterStopFrequency = 0;
-        if (opt.filterStopFrequency != oldFilterStopFrequency) {
-            oldFilterStopFrequency = opt.filterStopFrequency;
+    if (opt.highPassFilterParam.bEnable) {
+        if (opt.highPassFilterParam.bUpdate) {
             Util_Filter_DeleteFilter(&hHighPassFilter);
-            hHighPassFilter = Util_Filter_CreateHighPassFilter(5, pCtx->deviceParams.scanRate, opt.filterStopFrequency);
+            hHighPassFilter = Util_Filter_CreateHighPassFilter(5, pCtx->deviceParams.scanRate, opt.highPassFilterParam.filterStopFrequency);
+        }
+
+        Util_Filter_Filter(hHighPassFilter, restoreWaveBuffer.data(), restoreWaveBuffer.size());
+    }
+
+    if (opt.meanFilterParam.bEnable) {
+        if (opt.meanFilterParam.bUpdate) {
+            Util_Filter_DeleteFilter(&hMeanFilter);
+            hMeanFilter = Util_Filter_CreateMeanFilter(opt.meanFilterParam.radius);
         }
 
         Util_Filter_Filter(hMeanFilter, restoreWaveBuffer.data(), restoreWaveBuffer.size());
-        Util_Filter_Filter(hHighPassFilter, restoreWaveBuffer.data(), restoreWaveBuffer.size());
     }
 
     // ------------------------------------
@@ -432,12 +467,12 @@ void ComponentWaveformsProcess::WaveRestoreProcess(OTDRProcessValueType* pProces
 }
 
 void ComponentWaveformsProcess::WaveDisplay() const {
-    if (!ImGui::BeginTabBar("Wave/Tab", tabBarFlags)) { return; }
+    if (!ImGui::BeginTabBar("Wave/Tab", TAB_BAR_FLAGS)) { return; }
 
     const auto& deviceParams = pCtx->deviceParams;
 
     if (ImGui::BeginTabItem("Wave Unprocessed")) {
-        if (ImPlot::BeginPlot("ImPlot/Wave/Wave Unprocessed", plotSize)) {
+        if (ImPlot::BeginPlot("ImPlot/Wave/Wave Unprocessed", PLOT_SIZE)) {
             for (size_t frameIdx = 0;
                 frameIdx < GetDisplayFrame(deviceParams.processFrameCount);
                 frameIdx++) {
@@ -453,14 +488,14 @@ void ComponentWaveformsProcess::WaveDisplay() const {
     }
 
     if (ImGui::BeginTabItem("Wave Shake")) {
-        if (ImPlot::BeginPlot("ImPlot/Wave/Wave Shake", plotSize)) {
+        if (ImPlot::BeginPlot("ImPlot/Wave/Wave Shake", PLOT_SIZE)) {
             DisplayPlot(std::format("ImPlot/Wave/Wave Shake").c_str(),
                 restoreWaveBuffer.data(), static_cast<int>(restoreWaveBuffer.size()));
 
             ImPlot::EndPlot();
         }
 
-        if (ImPlot::BeginPlot("ImPlot/Wave/Wave FFT Amplitude", plotSize)) {
+        if (ImPlot::BeginPlot("ImPlot/Wave/Wave FFT Amplitude", PLOT_SIZE)) {
             DisplayPlot(std::format("ImPlot/Wave/Wave FFT Amplitude").c_str(),
                 restoreWaveFFTBuffer.data(), static_cast<int>(fftElement), 1,
                 [&] (const double index) {
