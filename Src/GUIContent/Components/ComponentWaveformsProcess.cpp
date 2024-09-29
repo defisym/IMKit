@@ -198,12 +198,13 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     static bool bUseReference = false;
     bOptChanged &= ImGui::Checkbox("use reference", &bUseReference);
     ImGui::SameLine();
-    static bool bReferenceAverage = false;
-    bOptChanged &= ImGui::Checkbox("reference average", &bReferenceAverage);
 
     auto disableReference = ManualDisableHelper();
 
     disableReference.Disable(!bUseReference);
+
+    static bool bReferenceAverage = false;
+    bOptChanged &= ImGui::Checkbox("reference average", &bReferenceAverage);
 
     static int referenceStart = 50;
     bOptChanged &= ImGui::SliderInt("##reference start", &referenceStart,
