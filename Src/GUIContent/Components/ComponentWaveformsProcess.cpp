@@ -194,6 +194,7 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     // ------------------------------------
     // Reference
     // ------------------------------------
+    ImGui::TextUnformatted("reference shares the range & unwrap settings");
     static bool bUseReference = false;
     bOptChanged &= ImGui::Checkbox("use reference", &bUseReference);
     ImGui::SameLine();
@@ -271,6 +272,7 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     // ------------------------
     static bool bHighPassFilter = false;
     bOptChanged &= ImGui::Checkbox("High Pass Filter", &bHighPassFilter);
+    ImGui::SameLine();
 
     disableFilter.Disable(!bHighPassFilter);
 
@@ -282,6 +284,8 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     bHighPassFilterChanged &= AddSpin("Filter Stop Frequency", &filterStopFrequency,
         1, static_cast<int>(deviceParams.scanRate));
     bOptChanged &= bHighPassFilterChanged;
+    ImGui::SameLine();
+    ImGui::TextUnformatted("Filter Stop Frequency");
 
     disableFilter.Enable();
 
@@ -302,6 +306,8 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     bMeanFilterChanged &= AddSpin("Filter Mean Radius", &filterMeanRadius,
         1, deviceParams.processFrameCount);
     bOptChanged &= bMeanFilterChanged;
+    ImGui::SameLine();
+    ImGui::TextUnformatted("Filter Mean Radius");
 
     disableFilter.Enable();
 
@@ -396,16 +402,16 @@ void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
         this->WaveRestoreProcess(pProcess, shakeInfo, referenceWaveBuffer);
 
         if (opt.bReferenceAverage) {
-        OTDRProcessValueType accumulate = 0.0f;
-        for (const float& element : referenceWaveBuffer) {
-            accumulate += element;
-        }
+            OTDRProcessValueType accumulate = 0.0f;
+            for (const float& element : referenceWaveBuffer) {
+                accumulate += element;
+            }
 
-        const OTDRProcessValueType average = accumulate / static_cast<OTDRProcessValueType>(referenceWaveBuffer.size());
-        for (float& element : restoreWaveBuffer) {
-            element -= average;
+            const OTDRProcessValueType average = accumulate / static_cast<OTDRProcessValueType>(referenceWaveBuffer.size());
+            for (float& element : restoreWaveBuffer) {
+                element -= average;
+            }
         }
-    }
         else {
             for (size_t index = 0; index < restoreWaveBuffer.size(); index++) {
                 restoreWaveBuffer[index] -= referenceWaveBuffer[index];
