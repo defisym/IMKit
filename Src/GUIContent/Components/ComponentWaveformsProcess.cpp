@@ -288,16 +288,17 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     // Mean Filter
     // ------------------------
     static bool bMeanFilter = false;
-    bOptChanged &= ImGui::Checkbox("High Pass Filter", &bMeanFilter);
+    bOptChanged &= ImGui::Checkbox("Mean Filter", &bMeanFilter);
+    ImGui::SameLine();
 
     disableFilter.Disable(!bMeanFilter);
 
     static int filterMeanRadius = 5;
     static bool bMeanFilterChanged = false;
-    bMeanFilterChanged &= ImGui::SliderInt("##Filter Stop Frequency", &filterMeanRadius,
+    bMeanFilterChanged &= ImGui::SliderInt("##Filter Mean Radius", &filterMeanRadius,
         1, deviceParams.processFrameCount,
         "%d", SLIDER_FLAGS);
-    bMeanFilterChanged &= AddSpin("Filter Stop Frequency", &filterMeanRadius,
+    bMeanFilterChanged &= AddSpin("Filter Mean Radius", &filterMeanRadius,
         1, deviceParams.processFrameCount);
     bOptChanged &= bMeanFilterChanged;
 
