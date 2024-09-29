@@ -197,7 +197,8 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     static bool bUseReference = false;
     bOptChanged &= ImGui::Checkbox("use reference", &bUseReference);
     ImGui::SameLine();
-    ImGui::TextUnformatted("reference shares the range & unwrap settings");
+    static bool bReferenceAverage = false;
+    bOptChanged &= ImGui::Checkbox("reference average", &bReferenceAverage);
 
     auto disableReference = ManualDisableHelper();
 
@@ -317,7 +318,7 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
         shakeStart,shakeRange,
         unwrap2DStart,averageRange},
         bPlayAudio,
-        bUseReference,referenceStart,
+        bUseReference,bReferenceAverage,referenceStart,
         { { bHighPassFilter,bHighPassFilterChanged },filterStopFrequency },
         { { bMeanFilter,bMeanFilterChanged }, filterMeanRadius }
     };
@@ -394,6 +395,7 @@ void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
         shakeInfo.shakeStart = opt.referenceStart;
         this->WaveRestoreProcess(pProcess, shakeInfo, referenceWaveBuffer);
 
+        if (opt.bReferenceAverage) {
         OTDRProcessValueType accumulate = 0.0f;
         for (const float& element : referenceWaveBuffer) {
             accumulate += element;
@@ -402,6 +404,12 @@ void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
         const OTDRProcessValueType average = accumulate / static_cast<OTDRProcessValueType>(referenceWaveBuffer.size());
         for (float& element : restoreWaveBuffer) {
             element -= average;
+        }
+    }
+        else {
+            for (size_t index = 0; index < restoreWaveBuffer.size(); index++) {
+                restoreWaveBuffer[index] -= referenceWaveBuffer[index];
+            }
         }
     }
 

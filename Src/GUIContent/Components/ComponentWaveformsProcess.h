@@ -58,6 +58,7 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
     struct WaveRestoreOpt :ShakeInfo {
         bool bPlayAudio = false;
         bool bUseReference = false;
+        bool bReferenceAverage = false;
         int referenceStart = 50;
 
         HighPassFilterParam highPassFilterParam = {};
