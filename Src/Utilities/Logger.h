@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <chrono>
 
 #include "../GUIContext/Context.h"
 
@@ -28,7 +29,10 @@ class Logger {
     bool bValid = false;
     std::string filePath;
 
+    using TimeStamp = decltype(std::chrono::system_clock::now());
+    TimeStamp lastSaveTimeStamp = {};
 public:
     Logger(Ctx* pCtx, const LoggerConfig& config = {});
     bool AddData(const LogData* pLogData);
+    static std::string GetFormattedTimeStamp(const TimeStamp timeStamp, char const* pFmt = "%Y-%m-%d %H-%M-%S");
 };
