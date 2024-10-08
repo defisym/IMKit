@@ -7,21 +7,77 @@ namespace fs = std::filesystem;
 Logger::Logger(Ctx* pCtx, const LoggerConfig& config) {
     this->pCtx = pCtx;
     this->config = config;
+    
+    do {
+        // get relative path
+        char fullPathName[MAX_PATH] = {};
+        GetFullPathNameA(config.filePath.c_str(), MAX_PATH, fullPathName, nullptr);
+        filePath = fullPathName;
 
-    // get relative path
-    filePath.resize(MAX_PATH);
-    GetFullPathNameA(config.filePath.c_str(), MAX_PATH, filePath.data(), nullptr);
+        // GetFullPathName will normalize / and \\ to \\
+        // if not end with \\ , append it
+        if (!filePath.ends_with('\\')) { filePath += '\\'; }
 
-    const auto path = fs::path{ filePath };
+        // create dir
+        const auto path = fs::path{ filePath };
 
-    std::error_code ec;
-    fs::create_directory(path, ec);
+        std::error_code ec;
+        fs::create_directory(path, ec);
 
-    bValid = ec.value() == 0;
+        if (ec.value() != 0) { break; }
+
+        bValid = true;
+
+        return;
+    } while (false);
+
+    bValid = false;   
 }
 
 using namespace std::chrono_literals;
+
 bool Logger::AddData(const LogData* pLogData) {
+    const auto currentTimeStamp = std::chrono::system_clock::now();
+    cache.emplace_back(currentTimeStamp,
+        GetFormattedTimeStamp(currentTimeStamp),
+        pLogData->ToString());
+
+    // save file if needed
+    const size_t interval = (currentTimeStamp - lastSaveTimeStamp) / 1ms;
+    if (interval < config.interval) { return false; }
+
+    const auto fileName = cache.begin()->timeStampFormatted
+        + "~"
+        + cache.end()->timeStampFormatted
+        + ".data";
+
+    const auto path = fs::path{ filePath } / fileName.c_str();
+
+    FILE* fp = nullptr;
+
+    const auto err = _wfopen_s(&fp, path.c_str(), L"wb");
+    if (err != 0 || fp == nullptr) { return false; }
+
+    for (auto& it : cache) {
+        auto writeString = [&] (const std::string& str) {
+            return fwrite(str.data(), str.size(), 1, fp);
+        };
+
+        size_t elementCount = 0u;
+
+        elementCount += writeString(it.timeStampFormatted);
+        elementCount += writeString("\r\n");
+        elementCount += writeString(it.data);
+        elementCount += writeString("\r\n");
+    }
+
+    cache.clear();
+
+    const auto ret = fclose(fp);
+
+    return ret == 0;
+}
+
 std::string Logger::GetFormattedTimeStamp(const TimeStamp timeStamp, char const* pFmt) {
     std::tm time = {};
     const auto t = std::chrono::system_clock::to_time_t(timeStamp);
