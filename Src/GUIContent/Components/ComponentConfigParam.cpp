@@ -25,10 +25,10 @@ bool UpdateParam(Ctx* pCtx) {
 
 	DisableHelper deviceStart = { pCtx->deviceHandler.bStart };
 
-	ImGui::Checkbox("Use context", &deviceParams.bUseCountext);
+	ImGui::Checkbox("Use context", &deviceParams.bUseContext);
 	
 	ManualDisableHelper frameHelper;
-	frameHelper.Disable(!deviceParams.bUseCountext);
+	frameHelper.Disable(!deviceParams.bUseContext);
 	static int updateFrameCount = 64;
 	ImGui::InputInt("Frame to update", &updateFrameCount, 64, 256);
 	frameHelper.Enable();
@@ -37,10 +37,10 @@ bool UpdateParam(Ctx* pCtx) {
 	ImGui::InputInt("Frame to process", &processFrameCount, 64, 256);
 
 	// crash when adding data if process frame is not the integer multiply of update frame
-	bEnable = bEnable && (!deviceParams.bUseCountext || ((processFrameCount % updateFrameCount) == 0));
+	bEnable = bEnable && (!deviceParams.bUseContext || ((processFrameCount % updateFrameCount) == 0));
 
 	deviceParams.processFrameCount = processFrameCount;
-	deviceParams.updateFrameCount = deviceParams.bUseCountext
+	deviceParams.updateFrameCount = deviceParams.bUseContext
 		? updateFrameCount
 		: processFrameCount;
 
@@ -163,7 +163,7 @@ void StartStopDevice(Ctx* pCtx, const bool bEnable) {
 
         const auto& deviceParams = pCtx->deviceParams;
         const auto& processParams = pCtx->processParams;
-        if (deviceParams.bUseCountext) {
+        if (deviceParams.bUseContext) {
             pCtx->processHandler.hVibrationLocalization
                 = Util_VibrationLocalizationContext_Create(deviceParams.processFrameCount, deviceParams.pointNumPerScan,
                                                          processParams.movingAvgRange, processParams.movingDiffRange);

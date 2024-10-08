@@ -100,7 +100,7 @@ void ComponentWaveformsProcess::Shake() const {
 
     const auto pComponentVibrationLocalization
     = [&] ()->std::unique_ptr<ComponentVibrationLocalization> {        
-        if (deviceParams.bUseCountext) {
+        if (deviceParams.bUseContext) {
             VibrationLocalizationContextParam contextParam
                 = { pCtx->deviceHandler.bContextUpdated, pCtx->processHandler.hVibrationLocalization };
             return std::make_unique<ComponentVibrationLocalizationContext>(param, contextParam);
@@ -243,7 +243,7 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     ImGui::TextUnformatted("shake range");
 
     // ------------------------------------
-    // Unwarp 2D
+    // Unwrap 2D
     // ------------------------------------
     static int unwrap2DStart = 1;
     bOptChanged &= ImGui::SliderInt("##unwrap 2D start", &unwrap2DStart,
