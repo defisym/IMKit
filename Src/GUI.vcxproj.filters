@@ -168,6 +168,9 @@
     <ClCompile Include="Utilities\DataConverter.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Utilities\Logger.cpp">
+      <Filter>源文件\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\imguiInterface.h">
@@ -271,6 +274,9 @@
     </ClInclude>
     <ClInclude Include="GUIContext\Handler\ProcessHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Logger.h">
+      <Filter>头文件\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
