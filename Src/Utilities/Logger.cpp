@@ -37,18 +37,24 @@ Logger::Logger(Ctx* pCtx, const LoggerConfig& config) {
 using namespace std::chrono_literals;
 
 bool Logger::AddData(LogData* pLogData) {
+    // update timestamp
     const auto currentTimeStamp = std::chrono::system_clock::now();
+    if (lastSaveTimeStamp == TimeStamp{}) [[unlikely]] { lastSaveTimeStamp = currentTimeStamp; }
+    const size_t interval = (currentTimeStamp - lastSaveTimeStamp) / 1ms;
+
+    // update cache
     cache.emplace_back(currentTimeStamp,
         GetFormattedTimeStamp(currentTimeStamp),
         pLogData->ToString());
 
-    // save file if needed
-    const size_t interval = (currentTimeStamp - lastSaveTimeStamp) / 1ms;
+    // check interval
     if (interval < config.interval) { return false; }
+    lastSaveTimeStamp = currentTimeStamp;
 
-    const auto fileName = cache.begin()->timeStampFormatted
-        + "~"
-        + cache.end()->timeStampFormatted
+    // save file
+    const auto fileName = cache.front().timeStampFormatted
+        + " ~ "
+        + cache.back().timeStampFormatted
         + ".data";
 
     const auto path = fs::path{ filePath } / fileName.c_str();
