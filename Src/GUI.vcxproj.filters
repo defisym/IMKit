@@ -171,6 +171,9 @@
     <ClCompile Include="Utilities\Logger.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Utilities\OTDRLogger.cpp">
+      <Filter>源文件\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\imguiInterface.h">
@@ -276,6 +279,9 @@
       <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\Logger.h">
+      <Filter>头文件\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\OTDRLogger.h">
       <Filter>头文件\Utilities</Filter>
     </ClInclude>
   </ItemGroup>

@@ -36,7 +36,7 @@ Logger::Logger(Ctx* pCtx, const LoggerConfig& config) {
 
 using namespace std::chrono_literals;
 
-bool Logger::AddData(const LogData* pLogData) {
+bool Logger::AddData(LogData* pLogData) {
     const auto currentTimeStamp = std::chrono::system_clock::now();
     cache.emplace_back(currentTimeStamp,
         GetFormattedTimeStamp(currentTimeStamp),

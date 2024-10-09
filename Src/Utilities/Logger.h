@@ -18,9 +18,7 @@ class LogData {
 public:
     LogData(const LogDataConfig& config = {}) { this->config = config; }
     virtual ~LogData() = default;
-    // save data to given buffer
-    // if pBuffer == nullptr, return the size it requires
-    virtual std::string ToString() const = 0;
+    [[nodiscard]] virtual std::string ToString() = 0;
 };
 
 struct LoggerConfig {
@@ -51,6 +49,6 @@ public:
     Logger(Ctx* pCtx, const LoggerConfig& config = {});
 
     // return true if file saved in this call
-    bool AddData(const LogData* pLogData);
+    bool AddData(LogData* pLogData);
     static std::string GetFormattedTimeStamp(const TimeStamp timeStamp, char const* pFmt = "%Y-%m-%d %H-%M-%S");
 };
