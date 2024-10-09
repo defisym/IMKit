@@ -1,0 +1,33 @@
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+
+#include <windows.h>
+
+#include "../Utilities/Logger.h"
+#include "../Utilities/OTDRLogger.h"
+
+namespace LoggerTest {
+    constexpr auto DEFAULT_POINT = 128000;
+    constexpr auto DEFAULT_FRAME = 2560;
+    constexpr auto DEFAULT_INTERVAL = 1000;
+
+    [[noreturn]] void LoggerTest() {
+        const auto pBuffer = new OTDRProcessValueType[DEFAULT_POINT];
+        memset(pBuffer, 0, DEFAULT_POINT * sizeof(OTDRProcessValueType));
+
+        const auto conf = LoggerConfig{ 3000,"log/test" };
+        auto logger = Logger{ nullptr,conf };
+
+        auto inf = OTDRLogger{};
+
+        for (;;) {
+            for(size_t index = 0; index < DEFAULT_POINT; index++) {
+                pBuffer[index] = static_cast<OTDRProcessValueType>(rand());
+            }
+
+            inf.UpdateData({ pBuffer,DEFAULT_POINT });
+            logger.AddData(&inf);
+            Sleep(DEFAULT_INTERVAL);
+        }
+    }
+}
