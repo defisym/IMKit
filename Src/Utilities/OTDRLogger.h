@@ -9,7 +9,7 @@ struct OTDRData {
     size_t sz = 0u;
 };
 
-class OTDRLogger :LogData {
+class OTDRLogger :public LogData {
     OTDRData logData;
     CSVBuilder builder;
     std::string ret;
