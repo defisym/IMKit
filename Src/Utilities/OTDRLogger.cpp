@@ -8,15 +8,10 @@ void OTDRLogger::UpdateData(const OTDRData& data) {
 
 std::string OTDRLogger::ToString() {
     builder.Reset();
-    ret.clear();
 
     for (size_t index = 0; index < logData.sz; index++) {
-        builder.AddNewItem(_ftos(logData.pData[index]));
+        builder.AddNewItem(std::format("{}", logData.pData[index]));
     }
 
-    const auto resultSz = sizeof(wchar_t) * builder.result.size();
-    ret.resize(resultSz, '\0');
-    memcpy(ret.data(), builder.result.data(), resultSz);
-
-    return ret;
+    return builder.result;
 }

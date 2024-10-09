@@ -11,8 +11,7 @@ struct OTDRData {
 
 class OTDRLogger :public LogData {
     OTDRData logData;
-    CSVBuilder builder;
-    std::string ret;
+    CSV::CSVBuilder<std::string> builder;
 
 public:
     OTDRLogger(const LogDataConfig& config = {});
