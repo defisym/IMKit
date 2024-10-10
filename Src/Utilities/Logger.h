@@ -13,6 +13,7 @@ struct LogDataConfig {
 };
 
 class LogData {
+protected:
     LogDataConfig config = {};
 
 public:
