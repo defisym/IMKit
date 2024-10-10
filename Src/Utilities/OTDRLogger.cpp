@@ -10,7 +10,7 @@ std::string OTDRLogger::ToString() {
     builder.Reset();
 
     for (size_t index = 0; index < logData.sz; index++) {
-        builder.AddNewItem(std::format("{}", logData.pData[index]));
+        builder.AddNewItem(_ftos<std::string>(logData.pData[index]));
     }
 
     return builder.result;
