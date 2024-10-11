@@ -19,7 +19,7 @@ protected:
 public:
     LogData(const LogDataConfig& config = {}) { this->config = config; }
     virtual ~LogData() = default;
-    [[nodiscard]] virtual std::string ToString() = 0;
+    [[nodiscard]] virtual const std::string& ToString() = 0;
 };
 
 struct LoggerConfig {

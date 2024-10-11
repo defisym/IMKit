@@ -18,5 +18,5 @@ public:
     OTDRLogger(const LogDataConfig& config = {});
 
     void UpdateData(const OTDRData& data);
-    [[nodiscard]] std::string ToString() override;
+    [[nodiscard]] const std::string& ToString() override;
 };

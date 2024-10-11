@@ -7,7 +7,7 @@ void OTDRLogger::UpdateData(const OTDRData& data) {
     this->logData = data;
 }
 
-std::string OTDRLogger::ToString() {
+const std::string& OTDRLogger::ToString() {
     std::string* pResult = &builder.result;
     builder.Reset();
 
