@@ -1,7 +1,7 @@
 #include "OTDRLogger.h"
 #include <_3rdLib/Compress/zlibInterface.h>
 
-OTDRLogger::OTDRLogger(const LogDataConfig& config):LogData(config) {}
+OTDRLogger::OTDRLogger(const LogDataConfig& conf):LogData(conf) {}
 
 void OTDRLogger::UpdateData(const OTDRData& data) {
     this->logData = data;

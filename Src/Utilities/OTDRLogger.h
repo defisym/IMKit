@@ -15,7 +15,7 @@ class OTDRLogger :public LogData {
     std::string compressed;
 
 public:
-    OTDRLogger(const LogDataConfig& config = {});
+    OTDRLogger(const LogDataConfig& conf = {});
 
     void UpdateData(const OTDRData& data);
     [[nodiscard]] const std::string& ToString() override;
