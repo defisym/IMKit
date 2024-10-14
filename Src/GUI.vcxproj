@@ -214,14 +214,14 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GUIContent\Components\ComponentConfig.cpp" />
-    <ClCompile Include="GUIContent\Components\ComponentConfigDevice.cpp" />
-    <ClCompile Include="GUIContent\Components\ComponentConfigParam.cpp" />
-    <ClCompile Include="GUIContent\Components\ComponentFiber.cpp" />
-    <ClCompile Include="GUIContent\Components\ComponentFrameRate.cpp" />
-    <ClCompile Include="GUIContent\Components\ComponentVibrationLocalization.cpp" />
-    <ClCompile Include="GUIContent\Components\ComponentWaveforms.cpp" />
-    <ClCompile Include="GUIContent\Components\ComponentWaveformsProcess.cpp" />
+    <ClCompile Include="GUIContent\Components\Basic\ComponentFrameRate.cpp" />
+    <ClCompile Include="GUIContent\Components\Config\ComponentConfig.cpp" />
+    <ClCompile Include="GUIContent\Components\Config\ComponentConfigDevice.cpp" />
+    <ClCompile Include="GUIContent\Components\Config\ComponentConfigParam.cpp" />
+    <ClCompile Include="GUIContent\Components\Config\ComponentConfigFiber.cpp" />
+    <ClCompile Include="GUIContent\Components\Process\ComponentVibrationLocalization.cpp" />
+    <ClCompile Include="GUIContent\Components\Process\ComponentWaveforms.cpp" />
+    <ClCompile Include="GUIContent\Components\Process\ComponentWaveformsProcess.cpp" />
     <ClCompile Include="GUIContent\GUIContent.cpp" />
     <ClCompile Include="GUIContext\Handler\AudioHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\DeviceHandler.cpp" />
@@ -264,16 +264,16 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="Utilities\OTDRLogger.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GUIContent\Components\ComponentBase.h" />
-    <ClInclude Include="GUIContent\Components\ComponentConfig.h" />
-    <ClInclude Include="GUIContent\Components\ComponentConfigDevice.h" />
-    <ClInclude Include="GUIContent\Components\ComponentConfigParam.h" />
-    <ClInclude Include="GUIContent\Components\ComponentFiber.h" />
-    <ClInclude Include="GUIContent\Components\ComponentFrameRate.h" />
-    <ClInclude Include="GUIContent\Components\ComponentVibrationLocalization.h" />
-    <ClInclude Include="GUIContent\Components\ComponentWaveforms.h" />
-    <ClInclude Include="GUIContent\Components\ComponentWaveformsProcess.h" />
-    <ClInclude Include="GUIContent\Components\ComponentWindow.h" />
+    <ClInclude Include="GUIContent\Components\Basic\ComponentBase.h" />
+    <ClInclude Include="GUIContent\Components\Basic\ComponentFrameRate.h" />
+    <ClInclude Include="GUIContent\Components\Basic\ComponentWindow.h" />
+    <ClInclude Include="GUIContent\Components\Config\ComponentConfig.h" />
+    <ClInclude Include="GUIContent\Components\Config\ComponentConfigDevice.h" />
+    <ClInclude Include="GUIContent\Components\Config\ComponentConfigParam.h" />
+    <ClInclude Include="GUIContent\Components\Config\ComponentConfigFiber.h" />
+    <ClInclude Include="GUIContent\Components\Process\ComponentVibrationLocalization.h" />
+    <ClInclude Include="GUIContent\Components\Process\ComponentWaveforms.h" />
+    <ClInclude Include="GUIContent\Components\Process\ComponentWaveformsProcess.h" />
     <ClInclude Include="GUIContent\GUIContent.h" />
     <ClInclude Include="GUIContext\Context.h" />
     <ClInclude Include="GUIContext\Handler\AudioHandler.h" />

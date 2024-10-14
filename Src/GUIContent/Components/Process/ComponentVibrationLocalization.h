@@ -1,7 +1,7 @@
 // ReSharper disable CppClangTidyCppcoreguidelinesSpecialMemberFunctions
 #pragma once
 
-#include "ComponentBase.h"
+#include "../Basic//ComponentBase.h"
 
 struct VibrationLocalizationParam {
     // info of read buffer

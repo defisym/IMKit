@@ -1,8 +1,7 @@
 #pragma once
 
 #include "../GUIContext/Context.h"
-
-#include "ComponentBase.h"
+#include "../Basic/ComponentBase.h"
 
 struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-special-member-functions)
 	OTDRContextHandle hContext = nullptr;
@@ -66,6 +65,7 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
     };
 
     bool bOptChanged = false;
+    //WaveRestoreOpt opt = {};
 
     [[nodiscard]] WaveRestoreOpt GetWaveRestoreOpt();
     bool WaveProcess(const WaveRestoreOpt& opt);
