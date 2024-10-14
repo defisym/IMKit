@@ -19,4 +19,11 @@ public:
 
     void UpdateData(const OTDRData& data);
     [[nodiscard]] const std::string& ToString() override;
+
+    // uploadaRate: 250M, etc
+    // dur: in ms
+    // frame: for accumulate
+    // return: in KB
+    [[nodiscard]] size_t GetEsitimateSize(const size_t uploadaRate, const size_t scanRate,
+        const size_t frame, const size_t dur) const;
 };

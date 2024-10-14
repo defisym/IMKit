@@ -41,3 +41,14 @@ const std::string& OTDRLogger::ToString() {
 
     return compressed;
 }
+
+// estimate formulat: point num / 400 (compressed) or 200 (uncompressed)
+size_t OTDRLogger::GetEsitimateSize(const size_t uploadaRate, const size_t scanRate,
+        const size_t frame, const size_t dur) const {
+    const auto processTimes = static_cast<size_t>(std::floor((static_cast<double>(dur) / 1000.0) * static_cast<double>(scanRate) / static_cast<double>(frame)));
+    const auto dataPerScan = static_cast<size_t>(std::floor(static_cast<double>(uploadaRate) / static_cast<double>(scanRate)));
+    const auto totalPointNum = processTimes * dataPerScan + processTimes * frame;
+    const auto dataPerSec = totalPointNum / (config.bCompress ? 400 : 200);
+
+    return dataPerSec;
+}
