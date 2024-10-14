@@ -1,4 +1,5 @@
 #include "OTDRLogger.h"
+
 #include <_3rdLib/Compress/zlibInterface.h>
 
 OTDRLogger::OTDRLogger(const LogDataConfig& conf):LogData(conf) {}

@@ -17,8 +17,10 @@ protected:
     LogDataConfig config = {};
 
 public:
-    LogData(const LogDataConfig& config = {}) { this->config = config; }
+    LogData(const LogDataConfig& config = {}) { LogData::UpdateConfig(config); }
     virtual ~LogData() = default;
+
+    void UpdateConfig(const LogDataConfig& conf = {}) { this->config = config; }
     [[nodiscard]] virtual const std::string& ToString() = 0;
 };
 
