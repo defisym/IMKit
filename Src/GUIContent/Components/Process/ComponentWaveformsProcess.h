@@ -5,9 +5,6 @@
 
 struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-special-member-functions)
 	OTDRContextHandle hContext = nullptr;
-	constexpr static ImVec2 PLOT_SIZE = { -1.0f, 300.0f };
-	constexpr static ImGuiTabBarFlags TAB_BAR_FLAGS = ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_TabListPopupButton;
-    constexpr static ImGuiSliderFlags SLIDER_FLAGS = ImGuiSliderFlags_AlwaysClamp;
 
 	using BufferHandle = void*;
 	BufferHandle pWaveBuffer = nullptr;             // for processing
