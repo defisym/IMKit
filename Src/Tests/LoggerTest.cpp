@@ -18,7 +18,8 @@ namespace LoggerTest {
         const auto conf = LoggerConfig{ 3000,"log/test" };
         auto logger = Logger{ nullptr,conf };
 
-        auto inf = OTDRLogger{};
+        auto inf = OTDRLogger{ {false,true} };
+        auto sz = inf.GetEsitimateSize(250'000'000, 2000, 1280, 1000);
 
         for (;;) {
             for(size_t index = 0; index < DEFAULT_POINT; index++) {
