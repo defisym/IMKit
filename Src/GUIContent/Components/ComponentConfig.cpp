@@ -8,7 +8,7 @@ void ComponentConfig(Ctx* pCtx) {
 		return;
 	}
 
-	ImGui::TextUnformatted(pCtx->dllHandler.supportedDevices.c_str());
+	ImGui::TextUnformatted(pCtx->deviceHandler.supportedDevices.c_str());
 
 	ComponentConfigDevice(pCtx);
 	ComponentConfigParam(pCtx);

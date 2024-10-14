@@ -42,7 +42,7 @@ void CreateDeviceFailedPopUp(Ctx* pCtx) {
 }
 
 void ComponentConfigDevice(Ctx* pCtx) {
-	const auto& deviceNames = pCtx->dllHandler.deviceNames;
+	const auto& deviceNames = pCtx->deviceHandler.deviceNames;
 
 	static ComboContext deviceComboCtx = {};
 	const auto pDeviceName = ComboEx({ "Config/Device", &deviceComboCtx }, deviceNames);
