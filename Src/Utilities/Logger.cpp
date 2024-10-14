@@ -1,5 +1,8 @@
 #include "Logger.h"
 
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#include <windows.h>
 #include <filesystem>
 
 namespace fs = std::filesystem;

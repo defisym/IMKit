@@ -1,9 +1,9 @@
 #pragma once
 
+#include "../../../Src/DLL/include/OTDR.h"
+
 #include <string>
 #include <chrono>
-
-#include "../GUIContext/Context.h"
 
 struct LogDataConfig {
     // save file in binary, otherwise is human-readable
@@ -28,6 +28,8 @@ struct LoggerConfig {
     size_t interval = 1000;
     std::string filePath = "Log/";
 };
+
+struct Ctx;
 
 class Logger {
     // interval to write to disk
