@@ -207,6 +207,9 @@
     <ClCompile Include="GUIContent\Components\Config\ComponentConfigWaveformRestore.cpp">
       <Filter>源文件\GUIContent\Components\Config</Filter>
     </ClCompile>
+    <ClCompile Include="GUIContext\Context.cpp">
+      <Filter>源文件\GUIContext</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\imguiInterface.h">

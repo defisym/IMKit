@@ -29,7 +29,7 @@ constexpr auto DEFAULT_LOG_INTERVAL = 1000;
 struct LoggerConfig {
     // interval to write to disk
     size_t interval = DEFAULT_LOG_INTERVAL;
-    std::string filePath = "Log/";
+    char filePath[512] = "Log/";
 };
 
 struct Ctx;

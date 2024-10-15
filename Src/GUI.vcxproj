@@ -225,6 +225,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContent\Components\Process\ComponentWaveform.cpp" />
     <ClCompile Include="GUIContent\Components\Process\ComponentWaveformProcess.cpp" />
     <ClCompile Include="GUIContent\GUIContent.cpp" />
+    <ClCompile Include="GUIContext\Context.cpp" />
     <ClCompile Include="GUIContext\Handler\AudioHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\DeviceHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\LoggerHandler.cpp" />

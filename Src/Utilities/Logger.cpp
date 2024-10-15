@@ -13,7 +13,7 @@ Logger::Logger(const LoggerConfig& config) {
     do {
         // get relative path
         char fullPathName[MAX_PATH] = {};
-        GetFullPathNameA(config.filePath.c_str(), MAX_PATH, fullPathName, nullptr);
+        GetFullPathNameA(config.filePath, MAX_PATH, fullPathName, nullptr);
         filePath = fullPathName;
 
         // GetFullPathName will normalize / and \\ to \\
