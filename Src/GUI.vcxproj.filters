@@ -165,10 +165,10 @@
     <ClCompile Include="GUIContent\Components\Config\ComponentConfigParam.cpp">
       <Filter>源文件\GUIContent\Components\Config</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\Process\ComponentWaveforms.cpp">
+    <ClCompile Include="GUIContent\Components\Process\ComponentWaveform.cpp">
       <Filter>源文件\GUIContent\Components\Process</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\Process\ComponentWaveformsProcess.cpp">
+    <ClCompile Include="GUIContent\Components\Process\ComponentWaveformProcess.cpp">
       <Filter>源文件\GUIContent\Components\Process</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -198,7 +198,7 @@
     <ClCompile Include="GUIContext\Handler\VibrationLocalizationHandler.cpp">
       <Filter>源文件\GUIContext\Handler</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContext\Handler\WaveformsRestoreHandler.cpp">
+    <ClCompile Include="GUIContext\Handler\WaveformRestoreHandler.cpp">
       <Filter>源文件\GUIContext\Handler</Filter>
     </ClCompile>
     <ClCompile Include="GUIContent\Components\Config\ComponentConfigVibrationLocalization.cpp">
@@ -290,10 +290,10 @@
     <ClInclude Include="GUIContent\Components\Config\ComponentConfigParam.h">
       <Filter>头文件\GUIContent\Components\Config</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\Process\ComponentWaveforms.h">
+    <ClInclude Include="GUIContent\Components\Process\ComponentWaveform.h">
       <Filter>头文件\GUIContent\Components\Process</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\Process\ComponentWaveformsProcess.h">
+    <ClInclude Include="GUIContent\Components\Process\ComponentWaveformProcess.h">
       <Filter>头文件\GUIContent\Components\Process</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiEx\EmbraceHelper.h">
@@ -320,7 +320,7 @@
     <ClInclude Include="GUIContext\Handler\VibrationLocalizationHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContext\Handler\WaveformsRestoreHandler.h">
+    <ClInclude Include="GUIContext\Handler\WaveformRestoreHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
     <ClInclude Include="GUIContent\Components\Config\ComponentConfigVibrationLocalization.h">

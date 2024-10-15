@@ -3,8 +3,8 @@
 #include "../GUIContext/Context.h"
 #include "../Basic/ComponentBase.h"
 
-struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-special-member-functions)
-    ComponentWaveformsProcess(Ctx* pCtx);
+struct ComponentWaveformProcess :ComponentBase {  // NOLINT(cppcoreguidelines-special-member-functions)
+    ComponentWaveformProcess(Ctx* p);
 
     // do not display more than MAX_DISPLAY_FRAME
     // for raw data -> nobody cares!
@@ -15,7 +15,8 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
 	void Shake() const;
 	void Wave() const;
 
-    static bool GetWaveRestoreOpt(const Ctx* pCtx, WaveformsRestoreHandler::WaveRestoreOpt& opt);
+    static bool GetWaveRestoreOpt(const Ctx* p, 
+        WaveformRestoreHandler::WaveRestoreOpt& opt);
 
     void WaveDisplay() const;
 };

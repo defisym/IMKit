@@ -1,14 +1,14 @@
-#include "ComponentWaveforms.h"
+#include "ComponentWaveform.h"
 
-#include "ComponentWaveformsProcess.h"
+#include "ComponentWaveformProcess.h"
 
 // Note: ImGui call this each frame
 //       if move to other UI lib should change the read logic
-void ComponentWaveforms(Ctx* pCtx) {
+void ComponentWaveform(Ctx* pCtx) {
     // out of tab: should always pull data
     const auto err = pCtx->deviceHandler.ReadData();
 
-	if (!ImGui::CollapsingHeader("Waveforms", ImGuiTreeNodeFlags_DefaultOpen)) {
+	if (!ImGui::CollapsingHeader("Waveform", ImGuiTreeNodeFlags_DefaultOpen)) {
 		return;
 	}
 
@@ -20,6 +20,6 @@ void ComponentWaveforms(Ctx* pCtx) {
         ImGui::TextUnformatted("Context not created");
         break;
 	case DeviceHandler::ReadResult::OK:
-        ComponentWaveformsProcess(pCtx).WaveformTab();
+        ComponentWaveformProcess(pCtx).WaveformTab();
     }
 }
