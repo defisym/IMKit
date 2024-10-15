@@ -91,7 +91,7 @@ void ComponentWaveformsProcess::Shake() const {
 
 	const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
 	const auto& deviceParams = pCtx->deviceParams;
-	const auto& processParams = pCtx->processParams;
+	const auto& processParams = pCtx->processHandler.processParams;
 
     const VibrationLocalizationParam param = 
     { Context_GetProcessBuffer(hContext, 1),
