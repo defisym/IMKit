@@ -24,9 +24,11 @@ public:
     [[nodiscard]] virtual const std::string& ToString() = 0;
 };
 
+constexpr auto DEFAULT_LOG_INTERVAL = 1000;
+
 struct LoggerConfig {
     // interval to write to disk
-    size_t interval = 1000;
+    size_t interval = DEFAULT_LOG_INTERVAL;
     std::string filePath = "Log/";
 };
 
