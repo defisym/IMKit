@@ -57,3 +57,15 @@ public:
     bool AddData(LogData* pLogData);
     static std::string GetFormattedTimeStamp(const TimeStamp timeStamp, char const* pFmt = "%Y-%m-%d %H-%M-%S");
 };
+
+template<typename Data>
+    requires std::is_base_of_v<LogData, Data>
+struct LoggerHelper {
+    Logger logger;
+    Data loggerData;
+
+    LoggerHelper(const LoggerConfig& loggerConf = {},
+        const LogDataConfig& logDataConf = {})
+        :logger(loggerConf), loggerData(logDataConf) {}
+    bool AddData() { return logger.AddData(&loggerData); }
+};
