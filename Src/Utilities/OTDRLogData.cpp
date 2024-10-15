@@ -1,14 +1,14 @@
-#include "OTDRLogger.h"
+#include "OTDRLogData.h"
 
 #include <_3rdLib/Compress/zlibInterface.h>
 
-OTDRLogger::OTDRLogger(const LogDataConfig& conf):LogData(conf) {}
+OTDRLogData::OTDRLogData(const LogDataConfig& conf):LogData(conf) {}
 
-void OTDRLogger::UpdateData(const OTDRData& data) {
+void OTDRLogData::UpdateData(const OTDRData& data) {
     this->logData = data;
 }
 
-const std::string& OTDRLogger::ToString() {
+const std::string& OTDRLogData::ToString() {
     std::string* pResult = &builder.result;
     builder.Reset();
 
@@ -44,7 +44,7 @@ const std::string& OTDRLogger::ToString() {
 }
 
 // estimate formulat: point num / 400 (compressed) or 200 (uncompressed)
-size_t OTDRLogger::GetEsitimateSize(const size_t uploadaRate, const size_t scanRate,
+size_t OTDRLogData::GetEsitimateSize(const size_t uploadaRate, const size_t scanRate,
         const size_t frame, const size_t dur) const {
     const auto processTimes = static_cast<size_t>(std::floor((static_cast<double>(dur) / 1000.0) * static_cast<double>(scanRate) / static_cast<double>(frame)));
     const auto dataPerScan = static_cast<size_t>(std::floor(static_cast<double>(uploadaRate) / static_cast<double>(scanRate)));
