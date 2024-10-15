@@ -13,10 +13,9 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
     void WaveformTab();
     void Raw() const;
 	void Shake() const;
-	void Wave();
+	void Wave() const;
 
-    bool bOptChanged = false;
-    [[nodiscard]] WaveformsRestoreHandler::WaveRestoreOpt GetWaveRestoreOpt();
+    [[nodiscard]] bool GetWaveRestoreOpt(WaveformsRestoreHandler::WaveRestoreOpt& opt) const;
 
     void WaveDisplay() const;
 };

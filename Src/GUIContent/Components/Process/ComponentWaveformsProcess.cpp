@@ -121,29 +121,30 @@ void ComponentWaveformsProcess::Shake() const {
 	}
 }
 
-void ComponentWaveformsProcess::Wave() {
+void ComponentWaveformsProcess::Wave() const {
     if (!ImGui::BeginTabItem("Wave")) { return; }
 
-    const auto waveRestoreOpt = GetWaveRestoreOpt();
-    const auto bDisplayBufferFilled = pCtx->processHandler.pWaveformsProcess->WaveProcess(waveRestoreOpt, bOptChanged);
+    auto pHandler = pCtx->processHandler.pWaveformsRestoreHandler;
+    auto& waveRestoreOpt = pCtx->processHandler.processParams.wrParam;
 
-    do {
-        if (!bDisplayBufferFilled) {
-            ImGui::TextUnformatted("Data not enough");
-            break;
-        }
+    const auto bOptChanged = GetWaveRestoreOpt(waveRestoreOpt);
+    const auto bDisplayBufferFilled = pHandler->WaveProcess(waveRestoreOpt, bOptChanged);
 
-        WaveDisplay();
-    } while (false);
+    if (!bDisplayBufferFilled) {
+        ImGui::TextUnformatted("Data not enough");
+        return;
+    }
+
+    WaveDisplay();
 
     ImGui::EndTabItem();
 }
 
-WaveformsRestoreHandler::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRestoreOpt() {
+bool ComponentWaveformsProcess::GetWaveRestoreOpt(WaveformsRestoreHandler::WaveRestoreOpt& opt) const {
     // ------------------------------------
     // Params
     // ------------------------------------
-    bOptChanged = false;
+    bool bOptChanged = false;
     const auto& deviceParams = pCtx->deviceHandler.deviceParams;
     const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
 
@@ -151,22 +152,18 @@ WaveformsRestoreHandler::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRestor
     // Reference
     // ------------------------------------
     ImGui::TextUnformatted("reference shares the range & unwrap settings");
-    static bool bUseReference = false;
-    bOptChanged &= ImGui::Checkbox("use reference", &bUseReference);
+    bOptChanged &= ImGui::Checkbox("use reference", &opt.bUseReference);
     ImGui::SameLine();
 
     auto disableReference = ManualDisableHelper();
 
-    disableReference.Disable(!bUseReference);
+    disableReference.Disable(!opt.bUseReference);
 
-    static bool bReferenceAverage = false;
-    bOptChanged &= ImGui::Checkbox("reference average", &bReferenceAverage);
-
-    static int referenceStart = 50;
-    bOptChanged &= ImGui::SliderInt("##reference start", &referenceStart,
+    bOptChanged &= ImGui::Checkbox("reference average", &opt.bReferenceAverage);
+    bOptChanged &= ImGui::SliderInt("##reference start", &opt.referenceStart,
                      0, static_cast<int>(bufferInfo.frameSize),
                      "%d", SLIDER_FLAGS);
-    bOptChanged &= AddSpin("reference start", &referenceStart,
+    bOptChanged &= AddSpin("reference start", &opt.referenceStart,
             0, static_cast<int>(bufferInfo.frameSize));
     ImGui::SameLine();
     ImGui::TextUnformatted("reference start");
@@ -176,46 +173,41 @@ WaveformsRestoreHandler::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRestor
     // ------------------------------------
     // Shake
     // ------------------------------------
-    static bool diff = false;
-    bOptChanged &= ImGui::Checkbox("use diff", &diff);
+    bOptChanged &= ImGui::Checkbox("use diff", &opt.diff);
 
     // TODO find the possible shake start position
-    static int shakeStart = 50;
-    bOptChanged &= ImGui::SliderInt("##shake start", &shakeStart,
+    bOptChanged &= ImGui::SliderInt("##shake start", &opt.shakeStart,
                      0, static_cast<int>(bufferInfo.frameSize),
                      "%d", SLIDER_FLAGS);
-    bOptChanged &= AddSpin("shake start", &shakeStart,
+    bOptChanged &= AddSpin("shake start", &opt.shakeStart,
             0, static_cast<int>(bufferInfo.frameSize));
     ImGui::SameLine();
     ImGui::TextUnformatted("shake start");
 
-    static int shakeRange = 20;
-    bOptChanged &= ImGui::SliderInt("##shake range", &shakeRange,
-                     0, static_cast<int>(bufferInfo.frameSize) - shakeStart,
+    bOptChanged &= ImGui::SliderInt("##shake range", &opt.shakeRange,
+                     0, static_cast<int>(bufferInfo.frameSize) - opt.shakeStart,
                      "%d", SLIDER_FLAGS);
-    bOptChanged &= AddSpin("shake range", &shakeRange,
-            0, static_cast<int>(bufferInfo.frameSize) - shakeStart);
+    bOptChanged &= AddSpin("shake range", &opt.shakeRange,
+            0, static_cast<int>(bufferInfo.frameSize) - opt.shakeStart);
     ImGui::SameLine();
     ImGui::TextUnformatted("shake range");
 
     // ------------------------------------
     // Unwrap 2D
     // ------------------------------------
-    static int unwrap2DStart = 1;
-    bOptChanged &= ImGui::SliderInt("##unwrap 2D start", &unwrap2DStart,
-                     1, shakeRange,
+    bOptChanged &= ImGui::SliderInt("##unwrap 2D start", &opt.unwrap2DStart,
+                     1, opt.shakeRange,
                      "%d", SLIDER_FLAGS);
-    bOptChanged &= AddSpin("unwrap 2D start", &unwrap2DStart,
-            1, shakeRange);
+    bOptChanged &= AddSpin("unwrap 2D start", &opt.unwrap2DStart,
+            1, opt.shakeRange);
     ImGui::SameLine();
     ImGui::TextUnformatted("unwrap 2D start");
 
-    static int averageRange = 1;
-    bOptChanged &= ImGui::SliderInt("##average range", &averageRange,
-                     1, shakeRange - unwrap2DStart,
+    bOptChanged &= ImGui::SliderInt("##average range", &opt.averageRange,
+                     1, opt.shakeRange - opt.unwrap2DStart,
                      "%d", SLIDER_FLAGS);
-    bOptChanged &= AddSpin("average range", &averageRange,
-            1, shakeRange - unwrap2DStart);
+    bOptChanged &= AddSpin("average range", &opt.averageRange,
+            1, opt.shakeRange - opt.unwrap2DStart);
     ImGui::SameLine();
     ImGui::TextUnformatted("average range");
 
@@ -227,20 +219,19 @@ WaveformsRestoreHandler::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRestor
     // ------------------------
     // High Pass Filter
     // ------------------------
-    static bool bHighPassFilter = false;
-    bOptChanged &= ImGui::Checkbox("High Pass Filter", &bHighPassFilter);
+    bOptChanged &= ImGui::Checkbox("High Pass Filter", &opt.highPassFilterParam.bEnable);
     ImGui::SameLine();
 
-    disableFilter.Disable(!bHighPassFilter);
+    disableFilter.Disable(!opt.highPassFilterParam.bEnable);
 
-    static int filterStopFrequency = 20;
-    static bool bHighPassFilterChanged = false;
-    bHighPassFilterChanged &= ImGui::SliderInt("##Filter Stop Frequency", &filterStopFrequency,
-        1, static_cast<int>(deviceParams.scanRate),
-        "%d", SLIDER_FLAGS);
-    bHighPassFilterChanged &= AddSpin("Filter Stop Frequency", &filterStopFrequency,
-        1, static_cast<int>(deviceParams.scanRate));
-    bOptChanged &= bHighPassFilterChanged;
+    opt.highPassFilterParam.bUpdate
+        &= ImGui::SliderInt("##Filter Stop Frequency", &opt.highPassFilterParam.filterStopFrequency,
+            1, static_cast<int>(deviceParams.scanRate),
+            "%d", SLIDER_FLAGS);
+    opt.highPassFilterParam.bUpdate
+        &= AddSpin("Filter Stop Frequency", &opt.highPassFilterParam.filterStopFrequency,
+            1, static_cast<int>(deviceParams.scanRate));
+    bOptChanged &= opt.highPassFilterParam.bUpdate;
     ImGui::SameLine();
     ImGui::TextUnformatted("Filter Stop Frequency");
 
@@ -249,20 +240,19 @@ WaveformsRestoreHandler::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRestor
     // ------------------------
     // Mean Filter
     // ------------------------
-    static bool bMeanFilter = false;
-    bOptChanged &= ImGui::Checkbox("Mean Filter", &bMeanFilter);
+    bOptChanged &= ImGui::Checkbox("Mean Filter", &opt.meanFilterParam.bEnable);
     ImGui::SameLine();
 
-    disableFilter.Disable(!bMeanFilter);
+    disableFilter.Disable(!opt.meanFilterParam.bEnable);
 
-    static int filterMeanRadius = 5;
-    static bool bMeanFilterChanged = false;
-    bMeanFilterChanged &= ImGui::SliderInt("##Filter Mean Radius", &filterMeanRadius,
-        1, deviceParams.processFrameCount,
-        "%d", SLIDER_FLAGS);
-    bMeanFilterChanged &= AddSpin("Filter Mean Radius", &filterMeanRadius,
-        1, deviceParams.processFrameCount);
-    bOptChanged &= bMeanFilterChanged;
+    opt.meanFilterParam.bUpdate
+        &= ImGui::SliderInt("##Filter Mean Radius", &opt.meanFilterParam.radius,
+            1, deviceParams.processFrameCount,
+            "%d", SLIDER_FLAGS);
+    opt.meanFilterParam.bUpdate
+        &= AddSpin("Filter Mean Radius", &opt.meanFilterParam.radius,
+            1, deviceParams.processFrameCount);
+    bOptChanged &= opt.meanFilterParam.bUpdate;
     ImGui::SameLine();
     ImGui::TextUnformatted("Filter Mean Radius");
 
@@ -271,27 +261,19 @@ WaveformsRestoreHandler::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRestor
     // ------------------------------------
     // Audio
     // ------------------------------------
-    static bool bPlayAudio = false;
-    bOptChanged &= ImGui::Checkbox("Play Wave", &bPlayAudio);
+    bOptChanged &= ImGui::Checkbox("Play Wave", &opt.bPlayAudio);
 
     // ------------------------------------
     // Return
     // ------------------------------------
-    return { {diff,
-        shakeStart,shakeRange,
-        unwrap2DStart,averageRange},
-        bPlayAudio,
-        bUseReference,bReferenceAverage,referenceStart,
-        { { bHighPassFilter,bHighPassFilterChanged },filterStopFrequency },
-        { { bMeanFilter,bMeanFilterChanged }, filterMeanRadius }
-    };
+    return bOptChanged;
 }
 
 void ComponentWaveformsProcess::WaveDisplay() const {
     if (!ImGui::BeginTabBar("Wave/Tab", TAB_BAR_FLAGS)) { return; }
 
     const auto& deviceParams = pCtx->deviceHandler.deviceParams;
-    const auto pHandler = pCtx->processHandler.pWaveformsProcess;
+    const auto pHandler = pCtx->processHandler.pWaveformsRestoreHandler;
 
     if (ImGui::BeginTabItem("Wave Unprocessed")) {
         if (ImPlot::BeginPlot("ImPlot/Wave/Wave Unprocessed", PLOT_SIZE)) {
