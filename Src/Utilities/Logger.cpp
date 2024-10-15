@@ -86,6 +86,10 @@ bool Logger::AddData(LogData* pLogData) {
     return ret == 0;
 }
 
+void Logger::UpdateInterval(const size_t interval) {
+    config.interval = interval;
+}
+
 std::string Logger::GetFormattedTimeStamp(const TimeStamp timeStamp, char const* pFmt) {
     std::tm time = {};
     const auto t = std::chrono::system_clock::to_time_t(timeStamp);

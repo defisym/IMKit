@@ -56,6 +56,7 @@ public:
 
     // return true if file saved in this call
     bool AddData(LogData* pLogData);
+    void UpdateInterval(const size_t interval);
     static std::string GetFormattedTimeStamp(const TimeStamp timeStamp, char const* pFmt = "%Y-%m-%d %H-%M-%S");
 };
 
