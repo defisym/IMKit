@@ -217,6 +217,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContent\Components\Basic\ComponentFrameRate.cpp" />
     <ClCompile Include="GUIContent\Components\Config\ComponentConfig.cpp" />
     <ClCompile Include="GUIContent\Components\Config\ComponentConfigDevice.cpp" />
+    <ClCompile Include="GUIContent\Components\Config\ComponentConfigLogger.Cpp" />
     <ClCompile Include="GUIContent\Components\Config\ComponentConfigParam.cpp" />
     <ClCompile Include="GUIContent\Components\Config\ComponentConfigFiber.cpp" />
     <ClCompile Include="GUIContent\Components\Process\ComponentVibrationLocalization.cpp" />
@@ -269,6 +270,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContent\Components\Basic\ComponentWindow.h" />
     <ClInclude Include="GUIContent\Components\Config\ComponentConfig.h" />
     <ClInclude Include="GUIContent\Components\Config\ComponentConfigDevice.h" />
+    <ClInclude Include="GUIContent\Components\Config\ComponentConfigLogger.h" />
     <ClInclude Include="GUIContent\Components\Config\ComponentConfigParam.h" />
     <ClInclude Include="GUIContent\Components\Config\ComponentConfigFiber.h" />
     <ClInclude Include="GUIContent\Components\Process\ComponentVibrationLocalization.h" />

@@ -76,19 +76,19 @@
     <Filter Include="源文件\GUIContent\Components">
       <UniqueIdentifier>{ddc0510e-c383-43f4-817f-2229242151a6}</UniqueIdentifier>
     </Filter>
-	<Filter Include="头文件\GUIContent\Components\Basic">
+    <Filter Include="头文件\GUIContent\Components\Basic">
       <UniqueIdentifier>{f21a08b6-775c-48e1-a7be-13c922521c13}</UniqueIdentifier>
     </Filter>
     <Filter Include="源文件\GUIContent\Components\Basic">
       <UniqueIdentifier>{ddb4bee1-6ac2-428b-8933-62e406bb9282}</UniqueIdentifier>
     </Filter>
-	<Filter Include="头文件\GUIContent\Components\Config">
+    <Filter Include="头文件\GUIContent\Components\Config">
       <UniqueIdentifier>{5631afcd-695b-4856-b2fe-34b07edbcabe}</UniqueIdentifier>
     </Filter>
     <Filter Include="源文件\GUIContent\Components\Config">
       <UniqueIdentifier>{5f7a0835-73f6-4258-a20c-42e3ecaf7810}</UniqueIdentifier>
     </Filter>
-	<Filter Include="头文件\GUIContent\Components\Process">
+    <Filter Include="头文件\GUIContent\Components\Process">
       <UniqueIdentifier>{308c17a4-4ed3-4847-a211-18f8563e05f0}</UniqueIdentifier>
     </Filter>
     <Filter Include="源文件\GUIContent\Components\Process">
@@ -194,6 +194,9 @@
     </ClCompile>
     <ClCompile Include="GUIContext\Handler\LoggerHandler.cpp">
       <Filter>源文件\GUIContext\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\Config\ComponentConfigLogger.Cpp">
+      <Filter>源文件\GUIContent\Components\Config</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +307,9 @@
     </ClInclude>
     <ClInclude Include="GUIContext\Handler\LoggerHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\Config\ComponentConfigLogger.h">
+      <Filter>头文件\GUIContent\Components\Config</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
