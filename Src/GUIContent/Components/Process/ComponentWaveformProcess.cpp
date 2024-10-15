@@ -12,7 +12,7 @@
 ComponentWaveformProcess::ComponentWaveformProcess(Ctx* p)
     :ComponentBase(p) {}
 
-bool ComponentWaveformProcess::GetWaveRestoreOpt(const Ctx* p, WaveformRestoreHandler::WaveRestoreOpt& opt) {
+bool ComponentWaveformProcess::UpdateWaveformRestoreParam(const Ctx* p, WaveformRestoreHandler::WaveformRestoreParams& opt) {
     // ------------------------------------
     // Params
     // ------------------------------------
