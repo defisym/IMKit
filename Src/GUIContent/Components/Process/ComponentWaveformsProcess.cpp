@@ -15,7 +15,7 @@ inline auto CastBufferPointer(const ComponentWaveformsProcess::BufferHandle h) {
 
 ComponentWaveformsProcess::ComponentWaveformsProcess(Ctx* p)
     :ComponentBase(p), hContext(p->deviceHandler.hContext) {
-	const auto& deviceParams = pCtx->deviceParams;
+	const auto& deviceParams = pCtx->deviceHandler.deviceParams;
 
     // alloc buffer
     const auto bufferSz = deviceParams.processFrameCount * deviceParams.pointNumPerScan;
@@ -24,7 +24,7 @@ ComponentWaveformsProcess::ComponentWaveformsProcess(Ctx* p)
     pWaveDisplayBuffer = new IndexBuffer(bufferSz);
 
     hHighPassFilter = Util_Filter_CreateHighPassFilter(DEFAULT_ORDER,
-        pCtx->deviceParams.scanRate,
+        pCtx->deviceHandler.deviceParams.scanRate,
         DEFAULT_CUTOFF_FREQUENCY);
     hMeanFilter = Util_Filter_CreateMeanFilter(DEFAULT_MEAN_RADIUS);
 }
@@ -169,7 +169,7 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     // Params
     // ------------------------------------
     bOptChanged = false;
-    const auto& deviceParams = pCtx->deviceParams;
+    const auto& deviceParams = pCtx->deviceHandler.deviceParams;
     const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
 
     // ------------------------------------
@@ -319,7 +319,7 @@ bool ComponentWaveformsProcess::WaveProcess(const WaveRestoreOpt& opt) {
 
     auto& audioHandler = pCtx->audioHandler;
 
-    const auto& deviceParams = pCtx->deviceParams;
+    const auto& deviceParams = pCtx->deviceHandler.deviceParams;
     const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
 
     const auto bContextUpdated = pCtx->deviceHandler.bContextUpdated;
@@ -408,7 +408,7 @@ void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
     if (opt.highPassFilterParam.bEnable) {
         if (opt.highPassFilterParam.bUpdate) {
             Util_Filter_DeleteFilter(&hHighPassFilter);
-            hHighPassFilter = Util_Filter_CreateHighPassFilter(5, pCtx->deviceParams.scanRate, opt.highPassFilterParam.filterStopFrequency);
+            hHighPassFilter = Util_Filter_CreateHighPassFilter(5, pCtx->deviceHandler.deviceParams.scanRate, opt.highPassFilterParam.filterStopFrequency);
         }
 
         Util_Filter_Filter(hHighPassFilter, restoreWaveBuffer.data(), restoreWaveBuffer.size());
@@ -432,7 +432,7 @@ void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, cons
 
 void ComponentWaveformsProcess::WaveRestoreProcess(OTDRProcessValueType* pProcess, const ShakeInfo& shakeInfo,
                                                    std::vector<OTDRProcessValueType>& waveBuffer) const {
-	const auto& deviceParams = pCtx->deviceParams;
+	const auto& deviceParams = pCtx->deviceHandler.deviceParams;
     const auto& [diff,
         shakeStart, shakeRange,
         unwrap2DStart, averageRange] = shakeInfo;
@@ -466,7 +466,7 @@ void ComponentWaveformsProcess::WaveRestoreProcess(OTDRProcessValueType* pProces
 void ComponentWaveformsProcess::WaveDisplay() const {
     if (!ImGui::BeginTabBar("Wave/Tab", TAB_BAR_FLAGS)) { return; }
 
-    const auto& deviceParams = pCtx->deviceParams;
+    const auto& deviceParams = pCtx->deviceHandler.deviceParams;
 
     if (ImGui::BeginTabItem("Wave Unprocessed")) {
         if (ImPlot::BeginPlot("ImPlot/Wave/Wave Unprocessed", PLOT_SIZE)) {
