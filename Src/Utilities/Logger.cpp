@@ -7,8 +7,7 @@
 
 namespace fs = std::filesystem;
 
-Logger::Logger(Ctx* pCtx, const LoggerConfig& config) {
-    this->pCtx = pCtx;
+Logger::Logger(const LoggerConfig& config) {
     this->config = config;
     
     do {

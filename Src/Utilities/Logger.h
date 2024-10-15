@@ -12,19 +12,20 @@ struct LogDataConfig {
     bool bCompress = false;
 };
 
-class LogData {
+class LogData {  // NOLINT(cppcoreguidelines-special-member-functions)
 protected:
     LogDataConfig config = {};
 
 public:
-    LogData(const LogDataConfig& config = {}) { LogData::UpdateConfig(config); }
+    LogData(const LogDataConfig& conf = {}) { LogData::UpdateConfig(conf); }
     virtual ~LogData() = default;
 
-    void UpdateConfig(const LogDataConfig& conf = {}) { this->config = config; }
+    void UpdateConfig(const LogDataConfig& conf = {}) { this->config = conf; }
     [[nodiscard]] virtual const std::string& ToString() = 0;
 };
 
 struct LoggerConfig {
+    // interval to write to disk
     size_t interval = 1000;
     std::string filePath = "Log/";
 };
@@ -32,8 +33,6 @@ struct LoggerConfig {
 struct Ctx;
 
 class Logger {
-    // interval to write to disk
-    Ctx* pCtx = nullptr;
     LoggerConfig config = {};
 
     bool bValid = false;
@@ -51,7 +50,7 @@ class Logger {
     std::vector<CacheData> cache;
 
 public:
-    Logger(Ctx* pCtx, const LoggerConfig& config = {});
+    Logger(const LoggerConfig& config = {});
 
     // return true if file saved in this call
     bool AddData(LogData* pLogData);
