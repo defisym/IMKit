@@ -1,5 +1,4 @@
 #include "ComponentWaveformsProcess.h"
-#include "ComponentVibrationLocalization.h"
 
 #include <format>
 

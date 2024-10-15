@@ -220,7 +220,6 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContent\Components\Config\ComponentConfigLogger.Cpp" />
     <ClCompile Include="GUIContent\Components\Config\ComponentConfigParam.cpp" />
     <ClCompile Include="GUIContent\Components\Config\ComponentConfigFiber.cpp" />
-    <ClCompile Include="GUIContent\Components\Process\ComponentVibrationLocalization.cpp" />
     <ClCompile Include="GUIContent\Components\Process\ComponentWaveforms.cpp" />
     <ClCompile Include="GUIContent\Components\Process\ComponentWaveformsProcess.cpp" />
     <ClCompile Include="GUIContent\GUIContent.cpp" />
@@ -228,6 +227,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContext\Handler\DeviceHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\LoggerHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp" />
+    <ClCompile Include="GUIContext\Handler\VibrationLocalizationHandler.cpp" />
     <ClCompile Include="imguiInterface\imguiInterface.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_win32.cpp" />
@@ -273,7 +273,6 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContent\Components\Config\ComponentConfigLogger.h" />
     <ClInclude Include="GUIContent\Components\Config\ComponentConfigParam.h" />
     <ClInclude Include="GUIContent\Components\Config\ComponentConfigFiber.h" />
-    <ClInclude Include="GUIContent\Components\Process\ComponentVibrationLocalization.h" />
     <ClInclude Include="GUIContent\Components\Process\ComponentWaveforms.h" />
     <ClInclude Include="GUIContent\Components\Process\ComponentWaveformsProcess.h" />
     <ClInclude Include="GUIContent\GUIContent.h" />
@@ -282,6 +281,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContext\Handler\DeviceHandler.h" />
     <ClInclude Include="GUIContext\Handler\LoggerHandler.h" />
     <ClInclude Include="GUIContext\Handler\ProcessHandler.h" />
+    <ClInclude Include="GUIContext\Handler\VibrationLocalizationHandler.h" />
     <ClInclude Include="GUIContext\Params\Params.h" />
     <ClInclude Include="IMGuiEx\AddSpin.h" />
     <ClInclude Include="IMGuiEx\ComboEx.h" />
