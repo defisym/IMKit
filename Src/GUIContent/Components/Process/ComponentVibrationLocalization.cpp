@@ -12,7 +12,7 @@ ComponentVibrationLocalizationTradition::ComponentVibrationLocalizationTradition
 ComponentVibrationLocalization::ReturnType ComponentVibrationLocalizationTradition::MovingAverage() {
     m_param.frameCount = Util_MovingAverage(m_param.pBuffer,
                                             m_param.frameCount, m_param.frameSize,
-                                            m_param.maRange);
+                                            m_param.processParam.movingAvgRange );
 
     return { m_param.frameCount };
 }
@@ -24,7 +24,7 @@ const OTDRProcessValueType* ComponentVibrationLocalizationTradition::GetMovingAv
 ComponentVibrationLocalization::ReturnType ComponentVibrationLocalizationTradition::MovingDifference() {
     m_param.frameCount = Util_MovingDifference(m_param.pBuffer,
                                                m_param.frameCount, m_param.frameSize,
-                                               m_param.mdRange);
+                                               m_param.processParam.movingDiffRange);
 
     return { m_param.frameCount };
 }

@@ -1,7 +1,12 @@
 // ReSharper disable CppClangTidyCppcoreguidelinesSpecialMemberFunctions
 #pragma once
 
-#include "../Basic//ComponentBase.h"
+#include "../../../Src/DLL/include/OTDR.h"
+
+struct VibrationLocalizationProcessParam {
+    size_t movingAvgRange = 20;
+    size_t movingDiffRange = 20;
+};
 
 struct VibrationLocalizationParam {
     // info of read buffer
@@ -9,8 +14,7 @@ struct VibrationLocalizationParam {
     size_t frameCount = 0;
     size_t frameSize = 0;
     // info of process
-    size_t maRange = 0;
-    size_t mdRange = 0;
+    VibrationLocalizationProcessParam processParam = {};
 };
 
 struct VibrationLocalizationReturn {

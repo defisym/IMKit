@@ -88,26 +88,8 @@ void ComponentWaveformsProcess::Raw() const {
 void ComponentWaveformsProcess::Shake() const {
     const EmbraceHelper tabHelper = { ImGui::BeginTabItem("Shake"), ImGui::EndTabItem };
 	if (!tabHelper.State()) { return; }
-
-	const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
-	const auto& deviceParams = pCtx->deviceParams;
-	const auto& processParams = pCtx->processHandler.processParams;
-
-    const VibrationLocalizationParam param = 
-    { Context_GetProcessBuffer(hContext, 1),
-        bufferInfo.frameCount, bufferInfo.frameSize,
-        processParams.movingAvgRange, processParams.movingDiffRange };
-
-    const auto pComponentVibrationLocalization
-    = [&] ()->std::unique_ptr<ComponentVibrationLocalization> {        
-        if (deviceParams.bUseContext) {
-            VibrationLocalizationContextParam contextParam
-                = { pCtx->deviceHandler.bContextUpdated, pCtx->processHandler.hVibrationLocalization };
-            return std::make_unique<ComponentVibrationLocalizationContext>(param, contextParam);
-        }
-
-        return std::make_unique<ComponentVibrationLocalizationTradition>(param);
-        }();
+    const auto frameSize = static_cast<int>(pCtx->deviceHandler.bufferInfo.frameSize);
+    const auto pComponentVibrationLocalization = pCtx->processHandler.GetVibrationLocalizationHandler(pCtx, Context_GetProcessBuffer(hContext, 1));
 
     if(!pComponentVibrationLocalization->bFilled) {
         ImGui::TextUnformatted("Data not enough");
@@ -125,7 +107,7 @@ void ComponentWaveformsProcess::Shake() const {
                     for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(frameCount); frameIdx++) {
                         DisplayPlot(std::format("ImPlot/Shake/MA/Plot_{}", frameIdx).c_str(),
                             pComponentVibrationLocalization->GetMovingAverageFrame(frameIdx),
-                            static_cast<int>(param.frameSize));
+                            frameSize);
                     }
 
                     ImPlot::EndPlot();
@@ -144,7 +126,7 @@ void ComponentWaveformsProcess::Shake() const {
                     for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(accumulateFrameIndex); frameIdx++) {
                         DisplayPlot(std::format("ImPlot/Shake/MD/Plot_{}", frameIdx).c_str(),
                             pComponentVibrationLocalization->GetMovingDifferenceFrame(frameIdx),
-                            static_cast<int>(param.frameSize));
+                           frameSize);
                     }
 
                     ImPlot::EndPlot();
@@ -155,7 +137,7 @@ void ComponentWaveformsProcess::Shake() const {
                 if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", PLOT_SIZE)) {
                     DisplayPlot("ImPlot/Shake/MD/Accumulate/Plot",
                           pComponentVibrationLocalization->GetMovingDifferenceFrame(accumulateFrameIndex),
-                          static_cast<int>(param.frameSize));
+                         frameSize);
                     ImPlot::EndPlot();
                 }
                 ImGui::EndTabItem();
