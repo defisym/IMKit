@@ -94,6 +94,24 @@
     <Filter Include="源文件\GUIContent\Components\Process">
       <UniqueIdentifier>{aec95022-85a8-42b1-a0f7-6075c60ab23a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\GUIContent\Components\Config\Enviorment">
+      <UniqueIdentifier>{ddd29d39-01b7-4f3f-a965-c39a6226fc32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\GUIContent\Components\Config\Device">
+      <UniqueIdentifier>{d557e126-5c12-4c0d-bc98-ea8d60ebb37d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\GUIContent\Components\Config\Process">
+      <UniqueIdentifier>{79e63789-d41a-40f8-a229-ee8b802fe8dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContent\Components\Config\Process">
+      <UniqueIdentifier>{8a880f70-f377-4e97-b31f-190cf17e23b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContent\Components\Config\Device">
+      <UniqueIdentifier>{9f076a6b-0b01-423d-bdaf-128c5e422794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContent\Components\Config\Enviorment">
+      <UniqueIdentifier>{bff85f3d-fe8f-44b7-a8ff-0792a6a965ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imguiInterface\imguiInterface.cpp">
@@ -156,14 +174,14 @@
     <ClCompile Include="GUIContent\Components\Config\ComponentConfig.cpp">
       <Filter>源文件\GUIContent\Components\Config</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\ComponentConfigFiber.cpp">
-      <Filter>源文件\GUIContent\Components\Config</Filter>
+    <ClCompile Include="GUIContent\Components\Config\Enviorment\ComponentConfigFiber.cpp">
+      <Filter>源文件\GUIContent\Components\Config\Enviorment</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\ComponentConfigDevice.cpp">
-      <Filter>源文件\GUIContent\Components\Config</Filter>
+    <ClCompile Include="GUIContent\Components\Config\Device\ComponentConfigDevice.cpp">
+      <Filter>源文件\GUIContent\Components\Config\Device</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\ComponentConfigParam.cpp">
-      <Filter>源文件\GUIContent\Components\Config</Filter>
+    <ClCompile Include="GUIContent\Components\Config\Device\ComponentConfigParam.cpp">
+      <Filter>源文件\GUIContent\Components\Config\Device</Filter>
     </ClCompile>
     <ClCompile Include="GUIContent\Components\Process\ComponentWaveform.cpp">
       <Filter>源文件\GUIContent\Components\Process</Filter>
@@ -192,8 +210,8 @@
     <ClCompile Include="GUIContext\Handler\LoggerHandler.cpp">
       <Filter>源文件\GUIContext\Handler</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\ComponentConfigLogger.Cpp">
-      <Filter>源文件\GUIContent\Components\Config</Filter>
+    <ClCompile Include="GUIContent\Components\Config\Enviorment\ComponentConfigLogger.Cpp">
+      <Filter>源文件\GUIContent\Components\Config\Enviorment</Filter>
     </ClCompile>
     <ClCompile Include="GUIContext\Handler\VibrationLocalizationHandler.cpp">
       <Filter>源文件\GUIContext\Handler</Filter>
@@ -201,11 +219,11 @@
     <ClCompile Include="GUIContext\Handler\WaveformRestoreHandler.cpp">
       <Filter>源文件\GUIContext\Handler</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\ComponentConfigVibrationLocalization.cpp">
-      <Filter>源文件\GUIContent\Components\Config</Filter>
+    <ClCompile Include="GUIContent\Components\Config\Process\ComponentConfigVibrationLocalization.cpp">
+      <Filter>源文件\GUIContent\Components\Config\Process</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\ComponentConfigWaveformRestore.cpp">
-      <Filter>源文件\GUIContent\Components\Config</Filter>
+    <ClCompile Include="GUIContent\Components\Config\Process\ComponentConfigWaveformRestore.cpp">
+      <Filter>源文件\GUIContent\Components\Config\Process</Filter>
     </ClCompile>
     <ClCompile Include="GUIContext\Context.cpp">
       <Filter>源文件\GUIContext</Filter>
@@ -284,14 +302,14 @@
     <ClInclude Include="GUIContent\Components\Config\ComponentConfig.h">
       <Filter>头文件\GUIContent\Components\Config</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\ComponentConfigFiber.h">
-      <Filter>头文件\GUIContent\Components\Config</Filter>
+    <ClInclude Include="GUIContent\Components\Config\Enviorment\ComponentConfigFiber.h">
+      <Filter>头文件\GUIContent\Components\Config\Enviorment</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\ComponentConfigDevice.h">
-      <Filter>头文件\GUIContent\Components\Config</Filter>
+    <ClInclude Include="GUIContent\Components\Config\Device\ComponentConfigDevice.h">
+      <Filter>头文件\GUIContent\Components\Config\Device</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\ComponentConfigParam.h">
-      <Filter>头文件\GUIContent\Components\Config</Filter>
+    <ClInclude Include="GUIContent\Components\Config\Device\ComponentConfigParam.h">
+      <Filter>头文件\GUIContent\Components\Config\Device</Filter>
     </ClInclude>
     <ClInclude Include="GUIContent\Components\Process\ComponentWaveform.h">
       <Filter>头文件\GUIContent\Components\Process</Filter>
@@ -317,8 +335,8 @@
     <ClInclude Include="GUIContext\Handler\LoggerHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\ComponentConfigLogger.h">
-      <Filter>头文件\GUIContent\Components\Config</Filter>
+    <ClInclude Include="GUIContent\Components\Config\Enviorment\ComponentConfigLogger.h">
+      <Filter>头文件\GUIContent\Components\Config\Enviorment</Filter>
     </ClInclude>
     <ClInclude Include="GUIContext\Handler\VibrationLocalizationHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
@@ -326,11 +344,11 @@
     <ClInclude Include="GUIContext\Handler\WaveformRestoreHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\ComponentConfigVibrationLocalization.h">
-      <Filter>头文件\GUIContent\Components\Config</Filter>
+    <ClInclude Include="GUIContent\Components\Config\Process\ComponentConfigVibrationLocalization.h">
+      <Filter>头文件\GUIContent\Components\Config\Process</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\ComponentConfigWaveformRestore.h">
-      <Filter>头文件\GUIContent\Components\Config</Filter>
+    <ClInclude Include="GUIContent\Components\Config\Process\ComponentConfigWaveformRestore.h">
+      <Filter>头文件\GUIContent\Components\Config\Process</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
