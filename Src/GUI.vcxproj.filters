@@ -186,7 +186,7 @@
     <ClCompile Include="Utilities\Logger.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities\OTDRLogger.cpp">
+    <ClCompile Include="Utilities\OTDRLogData.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Tests\LoggerTest.cpp">
@@ -299,7 +299,7 @@
     <ClInclude Include="Utilities\Logger.h">
       <Filter>头文件\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities\OTDRLogger.h">
+    <ClInclude Include="Utilities\OTDRLogData.h">
       <Filter>头文件\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="GUIContext\Handler\LoggerHandler.h">
