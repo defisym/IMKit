@@ -198,6 +198,9 @@
     <ClCompile Include="GUIContext\Handler\VibrationLocalizationHandler.cpp">
       <Filter>源文件\GUIContext\Handler</Filter>
     </ClCompile>
+    <ClCompile Include="GUIContext\Handler\WaveformsRestoreHandler.cpp">
+      <Filter>源文件\GUIContext\Handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\imguiInterface.h">
@@ -309,6 +312,9 @@
       <Filter>头文件\GUIContent\Components\Config</Filter>
     </ClInclude>
     <ClInclude Include="GUIContext\Handler\VibrationLocalizationHandler.h">
+      <Filter>头文件\GUIContext\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContext\Handler\WaveformsRestoreHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
   </ItemGroup>

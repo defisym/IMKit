@@ -20,6 +20,6 @@ void ComponentWaveforms(Ctx* pCtx) {
         ImGui::TextUnformatted("Context not created");
         break;
 	case DeviceHandler::ReadResult::OK:
-        pCtx->processHandler.pWaveformsProcess->WaveformTab();
+        ComponentWaveformsProcess(pCtx).WaveformTab();
     }
 }

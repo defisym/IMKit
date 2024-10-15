@@ -9,33 +9,8 @@
 
 #include "../../Src/Utilities/Buffer.h"
 
-inline auto CastBufferPointer(const ComponentWaveformsProcess::BufferHandle h) {
-    return static_cast<IndexBuffer<>*>(h);
-}
-
 ComponentWaveformsProcess::ComponentWaveformsProcess(Ctx* p)
-    :ComponentBase(p), hContext(p->deviceHandler.hContext) {
-	const auto& deviceParams = pCtx->deviceHandler.deviceParams;
-
-    // alloc buffer
-    const auto bufferSz = deviceParams.processFrameCount * deviceParams.pointNumPerScan;
-
-    pWaveBuffer = new IndexBuffer(bufferSz);
-    pWaveDisplayBuffer = new IndexBuffer(bufferSz);
-
-    hHighPassFilter = Util_Filter_CreateHighPassFilter(DEFAULT_ORDER,
-        pCtx->deviceHandler.deviceParams.scanRate,
-        DEFAULT_CUTOFF_FREQUENCY);
-    hMeanFilter = Util_Filter_CreateMeanFilter(DEFAULT_MEAN_RADIUS);
-}
-
-ComponentWaveformsProcess::~ComponentWaveformsProcess() {
-    delete CastBufferPointer(pWaveBuffer);
-    delete CastBufferPointer(pWaveDisplayBuffer);
-
-    Util_Filter_DeleteFilter(&hHighPassFilter);
-    Util_Filter_DeleteFilter(&hMeanFilter);
-}
+    :ComponentBase(p) {}
 
 size_t ComponentWaveformsProcess::GetDisplayFrame(const size_t frameCount) {
     constexpr size_t MAX_DISPLAY_FRAME = 15;
@@ -88,7 +63,7 @@ void ComponentWaveformsProcess::Shake() const {
     const EmbraceHelper tabHelper = { ImGui::BeginTabItem("Shake"), ImGui::EndTabItem };
 	if (!tabHelper.State()) { return; }
     const auto frameSize = static_cast<int>(pCtx->deviceHandler.bufferInfo.frameSize);
-    const auto pComponentVibrationLocalization = pCtx->processHandler.GetVibrationLocalizationHandler(pCtx, Context_GetProcessBuffer(hContext, 1));
+    const auto pComponentVibrationLocalization = pCtx->processHandler.GetVibrationLocalizationHandler(pCtx, Context_GetProcessBuffer(pCtx->deviceHandler.hContext, 1));
 
     if(!pComponentVibrationLocalization->bFilled) {
         ImGui::TextUnformatted("Data not enough");
@@ -150,7 +125,7 @@ void ComponentWaveformsProcess::Wave() {
     if (!ImGui::BeginTabItem("Wave")) { return; }
 
     const auto waveRestoreOpt = GetWaveRestoreOpt();
-    const auto bDisplayBufferFilled = WaveProcess(waveRestoreOpt);
+    const auto bDisplayBufferFilled = pCtx->processHandler.pWaveformsProcess->WaveProcess(waveRestoreOpt, bOptChanged);
 
     do {
         if (!bDisplayBufferFilled) {
@@ -164,7 +139,7 @@ void ComponentWaveformsProcess::Wave() {
     ImGui::EndTabItem();
 }
 
-ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRestoreOpt() {
+WaveformsRestoreHandler::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRestoreOpt() {
     // ------------------------------------
     // Params
     // ------------------------------------
@@ -312,169 +287,19 @@ ComponentWaveformsProcess::WaveRestoreOpt ComponentWaveformsProcess::GetWaveRest
     };
 }
 
-bool ComponentWaveformsProcess::WaveProcess(const WaveRestoreOpt& opt) {
-    // ------------------------
-    // Basic info
-    // ------------------------
-
-    auto& audioHandler = pCtx->audioHandler;
-
-    const auto& deviceParams = pCtx->deviceHandler.deviceParams;
-    const auto& bufferInfo = pCtx->deviceHandler.bufferInfo;
-
-    const auto bContextUpdated = pCtx->deviceHandler.bContextUpdated;
-    const auto pIndexWaveBuffer = CastBufferPointer(pWaveBuffer);
-    const auto pIndexWaveDisplayBuffer = CastBufferPointer(pWaveDisplayBuffer);
-
-    // ------------------------
-    // Update & Process buffer
-    // ------------------------
-
-    // reset audio buffer
-    if (!opt.bPlayAudio) { audioHandler.ResetBuffer(); }
-    if (bOptChanged) { bOptChanged = false; audioHandler.ResetIndex(); }
-
-    // always update buffer in both modes
-    do {
-        if (!bContextUpdated) { break; }
-
-        const auto pProcess = Context_GetProcessBuffer(hContext, 0);
-
-        if (pIndexWaveBuffer->Filled()) { pIndexWaveBuffer->Reset(); }
-
-        const auto pCur = pIndexWaveBuffer->GetData();
-        const auto dataSz = bufferInfo.frameCount * bufferInfo.frameSize;
-        pIndexWaveBuffer->AddData(pProcess, dataSz);
-
-        OTDRProcessValueType offset = 0.0f;
-        OTDRProcessValueType scale = 0.0f;
-        Util_WaveNormalization(pCur, dataSz, &offset, &scale);
-        for (size_t idx = 0; idx < dataSz; idx++) { pCur[idx] *= PI; }
-
-        if (!pIndexWaveBuffer->Filled()) { break; }
-
-        pIndexWaveDisplayBuffer->Copy(pIndexWaveBuffer);
-        WaveRestore(pIndexWaveBuffer->_pBuf, opt);
-
-        if (!opt.bPlayAudio) { break; }
-        audioBuffer = restoreWaveBuffer;
-        // Normalization: audio accepts data [ -1.0 ~ 1.0 ]
-        Util_MeanNormalization(audioBuffer.data(), audioBuffer.size(), &offset, &scale);
-        audioHandler.AddData({ audioBuffer.data(), audioBuffer.size(),
-            static_cast<size_t>(1000.0 * deviceParams.processFrameCount / deviceParams.scanRate) });
-    } while (false);
-
-    // should return the fill state of display buffer
-    // the buffer used to receive data's state will change periodically
-    // and cause jitter
-    return pIndexWaveDisplayBuffer->Filled();
-}
-
-void ComponentWaveformsProcess::WaveRestore(OTDRProcessValueType* pProcess, const WaveRestoreOpt& opt) {
-    // ------------------------------------
-    // Wave Restore
-    // ------------------------------------
-    auto shakeInfo = static_cast<ShakeInfo>(opt);
-
-    this->WaveRestoreProcess(pProcess, shakeInfo, restoreWaveBuffer);
-
-    // remove system noise by reference point
-    if (opt.bUseReference) {
-        shakeInfo.shakeStart = opt.referenceStart;
-        this->WaveRestoreProcess(pProcess, shakeInfo, referenceWaveBuffer);
-
-        if (opt.bReferenceAverage) {
-            OTDRProcessValueType accumulate = 0.0f;
-            for (const float& element : referenceWaveBuffer) {
-                accumulate += element;
-            }
-
-            const OTDRProcessValueType average = accumulate / static_cast<OTDRProcessValueType>(referenceWaveBuffer.size());
-            for (float& element : restoreWaveBuffer) {
-                element -= average;
-            }
-        }
-        else {
-            for (size_t index = 0; index < restoreWaveBuffer.size(); index++) {
-                restoreWaveBuffer[index] -= referenceWaveBuffer[index];
-            }
-        }
-    }
-
-    // ------------------------------------
-    // Filter
-    // ------------------------------------
-    //TODO White noise should be removed
-    if (opt.highPassFilterParam.bEnable) {
-        if (opt.highPassFilterParam.bUpdate) {
-            Util_Filter_DeleteFilter(&hHighPassFilter);
-            hHighPassFilter = Util_Filter_CreateHighPassFilter(5, pCtx->deviceHandler.deviceParams.scanRate, opt.highPassFilterParam.filterStopFrequency);
-        }
-
-        Util_Filter_Filter(hHighPassFilter, restoreWaveBuffer.data(), restoreWaveBuffer.size());
-    }
-
-    if (opt.meanFilterParam.bEnable) {
-        if (opt.meanFilterParam.bUpdate) {
-            Util_Filter_DeleteFilter(&hMeanFilter);
-            hMeanFilter = Util_Filter_CreateMeanFilter(opt.meanFilterParam.radius);
-        }
-
-        Util_Filter_Filter(hMeanFilter, restoreWaveBuffer.data(), restoreWaveBuffer.size());
-    }
-
-    // ------------------------------------
-    // FFT
-    // ------------------------------------
-    restoreWaveFFTBuffer = restoreWaveBuffer;
-    fftElement = Util_FFT_Amplitude(restoreWaveFFTBuffer.data(), restoreWaveFFTBuffer.size());
-}
-
-void ComponentWaveformsProcess::WaveRestoreProcess(OTDRProcessValueType* pProcess, const ShakeInfo& shakeInfo,
-                                                   std::vector<OTDRProcessValueType>& waveBuffer) const {
-	const auto& deviceParams = pCtx->deviceHandler.deviceParams;
-    const auto& [diff,
-        shakeStart, shakeRange,
-        unwrap2DStart, averageRange] = shakeInfo;
-
-	Util_IterateFrames(pProcess, deviceParams.processFrameCount, deviceParams.pointNumPerScan,
-					   [] (OTDRProcessValueType* pFrame, const size_t frameSz, void* pUserData) {
-						   const auto pShakeInfo = static_cast<ShakeInfo* const>(pUserData);
-						   const auto pStart = pFrame + pShakeInfo->shakeStart;
-
-						   Util_EliminateInitialInterference(pStart, pShakeInfo->shakeRange);
-						   Util_Unwrap(pStart, pShakeInfo->shakeRange, PI);
-						   if (!pShakeInfo->diff) { return; }
-						   Util_Diff(pStart, pShakeInfo->shakeRange);
-					   }, const_cast<ShakeInfo*>(&shakeInfo));
-				
-	waveBuffer.resize(deviceParams.processFrameCount);
-    for (auto& it : waveBuffer) { it = 0.0f; }
-
-    for (size_t averageIndex = 0; averageIndex < averageRange; averageIndex++) {
-        const auto pStart = pProcess + shakeStart + unwrap2DStart + averageIndex;
-        for (size_t index = 0; index < static_cast<size_t>(deviceParams.processFrameCount); index++) {
-            waveBuffer[index] += pStart[index * deviceParams.pointNumPerScan];
-        }
-    }
-
-    for (auto& it : waveBuffer) { it /= averageRange; }
-
-	Util_Unwrap(waveBuffer.data(), waveBuffer.size(), PI);
-}
-
 void ComponentWaveformsProcess::WaveDisplay() const {
     if (!ImGui::BeginTabBar("Wave/Tab", TAB_BAR_FLAGS)) { return; }
 
     const auto& deviceParams = pCtx->deviceHandler.deviceParams;
+    const auto pHandler = pCtx->processHandler.pWaveformsProcess;
 
     if (ImGui::BeginTabItem("Wave Unprocessed")) {
         if (ImPlot::BeginPlot("ImPlot/Wave/Wave Unprocessed", PLOT_SIZE)) {
             for (size_t frameIdx = 0;
                 frameIdx < GetDisplayFrame(deviceParams.processFrameCount);
                 frameIdx++) {
-                DisplayPlot(std::format("ImPlot/Wave/Wave Unprocessed/Plot_{}", frameIdx).c_str(),
-                    Context_GetFrameBuffer(CastBufferPointer(pWaveDisplayBuffer)->_pBuf,
+                DisplayPlot(std::format("ImPlot/Wave/Wave Unprocessed/Plot_{}", frameIdx).c_str(),                    
+                    Context_GetFrameBuffer(pHandler->pWaveDisplayBuffer->_pBuf,
                     deviceParams.pointNumPerScan, frameIdx),
                     deviceParams.pointNumPerScan);
             }
@@ -487,18 +312,20 @@ void ComponentWaveformsProcess::WaveDisplay() const {
     if (ImGui::BeginTabItem("Wave Shake")) {
         if (ImPlot::BeginPlot("ImPlot/Wave/Wave Shake", PLOT_SIZE)) {
             DisplayPlot(std::format("ImPlot/Wave/Wave Shake").c_str(),
-                restoreWaveBuffer.data(), static_cast<int>(restoreWaveBuffer.size()));
+                pHandler->restoreWaveBuffer.data(), 
+                static_cast<int>(pHandler->restoreWaveBuffer.size()));
 
             ImPlot::EndPlot();
         }
 
         if (ImPlot::BeginPlot("ImPlot/Wave/Wave FFT Amplitude", PLOT_SIZE)) {
             DisplayPlot(std::format("ImPlot/Wave/Wave FFT Amplitude").c_str(),
-                restoreWaveFFTBuffer.data(), static_cast<int>(fftElement), 1,
+                pHandler->restoreWaveFFTBuffer.data(),
+                static_cast<int>(pHandler->fftElement), 1,
                 [&] (const double index) {
                     // use the original element size for frequency calculation
                     return static_cast<double>(Util_FFT_GetFrequency(static_cast<size_t>(index),
-                        restoreWaveFFTBuffer.size(),
+                        pHandler->restoreWaveFFTBuffer.size(),
                         static_cast<float>(deviceParams.scanRate)));
                 });
 
