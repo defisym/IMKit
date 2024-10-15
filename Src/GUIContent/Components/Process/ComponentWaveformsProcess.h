@@ -10,12 +10,12 @@ struct ComponentWaveformsProcess :ComponentBase {  // NOLINT(cppcoreguidelines-s
     // for raw data -> nobody cares!
     static size_t GetDisplayFrame(const size_t frameCount);
 
-    void WaveformTab();
+    void WaveformTab() const;
     void Raw() const;
 	void Shake() const;
 	void Wave() const;
 
-    [[nodiscard]] bool GetWaveRestoreOpt(WaveformsRestoreHandler::WaveRestoreOpt& opt) const;
+    static bool GetWaveRestoreOpt(const Ctx* pCtx, WaveformsRestoreHandler::WaveRestoreOpt& opt);
 
     void WaveDisplay() const;
 };

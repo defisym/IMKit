@@ -12,135 +12,7 @@
 ComponentWaveformsProcess::ComponentWaveformsProcess(Ctx* p)
     :ComponentBase(p) {}
 
-size_t ComponentWaveformsProcess::GetDisplayFrame(const size_t frameCount) {
-    constexpr size_t MAX_DISPLAY_FRAME = 15;
-    return std::min(frameCount, MAX_DISPLAY_FRAME);
-}
-
-void ComponentWaveformsProcess::WaveformTab() {
-    if (!ImGui::BeginTabBar("Waveforms/Tab", TAB_BAR_FLAGS)) { return; }
-
-    this->Raw();
-    this->Shake();
-    this->Wave();
-
-    ImGui::EndTabBar();
-}
-
-void ComponentWaveformsProcess::Raw() const {
-	if (!ImGui::BeginTabItem("Raw")) { return; }
-
-	const auto& [pBuffer,
-		bufferSz,
-		bufferStride,
-		bufferFrameCount,
-		bufferFrameSize] = pCtx->deviceHandler.bufferInfo;
-
-	using DataType = std::remove_cvref_t<std::remove_pointer_t<decltype(pBuffer)>>;
-    [[maybe_unused]] auto stride = static_cast<int>(sizeof(DataType) * bufferStride);
-
-	if (ImPlot::BeginPlot("ImPlot/Raw/CH1", PLOT_SIZE)) {
-		DisplayPlot("ImPlot/Raw/CH1/Plot",
-					pBuffer,
-					static_cast<int>(bufferFrameSize),
-					static_cast<int>(bufferStride));
-
-		ImPlot::EndPlot();
-	}
-	if (ImPlot::BeginPlot("ImPlot/Raw/CH2", PLOT_SIZE)) {
-		DisplayPlot("ImPlot/Raw/CH2/Plot",
-					pBuffer + 1,
-					static_cast<int>(bufferFrameSize),
-					static_cast<int>(bufferStride));
-
-		ImPlot::EndPlot();
-	}
-
-	ImGui::EndTabItem();
-}
-
-void ComponentWaveformsProcess::Shake() const {
-    const EmbraceHelper tabHelper = { ImGui::BeginTabItem("Shake"), ImGui::EndTabItem };
-	if (!tabHelper.State()) { return; }
-    const auto frameSize = static_cast<int>(pCtx->deviceHandler.bufferInfo.frameSize);
-    const auto pComponentVibrationLocalization = pCtx->processHandler.GetVibrationLocalizationHandler(pCtx, Context_GetProcessBuffer(pCtx->deviceHandler.hContext, 1));
-
-    if(!pComponentVibrationLocalization->bFilled) {
-        ImGui::TextUnformatted("Data not enough");
-
-        return;
-    }
-
-	if (ImGui::BeginTabBar("Shake/Tab", TAB_BAR_FLAGS)) {
-        // Handle Moving Average
-        {
-            auto frameCount = pComponentVibrationLocalization->MovingAverage();
-
-            if (ImGui::BeginTabItem("Shake MA")) {
-                if (ImPlot::BeginPlot("ImPlot/Shake/MA", PLOT_SIZE)) {                    
-                    for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(frameCount); frameIdx++) {
-                        DisplayPlot(std::format("ImPlot/Shake/MA/Plot_{}", frameIdx).c_str(),
-                            pComponentVibrationLocalization->GetMovingAverageFrame(frameIdx),
-                            frameSize);
-                    }
-
-                    ImPlot::EndPlot();
-                }
-                ImGui::EndTabItem();
-            }
-        }
-
-        // Handle Moving Difference
-        {
-            auto frameCount = pComponentVibrationLocalization->MovingDifference();
-            const auto accumulateFrameIndex = frameCount - 1;
-
-            if (ImGui::BeginTabItem("Shake MD")) {
-                if (ImPlot::BeginPlot("ImPlot/Shake/MD", PLOT_SIZE)) {
-                    for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(accumulateFrameIndex); frameIdx++) {
-                        DisplayPlot(std::format("ImPlot/Shake/MD/Plot_{}", frameIdx).c_str(),
-                            pComponentVibrationLocalization->GetMovingDifferenceFrame(frameIdx),
-                           frameSize);
-                    }
-
-                    ImPlot::EndPlot();
-                }
-                ImGui::EndTabItem();
-            }
-            if (ImGui::BeginTabItem("Shake MD Accumulate")) {
-                if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", PLOT_SIZE)) {
-                    DisplayPlot("ImPlot/Shake/MD/Accumulate/Plot",
-                          pComponentVibrationLocalization->GetMovingDifferenceFrame(accumulateFrameIndex),
-                         frameSize);
-                    ImPlot::EndPlot();
-                }
-                ImGui::EndTabItem();
-            }
-        }
-		ImGui::EndTabBar();
-	}
-}
-
-void ComponentWaveformsProcess::Wave() const {
-    if (!ImGui::BeginTabItem("Wave")) { return; }
-
-    auto pHandler = pCtx->processHandler.pWaveformsRestoreHandler;
-    auto& waveRestoreOpt = pCtx->processHandler.processParams.wrParam;
-
-    const auto bOptChanged = GetWaveRestoreOpt(waveRestoreOpt);
-    const auto bDisplayBufferFilled = pHandler->WaveProcess(waveRestoreOpt, bOptChanged);
-
-    if (!bDisplayBufferFilled) {
-        ImGui::TextUnformatted("Data not enough");
-        return;
-    }
-
-    WaveDisplay();
-
-    ImGui::EndTabItem();
-}
-
-bool ComponentWaveformsProcess::GetWaveRestoreOpt(WaveformsRestoreHandler::WaveRestoreOpt& opt) const {
+bool ComponentWaveformsProcess::GetWaveRestoreOpt(const Ctx* pCtx, WaveformsRestoreHandler::WaveRestoreOpt& opt) {
     // ------------------------------------
     // Params
     // ------------------------------------
@@ -267,6 +139,132 @@ bool ComponentWaveformsProcess::GetWaveRestoreOpt(WaveformsRestoreHandler::WaveR
     // Return
     // ------------------------------------
     return bOptChanged;
+}
+
+size_t ComponentWaveformsProcess::GetDisplayFrame(const size_t frameCount) {
+    constexpr size_t MAX_DISPLAY_FRAME = 15;
+    return std::min(frameCount, MAX_DISPLAY_FRAME);
+}
+
+void ComponentWaveformsProcess::WaveformTab() const {
+    if (!ImGui::BeginTabBar("Waveforms/Tab", TAB_BAR_FLAGS)) { return; }
+
+    this->Raw();
+    this->Shake();
+    this->Wave();
+
+    ImGui::EndTabBar();
+}
+
+void ComponentWaveformsProcess::Raw() const {
+	if (!ImGui::BeginTabItem("Raw")) { return; }
+
+	const auto& [pBuffer,
+		bufferSz,
+		bufferStride,
+		bufferFrameCount,
+		bufferFrameSize] = pCtx->deviceHandler.bufferInfo;
+
+	using DataType = std::remove_cvref_t<std::remove_pointer_t<decltype(pBuffer)>>;
+    [[maybe_unused]] auto stride = static_cast<int>(sizeof(DataType) * bufferStride);
+
+	if (ImPlot::BeginPlot("ImPlot/Raw/CH1", PLOT_SIZE)) {
+		DisplayPlot("ImPlot/Raw/CH1/Plot",
+					pBuffer,
+					static_cast<int>(bufferFrameSize),
+					static_cast<int>(bufferStride));
+
+		ImPlot::EndPlot();
+	}
+	if (ImPlot::BeginPlot("ImPlot/Raw/CH2", PLOT_SIZE)) {
+		DisplayPlot("ImPlot/Raw/CH2/Plot",
+					pBuffer + 1,
+					static_cast<int>(bufferFrameSize),
+					static_cast<int>(bufferStride));
+
+		ImPlot::EndPlot();
+	}
+
+	ImGui::EndTabItem();
+}
+
+void ComponentWaveformsProcess::Shake() const {
+    const EmbraceHelper tabHelper = { ImGui::BeginTabItem("Shake"), ImGui::EndTabItem };
+	if (!tabHelper.State()) { return; }
+    const auto frameSize = static_cast<int>(pCtx->deviceHandler.bufferInfo.frameSize);
+    const auto pComponentVibrationLocalization = pCtx->processHandler.GetVibrationLocalizationHandler(pCtx, Context_GetProcessBuffer(pCtx->deviceHandler.hContext, 1));
+
+    if(!pComponentVibrationLocalization->bFilled) {
+        ImGui::TextUnformatted("Data not enough");
+
+        return;
+    }
+
+	if (ImGui::BeginTabBar("Shake/Tab", TAB_BAR_FLAGS)) {
+        // Handle Moving Average
+        {
+            auto frameCount = pComponentVibrationLocalization->MovingAverage();
+
+            if (ImGui::BeginTabItem("Shake MA")) {
+                if (ImPlot::BeginPlot("ImPlot/Shake/MA", PLOT_SIZE)) {                    
+                    for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(frameCount); frameIdx++) {
+                        DisplayPlot(std::format("ImPlot/Shake/MA/Plot_{}", frameIdx).c_str(),
+                            pComponentVibrationLocalization->GetMovingAverageFrame(frameIdx),
+                            frameSize);
+                    }
+
+                    ImPlot::EndPlot();
+                }
+                ImGui::EndTabItem();
+            }
+        }
+
+        // Handle Moving Difference
+        {
+            auto frameCount = pComponentVibrationLocalization->MovingDifference();
+            const auto accumulateFrameIndex = frameCount - 1;
+
+            if (ImGui::BeginTabItem("Shake MD")) {
+                if (ImPlot::BeginPlot("ImPlot/Shake/MD", PLOT_SIZE)) {
+                    for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(accumulateFrameIndex); frameIdx++) {
+                        DisplayPlot(std::format("ImPlot/Shake/MD/Plot_{}", frameIdx).c_str(),
+                            pComponentVibrationLocalization->GetMovingDifferenceFrame(frameIdx),
+                           frameSize);
+                    }
+
+                    ImPlot::EndPlot();
+                }
+                ImGui::EndTabItem();
+            }
+            if (ImGui::BeginTabItem("Shake MD Accumulate")) {
+                if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", PLOT_SIZE)) {
+                    DisplayPlot("ImPlot/Shake/MD/Accumulate/Plot",
+                          pComponentVibrationLocalization->GetMovingDifferenceFrame(accumulateFrameIndex),
+                         frameSize);
+                    ImPlot::EndPlot();
+                }
+                ImGui::EndTabItem();
+            }
+        }
+		ImGui::EndTabBar();
+	}
+}
+
+void ComponentWaveformsProcess::Wave() const {
+    if (!ImGui::BeginTabItem("Wave")) { return; }
+
+    auto pHandler = pCtx->processHandler.pWaveformsRestoreHandler;
+    const auto& waveRestoreOpt = pCtx->processHandler.processParams.wrParam;
+    const auto bOptChanged = pCtx->processHandler.bOptChanged;
+
+    if (!pHandler->WaveProcess(waveRestoreOpt, bOptChanged)) {
+        ImGui::TextUnformatted("Data not enough");
+        return;
+    }
+
+    WaveDisplay();
+
+    ImGui::EndTabItem();
 }
 
 void ComponentWaveformsProcess::WaveDisplay() const {

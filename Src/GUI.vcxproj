@@ -220,6 +220,8 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContent\Components\Config\ComponentConfigLogger.Cpp" />
     <ClCompile Include="GUIContent\Components\Config\ComponentConfigParam.cpp" />
     <ClCompile Include="GUIContent\Components\Config\ComponentConfigFiber.cpp" />
+    <ClCompile Include="GUIContent\Components\Config\ComponentConfigVibrationLocalization.cpp" />
+    <ClCompile Include="GUIContent\Components\Config\ComponentConfigWaveformRestore.cpp" />
     <ClCompile Include="GUIContent\Components\Process\ComponentWaveforms.cpp" />
     <ClCompile Include="GUIContent\Components\Process\ComponentWaveformsProcess.cpp" />
     <ClCompile Include="GUIContent\GUIContent.cpp" />
@@ -274,6 +276,8 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContent\Components\Config\ComponentConfigLogger.h" />
     <ClInclude Include="GUIContent\Components\Config\ComponentConfigParam.h" />
     <ClInclude Include="GUIContent\Components\Config\ComponentConfigFiber.h" />
+    <ClInclude Include="GUIContent\Components\Config\ComponentConfigVibrationLocalization.h" />
+    <ClInclude Include="GUIContent\Components\Config\ComponentConfigWaveformRestore.h" />
     <ClInclude Include="GUIContent\Components\Process\ComponentWaveforms.h" />
     <ClInclude Include="GUIContent\Components\Process\ComponentWaveformsProcess.h" />
     <ClInclude Include="GUIContent\GUIContent.h" />
