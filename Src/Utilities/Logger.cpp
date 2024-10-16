@@ -66,12 +66,12 @@ bool Logger::AddData(LogData* pLogData) {
     const auto err = _wfopen_s(&fp, path.c_str(), L"wb");
     if (err != 0 || fp == nullptr) { return false; }
 
+    size_t elementCount = 0u;
+
     for (auto& it : cache) {
         auto writeString = [&] (const std::string& str) {
             return fwrite(str.data(), str.size(), 1, fp);
         };
-
-        size_t elementCount = 0u;
 
         elementCount += writeString(it.timeStampFormatted);
         elementCount += writeString("\r\n");
@@ -93,7 +93,7 @@ void Logger::UpdateInterval(const size_t interval) {
 std::string Logger::GetFormattedTimeStamp(const TimeStamp timeStamp, char const* pFmt) {
     std::tm time = {};
     const auto t = std::chrono::system_clock::to_time_t(timeStamp);
-    const auto err = localtime_s(&time, &t);
+    [[maybe_unused]] const auto err = localtime_s(&time, &t);
 
     // https://stackoverflow.com/questions/28977585/how-to-get-put-time-into-a-variable
     auto timeString = std::string(MAX_PATH, 0);

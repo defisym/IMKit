@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../../../Src/DLL/include/OTDR.h"
-
 #include <string>
 #include <chrono>
 

@@ -1,5 +1,6 @@
 #include "DataConverter.h"
 
+#include <limits>
 #include <cassert>
 
 uint32_t DataConverter::ConvertData(const SourceInfo& srcInfo, const DestInfo& destInfo) {

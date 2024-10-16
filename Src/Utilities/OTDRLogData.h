@@ -1,8 +1,9 @@
 #pragma once
 
-#include "Logger.h"
-
 #include <_DeLib/CSVHandler.h>
+
+#include "Logger.h"
+#include "../../../Src/DLL/include/OTDR.h"
 
 struct OTDRData {
     OTDRProcessValueType* pData = nullptr;

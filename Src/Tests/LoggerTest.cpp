@@ -15,11 +15,11 @@ namespace LoggerTest {
         const auto pBuffer = new OTDRProcessValueType[DEFAULT_POINT];
         memset(pBuffer, 0, DEFAULT_POINT * sizeof(OTDRProcessValueType));
 
-        const auto conf = LoggerConfig{ 3000,"log/test" };
+        constexpr auto conf = LoggerConfig{ 3000,"log/test" };
         auto logger = Logger{ conf };
 
         auto inf = OTDRLogData{ {false,true} };
-        auto sz = inf.GetEsitimateSize(250'000'000, 2000, 1280, 1000);
+        [[maybe_unused]] auto sz = inf.GetEsitimateSize(250'000'000, 2000, 1280, 1000);
 
         for (;;) {
             for(size_t index = 0; index < DEFAULT_POINT; index++) {
