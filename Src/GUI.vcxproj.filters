@@ -186,9 +186,6 @@
     <ClCompile Include="GUIContent\Components\Process\ComponentWaveform.cpp">
       <Filter>源文件\GUIContent\Components\Process</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\Process\ComponentWaveformProcess.cpp">
-      <Filter>源文件\GUIContent\Components\Process</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -312,9 +309,6 @@
       <Filter>头文件\GUIContent\Components\Config\Device</Filter>
     </ClInclude>
     <ClInclude Include="GUIContent\Components\Process\ComponentWaveform.h">
-      <Filter>头文件\GUIContent\Components\Process</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Process\ComponentWaveformProcess.h">
       <Filter>头文件\GUIContent\Components\Process</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiEx\EmbraceHelper.h">
