@@ -14,9 +14,5 @@ struct ComponentWaveformProcess :ComponentBase {  // NOLINT(cppcoreguidelines-sp
     void Raw() const;
 	void Shake() const;
 	void Wave() const;
-
-    static bool UpdateWaveformRestoreParam(const Ctx* p, 
-        WaveformRestoreHandler::WaveformRestoreParams& opt);
-
     void WaveDisplay() const;
 };
