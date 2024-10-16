@@ -42,10 +42,13 @@ void RawData(Ctx* pCtx)  {
     ImGui::EndTabItem();
 }
 
+#define ONLY_VIBRATION_LOCALIZATION_RESULT
+
 void VibrationLocalization(Ctx* pCtx)  {
     const EmbraceHelper tabHelper = { ImGui::BeginTabItem("Vibration Localization"), ImGui::EndTabItem };
     if (!tabHelper.State()) { return; }
-    const auto frameSize = static_cast<int>(pCtx->deviceHandler.bufferInfo.frameSize);
+    const auto frameSz = pCtx->deviceHandler.bufferInfo.frameSize;
+    const auto frameSize = static_cast<int>(frameSz);
     const auto pComponentVibrationLocalization = pCtx->processHandler.GetVibrationLocalizationHandler(pCtx, Context_GetProcessBuffer(pCtx->deviceHandler.hContext, 1));
 
     if (!pComponentVibrationLocalization->bFilled) {
@@ -54,6 +57,21 @@ void VibrationLocalization(Ctx* pCtx)  {
         return;
     }
 
+    // for logger
+    const OTDRProcessValueType* pResult = nullptr;
+
+#ifdef ONLY_VIBRATION_LOCALIZATION_RESULT
+    auto frameCount = pComponentVibrationLocalization->MovingAverage();
+    frameCount = pComponentVibrationLocalization->MovingDifference();
+
+    const auto accumulateFrameIndex = frameCount - 1;
+    pResult  = pComponentVibrationLocalization->GetMovingDifferenceFrame(accumulateFrameIndex);
+
+    if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", PLOT_SIZE)) {
+        DisplayPlot("ImPlot/Shake/MD/Accumulate/Plot", pResult, frameSize);
+        ImPlot::EndPlot();
+    }
+#else
     if (ImGui::BeginTabBar("Shake/Tab", TAB_BAR_FLAGS)) {
         // Handle Moving Average
         {
@@ -77,6 +95,7 @@ void VibrationLocalization(Ctx* pCtx)  {
         {
             auto frameCount = pComponentVibrationLocalization->MovingDifference();
             const auto accumulateFrameIndex = frameCount - 1;
+            pResult = pComponentVibrationLocalization->GetMovingDifferenceFrame(accumulateFrameIndex);
 
             if (ImGui::BeginTabItem("Shake MD")) {
                 if (ImPlot::BeginPlot("ImPlot/Shake/MD", PLOT_SIZE)) {
@@ -92,10 +111,10 @@ void VibrationLocalization(Ctx* pCtx)  {
             }
             if (ImGui::BeginTabItem("Shake MD Accumulate")) {
                 if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", PLOT_SIZE)) {
-                    DisplayPlot("ImPlot/Shake/MD/Accumulate/Plot",
-                          pComponentVibrationLocalization->GetMovingDifferenceFrame(accumulateFrameIndex),
-                         frameSize);
-                    ImPlot::EndPlot();
+                    if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", PLOT_SIZE)) {
+                        DisplayPlot("ImPlot/Shake/MD/Accumulate/Plot", pResult, frameSize);
+                        ImPlot::EndPlot();
+                    }
                 }
                 ImGui::EndTabItem();
             }
@@ -103,6 +122,11 @@ void VibrationLocalization(Ctx* pCtx)  {
 
         ImGui::EndTabBar();
     }
+#endif
+
+    auto& logger = pCtx->loggerHandler.vibrationLogger;
+    logger.loggerData.UpdateData({ pResult, frameSz });
+    logger.AddData();
 }
 
 void WaveformRestore(const Ctx* pCtx) {

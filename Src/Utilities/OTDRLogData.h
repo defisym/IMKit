@@ -6,7 +6,7 @@
 #include "../../../Src/DLL/include/OTDR.h"
 
 struct OTDRData {
-    OTDRProcessValueType* pData = nullptr;
+    const OTDRProcessValueType* pData = nullptr;
     size_t sz = 0u;
 };
 
