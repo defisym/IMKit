@@ -58,12 +58,6 @@
     <Filter Include="源文件\GUIContext\Handler">
       <UniqueIdentifier>{cab55633-8990-4d16-832f-2b4c72ca5b57}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\GUIContext\Params">
-      <UniqueIdentifier>{ef27c309-cdb8-466b-ba45-ba523b1a88ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\GUIContext\Params">
-      <UniqueIdentifier>{fbf51b95-5e0a-423a-a667-36d39c30a67e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="头文件\GUIContent">
       <UniqueIdentifier>{5a2e1460-a324-4abc-9c94-5559d0ec8fca}</UniqueIdentifier>
     </Filter>
@@ -277,9 +271,6 @@
     </ClInclude>
     <ClInclude Include="GUIContext\Handler\AudioHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContext\Params\Params.h">
-      <Filter>头文件\GUIContext\Params</Filter>
     </ClInclude>
     <ClInclude Include="GUIContext\Context.h">
       <Filter>头文件\GUIContext</Filter>
