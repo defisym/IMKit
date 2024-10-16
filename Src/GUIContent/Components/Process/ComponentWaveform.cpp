@@ -172,8 +172,6 @@ void WaveformRestore(const Ctx* pCtx) {
             ImPlot::EndPlot();
         }
 
-        ImGui::SameLine();
-
         if (ImPlot::BeginPlot("ImPlot/Wave/Wave FFT Amplitude", PLOT_SIZE)) {
             DisplayPlot(std::format("ImPlot/Wave/Wave FFT Amplitude").c_str(),
                 pHandler->restoreWaveFFTBuffer.data(),
