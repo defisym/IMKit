@@ -24,7 +24,7 @@ Logger::Logger(const LoggerConfig& config) {
         const auto path = fs::path{ filePath };
 
         std::error_code ec;
-        fs::create_directory(path, ec);
+        fs::create_directories(path, ec);
 
         if (ec.value() != 0) { break; }
 
@@ -52,6 +52,8 @@ bool Logger::AddData(LogData* pLogData) {
     // check interval
     if (interval < config.interval) { return false; }
     lastSaveTimeStamp = currentTimeStamp;
+
+    if (!bValid) { return false; }
 
     // save file
     const auto fileName = cache.front().timeStampFormatted
