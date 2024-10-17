@@ -8,6 +8,8 @@
 // Debug only
 // ------------------------------------
 #ifdef _DEBUG
+// show imgui demo window
+//#define SHOW_DEMO_WINDOW
 // always show device config even if no device created
 #define CONFIG_ALWAYS_SHOW_DEVICE_PARAM
 #endif
