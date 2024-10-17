@@ -231,6 +231,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\VibrationLocalizationHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\WaveformRestoreHandler.cpp" />
+    <ClCompile Include="IMGuiEx\IndentHelper.cpp" />
     <ClCompile Include="imguiInterface\imguiInterface.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_win32.cpp" />
@@ -292,6 +293,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="IMGuiEx\DisableHelper.h" />
     <ClInclude Include="IMGuiEx\DisplayPlot.h" />
     <ClInclude Include="IMGuiEx\EmbraceHelper.h" />
+    <ClInclude Include="IMGuiEx\IndentHelper.h" />
     <ClInclude Include="imguiInterface\imguiDemo.h" />
     <ClInclude Include="imguiInterface\imguiInterface.h" />
     <ClInclude Include="imgui\backends\imgui_impl_dx11.h" />
