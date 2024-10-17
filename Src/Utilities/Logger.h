@@ -53,12 +53,14 @@ public:
     Logger(const LoggerConfig& config = {});
     ~Logger();
 
+    // add data to internal cache
+    void AddData(LogData* pLogData);
     // write cache to disk
     // return true if file saved
     bool SaveData();
+    // similiar as above, but check interval
+    bool SaveDataWhenNeeded();
 
-    // return true if file saved in this call
-    bool AddData(LogData* pLogData);
     void UpdateInterval(const size_t interval);
     static std::string GetFormattedTimeStamp(const TimeStamp timeStamp, char const* pFmt = "%Y-%m-%d %H-%M-%S");
 };
@@ -72,5 +74,6 @@ struct LoggerHelper {
     LoggerHelper(const LoggerConfig& loggerConf = {},
         const LogDataConfig& logDataConf = {})
         :logger(loggerConf), loggerData(logDataConf) {}
-    bool AddData() { return logger.AddData(&loggerData); }
+    void AddData() { logger.AddData(&loggerData); }
+    bool SaveDataWhenNeeded() { return logger.SaveDataWhenNeeded(); }
 };

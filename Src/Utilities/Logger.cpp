@@ -40,22 +40,14 @@ Logger::~Logger() { SaveData(); }
 
 using namespace std::chrono_literals;
 
-bool Logger::AddData(LogData* pLogData) {
+void Logger::AddData(LogData* pLogData) {
     // update timestamp
     const auto currentTimeStamp = std::chrono::system_clock::now();
-    if (lastSaveTimeStamp == TimeStamp{}) [[unlikely]] { lastSaveTimeStamp = currentTimeStamp; }
-    const size_t interval = (currentTimeStamp - lastSaveTimeStamp) / 1ms;
 
     // update cache
     cache.emplace_back(currentTimeStamp,
         GetFormattedTimeStamp(currentTimeStamp),
         pLogData->ToString());
-
-    // check interval
-    if (interval < config.interval) { return false; }
-    lastSaveTimeStamp = currentTimeStamp;
-
-    return SaveData();
 }
 
 bool Logger::SaveData() {
@@ -92,6 +84,19 @@ bool Logger::SaveData() {
     const auto ret = fclose(fp);
 
     return ret == 0;
+}
+
+bool Logger::SaveDataWhenNeeded() {
+    // update timestamp
+    const auto currentTimeStamp = std::chrono::system_clock::now();
+    if (lastSaveTimeStamp == TimeStamp{}) [[unlikely]] { lastSaveTimeStamp = currentTimeStamp; }
+    const size_t interval = (currentTimeStamp - lastSaveTimeStamp) / 1ms;
+
+    // check interval
+    if (interval < config.interval) { return false; }
+    lastSaveTimeStamp = currentTimeStamp;
+
+    return SaveData();
 }
 
 void Logger::UpdateInterval(const size_t interval) {
