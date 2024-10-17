@@ -9,12 +9,11 @@
 
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
-
 #include <windows.h>
 
-#include "./../../Src/DLL/include/OTDR.h"
-#include "./../Utilities/AudioPlayer.h"
-#include "./../GUIContext/Handler/AudioHandler.h"
+#include "../Src/DLL/include/OTDR.h"
+#include "Utilities/AudioPlayer.h"
+#include "GUIContext/Handler/AudioHandler.h"
 
 namespace AudioTest {
     //constexpr auto DEFAULT_BUFFER_SZ = 44100; 

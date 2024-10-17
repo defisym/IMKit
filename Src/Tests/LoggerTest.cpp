@@ -3,8 +3,8 @@
 
 #include <windows.h>
 
-#include "../Utilities/Logger.h"
-#include "../Utilities/OTDRLogData.h"
+#include "Utilities/Logger.h"
+#include "Utilities/OTDRLogData.h"
 
 namespace LoggerTest {
     constexpr auto DEFAULT_POINT = 128000;

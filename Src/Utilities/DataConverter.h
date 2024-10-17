@@ -2,7 +2,7 @@
 
 #include <SDL_mixer.h>
 
-#include "../../Src/Module/General/Definition.h"
+#include "../Src/Module/General/Definition.h"
 
 struct DataConverter {  // NOLINT(cppcoreguidelines-special-member-functions)
 	struct SourceInfo {

@@ -1,7 +1,7 @@
 #include "ComponentWaveform.h"
 
-#include "../../IMGuiEx/DisplayPlot.h"
-#include "../../IMGuiEx/EmbraceHelper.h"
+#include "IMGuiEx/DisplayPlot.h"
+#include "IMGuiEx/EmbraceHelper.h"
 
 // do not display more than MAX_DISPLAY_FRAME
 // for raw data -> nobody cares!
