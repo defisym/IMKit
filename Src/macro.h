@@ -17,6 +17,7 @@
 // ------------------------------------
 // try to read saved config even if the struct size changed
 #define CONFIG_TRY_READ_CONFIG
+
 // skip if process takes too long
 #define READER_SKIP_FRAME
 
