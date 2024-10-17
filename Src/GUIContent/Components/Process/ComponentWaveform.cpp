@@ -135,16 +135,16 @@ void WaveformRestore(const Ctx* pCtx) {
     const auto pHandler = pCtx->processHandler.pWaveformRestoreHandler;
     const auto bOptChanged = pCtx->processHandler.bWaveformRestoreOptUpdated;
     const auto& waveRestoreOpt = pCtx->processHandler.processParams.wrParam;
+    const auto& deviceParams = pCtx->deviceHandler.deviceParams;
 
     if (!pHandler->WaveProcess(waveRestoreOpt, bOptChanged)) {
         ImGui::TextUnformatted("Data not enough");
         return;
     }
 
+#ifndef WAVEFORM_RESTORE_ONLY_SHOW_RESULT
     const EmbraceHelper tabBarHelper = { ImGui::BeginTabBar("Wave/Tab", TAB_BAR_FLAGS), ImGui::EndTabBar };
     if (!tabBarHelper.State()) { return; }
-
-    const auto& deviceParams = pCtx->deviceHandler.deviceParams;
 
     if (ImGui::BeginTabItem("Wave Unprocessed")) {
         if (ImPlot::BeginPlot("ImPlot/Wave/Wave Unprocessed", PLOT_SIZE)) {
@@ -163,6 +163,7 @@ void WaveformRestore(const Ctx* pCtx) {
     }
 
     if (ImGui::BeginTabItem("Wave Shake")) {
+#endif
         if (ImPlot::BeginPlot("ImPlot/Wave/Wave Shake", PLOT_SIZE)) {
             DisplayPlot(std::format("ImPlot/Wave/Wave Shake").c_str(),
                 pHandler->restoreWaveBuffer.data(),
@@ -184,9 +185,10 @@ void WaveformRestore(const Ctx* pCtx) {
 
             ImPlot::EndPlot();
         }
-
+#ifndef WAVEFORM_RESTORE_ONLY_SHOW_RESULT
         ImGui::EndTabItem();
     }
+#endif
 }
 
 // Note: ImGui call this each frame
