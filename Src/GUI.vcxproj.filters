@@ -335,5 +335,8 @@
     <ClInclude Include="GUIContent\Components\Config\Process\ComponentConfigWaveformRestore.h">
       <Filter>头文件\GUIContent\Components\Config\Process</Filter>
     </ClInclude>
+    <ClInclude Include="macro.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

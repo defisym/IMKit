@@ -1,5 +1,6 @@
 #include "ComponentWaveform.h"
 
+#include "macro.h"
 #include "IMGuiEx/DisplayPlot.h"
 #include "IMGuiEx/EmbraceHelper.h"
 
@@ -41,8 +42,6 @@ void RawData(Ctx* pCtx)  {
 
     ImGui::EndTabItem();
 }
-
-#define ONLY_VIBRATION_LOCALIZATION_RESULT
 
 void VibrationLocalization(Ctx* pCtx)  {
     const EmbraceHelper tabHelper = { ImGui::BeginTabItem("Vibration Localization"), ImGui::EndTabItem };

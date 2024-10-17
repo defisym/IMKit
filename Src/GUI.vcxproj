@@ -301,6 +301,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="imgui\imgui_internal.h" />
     <ClInclude Include="implot\implot.h" />
     <ClInclude Include="implot\implot_internal.h" />
+    <ClInclude Include="macro.h" />
     <ClInclude Include="Utilities\AudioPlayer.h" />
     <ClInclude Include="Utilities\DataConverter.h" />
     <ClInclude Include="Utilities\LoadFileToWStr.h" />
