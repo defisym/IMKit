@@ -22,6 +22,8 @@
 
 // skip if process takes too long
 #define READER_SKIP_FRAME
+// output debug string when skip triggered
+#define READER_OUTPUT_DEBUG_STRING_WHEN_SKIP_FRAME
 
 // only show the result
 #define VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
