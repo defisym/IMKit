@@ -59,23 +59,13 @@ void VibrationLocalization(Ctx* pCtx)  {
     // for logger
     const OTDRProcessValueType* pResult = nullptr;
 
-#ifdef ONLY_VIBRATION_LOCALIZATION_RESULT
-    auto frameCount = pComponentVibrationLocalization->MovingAverage();
-    frameCount = pComponentVibrationLocalization->MovingDifference();
-
-    const auto accumulateFrameIndex = frameCount - 1;
-    pResult  = pComponentVibrationLocalization->GetMovingDifferenceFrame(accumulateFrameIndex);
-
-    if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", PLOT_SIZE)) {
-        DisplayPlot("ImPlot/Shake/MD/Accumulate/Plot", pResult, frameSize);
-        ImPlot::EndPlot();
-    }
-#else
+#ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
     if (ImGui::BeginTabBar("Shake/Tab", TAB_BAR_FLAGS)) {
+#endif
         // Handle Moving Average
         {
             auto frameCount = pComponentVibrationLocalization->MovingAverage();
-
+#ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
             if (ImGui::BeginTabItem("Shake MA")) {
                 if (ImPlot::BeginPlot("ImPlot/Shake/MA", PLOT_SIZE)) {
                     for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(frameCount); frameIdx++) {
@@ -88,6 +78,7 @@ void VibrationLocalization(Ctx* pCtx)  {
                 }
                 ImGui::EndTabItem();
             }
+#endif
         }
 
         // Handle Moving Difference
@@ -95,7 +86,7 @@ void VibrationLocalization(Ctx* pCtx)  {
             auto frameCount = pComponentVibrationLocalization->MovingDifference();
             const auto accumulateFrameIndex = frameCount - 1;
             pResult = pComponentVibrationLocalization->GetMovingDifferenceFrame(accumulateFrameIndex);
-
+#ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
             if (ImGui::BeginTabItem("Shake MD")) {
                 if (ImPlot::BeginPlot("ImPlot/Shake/MD", PLOT_SIZE)) {
                     for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(accumulateFrameIndex); frameIdx++) {
@@ -109,16 +100,20 @@ void VibrationLocalization(Ctx* pCtx)  {
                 ImGui::EndTabItem();
             }
             if (ImGui::BeginTabItem("Shake MD Accumulate")) {
+#endif
                 if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", PLOT_SIZE)) {
                     if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", PLOT_SIZE)) {
                         DisplayPlot("ImPlot/Shake/MD/Accumulate/Plot", pResult, frameSize);
                         ImPlot::EndPlot();
                     }
                 }
+#ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
                 ImGui::EndTabItem();
             }
+#endif
         }
 
+#ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
         ImGui::EndTabBar();
     }
 #endif
