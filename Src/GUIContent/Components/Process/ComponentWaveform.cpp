@@ -102,10 +102,18 @@ void VibrationLocalization(Ctx* pCtx)  {
             if (ImGui::BeginTabItem("Shake MD Accumulate")) {
 #endif
                 if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", PLOT_SIZE)) {
-                    if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", PLOT_SIZE)) {
-                        DisplayPlot("ImPlot/Shake/MD/Accumulate/Plot", pResult, frameSize);
-                        ImPlot::EndPlot();
-                    }
+#ifdef VIBRATION_LOCALIZATION_SHOW_LOGGER_THRESHOLD
+                    auto threshold = pCtx->loggerHandler.loggerParams.threshold;
+
+                    ImPlot::PlotLineG("ImPlot/Shake/MD/Accumulate/Threshold",
+                        [] (int idx, void* pData) {
+                            return ImPlotPoint{ static_cast<double>(idx),
+                                static_cast<double>(*static_cast<decltype(threshold)*>(pData)) };
+                        }, & threshold, frameSize, ImPlotLineFlags_Shaded);
+#endif
+                    DisplayPlot("ImPlot/Shake/MD/Accumulate/Plot", pResult, frameSize);
+
+                    ImPlot::EndPlot();
                 }
 #ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
                 ImGui::EndTabItem();
