@@ -51,6 +51,11 @@ class Logger {
 
 public:
     Logger(const LoggerConfig& config = {});
+    ~Logger();
+
+    // write cache to disk
+    // return true if file saved
+    bool SaveData();
 
     // return true if file saved in this call
     bool AddData(LogData* pLogData);

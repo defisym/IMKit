@@ -36,6 +36,8 @@ Logger::Logger(const LoggerConfig& config) {
     bValid = false;   
 }
 
+Logger::~Logger() { SaveData(); }
+
 using namespace std::chrono_literals;
 
 bool Logger::AddData(LogData* pLogData) {
@@ -53,9 +55,13 @@ bool Logger::AddData(LogData* pLogData) {
     if (interval < config.interval) { return false; }
     lastSaveTimeStamp = currentTimeStamp;
 
-    if (!bValid) { return false; }
+    return SaveData();
+}
 
-    // save file
+bool Logger::SaveData() {
+    if (!bValid) { return false; }
+    if (cache.empty()) { return false; }
+
     const auto fileName = cache.front().timeStampFormatted
         + " ~ "
         + cache.back().timeStampFormatted
@@ -73,7 +79,7 @@ bool Logger::AddData(LogData* pLogData) {
     for (auto& it : cache) {
         auto writeString = [&] (const std::string& str) {
             return fwrite(str.data(), str.size(), 1, fp);
-        };
+            };
 
         elementCount += writeString(it.timeStampFormatted);
         elementCount += writeString("\r\n");
