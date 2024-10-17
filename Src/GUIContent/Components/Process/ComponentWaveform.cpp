@@ -126,12 +126,9 @@ void VibrationLocalization(Ctx* pCtx)  {
     }
 #endif
 
-    if (const OTDRData& data = { pResult, frameSz }; 
-        pCtx->loggerHandler.ExceedThreshold(data)) {
-        auto& logger = pCtx->loggerHandler.vibrationLogger;
-        logger.loggerData.UpdateData(data);
-        logger.AddData();
-    }
+    auto& loggerHandler = pCtx->loggerHandler;
+    auto& vibrationLogger = loggerHandler.vibrationLogger;
+    loggerHandler.AddData(vibrationLogger, { pResult, frameSz });
 }
 
 void WaveformRestore(const Ctx* pCtx) {
