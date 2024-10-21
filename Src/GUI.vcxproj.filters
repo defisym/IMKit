@@ -222,6 +222,9 @@
     <ClCompile Include="IMGuiEx\IndentHelper.cpp">
       <Filter>源文件\IMGuiEx</Filter>
     </ClCompile>
+    <ClCompile Include="imguiInterface\GUIContext.cpp">
+      <Filter>源文件\imguiInterface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\imguiInterface.h">
@@ -343,6 +346,9 @@
     </ClInclude>
     <ClInclude Include="IMGuiEx\IndentHelper.h">
       <Filter>头文件\IMGuiEx</Filter>
+    </ClInclude>
+    <ClInclude Include="imguiInterface\GUIContext.h">
+      <Filter>头文件\imguiInterface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
