@@ -1,3 +1,4 @@
+// ReSharper disable CppClangTidyClangDiagnosticInvalidUtf8
 #pragma once
 
 // ------------------------------------------------
