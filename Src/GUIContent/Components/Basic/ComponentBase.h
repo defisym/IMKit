@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GUIContext/OTDRGUIContext.h"
+#include "GUIContext/GUIContext.h"
 
 struct ComponentBase {  // NOLINT(cppcoreguidelines-special-member-functions)
 	Ctx* pCtx = nullptr;

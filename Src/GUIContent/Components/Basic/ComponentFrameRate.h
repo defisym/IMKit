@@ -1,5 +1,5 @@
 #pragma once
 
-#include "GUIContext/OTDRGUIContext.h"
+#include "GUIContext/GUIContext.h"
 
 void ComponentFrameRate(Ctx* pCtx);
