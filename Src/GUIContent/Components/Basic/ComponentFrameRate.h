@@ -2,4 +2,4 @@
 
 #include "GUIContext/GUIContext.h"
 
-void ComponentFrameRate(Ctx* pCtx);
+void ComponentFrameRate(const Ctx* pCtx);
