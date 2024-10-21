@@ -2,7 +2,7 @@
 
 #include "ComponentBase.h"
 
-struct ComponentWindow :ComponentBase {
+struct ComponentWindow :ComponentBase {  // NOLINT(cppcoreguidelines-special-member-functions)
 	ComponentWindow(Ctx* p) :ComponentBase(p) {
 		// ref: https://stackoverflow.com/questions/74954814/remove-the-parent-default-window-in-imgui
 		// place the next window in the top left corner (0,0), resize to parent window size

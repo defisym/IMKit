@@ -5,20 +5,17 @@
 #include <iostream>
 #endif
 
+#include <complex>
+
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
-
 #include <windows.h>
 
-#include "./../../Src/DLL/include/OTDR.h"
-#include "./../Utilities/AudioPlayer.h"
-#include "./../GUIContext/Handler/AudioHandler.h"
+#include "../Src/DLL/include/OTDR.h"
+#include "Utilities/AudioPlayer.h"
+#include "GUIContext/Handler/AudioHandler.h"
 
 namespace AudioTest {
-    // TODO
-    // 44100 has no issue, so it's a resample issue
-    // try using interpolation?
-
     //constexpr auto DEFAULT_BUFFER_SZ = 44100; 
     constexpr auto DEFAULT_BUFFER_SZ = 2560;
     constexpr auto DEFAULT_FREQ = 200.0;
@@ -54,7 +51,7 @@ namespace AudioTest {
         AudioPlayer::StartAudio(audioData);
 
         for (;;) {
-            player.AddData(audioData, { p,DEFAULT_BUFFER_SZ,DEFAULT_DURA });
+            audioData.AddData({ p,DEFAULT_BUFFER_SZ,DEFAULT_DURA });
             Sleep(DEFAULT_DURA + rand() % 10);
         }
     }

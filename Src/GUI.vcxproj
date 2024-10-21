@@ -73,25 +73,25 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Obj\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Obj\$(Configuration)\</IntDir>
-    <IncludePath>.\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>.\;.\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>.\SDL\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Obj\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Obj\$(Configuration)\</IntDir>
-    <IncludePath>.\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>.\;.\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>.\SDL\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Obj\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Obj\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>.\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>.\;.\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>.\SDL\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Obj\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Obj\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>.\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>.\;.\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>.\SDL\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -214,19 +214,24 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GUIContent\Components\ComponentConfig.cpp" />
-    <ClCompile Include="GUIContent\Components\ComponentConfigDevice.cpp" />
-    <ClCompile Include="GUIContent\Components\ComponentConfigParam.cpp" />
-    <ClCompile Include="GUIContent\Components\ComponentFiber.cpp" />
-    <ClCompile Include="GUIContent\Components\ComponentFrameRate.cpp" />
-    <ClCompile Include="GUIContent\Components\ComponentVibrationLocalization.cpp" />
-    <ClCompile Include="GUIContent\Components\ComponentWaveforms.cpp" />
-    <ClCompile Include="GUIContent\Components\ComponentWaveformsProcess.cpp" />
+    <ClCompile Include="GUIContent\Components\Basic\ComponentFrameRate.cpp" />
+    <ClCompile Include="GUIContent\Components\Config\ComponentConfig.cpp" />
+    <ClCompile Include="GUIContent\Components\Config\Device\ComponentConfigDevice.cpp" />
+    <ClCompile Include="GUIContent\Components\Config\Device\ComponentConfigParam.cpp" />
+    <ClCompile Include="GUIContent\Components\Config\Enviorment\ComponentConfigLogger.Cpp" />
+    <ClCompile Include="GUIContent\Components\Config\Enviorment\ComponentConfigFiber.cpp" />
+    <ClCompile Include="GUIContent\Components\Config\Process\ComponentConfigVibrationLocalization.cpp" />
+    <ClCompile Include="GUIContent\Components\Config\Process\ComponentConfigWaveformRestore.cpp" />
+    <ClCompile Include="GUIContent\Components\Process\ComponentWaveform.cpp" />
     <ClCompile Include="GUIContent\GUIContent.cpp" />
+    <ClCompile Include="GUIContext\Context.cpp" />
     <ClCompile Include="GUIContext\Handler\AudioHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\DeviceHandler.cpp" />
-    <ClCompile Include="GUIContext\Handler\OTDRHandler.cpp" />
+    <ClCompile Include="GUIContext\Handler\LoggerHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp" />
+    <ClCompile Include="GUIContext\Handler\VibrationLocalizationHandler.cpp" />
+    <ClCompile Include="GUIContext\Handler\WaveformRestoreHandler.cpp" />
+    <ClCompile Include="IMGuiEx\IndentHelper.cpp" />
     <ClCompile Include="imguiInterface\imguiInterface.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_win32.cpp" />
@@ -245,6 +250,12 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Tests\LoggerTest.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Tests\RingBufferTest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -254,30 +265,35 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="Utilities\AudioPlayer.cpp" />
     <ClCompile Include="Utilities\DataConverter.cpp" />
     <ClCompile Include="Utilities\LoadFileToWStr.cpp" />
+    <ClCompile Include="Utilities\Logger.cpp" />
+    <ClCompile Include="Utilities\OTDRLogData.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GUIContent\Components\ComponentBase.h" />
-    <ClInclude Include="GUIContent\Components\ComponentConfig.h" />
-    <ClInclude Include="GUIContent\Components\ComponentConfigDevice.h" />
-    <ClInclude Include="GUIContent\Components\ComponentConfigParam.h" />
-    <ClInclude Include="GUIContent\Components\ComponentFiber.h" />
-    <ClInclude Include="GUIContent\Components\ComponentFrameRate.h" />
-    <ClInclude Include="GUIContent\Components\ComponentVibrationLocalization.h" />
-    <ClInclude Include="GUIContent\Components\ComponentWaveforms.h" />
-    <ClInclude Include="GUIContent\Components\ComponentWaveformsProcess.h" />
-    <ClInclude Include="GUIContent\Components\ComponentWindow.h" />
+    <ClInclude Include="GUIContent\Components\Basic\ComponentBase.h" />
+    <ClInclude Include="GUIContent\Components\Basic\ComponentFrameRate.h" />
+    <ClInclude Include="GUIContent\Components\Basic\ComponentWindow.h" />
+    <ClInclude Include="GUIContent\Components\Config\ComponentConfig.h" />
+    <ClInclude Include="GUIContent\Components\Config\Enviorment\ComponentConfigFiber.h" />
+    <ClInclude Include="GUIContent\Components\Config\Enviorment\ComponentConfigLogger.h" />
+    <ClInclude Include="GUIContent\Components\Config\Device\ComponentConfigDevice.h" />
+    <ClInclude Include="GUIContent\Components\Config\Device\ComponentConfigParam.h" />
+    <ClInclude Include="GUIContent\Components\Config\Process\ComponentConfigVibrationLocalization.h" />
+    <ClInclude Include="GUIContent\Components\Config\Process\ComponentConfigWaveformRestore.h" />
+    <ClInclude Include="GUIContent\Components\Process\ComponentWaveform.h" />
     <ClInclude Include="GUIContent\GUIContent.h" />
     <ClInclude Include="GUIContext\Context.h" />
     <ClInclude Include="GUIContext\Handler\AudioHandler.h" />
     <ClInclude Include="GUIContext\Handler\DeviceHandler.h" />
-    <ClInclude Include="GUIContext\Handler\OTDRHandler.h" />
+    <ClInclude Include="GUIContext\Handler\LoggerHandler.h" />
     <ClInclude Include="GUIContext\Handler\ProcessHandler.h" />
-    <ClInclude Include="GUIContext\Params\Params.h" />
+    <ClInclude Include="GUIContext\Handler\VibrationLocalizationHandler.h" />
+    <ClInclude Include="GUIContext\Handler\WaveformRestoreHandler.h" />
     <ClInclude Include="IMGuiEx\AddSpin.h" />
     <ClInclude Include="IMGuiEx\ComboEx.h" />
     <ClInclude Include="IMGuiEx\DisableHelper.h" />
     <ClInclude Include="IMGuiEx\DisplayPlot.h" />
     <ClInclude Include="IMGuiEx\EmbraceHelper.h" />
+    <ClInclude Include="IMGuiEx\IndentHelper.h" />
     <ClInclude Include="imguiInterface\imguiDemo.h" />
     <ClInclude Include="imguiInterface\imguiInterface.h" />
     <ClInclude Include="imgui\backends\imgui_impl_dx11.h" />
@@ -287,9 +303,12 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="imgui\imgui_internal.h" />
     <ClInclude Include="implot\implot.h" />
     <ClInclude Include="implot\implot_internal.h" />
+    <ClInclude Include="macro.h" />
     <ClInclude Include="Utilities\AudioPlayer.h" />
     <ClInclude Include="Utilities\DataConverter.h" />
     <ClInclude Include="Utilities\LoadFileToWStr.h" />
+    <ClInclude Include="Utilities\Logger.h" />
+    <ClInclude Include="Utilities\OTDRLogData.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

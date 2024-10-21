@@ -171,7 +171,7 @@ bool CreateDeviceD3D(GUIContext* pCtx, HWND hWnd) {
     UINT createDeviceFlags = 0;
     //createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
     D3D_FEATURE_LEVEL featureLevel;
-    const D3D_FEATURE_LEVEL featureLevelArray[2] = { D3D_FEATURE_LEVEL_11_0, D3D_FEATURE_LEVEL_10_0, };
+    constexpr D3D_FEATURE_LEVEL featureLevelArray[2] = { D3D_FEATURE_LEVEL_11_0, D3D_FEATURE_LEVEL_10_0, };
     HRESULT res =
         D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE,
         nullptr, createDeviceFlags,
@@ -253,8 +253,8 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     {
         if (wParam == SIZE_MINIMIZED) { return 0; }
 
-        pCtx->renderContext.resizeWidth = (UINT)LOWORD(lParam); // Queue resize
-        pCtx->renderContext.resizeHeight = (UINT)HIWORD(lParam);
+        pCtx->renderContext.resizeWidth = static_cast<UINT>(LOWORD(lParam)); // Queue resize
+        pCtx->renderContext.resizeHeight = static_cast<UINT>(HIWORD(lParam));
 
         return 0;
     }
@@ -269,6 +269,9 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     {
         ::PostQuitMessage(0);
         return 0;
+    }
+    default: {
+        
     }
     }
 

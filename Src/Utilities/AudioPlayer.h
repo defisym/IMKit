@@ -6,7 +6,6 @@
 #include <_DeLib/ThreadSafeRingBuffer.h>
 
 #include "DataConverter.h"
-#include "../../Src/Module/General/Definition.h"
 
 constexpr auto SDL_BUFFER_SIZE = 4096;
 constexpr auto CHUNK_SIZE = 4 * SDL_BUFFER_SIZE;

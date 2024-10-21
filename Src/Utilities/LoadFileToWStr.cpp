@@ -3,6 +3,7 @@
 #include <_DeLib/GeneralDefinition.h>
 
 #include <_DeLib/Encryption.h>
+// ReSharper disable once CppUnusedIncludeDirective
 #include <_DeLib/Encryption.cpp>
 
 bool LoadFileToWStr(std::wstring& wStr, const wchar_t* pFilePath, bool bUnicode) {

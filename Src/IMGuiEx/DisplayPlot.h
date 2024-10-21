@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <functional>
 
-#include "./../implot/implot.h"
+#include "implot/implot.h"
 
 using CoordUpdater = std::function<double(const double)>;
 
