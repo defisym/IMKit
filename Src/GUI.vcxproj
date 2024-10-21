@@ -231,6 +231,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\VibrationLocalizationHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\WaveformRestoreHandler.cpp" />
+    <ClCompile Include="IMGuiEx\FontEx.cpp" />
     <ClCompile Include="IMGuiEx\IndentHelper.cpp" />
     <ClCompile Include="imguiInterface\GUIContext.cpp" />
     <ClCompile Include="imguiInterface\imguiInterface.cpp" />
@@ -294,6 +295,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="IMGuiEx\DisableHelper.h" />
     <ClInclude Include="IMGuiEx\DisplayPlot.h" />
     <ClInclude Include="IMGuiEx\EmbraceHelper.h" />
+    <ClInclude Include="IMGuiEx\FontEx.h" />
     <ClInclude Include="IMGuiEx\IndentHelper.h" />
     <ClInclude Include="imguiInterface\GUIContext.h" />
     <ClInclude Include="imguiInterface\imguiDemo.h" />
