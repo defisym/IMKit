@@ -246,6 +246,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="implot\implot.cpp" />
     <ClCompile Include="implot\implot_demo.cpp" />
     <ClCompile Include="implot\implot_items.cpp" />
+    <ClCompile Include="Internationalization\Internationalization.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Tests\AudioTest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -309,6 +310,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="imgui\imgui_internal.h" />
     <ClInclude Include="implot\implot.h" />
     <ClInclude Include="implot\implot_internal.h" />
+    <ClInclude Include="Internationalization\Internationalization.h" />
     <ClInclude Include="macro.h" />
     <ClInclude Include="Utilities\AudioPlayer.h" />
     <ClInclude Include="Utilities\DataConverter.h" />

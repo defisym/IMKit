@@ -106,6 +106,12 @@
     <Filter Include="源文件\GUIContent\Components\Config\Enviorment">
       <UniqueIdentifier>{bff85f3d-fe8f-44b7-a8ff-0792a6a965ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Internationalization">
+      <UniqueIdentifier>{f623151d-53d9-4fd2-a4ef-923ddd85203a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Internationalization">
+      <UniqueIdentifier>{4d03a0cd-af2f-4382-b328-2d10c8a7df5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imguiInterface\imguiInterface.cpp">
@@ -221,6 +227,9 @@
     </ClCompile>
     <ClCompile Include="IMGuiEx\IndentHelper.cpp">
       <Filter>源文件\IMGuiEx</Filter>
+    </ClCompile>
+    <ClCompile Include="Internationalization\Internationalization.cpp">
+      <Filter>源文件\Internationalization</Filter>
     </ClCompile>
     <ClCompile Include="IMGuiEx\FontEx.cpp">
       <Filter>源文件\IMGuiEx</Filter>
@@ -352,6 +361,9 @@
     </ClInclude>
     <ClInclude Include="IMGuiEx\IndentHelper.h">
       <Filter>头文件\IMGuiEx</Filter>
+    </ClInclude>
+    <ClInclude Include="Internationalization\Internationalization.h">
+      <Filter>头文件\Internationalization</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiEx\FontEx.h">
       <Filter>头文件\IMGuiEx</Filter>
