@@ -13,7 +13,7 @@
 //#define SHOW_DEMO_WINDOW
 
 // show font debug
-#define FONT_SHOW_FONT_DEBUG
+//#define FONT_SHOW_FONT_DEBUG
 
 // always show device config even if no device created
 #define CONFIG_ALWAYS_SHOW_DEVICE_PARAM
@@ -28,7 +28,7 @@
 // only load simplified chinese 2500 regularly used characters
 // speed up font texture generate, good for debug
 // for imgui, japanese katakana will be included also
-// but some characters like ï¿½D (not regularly used) and ï¿½~ (kokuji)
+// but some characters like †D (not regularly used) and ë~ (kokuji)
 // will not be displayed properly
 // https://en.wikipedia.org/wiki/Kokuji
 #define FONT_SIMPLIFIED_CHINESE_COMMON_ONLY
@@ -44,6 +44,15 @@
 // only show the result
 #define VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
 #define WAVEFORM_RESTORE_ONLY_SHOW_RESULT
+
+// always update
+#ifdef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
+#define VIBRATION_LOCALIZATION_ALWAYS_UPDATE
+#endif
+
+#ifdef WAVEFORM_RESTORE_ONLY_SHOW_RESULT
+#define WAVEFORM_RESTORE_ALWAYS_UPDATE
+#endif
 
 // show logger threshold
 #define VIBRATION_LOCALIZATION_SHOW_LOGGER_THRESHOLD
