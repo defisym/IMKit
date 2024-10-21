@@ -1,16 +1,16 @@
 #pragma once
 
-#include "imguiInterface.h"
+#include "IMGUIInterface.h"
 
 inline int imguiDemo() {
-    struct DefaultCtx final :GUIContext {
+    struct DefaultCtx final :IMGUIContext {
         bool show_demo_window = true;
         bool show_another_window = false;
     };
 
     DefaultCtx defaultCtx;
 
-    auto defaultGui = [] (GUIContext* p) {
+    auto defaultGui = [] (IMGUIContext* p) {
         const auto pCtx = dynamic_cast<DefaultCtx*>(p);
         if (pCtx == nullptr) { return; }
 
@@ -51,5 +51,5 @@ inline int imguiDemo() {
         }
         };
 
-    return ImguiInterface(&defaultCtx, defaultGui);
+    return IMGUIInterface(&defaultCtx, defaultGui);
 }

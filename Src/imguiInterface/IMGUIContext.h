@@ -18,7 +18,7 @@ constexpr static ImVec2 PLOT_SIZE = { -1.0f, 300.0f };
 constexpr static ImGuiTabBarFlags TAB_BAR_FLAGS = ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_TabListPopupButton;
 constexpr static ImGuiSliderFlags SLIDER_FLAGS = ImGuiSliderFlags_AlwaysClamp;
 
-struct GUIContext {
+struct IMGUIContext {
     const wchar_t* pWindowName = L"Dear ImGui DirectX11 Example";
     int width = 1280;
     int height = 800;
@@ -32,13 +32,13 @@ struct GUIContext {
 
     D3DContext renderContext = {};
 
-    GUIContext() = default;
-    virtual ~GUIContext() = default;
+    IMGUIContext() = default;
+    virtual ~IMGUIContext() = default;
 
-    GUIContext(const GUIContext& other) = default;
-    GUIContext(GUIContext&& other) noexcept = default;
-    GUIContext& operator=(const GUIContext& other) = default;
-    GUIContext& operator=(GUIContext&& other) noexcept = default;
+    IMGUIContext(const IMGUIContext& other) = default;
+    IMGUIContext(IMGUIContext&& other) noexcept = default;
+    IMGUIContext& operator=(const IMGUIContext& other) = default;
+    IMGUIContext& operator=(IMGUIContext&& other) noexcept = default;
 
     // init members which need imgui context
     bool InitContext();

@@ -1,4 +1,4 @@
-#include "imguiInterface.h"
+#include "IMGUIInterface.h"
 
 #include "imgui.h"
 #include "imgui_impl_win32.h"
@@ -15,15 +15,15 @@
 // - Introduction, links and more at the top of imgui.cpp
 
 // Forward declarations of helper functions
-bool CreateDeviceD3D(GUIContext* pCtx, HWND hWnd);
-void CleanupDeviceD3D(GUIContext* pCtx);
-void CreateRenderTarget(GUIContext* pCtx);
-void CleanupRenderTarget(GUIContext* pCtx);
+bool CreateDeviceD3D(IMGUIContext* pCtx, HWND hWnd);
+void CleanupDeviceD3D(IMGUIContext* pCtx);
+void CreateRenderTarget(IMGUIContext* pCtx);
+void CleanupRenderTarget(IMGUIContext* pCtx);
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // Main code
-int ImguiInterface(GUIContext* pCtx,
-    const std::function<void(GUIContext*)>& gui) {
+int IMGUIInterface(IMGUIContext* pCtx,
+    const std::function<void(IMGUIContext*)>& gui) {
     // Create application window
     if (pCtx->bDPIAware) {
         ImGui_ImplWin32_EnableDpiAwareness();
@@ -140,7 +140,7 @@ int ImguiInterface(GUIContext* pCtx,
 
 // Helper functions
 
-bool CreateDeviceD3D(GUIContext* pCtx, HWND hWnd) {
+bool CreateDeviceD3D(IMGUIContext* pCtx, HWND hWnd) {
     // Setup swap chain
     DXGI_SWAP_CHAIN_DESC sd;
     ZeroMemory(&sd, sizeof(sd));
@@ -186,7 +186,7 @@ bool CreateDeviceD3D(GUIContext* pCtx, HWND hWnd) {
     return true;
 }
 
-void CleanupDeviceD3D(GUIContext* pCtx) {
+void CleanupDeviceD3D(IMGUIContext* pCtx) {
     CleanupRenderTarget(pCtx);
 
     if (pCtx->renderContext.pSwapChain) {
@@ -203,14 +203,14 @@ void CleanupDeviceD3D(GUIContext* pCtx) {
     }
 }
 
-void CreateRenderTarget(GUIContext* pCtx) {
+void CreateRenderTarget(IMGUIContext* pCtx) {
     ID3D11Texture2D* pBackBuffer;    
     pCtx->renderContext.pSwapChain->GetBuffer(0, IID_PPV_ARGS(&pBackBuffer));
     pCtx->renderContext.pD3DDevice->CreateRenderTargetView(pBackBuffer, nullptr, &pCtx->renderContext.pRenderTargetView);
     pBackBuffer->Release();
 }
 
-void CleanupRenderTarget(GUIContext* pCtx) {
+void CleanupRenderTarget(IMGUIContext* pCtx) {
     if (pCtx->renderContext.pRenderTargetView) {
         pCtx->renderContext.pRenderTargetView->Release();
         pCtx->renderContext.pRenderTargetView = nullptr;
@@ -229,13 +229,13 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
         return true;
 
-    static GUIContext* pCtx = nullptr;
+    static IMGUIContext* pCtx = nullptr;
 
     switch (msg) {
     case WM_CREATE:
     {
         CREATESTRUCT* pCreate = reinterpret_cast<CREATESTRUCT*>(lParam);
-        pCtx = static_cast<GUIContext*>(pCreate->lpCreateParams);
+        pCtx = static_cast<IMGUIContext*>(pCreate->lpCreateParams);
 
         return 0;
     }

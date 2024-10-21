@@ -2,7 +2,7 @@
 
 #include <functional>
 
-#include "GUIContext.h"
+#include "IMGUIContext.h"
 
-int ImguiInterface(GUIContext* pCtx,
-	const std::function<void(GUIContext*)>& gui);
+int IMGUIInterface(IMGUIContext* pCtx,
+                   const std::function<void(IMGUIContext*)>& gui);

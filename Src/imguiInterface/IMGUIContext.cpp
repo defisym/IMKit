@@ -1,12 +1,12 @@
-#include "GUIContext.h"
+#include "IMGUIContext.h"
 
-bool GUIContext::InitContext() {
+bool IMGUIContext::InitContext() {
     pFont = new FontEx{};
 
     return true;
 }
 
-bool GUIContext::UnInitContext() {
+bool IMGUIContext::UnInitContext() {
     delete pFont;
     pFont = nullptr;
 
