@@ -233,6 +233,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContext\Handler\WaveformRestoreHandler.cpp" />
     <ClCompile Include="IMGuiEx\FontEx.cpp" />
     <ClCompile Include="IMGuiEx\IndentHelper.cpp" />
+    <ClCompile Include="IMGuiEx\LabelMaker.cpp" />
     <ClCompile Include="imguiInterface\GUIContext.cpp" />
     <ClCompile Include="imguiInterface\imguiInterface.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_dx11.cpp" />
@@ -297,6 +298,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="IMGuiEx\EmbraceHelper.h" />
     <ClInclude Include="IMGuiEx\FontEx.h" />
     <ClInclude Include="IMGuiEx\IndentHelper.h" />
+    <ClInclude Include="IMGuiEx\LabelMaker.h" />
     <ClInclude Include="imguiInterface\GUIContext.h" />
     <ClInclude Include="imguiInterface\imguiDemo.h" />
     <ClInclude Include="imguiInterface\imguiInterface.h" />

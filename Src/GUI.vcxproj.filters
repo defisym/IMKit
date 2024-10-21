@@ -228,6 +228,9 @@
     <ClCompile Include="imguiInterface\GUIContext.cpp">
       <Filter>源文件\imguiInterface</Filter>
     </ClCompile>
+    <ClCompile Include="IMGuiEx\LabelMaker.cpp">
+      <Filter>源文件\IMGuiEx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\imguiInterface.h">
@@ -351,6 +354,9 @@
       <Filter>头文件\IMGuiEx</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiEx\FontEx.h">
+      <Filter>头文件\IMGuiEx</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGuiEx\LabelMaker.h">
       <Filter>头文件\IMGuiEx</Filter>
     </ClInclude>
     <ClInclude Include="imguiInterface\GUIContext.h">
