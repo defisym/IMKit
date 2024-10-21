@@ -216,7 +216,7 @@
     <ClCompile Include="GUIContent\Components\Config\Process\ComponentConfigWaveformRestore.cpp">
       <Filter>源文件\GUIContent\Components\Config\Process</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContext\Context.cpp">
+    <ClCompile Include="GUIContext\OTDRGUIContext.cpp">
       <Filter>源文件\GUIContext</Filter>
     </ClCompile>
     <ClCompile Include="IMGuiEx\IndentHelper.cpp">
@@ -281,7 +281,7 @@
     <ClInclude Include="GUIContext\Handler\AudioHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContext\Context.h">
+    <ClInclude Include="GUIContext\OTDRGUIContext.h">
       <Filter>头文件\GUIContext</Filter>
     </ClInclude>
     <ClInclude Include="GUIContent\GUIContent.h">

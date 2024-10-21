@@ -224,7 +224,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContent\Components\Config\Process\ComponentConfigWaveformRestore.cpp" />
     <ClCompile Include="GUIContent\Components\Process\ComponentWaveform.cpp" />
     <ClCompile Include="GUIContent\GUIContent.cpp" />
-    <ClCompile Include="GUIContext\Context.cpp" />
+    <ClCompile Include="GUIContext\OTDRGUIContext.cpp" />
     <ClCompile Include="GUIContext\Handler\AudioHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\DeviceHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\LoggerHandler.cpp" />
@@ -283,7 +283,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContent\Components\Config\Process\ComponentConfigWaveformRestore.h" />
     <ClInclude Include="GUIContent\Components\Process\ComponentWaveform.h" />
     <ClInclude Include="GUIContent\GUIContent.h" />
-    <ClInclude Include="GUIContext\Context.h" />
+    <ClInclude Include="GUIContext\OTDRGUIContext.h" />
     <ClInclude Include="GUIContext\Handler\AudioHandler.h" />
     <ClInclude Include="GUIContext\Handler\DeviceHandler.h" />
     <ClInclude Include="GUIContext\Handler\LoggerHandler.h" />
