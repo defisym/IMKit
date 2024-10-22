@@ -31,7 +31,10 @@
 // but some characters like †D (not regularly used) and ë~ (kokuji)
 // will not be displayed properly
 // https://en.wikipedia.org/wiki/Kokuji
-//#define FONT_SIMPLIFIED_CHINESE_COMMON_ONLY
+#ifndef NDEBUG
+// in release mode should be fast enough
+#define FONT_SIMPLIFIED_CHINESE_COMMON_ONLY
+#endif
 
 #ifndef FONT_SIMPLIFIED_CHINESE_COMMON_ONLY
 #define FONT_SIMPLIFIED_CHINESE_ONLY
