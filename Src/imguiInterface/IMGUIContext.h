@@ -4,6 +4,7 @@
 #include <d3d11.h>
 
 #include "IMGuiEx/FontEx.h"
+#include "Internationalization/Internationalization.h"
 
 struct D3DContext {
     ID3D11Device* pD3DDevice = nullptr;
@@ -31,6 +32,7 @@ struct IMGUIContext {
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     D3DContext renderContext = {};
+    I18N i18n = {};
 
     IMGUIContext() = default;
     virtual ~IMGUIContext() = default;
