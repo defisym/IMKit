@@ -17,9 +17,11 @@ FontEx::FontEx() {
 #else
     // build CKJ by default
     builder.AddRanges(pFontAtlas->GetGlyphRangesChineseFull());
+#ifndef FONT_SIMPLIFIED_CHINESE_ONLY
     // Chinese includes Japaneses
     //builder.AddRanges(pFontAtlas->GetGlyphRangesJapanese());
     builder.AddRanges(pFontAtlas->GetGlyphRangesKorean());
+#endif
 #endif
     builder.BuildRanges(&ranges);
 

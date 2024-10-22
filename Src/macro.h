@@ -31,7 +31,11 @@
 // but some characters like †D (not regularly used) and ë~ (kokuji)
 // will not be displayed properly
 // https://en.wikipedia.org/wiki/Kokuji
-#define FONT_SIMPLIFIED_CHINESE_COMMON_ONLY
+//#define FONT_SIMPLIFIED_CHINESE_COMMON_ONLY
+
+#ifndef FONT_SIMPLIFIED_CHINESE_COMMON_ONLY
+#define FONT_SIMPLIFIED_CHINESE_ONLY
+#endif
 
 // try to read saved config even if the struct size changed
 #define CONFIG_TRY_READ_CONFIG
