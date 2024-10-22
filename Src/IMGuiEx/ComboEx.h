@@ -45,7 +45,7 @@ struct ComboInfoEx :ComboInfoBase {
 
 template<typename T>
 struct ComboItem {
-    const char* displayName = "Undefined";
+    std::string displayName = "Undefined";
     T value = {};
 };
 
@@ -60,7 +60,7 @@ namespace ComboExImpl {
 
         auto GetName = [&] (size_t index)->const char* {
             if constexpr (std::is_same_v<ItemType, ComboItem<ReturnType>>) {
-                return comboItems[index].displayName;
+                return comboItems[index].displayName.c_str();
             }
             else {
                 using Type = std::remove_cvref<ItemType>;
