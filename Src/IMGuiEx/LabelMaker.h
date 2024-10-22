@@ -12,6 +12,7 @@ class LabelMaker {
 
 public:
     LabelMaker(IMGUIContext* p);
+    const std::string& UpdateCache(const std::string& str);
     const std::string& MakeLabel(const char* displayName);
     const std::string& MakeLabel(const char* displayName, const char* label);
 };
