@@ -20,6 +20,8 @@ constexpr static ImVec2 PLOT_SIZE = { -1.0f, 300.0f };
 constexpr static ImGuiTabBarFlags TAB_BAR_FLAGS = ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_TabListPopupButton;
 constexpr static ImGuiSliderFlags SLIDER_FLAGS = ImGuiSliderFlags_AlwaysClamp;
 
+#define I18N pCtx->GetI18NLabel
+
 struct IMGUIContext {
     const wchar_t* pWindowName = L"Dear ImGui DirectX11 Example";
     int width = 1280;
@@ -31,7 +33,7 @@ struct IMGUIContext {
 
     ImGuiIO* pIO = nullptr;
     FontEx* pFont = nullptr;
-    I18N i18n = {};
+    Internationalization i18n = {};
     LabelMaker labelMaker = { this };
 
     const char* GetI18NLabel(const char* displayName);

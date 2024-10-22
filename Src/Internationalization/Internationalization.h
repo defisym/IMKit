@@ -4,10 +4,6 @@
 #include <string>
 #include <vector>
 
-struct Internationalization;
-
-using I18N = Internationalization;
-
 struct Internationalization {
     std::string curLang = "zh-cn";
     std::vector<std::string> supportLang;
