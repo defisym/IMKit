@@ -23,7 +23,7 @@ void RawData(Ctx* pCtx)  {
     using DataType = std::remove_cvref_t<std::remove_pointer_t<decltype(pBuffer)>>;
     [[maybe_unused]] auto stride = static_cast<int>(sizeof(DataType) * bufferStride);
 
-    if (ImPlot::BeginPlot("ImPlot/Raw/CH1", PLOT_SIZE)) {
+    if (ImPlot::BeginPlot(I18N("CH1", "ImPlot/Raw/CH1"), PLOT_SIZE)) {
         DisplayPlot(I18N("CH1", "ImPlot/Raw/CH1/Plot"),
                     pBuffer,
                     static_cast<int>(bufferFrameSize),
@@ -31,7 +31,7 @@ void RawData(Ctx* pCtx)  {
 
         ImPlot::EndPlot();
     }
-    if (ImPlot::BeginPlot("ImPlot/Raw/CH2", PLOT_SIZE)) {
+    if (ImPlot::BeginPlot(I18N("CH1", "ImPlot/Raw/CH2"), PLOT_SIZE)) {
         DisplayPlot(I18N("CH2", "ImPlot/Raw/CH2/Plot"),
                     pBuffer + 1,
                     static_cast<int>(bufferFrameSize),
@@ -67,7 +67,7 @@ void VibrationLocalization(Ctx* pCtx)  {
             auto frameCount = pComponentVibrationLocalization->MovingAverage();
 #ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
             if (ImGui::BeginTabItem(I18N("Shake MA"))) {
-                if (ImPlot::BeginPlot("ImPlot/Shake/MA", PLOT_SIZE)) {
+                if (ImPlot::BeginPlot(I18N("MA", "ImPlot/Shake/MA"), PLOT_SIZE)) {
                     for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(frameCount); frameIdx++) {
                         const std::string plotName = I18NFMT("Plot_{}", frameIdx);
                         DisplayPlot(std::format("{}##ImPlot/Shake/MA/{}", plotName, plotName).c_str(),
@@ -89,7 +89,7 @@ void VibrationLocalization(Ctx* pCtx)  {
             pResult = pComponentVibrationLocalization->GetMovingDifferenceFrame(accumulateFrameIndex);
 #ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
             if (ImGui::BeginTabItem(I18N("Shake MD"))) {
-                if (ImPlot::BeginPlot("ImPlot/Shake/MD", PLOT_SIZE)) {
+                if (ImPlot::BeginPlot(I18N("MD", "ImPlot/Shake/MD"), PLOT_SIZE)) {
                     for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(accumulateFrameIndex); frameIdx++) {
                         const std::string plotName = I18NFMT("Plot_{}", frameIdx);
                         DisplayPlot(std::format("{}##ImPlot/Shake/MD/{}", plotName, plotName).c_str(),
@@ -102,8 +102,8 @@ void VibrationLocalization(Ctx* pCtx)  {
                 ImGui::EndTabItem();
             }
             if (ImGui::BeginTabItem(I18N("Shake MD Accumulate"))) {
-#endif
-                if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", PLOT_SIZE)) {
+#endif                
+                if (ImPlot::BeginPlot(I18N("Vibration Localization", "ImPlot/Shake/MD/Accumulate"), PLOT_SIZE)) {
 #ifdef VIBRATION_LOCALIZATION_SHOW_LOGGER_THRESHOLD
                     auto threshold = pCtx->loggerHandler.loggerParams.threshold;
                     ImPlot::PlotLineG(I18N("Threshold", "ImPlot/Shake/MD/Accumulate/Threshold"),
@@ -150,8 +150,8 @@ void WaveformRestore(Ctx* pCtx) {
     const EmbraceHelper tabBarHelper = { ImGui::BeginTabBar("Wave/Tab", TAB_BAR_FLAGS), ImGui::EndTabBar };
     if (!tabBarHelper.State()) { return; }
 
-    if (ImGui::BeginTabItem(I18N("Wave Unprocessed"))) {
-        if (ImPlot::BeginPlot("ImPlot/Wave/Wave Unprocessed", PLOT_SIZE)) {
+    if (ImGui::BeginTabItem(I18N("Wave Unprocessed"))) {       
+        if (ImPlot::BeginPlot(I18N("Wave Unprocessed", "ImPlot/Wave/Wave Unprocessed"), PLOT_SIZE)) {
             for (size_t frameIdx = 0;
                 frameIdx < GetDisplayFrame(deviceParams.processFrameCount);
                 frameIdx++) {
@@ -169,7 +169,7 @@ void WaveformRestore(Ctx* pCtx) {
 
     if (ImGui::BeginTabItem(I18N("Wave Shake"))) {
 #endif
-        if (ImPlot::BeginPlot("ImPlot/Wave/Wave Shake", PLOT_SIZE)) {            
+        if (ImPlot::BeginPlot(I18N("Wave Shake", "ImPlot/Wave/Wave Shake"), PLOT_SIZE)) {
             DisplayPlot(I18N("Wave Shake", "ImPlot/Wave/Wave Shake"),
                 pHandler->restoreWaveBuffer.data(),
                 static_cast<int>(pHandler->restoreWaveBuffer.size()));
@@ -177,7 +177,7 @@ void WaveformRestore(Ctx* pCtx) {
             ImPlot::EndPlot();
         }
 
-        if (ImPlot::BeginPlot("ImPlot/Wave/Wave FFT Amplitude", PLOT_SIZE)) {           
+        if (ImPlot::BeginPlot(I18N("Wave FFT Amplitude", "ImPlot/Wave/Wave FFT Amplitude"), PLOT_SIZE)) {
             DisplayPlot(I18N("Wave FFT Amplitude", "ImPlot/Wave/Wave FFT Amplitude"),
                 pHandler->restoreWaveFFTBuffer.data(),
                 static_cast<int>(pHandler->fftElement), 1,
