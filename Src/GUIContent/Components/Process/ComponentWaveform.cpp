@@ -12,7 +12,7 @@ size_t GetDisplayFrame(const size_t frameCount) {
 }
 
 void RawData(Ctx* pCtx)  {
-    if (!ImGui::BeginTabItem("Raw")) { return; }
+    if (!ImGui::BeginTabItem(I18N("Raw"))) { return; }
 
     const auto& [pBuffer,
         bufferSz,
@@ -24,7 +24,7 @@ void RawData(Ctx* pCtx)  {
     [[maybe_unused]] auto stride = static_cast<int>(sizeof(DataType) * bufferStride);
 
     if (ImPlot::BeginPlot("ImPlot/Raw/CH1", PLOT_SIZE)) {
-        DisplayPlot("ImPlot/Raw/CH1/Plot",
+        DisplayPlot(I18N("CH1", "ImPlot/Raw/CH1/Plot"),
                     pBuffer,
                     static_cast<int>(bufferFrameSize),
                     static_cast<int>(bufferStride));
@@ -32,7 +32,7 @@ void RawData(Ctx* pCtx)  {
         ImPlot::EndPlot();
     }
     if (ImPlot::BeginPlot("ImPlot/Raw/CH2", PLOT_SIZE)) {
-        DisplayPlot("ImPlot/Raw/CH2/Plot",
+        DisplayPlot(I18N("CH2", "ImPlot/Raw/CH2/Plot"),
                     pBuffer + 1,
                     static_cast<int>(bufferFrameSize),
                     static_cast<int>(bufferStride));
@@ -44,14 +44,14 @@ void RawData(Ctx* pCtx)  {
 }
 
 void VibrationLocalization(Ctx* pCtx)  {
-    const EmbraceHelper tabHelper = { ImGui::BeginTabItem("Vibration Localization"), ImGui::EndTabItem };
+    const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Vibration Localization")), ImGui::EndTabItem };
     if (!tabHelper.State()) { return; }
     const auto frameSz = pCtx->deviceHandler.bufferInfo.frameSize;
     const auto frameSize = static_cast<int>(frameSz);
     const auto pComponentVibrationLocalization = pCtx->processHandler.GetVibrationLocalizationHandler(pCtx, Context_GetProcessBuffer(pCtx->deviceHandler.hContext, 1));
 
     if (!pComponentVibrationLocalization->bFilled) {
-        ImGui::TextUnformatted("Data not enough");
+        ImGui::TextUnformatted(I18N("Data not enough"));
 
         return;
     }
@@ -66,10 +66,11 @@ void VibrationLocalization(Ctx* pCtx)  {
         {
             auto frameCount = pComponentVibrationLocalization->MovingAverage();
 #ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
-            if (ImGui::BeginTabItem("Shake MA")) {
+            if (ImGui::BeginTabItem(I18N("Shake MA"))) {
                 if (ImPlot::BeginPlot("ImPlot/Shake/MA", PLOT_SIZE)) {
                     for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(frameCount); frameIdx++) {
-                        DisplayPlot(std::format("ImPlot/Shake/MA/Plot_{}", frameIdx).c_str(),
+                        const std::string plotName = I18NFMT("Plot_{}", frameIdx);
+                        DisplayPlot(std::format("{}##ImPlot/Shake/MA/{}", plotName, plotName).c_str(),
                             pComponentVibrationLocalization->GetMovingAverageFrame(frameIdx),
                             frameSize);
                     }
@@ -87,10 +88,11 @@ void VibrationLocalization(Ctx* pCtx)  {
             const auto accumulateFrameIndex = frameCount - 1;
             pResult = pComponentVibrationLocalization->GetMovingDifferenceFrame(accumulateFrameIndex);
 #ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
-            if (ImGui::BeginTabItem("Shake MD")) {
+            if (ImGui::BeginTabItem(I18N("Shake MD"))) {
                 if (ImPlot::BeginPlot("ImPlot/Shake/MD", PLOT_SIZE)) {
                     for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(accumulateFrameIndex); frameIdx++) {
-                        DisplayPlot(std::format("ImPlot/Shake/MD/Plot_{}", frameIdx).c_str(),
+                        const std::string plotName = I18NFMT("Plot_{}", frameIdx);
+                        DisplayPlot(std::format("{}##ImPlot/Shake/MD/{}", plotName, plotName).c_str(),
                             pComponentVibrationLocalization->GetMovingDifferenceFrame(frameIdx),
                            frameSize);
                     }
@@ -99,19 +101,18 @@ void VibrationLocalization(Ctx* pCtx)  {
                 }
                 ImGui::EndTabItem();
             }
-            if (ImGui::BeginTabItem("Shake MD Accumulate")) {
+            if (ImGui::BeginTabItem(I18N("Shake MD Accumulate"))) {
 #endif
                 if (ImPlot::BeginPlot("ImPlot/Shake/MD/Accumulate", PLOT_SIZE)) {
 #ifdef VIBRATION_LOCALIZATION_SHOW_LOGGER_THRESHOLD
                     auto threshold = pCtx->loggerHandler.loggerParams.threshold;
-
-                    ImPlot::PlotLineG("ImPlot/Shake/MD/Accumulate/Threshold",
+                    ImPlot::PlotLineG(I18N("Threshold", "ImPlot/Shake/MD/Accumulate/Threshold"),
                         [] (int idx, void* pData) {
                             return ImPlotPoint{ static_cast<double>(idx),
                                 static_cast<double>(*static_cast<decltype(threshold)*>(pData)) };
                         }, & threshold, frameSize, ImPlotLineFlags_Shaded);
 #endif
-                    DisplayPlot("ImPlot/Shake/MD/Accumulate/Plot", pResult, frameSize);
+                    DisplayPlot(I18N("Vibration Localization", "ImPlot/Shake/MD/Accumulate/Vibration Localization"), pResult, frameSize);
 
                     ImPlot::EndPlot();
                 }
@@ -131,8 +132,8 @@ void VibrationLocalization(Ctx* pCtx)  {
     loggerHandler.AddData(vibrationLogger, { pResult, frameSz });
 }
 
-void WaveformRestore(const Ctx* pCtx) {
-    const EmbraceHelper tabItemHelper = { ImGui::BeginTabItem("Waveform Restore"), ImGui::EndTabItem };
+void WaveformRestore(Ctx* pCtx) {
+    const EmbraceHelper tabItemHelper = { ImGui::BeginTabItem(I18N("Waveform Restore")), ImGui::EndTabItem };
     if (!tabItemHelper.State()) { return; }
 
     const auto pHandler = pCtx->processHandler.pWaveformRestoreHandler;
@@ -141,7 +142,7 @@ void WaveformRestore(const Ctx* pCtx) {
     const auto& deviceParams = pCtx->deviceHandler.deviceParams;
 
     if (!pHandler->WaveProcess(waveRestoreOpt, bOptChanged)) {
-        ImGui::TextUnformatted("Data not enough");
+        ImGui::TextUnformatted(I18N("Data not enough"));
         return;
     }
 
@@ -149,12 +150,13 @@ void WaveformRestore(const Ctx* pCtx) {
     const EmbraceHelper tabBarHelper = { ImGui::BeginTabBar("Wave/Tab", TAB_BAR_FLAGS), ImGui::EndTabBar };
     if (!tabBarHelper.State()) { return; }
 
-    if (ImGui::BeginTabItem("Wave Unprocessed")) {
+    if (ImGui::BeginTabItem(I18N("Wave Unprocessed"))) {
         if (ImPlot::BeginPlot("ImPlot/Wave/Wave Unprocessed", PLOT_SIZE)) {
             for (size_t frameIdx = 0;
                 frameIdx < GetDisplayFrame(deviceParams.processFrameCount);
                 frameIdx++) {
-                DisplayPlot(std::format("ImPlot/Wave/Wave Unprocessed/Plot_{}", frameIdx).c_str(),
+                const std::string plotName = I18NFMT("Plot_{}", frameIdx);
+                DisplayPlot(std::format("{}##ImPlot/Wave/Wave Unprocessed/{}", plotName, plotName).c_str(),
                     Context_GetFrameBuffer(pHandler->pWaveDisplayBuffer->_pBuf,
                     deviceParams.pointNumPerScan, frameIdx),
                     deviceParams.pointNumPerScan);
@@ -165,18 +167,18 @@ void WaveformRestore(const Ctx* pCtx) {
         ImGui::EndTabItem();
     }
 
-    if (ImGui::BeginTabItem("Wave Shake")) {
+    if (ImGui::BeginTabItem(I18N("Wave Shake"))) {
 #endif
-        if (ImPlot::BeginPlot("ImPlot/Wave/Wave Shake", PLOT_SIZE)) {
-            DisplayPlot(std::format("ImPlot/Wave/Wave Shake").c_str(),
+        if (ImPlot::BeginPlot("ImPlot/Wave/Wave Shake", PLOT_SIZE)) {            
+            DisplayPlot(I18N("Wave Shake", "ImPlot/Wave/Wave Shake"),
                 pHandler->restoreWaveBuffer.data(),
                 static_cast<int>(pHandler->restoreWaveBuffer.size()));
 
             ImPlot::EndPlot();
         }
 
-        if (ImPlot::BeginPlot("ImPlot/Wave/Wave FFT Amplitude", PLOT_SIZE)) {
-            DisplayPlot(std::format("ImPlot/Wave/Wave FFT Amplitude").c_str(),
+        if (ImPlot::BeginPlot("ImPlot/Wave/Wave FFT Amplitude", PLOT_SIZE)) {           
+            DisplayPlot(I18N("Wave FFT Amplitude", "ImPlot/Wave/Wave FFT Amplitude"),
                 pHandler->restoreWaveFFTBuffer.data(),
                 static_cast<int>(pHandler->fftElement), 1,
                 [&] (const double index) {
@@ -200,16 +202,16 @@ void ComponentWaveform(Ctx* pCtx) {
     // out of tab: should always pull data
     const auto err = pCtx->deviceHandler.ReadData();
 
-	if (!ImGui::CollapsingHeader("Waveform", ImGuiTreeNodeFlags_DefaultOpen)) {
+	if (!ImGui::CollapsingHeader(I18N("Waveform"), ImGuiTreeNodeFlags_DefaultOpen)) {
 		return;
 	}
 
     switch (err) {
     case DeviceHandler::ReadResult::NO_DEVICE:
-        ImGui::TextUnformatted("Device not started");
+        ImGui::TextUnformatted(I18N("Device not started"));
         break;
 	case DeviceHandler::ReadResult::NO_CONTEXT:
-        ImGui::TextUnformatted("Context not created");
+        ImGui::TextUnformatted(I18N("Context not created"));
         break;
 	case DeviceHandler::ReadResult::OK:
         if (ImGui::BeginTabBar("Waveform/Tab", TAB_BAR_FLAGS)) {
