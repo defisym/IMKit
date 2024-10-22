@@ -4,6 +4,7 @@
 #include <d3d11.h>
 
 #include "IMGuiEx/FontEx.h"
+#include "IMGuiEx/LabelMaker.h"
 #include "Internationalization/Internationalization.h"
 
 struct D3DContext {
@@ -25,15 +26,19 @@ struct IMGUIContext {
     int height = 800;
     bool bDPIAware = false;
 
-    ImGuiIO* pIO = nullptr;
-    FontEx* pFont = nullptr;
-
     bool bDarkMode = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    D3DContext renderContext = {};
+    ImGuiIO* pIO = nullptr;
+    FontEx* pFont = nullptr;
     I18N i18n = {};
+    LabelMaker labelMaker = { this };
 
+    const char* GetI18NLabel(const char* displayName) const;
+    const char* GetI18NLabel(const char* displayName, const char* label);
+
+    D3DContext renderContext = {};
+    
     IMGUIContext() = default;
     virtual ~IMGUIContext() = default;
 
