@@ -311,9 +311,6 @@
     <ClInclude Include="GUIContent\Components\Config\ComponentConfig.h">
       <Filter>头文件\GUIContent\Components\Config</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\Enviorment\ComponentConfigFiber.h">
-      <Filter>头文件\GUIContent\Components\Config\Environment</Filter>
-    </ClInclude>
     <ClInclude Include="GUIContent\Components\Config\Device\ComponentConfigDevice.h">
       <Filter>头文件\GUIContent\Components\Config\Device</Filter>
     </ClInclude>
@@ -340,9 +337,6 @@
     </ClInclude>
     <ClInclude Include="GUIContext\Handler\LoggerHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\Enviorment\ComponentConfigLogger.h">
-      <Filter>头文件\GUIContent\Components\Config\Environment</Filter>
     </ClInclude>
     <ClInclude Include="GUIContext\Handler\VibrationLocalizationHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
@@ -373,6 +367,12 @@
     </ClInclude>
     <ClInclude Include="imguiInterface\IMGUIContext.h">
       <Filter>头文件\imguiInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigFiber.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigLogger.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
