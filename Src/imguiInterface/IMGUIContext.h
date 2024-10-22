@@ -34,7 +34,7 @@ struct IMGUIContext {
     I18N i18n = {};
     LabelMaker labelMaker = { this };
 
-    const char* GetI18NLabel(const char* displayName) const;
+    const char* GetI18NLabel(const char* displayName);
     const char* GetI18NLabel(const char* displayName, const char* label);
 
     D3DContext renderContext = {};

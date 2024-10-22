@@ -5,8 +5,9 @@
 #include "imguiInterface/IMGUIContext.h"
 
 LabelMaker::LabelMaker(IMGUIContext* p) :pCtx(p) {}
-const std::string& LabelMaker::MakeLabel(const char* displayName) const {
-    return pCtx->i18n.GetInternationalization(displayName);
+const std::string& LabelMaker::MakeLabel(const char* displayName) {
+    cache = pCtx->i18n.GetInternationalization(displayName);
+    return cache;
 }
 
 const std::string& LabelMaker::MakeLabel(const char* displayName, const char* label) {

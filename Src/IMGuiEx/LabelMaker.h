@@ -12,7 +12,7 @@ class LabelMaker {
 
 public:
     LabelMaker(IMGUIContext* p);
-    const std::string& MakeLabel(const char* displayName) const;
+    const std::string& MakeLabel(const char* displayName);
     const std::string& MakeLabel(const char* displayName, const char* label);
 };
 

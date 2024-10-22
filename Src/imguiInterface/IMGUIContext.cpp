@@ -1,6 +1,6 @@
 #include "IMGUIContext.h"
 
-const char* IMGUIContext::GetI18NLabel(const char* displayName) const {    
+const char* IMGUIContext::GetI18NLabel(const char* displayName) {    
     return labelMaker.MakeLabel(displayName).c_str();
 }
 
