@@ -13,7 +13,7 @@ inline void DisplayPlot(const char* pLabel,
     const CoordUpdater & xUpdater = nullptr,
     const CoordUpdater & yUpdater = nullptr) {
     constexpr auto threshold = 500;
-    constexpr auto minOffset = 1;
+    constexpr auto minOffset = 1.0;
     static const CoordUpdater defaultUpdater = [] (const double coord) { return coord; };
 
     if (dataCount <= threshold && !xUpdater && !yUpdater) {
@@ -26,13 +26,15 @@ inline void DisplayPlot(const char* pLabel,
         const T* pData = nullptr;
         int stride = 1;
         int offset = 1;
+        double coordCoef = 1.0;
 
         const CoordUpdater* pXUpdater = nullptr;
         const CoordUpdater* pYUpdater = nullptr;
     };
 
+    const auto coordCoef = (std::max)(minOffset, static_cast<double>(dataCount) / static_cast<double>(threshold));
     Data plotData = { pData, stride,
-        (std::max)(minOffset, dataCount / threshold),
+        static_cast<int>(coordCoef),coordCoef,
         xUpdater ? &xUpdater : &defaultUpdater,
         yUpdater ? &yUpdater : &defaultUpdater };
 
@@ -41,7 +43,7 @@ inline void DisplayPlot(const char* pLabel,
         auto pPlotData = static_cast<Data*>(user_data);
         auto pElement = pPlotData->pData + pPlotData->stride * pPlotData->offset * idx;
 
-        ImPlotPoint point = { (*pPlotData->pXUpdater)(static_cast<double>(idx * pPlotData->offset)),
+        ImPlotPoint point = { (*pPlotData->pXUpdater)(static_cast<double>(idx * pPlotData->coordCoef)),
             (*pPlotData->pYUpdater)(static_cast<double>(*pElement)) };
 
         return point;
