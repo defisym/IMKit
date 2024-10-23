@@ -23,7 +23,8 @@ Internationalization::Internationalization() {
         if (!token.contains("token")) { continue; }
         if (!token.contains("language")) { continue; }
 
-        std::string tokenName = token["token"]; ToLower(tokenName);
+        const std::string tokenNameSrc = token["token"];
+        std::string tokenName = ToLower(tokenNameSrc);
         if (tokenName.empty()) { continue; }
         if (tokenMap.contains(tokenName)) { continue; }
 
@@ -31,7 +32,8 @@ Internationalization::Internationalization() {
         auto& languageMap = tokenMap[tokenName];
 
         for (auto& langs : language) {
-            std::string langName = langs.begin().key(); ToLower(langName);
+            const std::string langNameSrc = langs.begin().key();
+            std::string langName = ToLower(langNameSrc);
             const auto& langContent = langs[langName];
 
             if (langName.empty()) { continue; }
@@ -45,11 +47,11 @@ Internationalization::Internationalization() {
 }
 
 void Internationalization::UpdateLanguage(const std::string& lang) {
-    curLang = lang; ToLower(curLang);
+    curLang = ToLower(lang);
 }
 
 const std::string& Internationalization::GetInternationalization(const std::string& token) const {
-    auto lowerToken = token; ToLower(lowerToken);
+    const auto lowerToken = ToLower(token);
     const auto& tokenIt = tokenMap.find(lowerToken);
 
     if (tokenIt == tokenMap.end()) { return token; }
