@@ -26,7 +26,13 @@ Internationalization::Internationalization() {
         const std::string tokenNameSrc = token["token"];
         std::string tokenName = ToLower(tokenNameSrc);
         if (tokenName.empty()) { continue; }
-        if (tokenMap.contains(tokenName)) { continue; }
+        if (tokenMap.contains(tokenName)) {
+#ifdef _DEBUG
+            OutputDebugStringA(std::format("Duplicate token: {}",
+                tokenNameSrc).c_str());
+#endif
+            continue;
+        }
 
         const auto& language = token["language"];
         auto& languageMap = tokenMap[tokenName];
@@ -37,7 +43,13 @@ Internationalization::Internationalization() {
             const auto& langContent = langs[langName];
 
             if (langName.empty()) { continue; }
-            if (languageMap.contains(langName)) { continue; }
+            if (languageMap.contains(langName)) {
+#ifdef _DEBUG
+                OutputDebugStringA(std::format("Duplicate token {} localization: {}",
+                    tokenNameSrc, langNameSrc).c_str());
+#endif
+                continue;
+            }
             if (std::ranges::find(supportLang, langName) == supportLang.end()) { continue; }
             if (langContent.empty()) { continue; }
 
