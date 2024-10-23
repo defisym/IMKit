@@ -69,7 +69,7 @@ void VibrationLocalization(Ctx* pCtx)  {
             if (ImGui::BeginTabItem(I18N("Shake MA"))) {
                 if (ImPlot::BeginPlot(I18N("MA", "ImPlot/Shake/MA"), PLOT_SIZE)) {
                     for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(frameCount); frameIdx++) {
-                        const std::string plotName = I18NFMT("Plot_{}", frameIdx);
+                        const std::string plotName = I18NFMT("Plot {}", frameIdx);
                         DisplayPlot(std::format("{}##ImPlot/Shake/MA/{}", plotName, plotName).c_str(),
                             pComponentVibrationLocalization->GetMovingAverageFrame(frameIdx),
                             frameSize);
@@ -91,7 +91,7 @@ void VibrationLocalization(Ctx* pCtx)  {
             if (ImGui::BeginTabItem(I18N("Shake MD"))) {
                 if (ImPlot::BeginPlot(I18N("MD", "ImPlot/Shake/MD"), PLOT_SIZE)) {
                     for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(accumulateFrameIndex); frameIdx++) {
-                        const std::string plotName = I18NFMT("Plot_{}", frameIdx);
+                        const std::string plotName = I18NFMT("Plot {}", frameIdx);
                         DisplayPlot(std::format("{}##ImPlot/Shake/MD/{}", plotName, plotName).c_str(),
                             pComponentVibrationLocalization->GetMovingDifferenceFrame(frameIdx),
                            frameSize);
@@ -155,7 +155,7 @@ void WaveformRestore(Ctx* pCtx) {
             for (size_t frameIdx = 0;
                 frameIdx < GetDisplayFrame(deviceParams.processFrameCount);
                 frameIdx++) {
-                const std::string plotName = I18NFMT("Plot_{}", frameIdx);
+                const std::string plotName = I18NFMT("Plot {}", frameIdx);
                 DisplayPlot(std::format("{}##ImPlot/Wave/Wave Unprocessed/{}", plotName, plotName).c_str(),
                     Context_GetFrameBuffer(pHandler->pWaveDisplayBuffer->_pBuf,
                     deviceParams.pointNumPerScan, frameIdx),
