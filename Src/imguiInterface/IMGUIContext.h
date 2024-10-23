@@ -4,6 +4,8 @@
 #include <d3d11.h>
 #include <_DeLib/GeneralDefinition.h>
 
+#include "imgui/imgui.h"
+
 #include "IMGuiEx/FontEx.h"
 #include "IMGuiEx/LabelMaker.h"
 #include "Internationalization/Internationalization.h"
@@ -17,7 +19,6 @@ struct D3DContext {
     ID3D11RenderTargetView* pRenderTargetView = nullptr;
 };
 
-constexpr static ImVec2 PLOT_SIZE = { -1.0f, 300.0f };
 constexpr static ImGuiTabBarFlags TAB_BAR_FLAGS = ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_TabListPopupButton;
 constexpr static ImGuiSliderFlags SLIDER_FLAGS = ImGuiSliderFlags_AlwaysClamp;
 
@@ -32,6 +33,7 @@ struct IMGUIContext {
 
     bool bDarkMode = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    D3DContext renderContext = {};
 
     ImGuiIO* pIO = nullptr;
     FontEx* pFont = nullptr;
@@ -53,8 +55,6 @@ struct IMGUIContext {
         return labelMaker.UpdateCache(labelMaker.ConnectLabel(fmt, label)).c_str();
     }
 
-    D3DContext renderContext = {};
-    
     IMGUIContext() = default;
     virtual ~IMGUIContext() = default;
 

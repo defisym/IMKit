@@ -5,6 +5,11 @@
 
 #include "implot/implot.h"
 
+// setup axis with default settings
+void SetupAxis(const char* xLabel = nullptr, const char* yLabel = nullptr);
+// begin plot and impl default settings
+bool BeginPlotEx(const char* title_id, const char* xLabel = nullptr, const char* yLabel = nullptr);
+
 using CoordUpdater = std::function<double(const double)>;
 
 template<typename T>
