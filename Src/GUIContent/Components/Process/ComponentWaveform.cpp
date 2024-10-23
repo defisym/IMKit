@@ -46,25 +46,31 @@ void RawData(Ctx* pCtx)  {
 void VibrationLocalization(Ctx* pCtx)  {
     const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Vibration Localization")), ImGui::EndTabItem };
     if (!tabHelper.State()) { return; }
+    auto& pResult = pCtx->processHandler.processResult.pVibrationLocalizationResult;
     const auto frameSz = pCtx->deviceHandler.bufferInfo.frameSize;
     const auto frameSize = static_cast<int>(frameSz);
-    const auto pComponentVibrationLocalization = pCtx->processHandler.GetVibrationLocalizationHandler(pCtx, Context_GetProcessBuffer(pCtx->deviceHandler.hContext, 1));
+#ifndef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
+    const auto pComponentVibrationLocalization
+        = pCtx->processHandler.GetVibrationLocalizationHandler(pCtx,
+            Context_GetProcessBuffer(pCtx->deviceHandler.hContext, 1));
 
     if (!pComponentVibrationLocalization->bFilled) {
+#else
+    if (pResult == nullptr) {
+#endif
         ImGui::TextUnformatted(I18N("Data not enough"));
 
         return;
     }
-
-    // for logger
-    const OTDRProcessValueType* pResult = nullptr;
 
 #ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
     if (ImGui::BeginTabBar("Shake/Tab", TAB_BAR_FLAGS)) {
 #endif
         // Handle Moving Average
         {
+#ifndef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
             auto frameCount = pComponentVibrationLocalization->MovingAverage();
+#endif
 #ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
             if (ImGui::BeginTabItem(I18N("Shake MA"))) {
                 if (ImPlot::BeginPlot(I18N("MA", "ImPlot/Shake/MA"), PLOT_SIZE)) {
@@ -84,9 +90,11 @@ void VibrationLocalization(Ctx* pCtx)  {
 
         // Handle Moving Difference
         {
+#ifndef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
             auto frameCount = pComponentVibrationLocalization->MovingDifference();
             const auto accumulateFrameIndex = frameCount - 1;
             pResult = pComponentVibrationLocalization->GetMovingDifferenceFrame(accumulateFrameIndex);
+#endif
 #ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
             if (ImGui::BeginTabItem(I18N("Shake MD"))) {
                 if (ImPlot::BeginPlot(I18N("MD", "ImPlot/Shake/MD"), PLOT_SIZE)) {
@@ -127,9 +135,9 @@ void VibrationLocalization(Ctx* pCtx)  {
     }
 #endif
 
-    auto& loggerHandler = pCtx->loggerHandler;
-    auto& vibrationLogger = loggerHandler.vibrationLogger;
-    loggerHandler.AddData(vibrationLogger, { pResult, frameSz });
+#ifndef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
+    pCtx->loggerHandler.LogVibration(pCtx);
+#endif
 }
 
 void WaveformRestore(Ctx* pCtx) {
@@ -137,11 +145,13 @@ void WaveformRestore(Ctx* pCtx) {
     if (!tabItemHelper.State()) { return; }
 
     const auto pHandler = pCtx->processHandler.pWaveformRestoreHandler;
-    const auto bOptChanged = pCtx->processHandler.bWaveformRestoreOptUpdated;
-    const auto& waveRestoreOpt = pCtx->processHandler.processParams.wrParam;
     const auto& deviceParams = pCtx->deviceHandler.deviceParams;
 
-    if (!pHandler->WaveProcess(waveRestoreOpt, bOptChanged)) {
+#ifndef WAVEFORM_RESTORE_ALWAYS_UPDATE
+    pCtx->processHandler.ProcessWaveform();
+#endif
+
+    if (!pCtx->processHandler.processResult.bWaveFromProcessed) {
         ImGui::TextUnformatted(I18N("Data not enough"));
         return;
     }
@@ -201,6 +211,19 @@ void WaveformRestore(Ctx* pCtx) {
 void ComponentWaveform(Ctx* pCtx) {
     // out of tab: should always pull data
     const auto err = pCtx->deviceHandler.ReadData();
+#if defined(VIBRATION_LOCALIZATION_ALWAYS_UPDATE) || defined(WAVEFORM_RESTORE_ALWAYS_UPDATE)
+    if (err == DeviceHandler::ReadResult::OK) {
+        auto& processResult = pCtx->processHandler.processResult;
+#ifdef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
+        if (pCtx->processHandler.ProcessVibrationLocalization(pCtx)) {
+            pCtx->loggerHandler.LogVibration(pCtx);
+        }
+#endif
+#ifdef WAVEFORM_RESTORE_ALWAYS_UPDATE
+        pCtx->processHandler.ProcessWaveform();
+#endif
+    }
+#endif
 
 	if (!ImGui::CollapsingHeader(I18N("Waveform"), ImGuiTreeNodeFlags_DefaultOpen)) {
 		return;
