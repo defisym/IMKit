@@ -24,6 +24,7 @@ constexpr static ImGuiSliderFlags SLIDER_FLAGS = ImGuiSliderFlags_AlwaysClamp;
 
 #define I18N pCtx->GetI18NLabel
 #define I18NFMT pCtx->GetI18NLabelFMT
+#define I18NSTR(...) pCtx->GetI18NLabelStr(__VA_ARGS__).c_str()
 
 struct IMGUIContext {
     const wchar_t* pWindowName = L"Dear ImGui DirectX11 Example";
@@ -42,6 +43,8 @@ struct IMGUIContext {
 
     const char* GetI18NLabel(const char* displayName);
     const char* GetI18NLabel(const char* displayName, const char* label);
+    const std::string GetI18NLabelStr(const char* displayName);
+    const std::string GetI18NLabelStr(const char* displayName, const char* label);
 
     template <class... Types>
     const char* GetI18NLabelFMT(const char* displayName, Types&&... args) {

@@ -8,6 +8,14 @@ const char* IMGUIContext::GetI18NLabel(const char* displayName, const char* labe
     return labelMaker.MakeLabel(displayName, label).c_str();
 }
 
+const std::string IMGUIContext::GetI18NLabelStr(const char* displayName) {
+    return labelMaker.MakeLabelStr(displayName);
+}
+
+const std::string IMGUIContext::GetI18NLabelStr(const char* displayName, const char* label) {
+    return labelMaker.MakeLabelStr(displayName, label);
+}
+
 bool IMGUIContext::InitContext() {
     pFont = new FontEx{};
 

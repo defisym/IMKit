@@ -23,7 +23,7 @@ void RawData(Ctx* pCtx)  {
     using DataType = std::remove_cvref_t<std::remove_pointer_t<decltype(pBuffer)>>;
     [[maybe_unused]] auto stride = static_cast<int>(sizeof(DataType) * bufferStride);
 
-    if (BeginPlotEx(I18N("CH1", "ImPlot/Raw/CH1"), I18N("Point"))) {
+    if (BeginPlotEx(I18NSTR("CH1", "ImPlot/Raw/CH1"), I18NSTR("Point"))) {
         DisplayPlot(I18N("CH1", "ImPlot/Raw/CH1/Plot"),
                     pBuffer,
                     static_cast<int>(bufferFrameSize),
@@ -31,7 +31,7 @@ void RawData(Ctx* pCtx)  {
 
         ImPlot::EndPlot();
     }
-    if (BeginPlotEx(I18N("CH2", "ImPlot/Raw/CH2"), I18N("Point"))) {
+    if (BeginPlotEx(I18NSTR("CH2", "ImPlot/Raw/CH2"), I18NSTR("Point"))) {
         DisplayPlot(I18N("CH2", "ImPlot/Raw/CH2/Plot"),
                     pBuffer + 1,
                     static_cast<int>(bufferFrameSize),

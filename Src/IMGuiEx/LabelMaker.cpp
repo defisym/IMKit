@@ -12,13 +12,21 @@ const std::string& LabelMaker::UpdateCache(const std::string& str) {
 }
 
 const std::string& LabelMaker::MakeLabel(const char* displayName) {
-    cache = pCtx->i18n.GetInternationalization(displayName);
+    cache = MakeLabelStr(displayName);
     return cache;
 }
 
 const std::string& LabelMaker::MakeLabel(const char* displayName, const char* label) {
-    cache = ConnectLabel(pCtx->i18n.GetInternationalization(displayName).c_str(), label);
+    cache = MakeLabelStr(displayName, label);
     return cache;
+}
+
+const std::string LabelMaker::MakeLabelStr(const char* displayName) {
+    return pCtx->i18n.GetInternationalization(displayName);
+}
+
+const std::string LabelMaker::MakeLabelStr(const char* displayName, const char* label) {
+    return ConnectLabel(pCtx->i18n.GetInternationalization(displayName).c_str(), label);
 }
 
 std::string LabelMaker::ConnectLabel(const char* displayName, const char* label) {

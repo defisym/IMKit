@@ -15,6 +15,8 @@ public:
     const std::string& UpdateCache(const std::string& str);
     const std::string& MakeLabel(const char* displayName);
     const std::string& MakeLabel(const char* displayName, const char* label);
+    const std::string MakeLabelStr(const char* displayName);
+    const std::string MakeLabelStr(const char* displayName, const char* label);
     // no localization
     static std::string ConnectLabel(const char* displayName, const char* label);
 };
