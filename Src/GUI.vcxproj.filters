@@ -368,11 +368,24 @@
     <ClInclude Include="imguiInterface\IMGUIContext.h">
       <Filter>头文件\imguiInterface</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>资源文件</Filter>
+    </ClInclude>
     <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigFiber.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\GUIContent\Components\Config\Environment</Filter>
     </ClInclude>
     <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigLogger.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\GUIContent\Components\Config\Environment</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GUI.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico">
+      <Filter>资源文件</Filter>
+    </Image>
   </ItemGroup>
 </Project>
