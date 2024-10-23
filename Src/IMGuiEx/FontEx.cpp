@@ -40,8 +40,9 @@ FontEx::FontEx() {
         pFontAtlas->Build();
     }
 #else
-    AddFont(R"(c:\Windows\Fonts\msyh.ttc)", 18.0f);
-    //AddFont("./Fonts/SourceHanSansCN-Regular.ttf", 18.0f);
+    // no M$ Yahei UI, fallback to SourceHanSans
+    if (AddFont(R"(c:\Windows\Fonts\msyh.ttc)", 18.0f)) { return; }
+    AddFont("./Fonts/SourceHanSansCN-Regular.ttf", 18.0f);
 #endif
 }
 
