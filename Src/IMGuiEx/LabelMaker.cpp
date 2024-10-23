@@ -17,6 +17,10 @@ const std::string& LabelMaker::MakeLabel(const char* displayName) {
 }
 
 const std::string& LabelMaker::MakeLabel(const char* displayName, const char* label) {
-    cache = std::format("{}##{}", pCtx->i18n.GetInternationalization(displayName), label);
+    cache = ConnectLabel(pCtx->i18n.GetInternationalization(displayName).c_str(), label);
     return cache;
+}
+
+std::string LabelMaker::ConnectLabel(const char* displayName, const char* label) {
+    return std::format("{}##{}", displayName, label);
 }

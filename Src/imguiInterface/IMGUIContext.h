@@ -50,7 +50,7 @@ struct IMGUIContext {
     template <class... Types>
     const char* GetI18NLabelFMT(const char* displayName, const char* label, Types&&... args) {
         const auto fmt = GetI18NLabelFMT(displayName, args...);
-        return labelMaker.UpdateCache(std::format("{}##{}", fmt, label)).c_str();
+        return labelMaker.UpdateCache(labelMaker.ConnectLabel(fmt, label)).c_str();
     }
 
     D3DContext renderContext = {};
