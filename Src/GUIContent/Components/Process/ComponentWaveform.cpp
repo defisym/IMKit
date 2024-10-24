@@ -43,95 +43,77 @@ void RawData(Ctx* pCtx)  {
     ImGui::EndTabItem();
 }
 
-void VibrationLocalization(Ctx* pCtx)  {
+void VibrationLocalization(Ctx* pCtx) {
     const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Vibration Localization")), ImGui::EndTabItem };
     if (!tabHelper.State()) { return; }
-    auto& pResult = pCtx->processHandler.processResult.pVibrationLocalizationResult;
+    const auto pHandler = pCtx->processHandler.pVibrationLocalizationHandler;
     const auto frameSz = pCtx->deviceHandler.bufferInfo.frameSize;
     const auto frameSize = static_cast<int>(frameSz);
+
 #ifndef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
-    const auto pComponentVibrationLocalization
-        = pCtx->processHandler.GetVibrationLocalizationHandler(pCtx,
-            Context_GetProcessBuffer(pCtx->deviceHandler.hContext, 1));
-
-    if (!pComponentVibrationLocalization->bFilled) {
-#else
-    if (pResult == nullptr) {
+    pCtx->processHandler.ProcessVibrationLocalization();
 #endif
-        ImGui::TextUnformatted(I18N("Data not enough"));
 
+    if (!pCtx->processHandler.processResult.bVibrationLocalizationProcessed) {
+        ImGui::TextUnformatted(I18N("Data not enough"));
         return;
     }
 
 #ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
     if (ImGui::BeginTabBar("Shake/Tab", TAB_BAR_FLAGS)) {
-#endif
         // Handle Moving Average
-        {
-#ifndef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
-            auto frameCount = pComponentVibrationLocalization->MovingAverage();
-#endif
-#ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
-            if (ImGui::BeginTabItem(I18N("Shake MA"))) {
-                if (BeginPlotEx(I18N("MA", "ImPlot/Shake/MA"))) {
-                    for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(frameCount); frameIdx++) {
-                        const std::string plotName = I18NFMT("Plot {}", frameIdx);
-                        DisplayPlot(std::format("{}##ImPlot/Shake/MA/{}", plotName, plotName).c_str(),
-                            pComponentVibrationLocalization->GetMovingAverageFrame(frameIdx),
-                            frameSize);
-                    }
-
-                    ImPlot::EndPlot();
+        if (ImGui::BeginTabItem(I18N("Shake MA"))) {
+            if (BeginPlotEx(I18N("MA", "ImPlot/Shake/MA"))) {
+                const auto maxFrameCount = GetDisplayFrame(pHandler->pProcessor->maFrameCount);
+                for (size_t frameIdx = 0; frameIdx < maxFrameCount; frameIdx++) {
+                    const std::string plotName = I18NFMT("Plot {}", frameIdx);
+                    DisplayPlot(std::format("{}##ImPlot/Shake/MA/{}", plotName, plotName).c_str(),
+                        pHandler->pProcessor->GetMovingAverageFrame(frameIdx),
+                        frameSize);
                 }
-                ImGui::EndTabItem();
+
+                ImPlot::EndPlot();
             }
-#endif
+            ImGui::EndTabItem();
         }
 
         // Handle Moving Difference
-        {
-#ifndef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
-            auto frameCount = pComponentVibrationLocalization->MovingDifference();
-            const auto accumulateFrameIndex = frameCount - 1;
-            pResult = pComponentVibrationLocalization->GetMovingDifferenceFrame(accumulateFrameIndex);
-#endif
-#ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
-            if (ImGui::BeginTabItem(I18N("Shake MD"))) {
-                if (BeginPlotEx(I18N("MD", "ImPlot/Shake/MD"))) {
-                    for (size_t frameIdx = 0; frameIdx < GetDisplayFrame(accumulateFrameIndex); frameIdx++) {
-                        const std::string plotName = I18NFMT("Plot {}", frameIdx);
-                        DisplayPlot(std::format("{}##ImPlot/Shake/MD/{}", plotName, plotName).c_str(),
-                            pComponentVibrationLocalization->GetMovingDifferenceFrame(frameIdx),
-                           frameSize);
-                    }
+        if (ImGui::BeginTabItem(I18N("Shake MD"))) {
+            if (BeginPlotEx(I18N("MD", "ImPlot/Shake/MD"))) {
+                // accumulateFrameIndex
+                const auto maxFrameCount = GetDisplayFrame(pHandler->pProcessor->mdFrameCount) - 1;
 
-                    ImPlot::EndPlot();
+                for (size_t frameIdx = 0; frameIdx < maxFrameCount; frameIdx++) {
+                    const std::string plotName = I18NFMT("Plot {}", frameIdx);
+                    DisplayPlot(std::format("{}##ImPlot/Shake/MD/{}", plotName, plotName).c_str(),
+                        pHandler->pProcessor->GetMovingDifferenceFrame(frameIdx),
+                        frameSize);
                 }
-                ImGui::EndTabItem();
+
+                ImPlot::EndPlot();
             }
-            if (ImGui::BeginTabItem(I18N("Shake MD Accumulate"))) {
+            ImGui::EndTabItem();
+        }
+        if (ImGui::BeginTabItem(I18N("Shake MD Accumulate"))) {
 #endif                
-                if (BeginPlotEx(I18N("Vibration Localization", "ImPlot/Shake/MD/Accumulate"))) {
+            if (BeginPlotEx(I18N("Vibration Localization", "ImPlot/Shake/MD/Accumulate"))) {
 #ifdef VIBRATION_LOCALIZATION_SHOW_LOGGER_THRESHOLD
-                    auto threshold = pCtx->loggerHandler.loggerParams.threshold;
-                    ImPlot::PlotLineG(I18N("Threshold", "ImPlot/Shake/MD/Accumulate/Threshold"),
-                        [] (int idx, void* pData) {
-                            return ImPlotPoint{ static_cast<double>(idx),
-                                static_cast<double>(*static_cast<decltype(threshold)*>(pData)) };
-                        }, & threshold, frameSize, ImPlotLineFlags_Shaded);
+                auto threshold = pCtx->loggerHandler.loggerParams.threshold;
+                ImPlot::PlotLineG(I18N("Threshold", "ImPlot/Shake/MD/Accumulate/Threshold"),
+                    [] (int idx, void* pData) {
+                    return ImPlotPoint{ static_cast<double>(idx),
+                        static_cast<double>(*static_cast<decltype(threshold)*>(pData)) };
+                    }, &threshold, frameSize, ImPlotLineFlags_Shaded);
 #endif
-                    DisplayPlot(I18N("Vibration Localization", "ImPlot/Shake/MD/Accumulate/Vibration Localization"),
-                        pResult, frameSize);
+                DisplayPlot(I18N("Vibration Localization", "ImPlot/Shake/MD/Accumulate/Vibration Localization"),
+                    pHandler->GetVibrationLocalizationResult(), frameSize);
 
-                    ImPlot::EndPlot();
-                }
-#ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
-                ImGui::EndTabItem();
+                ImPlot::EndPlot();
             }
-#endif
+#ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
+            ImGui::EndTabItem();
         }
 
-#ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
         ImGui::EndTabBar();
     }
 #endif
@@ -216,7 +198,7 @@ void ComponentWaveform(Ctx* pCtx) {
     if (err == DeviceHandler::ReadResult::OK) {
         auto& processResult = pCtx->processHandler.processResult;
 #ifdef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
-        if (pCtx->processHandler.ProcessVibrationLocalization(pCtx)) {
+        if (pCtx->processHandler.ProcessVibrationLocalization()) {
             pCtx->loggerHandler.LogVibration(pCtx);
         }
 #endif
