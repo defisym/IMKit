@@ -16,7 +16,8 @@ template<typename T>
 inline void DisplayPlot(const char* pLabel,
     const T * pData, int dataCount, const int stride = 1,
     const CoordUpdater & xUpdater = nullptr,
-    const CoordUpdater & yUpdater = nullptr) {
+    const CoordUpdater & yUpdater = nullptr,
+    ImPlotLineFlags flags = ImPlotLineFlags_None) {
     constexpr auto threshold = 500;
     constexpr auto minOffset = 1.0;
     static const CoordUpdater defaultUpdater = [] (const double coord) { return coord; };
@@ -53,6 +54,19 @@ inline void DisplayPlot(const char* pLabel,
 
         return point;
         },
-        &plotData, (std::min)(dataCount, threshold), ImPlotLineFlags_None);
+        &plotData, (std::min)(dataCount, threshold), flags);
 };
 
+struct PlotInfo {
+    int stride = 1;
+    CoordUpdater xUpdater = nullptr;
+    CoordUpdater yUpdater = nullptr;
+    ImPlotLineFlags flags = ImPlotLineFlags_None;
+};
+
+template<typename T>
+inline void DisplayPlot(const char* pLabel,
+    const T* pData, int dataCount, const PlotInfo& info) {
+    DisplayPlot(pLabel, pData, dataCount,
+        info.stride, info.xUpdater, info.yUpdater, info.flags);
+}
