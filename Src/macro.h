@@ -54,6 +54,9 @@
 // output debug string when skip triggered
 #define READER_OUTPUT_DEBUG_STRING_WHEN_SKIP_FRAME
 
+// normalize result by frame count
+#define VIBRATION_LOCALIZATION_NORMALIZE_RESULT_BY_FRAMECOUNT
+
 // only show the result
 #define VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
 #define WAVEFORM_RESTORE_ONLY_SHOW_RESULT
