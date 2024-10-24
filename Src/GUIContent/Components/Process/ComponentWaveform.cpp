@@ -63,7 +63,7 @@ void VibrationLocalization(Ctx* pCtx) {
     if (ImGui::BeginTabBar("Shake/Tab", TAB_BAR_FLAGS)) {
         // Handle Moving Average
         if (ImGui::BeginTabItem(I18N("Shake MA"))) {
-            if (BeginPlotEx(I18N("MA", "ImPlot/Shake/MA"))) {
+            if (BeginPlotEx(I18N("MA", "ImPlot/Shake/MA"), I18NSTR("Point"))) {
                 const auto maxFrameCount = GetDisplayFrame(pHandler->pProcessor->maFrameCount);
                 for (size_t frameIdx = 0; frameIdx < maxFrameCount; frameIdx++) {
                     const std::string plotName = I18NFMT("Plot {}", frameIdx);
@@ -79,7 +79,7 @@ void VibrationLocalization(Ctx* pCtx) {
 
         // Handle Moving Difference
         if (ImGui::BeginTabItem(I18N("Shake MD"))) {
-            if (BeginPlotEx(I18N("MD", "ImPlot/Shake/MD"))) {
+            if (BeginPlotEx(I18N("MD", "ImPlot/Shake/MD"), I18NSTR("Point"))) {
                 // accumulateFrameIndex
                 const auto maxFrameCount = GetDisplayFrame(pHandler->pProcessor->mdFrameCount) - 1;
 
@@ -96,17 +96,37 @@ void VibrationLocalization(Ctx* pCtx) {
         }
         if (ImGui::BeginTabItem(I18N("Shake MD Accumulate"))) {
 #endif                
-            if (BeginPlotEx(I18N("Vibration Localization", "ImPlot/Shake/MD/Accumulate"))) {
+            if (BeginPlotEx(I18N("Vibration Localization", "ImPlot/Shake/MD/Accumulate"),
+#ifdef VIBRATION_LOCALIZATION_USE_METER
+                I18NSTR("Meter")
+#else
+                I18NSTR("Point")
+#endif
+                )) {
+                PlotInfo plotInfo = {};
+#ifdef WAVEFORM_RESTORE_USE_MILLISECOND
+                plotInfo.xUpdater = [&] (const double index) {
+                    const auto resolution = pCtx->deviceHandler.deviceParams.resolution;
+                    return static_cast<double>(index * resolution);
+                    };
+#endif
+
 #ifdef VIBRATION_LOCALIZATION_SHOW_LOGGER_THRESHOLD
-                auto threshold = pCtx->loggerHandler.loggerParams.threshold;
+                struct ThresholdData {
+                    OTDRProcessValueType threshold;
+                    PlotInfo& plotInfo;
+                } thresholdData = { pCtx->loggerHandler.loggerParams.threshold,plotInfo };
+
                 ImPlot::PlotLineG(I18N("Threshold", "ImPlot/Shake/MD/Accumulate/Threshold"),
                     [] (int idx, void* pData) {
-                    return ImPlotPoint{ static_cast<double>(idx),
-                        static_cast<double>(*static_cast<decltype(threshold)*>(pData)) };
-                    }, &threshold, frameSize, ImPlotLineFlags_Shaded);
+                        const auto pThresholdData = static_cast<ThresholdData*>(pData);
+
+                        return ImPlotPoint{ pThresholdData->plotInfo.xUpdater(idx),
+                            pThresholdData->threshold };
+                    }, &thresholdData, frameSize, ImPlotLineFlags_Shaded);
 #endif
                 DisplayPlot(I18N("Vibration Localization", "ImPlot/Shake/MD/Accumulate/Vibration Localization"),
-                    pHandler->GetVibrationLocalizationResult(), frameSize);
+                    pHandler->GetVibrationLocalizationResult(), frameSize, plotInfo);
 
                 ImPlot::EndPlot();
             }
@@ -144,7 +164,7 @@ void WaveformRestore(Ctx* pCtx) {
     if (!tabBarHelper.State()) { return; }
 
     if (ImGui::BeginTabItem(I18N("Wave Unprocessed"))) {       
-        if (BeginPlotEx(I18N("Wave Unprocessed", "ImPlot/Wave/Wave Unprocessed"))) {
+        if (BeginPlotEx(I18N("Wave Unprocessed", "ImPlot/Wave/Wave Unprocessed"), I18NSTR("Point"))) {
             for (size_t frameIdx = 0;
                 frameIdx < GetDisplayFrame(deviceParams.processFrameCount);
                 frameIdx++) {
@@ -162,24 +182,44 @@ void WaveformRestore(Ctx* pCtx) {
 
     if (ImGui::BeginTabItem(I18N("Wave Shake"))) {
 #endif
-        if (BeginPlotEx(I18N("Wave Shake", "ImPlot/Wave/Wave Shake"))) {
+        if (BeginPlotEx(I18N("Wave Shake", "ImPlot/Wave/Wave Shake"),
+#ifdef WAVEFORM_RESTORE_USE_MILLISECOND
+            I18NSTR("ms")
+#else
+            I18NSTR("Point")
+#endif
+            )) {
+            PlotInfo plotInfo = {};
+#ifdef WAVEFORM_RESTORE_USE_MILLISECOND
+            const auto& deviceParam = pCtx->deviceHandler.deviceParams;
+            const auto timeScale = (1000.0 / deviceParam.scanRate);
+
+            plotInfo.xUpdater = [&] (const double index) {
+                return static_cast<double>(index * timeScale);
+                };
+#endif
+
             DisplayPlot(I18N("Wave Shake", "ImPlot/Wave/Wave Shake"),
                 pHandler->restoreWaveBuffer.data(),
-                static_cast<int>(pHandler->restoreWaveBuffer.size()));
+                static_cast<int>(pHandler->restoreWaveBuffer.size()),
+                plotInfo
+            );
 
             ImPlot::EndPlot();
         }
 
-        if (BeginPlotEx(I18N("Wave FFT Amplitude", "ImPlot/Wave/Wave FFT Amplitude"))) {
+        if (BeginPlotEx(I18N("Wave FFT Amplitude", "ImPlot/Wave/Wave FFT Amplitude"), I18NSTR("Hz"))) {
+            PlotInfo plotInfo = {};
+            plotInfo.xUpdater = [&] (const double index) {
+                // use the original element size for frequency calculation
+                return static_cast<double>(Util_FFT_GetFrequency(static_cast<size_t>(index),
+                    pHandler->restoreWaveFFTBuffer.size(),
+                    static_cast<float>(deviceParams.scanRate)));
+                };
             DisplayPlot(I18N("Wave FFT Amplitude", "ImPlot/Wave/Wave FFT Amplitude"),
                 pHandler->restoreWaveFFTBuffer.data(),
-                static_cast<int>(pHandler->fftElement), 1,
-                [&] (const double index) {
-                    // use the original element size for frequency calculation
-                    return static_cast<double>(Util_FFT_GetFrequency(static_cast<size_t>(index),
-                        pHandler->restoreWaveFFTBuffer.size(),
-                        static_cast<float>(deviceParams.scanRate)));
-                });
+                static_cast<int>(pHandler->fftElement),
+                plotInfo);
 
             ImPlot::EndPlot();
         }
