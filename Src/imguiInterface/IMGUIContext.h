@@ -43,8 +43,8 @@ struct IMGUIContext {
 
     const char* GetI18NLabel(const char* displayName);
     const char* GetI18NLabel(const char* displayName, const char* label);
-    const std::string GetI18NLabelStr(const char* displayName);
-    const std::string GetI18NLabelStr(const char* displayName, const char* label);
+    std::string GetI18NLabelStr(const char* displayName);
+    std::string GetI18NLabelStr(const char* displayName, const char* label);
 
     template <class... Types>
     const char* GetI18NLabelFMT(const char* displayName, Types&&... args) {
