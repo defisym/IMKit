@@ -46,13 +46,15 @@ void RawData(Ctx* pCtx)  {
 void VibrationLocalization(Ctx* pCtx) {
     const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Vibration Localization")), ImGui::EndTabItem };
     if (!tabHelper.State()) { return; }
+    const auto& deviceParams = pCtx->deviceHandler.deviceParams;
+    const auto frameSize = static_cast<int>(deviceParams.pointNumProcess);
     const auto pHandler = pCtx->processHandler.pVibrationLocalizationHandler;
+
 #ifdef SKIP_INTERNAL_POINTS
     const auto internalPoint = pCtx->deviceHandler.deviceParams.internalPoint;
 #else
     const auto internalPoint = 0;
 #endif
-    const auto frameSize = static_cast<int>(pCtx->deviceHandler.bufferInfo.frameSize - internalPoint);
 
 #ifndef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
     pCtx->processHandler.ProcessVibrationLocalization();
