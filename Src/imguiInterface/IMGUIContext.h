@@ -31,6 +31,7 @@ struct IMGUIContext {
     int width = 1280;
     int height = 800;
     bool bDPIAware = false;
+    HINSTANCE hInstance = nullptr;
 
     bool bDarkMode = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);

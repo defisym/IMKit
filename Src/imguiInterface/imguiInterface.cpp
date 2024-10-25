@@ -5,6 +5,7 @@
 #include "imgui_impl_dx11.h"
 
 #include <tchar.h>
+#include <resource.h>
 
 // Dear ImGui: standalone example application for DirectX 11
 
@@ -28,9 +29,12 @@ int IMGUIInterface(IMGUIContext* pCtx,
     if (pCtx->bDPIAware) {
         ImGui_ImplWin32_EnableDpiAwareness();
     }
+
+    pCtx->hInstance = GetModuleHandle(nullptr);    
     WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC,
         WndProc, 0L, 0L,
-        GetModuleHandle(nullptr), nullptr,
+        pCtx->hInstance,
+        LoadIcon(pCtx->hInstance, MAKEINTRESOURCE(IDI_ICON)),
         nullptr, nullptr, nullptr,
         L"ImGui Example", nullptr };
     ::RegisterClassExW(&wc);
