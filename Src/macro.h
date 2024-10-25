@@ -28,7 +28,7 @@
 // ------------------------------------
 // General
 // ------------------------------------
-// load all fonts
+// load all fonts in fonts folder, disabled will use 
 //#define FONT_LOAD_ALL_FONTS
 
 // only load simplified chinese 2500 regularly used characters
