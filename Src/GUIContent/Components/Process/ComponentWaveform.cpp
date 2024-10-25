@@ -64,11 +64,11 @@ void VibrationLocalization(Ctx* pCtx) {
         // Handle Moving Average
         if (ImGui::BeginTabItem(I18N("Shake MA"))) {
             if (BeginPlotEx(I18N("MA", "ImPlot/Shake/MA"), I18NSTR("Point"))) {
-                const auto maxFrameCount = GetDisplayFrame(pHandler->pProcessor->maFrameCount);
+                const auto maxFrameCount = GetDisplayFrame(pHandler->GetProcessor()->maFrameCount);
                 for (size_t frameIdx = 0; frameIdx < maxFrameCount; frameIdx++) {
                     const std::string plotName = I18NFMT("Plot {}", frameIdx);
                     DisplayPlot(std::format("{}##ImPlot/Shake/MA/{}", plotName, plotName).c_str(),
-                        pHandler->pProcessor->GetMovingAverageFrame(frameIdx),
+                        pHandler->GetProcessor()->GetMovingAverageFrame(frameIdx),
                         frameSize);
                 }
 
@@ -81,12 +81,12 @@ void VibrationLocalization(Ctx* pCtx) {
         if (ImGui::BeginTabItem(I18N("Shake MD"))) {
             if (BeginPlotEx(I18N("MD", "ImPlot/Shake/MD"), I18NSTR("Point"))) {
                 // accumulateFrameIndex
-                const auto maxFrameCount = GetDisplayFrame(pHandler->pProcessor->mdFrameCount) - 1;
+                const auto maxFrameCount = GetDisplayFrame(pHandler->GetProcessor()->mdFrameCount) - 1;
 
                 for (size_t frameIdx = 0; frameIdx < maxFrameCount; frameIdx++) {
                     const std::string plotName = I18NFMT("Plot {}", frameIdx);
                     DisplayPlot(std::format("{}##ImPlot/Shake/MD/{}", plotName, plotName).c_str(),
-                        pHandler->pProcessor->GetMovingDifferenceFrame(frameIdx),
+                        pHandler->GetProcessor()->GetMovingDifferenceFrame(frameIdx),
                         frameSize);
                 }
 
@@ -170,7 +170,7 @@ void WaveformRestore(Ctx* pCtx) {
                 frameIdx++) {
                 const std::string plotName = I18NFMT("Plot {}", frameIdx);
                 DisplayPlot(std::format("{}##ImPlot/Wave/Wave Unprocessed/{}", plotName, plotName).c_str(),
-                    Context_GetFrameBuffer(pHandler->pWaveDisplayBuffer->_pBuf,
+                    Context_GetConstFrameBuffer(pHandler->GetWaveDisplay(),
                     deviceParams.pointNumPerScan, frameIdx),
                     deviceParams.pointNumPerScan);
             }
@@ -200,8 +200,8 @@ void WaveformRestore(Ctx* pCtx) {
 #endif
 
             DisplayPlot(I18N("Wave Shake", "ImPlot/Wave/Wave Shake"),
-                pHandler->restoreWaveBuffer.data(),
-                static_cast<int>(pHandler->restoreWaveBuffer.size()),
+                pHandler->GetRestoreWave().data(),
+                static_cast<int>(pHandler->GetRestoreWave().size()),
                 plotInfo
             );
 
@@ -213,12 +213,12 @@ void WaveformRestore(Ctx* pCtx) {
             plotInfo.xUpdater = [&] (const double index) {
                 // use the original element size for frequency calculation
                 return static_cast<double>(Util_FFT_GetFrequency(static_cast<size_t>(index),
-                    pHandler->restoreWaveFFTBuffer.size(),
+                    pHandler->GetRestoreWaveFFT().size(),
                     static_cast<float>(deviceParams.scanRate)));
                 };
             DisplayPlot(I18N("Wave FFT Amplitude", "ImPlot/Wave/Wave FFT Amplitude"),
-                pHandler->restoreWaveFFTBuffer.data(),
-                static_cast<int>(pHandler->fftElement),
+                pHandler->GetRestoreWaveFFT().data(),
+                static_cast<int>(pHandler->GetRestoreWaveFFTElement()),
                 plotInfo);
 
             ImPlot::EndPlot();
