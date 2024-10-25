@@ -11,9 +11,10 @@ Internationalization::Internationalization() {
     const auto err = fopen_s(&fp, "Internationalization\\Internationalization.json", "rb");
     if (err != 0 || fp == nullptr) { return; }
 
-    inf.Load(fp);
-    const auto& data = inf.Get();
+    const auto bValid = inf.Load(fp); fclose(fp);
+    if (!bValid) { return; }
 
+    const auto& data = inf.Get();
     const auto& langArray = JsonInterface::GetData(data, "language");
     for (auto& it : langArray) { supportLang.emplace_back(it); }
     for (auto& it : supportLang) { ToLower(it); }
