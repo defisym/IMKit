@@ -47,8 +47,12 @@ void VibrationLocalization(Ctx* pCtx) {
     const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Vibration Localization")), ImGui::EndTabItem };
     if (!tabHelper.State()) { return; }
     const auto pHandler = pCtx->processHandler.pVibrationLocalizationHandler;
-    const auto frameSz = pCtx->deviceHandler.bufferInfo.frameSize;
-    const auto frameSize = static_cast<int>(frameSz);
+#ifdef SKIP_INTERNAL_POINTS
+    const auto internalPoint = pCtx->deviceHandler.deviceParams.internalPoint;
+#else
+    const auto internalPoint = 0;
+#endif
+    const auto frameSize = static_cast<int>(pCtx->deviceHandler.bufferInfo.frameSize - internalPoint);
 
 #ifndef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
     pCtx->processHandler.ProcessVibrationLocalization();
@@ -68,7 +72,7 @@ void VibrationLocalization(Ctx* pCtx) {
                 for (size_t frameIdx = 0; frameIdx < maxFrameCount; frameIdx++) {
                     const std::string plotName = I18NFMT("Plot {}", frameIdx);
                     DisplayPlot(std::format("{}##ImPlot/Shake/MA/{}", plotName, plotName).c_str(),
-                        pHandler->GetProcessor()->GetMovingAverageFrame(frameIdx),
+                        pHandler->GetProcessor()->GetMovingAverageFrame(frameIdx) + internalPoint,
                         frameSize);
                 }
 
@@ -86,7 +90,7 @@ void VibrationLocalization(Ctx* pCtx) {
                 for (size_t frameIdx = 0; frameIdx < maxFrameCount; frameIdx++) {
                     const std::string plotName = I18NFMT("Plot {}", frameIdx);
                     DisplayPlot(std::format("{}##ImPlot/Shake/MD/{}", plotName, plotName).c_str(),
-                        pHandler->GetProcessor()->GetMovingDifferenceFrame(frameIdx),
+                        pHandler->GetProcessor()->GetMovingDifferenceFrame(frameIdx) + internalPoint,
                         frameSize);
                 }
 
@@ -126,7 +130,7 @@ void VibrationLocalization(Ctx* pCtx) {
                     }, &thresholdData, frameSize, ImPlotLineFlags_Shaded);
 #endif
                 DisplayPlot(I18N("Vibration Localization", "ImPlot/Shake/MD/Accumulate/Vibration Localization"),
-                    pHandler->GetVibrationLocalizationResult(), frameSize, plotInfo);
+                    pHandler->GetVibrationLocalizationResult() + internalPoint, frameSize, plotInfo);
 
                 ImPlot::EndPlot();
             }

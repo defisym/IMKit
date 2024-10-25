@@ -55,6 +55,13 @@
 #define CONFIG_TRY_READ_CONFIG
 #endif
 
+// skip internal points in optical module
+// as it's too complicated to change the process algorithm
+// and comparing to the total length the internal part can be ignored
+// so process those data won't consume much performance
+// so it's just a UI change and nothing modified internally
+#define SKIP_INTERNAL_POINTS
+
 // skip if process takes too long
 #define READER_SKIP_FRAME
 // output debug string when skip triggered
