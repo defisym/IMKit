@@ -120,14 +120,14 @@ void VibrationLocalization(Ctx* pCtx) {
 #ifdef VIBRATION_LOCALIZATION_SHOW_LOGGER_THRESHOLD
                 struct ThresholdData {
                     OTDRProcessValueType threshold;
-                    PlotInfo& plotInfo;
-                } thresholdData = { pCtx->loggerHandler.loggerParams.threshold,plotInfo };
+                    PlotInfo* plotInfo = nullptr;
+                } thresholdData = { pCtx->loggerHandler.loggerParams.threshold,&plotInfo };
 
                 ImPlot::PlotLineG(I18N("Threshold", "ImPlot/Shake/MD/Accumulate/Threshold"),
                     [] (int idx, void* pData) {
                         const auto pThresholdData = static_cast<ThresholdData*>(pData);
 
-                        return ImPlotPoint{ pThresholdData->plotInfo.xUpdater(idx),
+                        return ImPlotPoint{ pThresholdData->plotInfo->xUpdater(idx),
                             pThresholdData->threshold };
                     }, &thresholdData, frameSize, ImPlotLineFlags_Shaded);
 #endif
@@ -242,7 +242,6 @@ void ComponentWaveform(Ctx* pCtx) {
     const auto err = pCtx->deviceHandler.ReadData();
 #if defined(VIBRATION_LOCALIZATION_ALWAYS_UPDATE) || defined(WAVEFORM_RESTORE_ALWAYS_UPDATE)
     if (err == DeviceHandler::ReadResult::OK) {
-        auto& processResult = pCtx->processHandler.processResult;
 #ifdef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
         if (pCtx->processHandler.ProcessVibrationLocalization()) {
             pCtx->loggerHandler.LogVibration(pCtx);
