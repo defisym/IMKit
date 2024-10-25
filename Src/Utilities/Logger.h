@@ -10,6 +10,11 @@ struct LogDataConfig {
     bool bCompress = false;
 };
 
+template<>
+struct std::hash<LogDataConfig> {
+    std::size_t operator()(LogDataConfig const& s) const noexcept;
+};
+
 class LogData {  // NOLINT(cppcoreguidelines-special-member-functions)
 protected:
     LogDataConfig config = {};
@@ -23,11 +28,17 @@ public:
 };
 
 constexpr auto DEFAULT_LOG_INTERVAL = 1000;
+constexpr auto FILEPATH_LENGTH = 512;
 
 struct LoggerConfig {
     // interval to write to disk
     size_t interval = DEFAULT_LOG_INTERVAL;
-    char filePath[512] = "Log/";
+    char filePath[FILEPATH_LENGTH] = "Log/";
+};
+
+template<>
+struct std::hash<LoggerConfig> {
+    std::size_t operator()(LoggerConfig const& s) const noexcept;
 };
 
 struct Ctx;

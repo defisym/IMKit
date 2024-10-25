@@ -46,8 +46,14 @@
 #define FONT_SIMPLIFIED_CHINESE_ONLY
 #endif
 
+// chech the version by size of param struct
+// disable will use the hash of default param instead
+//#define CONFIG_VERSION_BY_SIZE
+
+#ifdef CONFIG_VERSION_BY_SIZE
 // try to read saved config even if the struct size changed
 #define CONFIG_TRY_READ_CONFIG
+#endif
 
 // skip if process takes too long
 #define READER_SKIP_FRAME

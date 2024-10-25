@@ -380,6 +380,9 @@
     <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigLogger.h">
       <Filter>头文件\GUIContent\Components\Config\Environment</Filter>
     </ClInclude>
+    <ClInclude Include="GUIContext\Param.h">
+      <Filter>头文件\GUIContext</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GUI.rc">

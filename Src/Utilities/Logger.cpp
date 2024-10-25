@@ -5,7 +5,26 @@
 #include <windows.h>
 #include <filesystem>
 
+#include "GUIContext/Param.h"
+
 namespace fs = std::filesystem;
+
+std::size_t std::hash<LogDataConfig>::operator()(LogDataConfig const& s) const noexcept {
+    return GetParamHash(s);
+}
+
+std::size_t std::hash<LoggerConfig>::operator()(LoggerConfig const& s) const noexcept {
+    std::size_t hash = 0xcbf29ce484222325; // FNV-1a
+    hash ^= std::hash<size_t>{}(s.interval);
+    hash *= 0x100000001b3;  // FNV-1a
+
+    for (char index : s.filePath) {
+        hash ^= std::hash<char>{}(index);
+        hash *= 0x100000001b3;  // FNV-1a
+    }
+
+    return hash;
+}
 
 Logger::Logger(const LoggerConfig& config) {
     this->config = config;
