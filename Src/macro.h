@@ -83,6 +83,27 @@
 #define WAVEFORM_RESTORE_ALWAYS_UPDATE
 #endif
 
+// log viberation waveform
+// only work when vibration localization is always update
+#ifdef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
+
+// log viberation waveform of the point
+// that exceed the threshold
+#define VIBRATION_LOCALIZATION_LOG_WAVEFORM
+
+#ifdef VIBRATION_LOCALIZATION_LOG_WAVEFORM
+// this shares the wave raw data, so wavefrom always update
+// must be enabled
+#ifndef WAVEFORM_RESTORE_ALWAYS_UPDATE
+#define WAVEFORM_RESTORE_ALWAYS_UPDATE
+#endif
+
+// display logged waveforms of each point
+#define VIBRATION_LOCALIZATION_SHOW_LOGGED_WAVEFORM
+
+#endif
+#endif
+
 // show logger threshold
 #define VIBRATION_LOCALIZATION_SHOW_LOGGER_THRESHOLD
 

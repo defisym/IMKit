@@ -242,13 +242,13 @@ void ComponentWaveform(Ctx* pCtx) {
     const auto err = pCtx->deviceHandler.ReadData();
 #if defined(VIBRATION_LOCALIZATION_ALWAYS_UPDATE) || defined(WAVEFORM_RESTORE_ALWAYS_UPDATE)
     if (err == DeviceHandler::ReadResult::OK) {
-#ifdef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
-        if (pCtx->processHandler.ProcessVibrationLocalization()) {
-            pCtx->loggerHandler.LogVibration(pCtx);
-        }
-#endif
 #ifdef WAVEFORM_RESTORE_ALWAYS_UPDATE
+        // call before log to obtain wave raw data
         pCtx->processHandler.ProcessWaveform();
+#endif
+#ifdef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
+        pCtx->processHandler.ProcessVibrationLocalization();
+        pCtx->loggerHandler.LogVibration(pCtx);
 #endif
     }
 #endif
