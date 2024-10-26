@@ -15,3 +15,8 @@ bool BeginPlotEx(const char* title_id, const char* xLabel, const char* yLabel) {
 
 	return bBegin;
 }
+
+bool BeginSubPlotEx(const char* title_id, int rows, int cols) {
+    return ImPlot::BeginSubplots(title_id, rows, cols,
+        PLOT_SIZE);
+}

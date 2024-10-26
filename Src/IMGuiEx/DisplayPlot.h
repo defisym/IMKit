@@ -9,6 +9,7 @@
 void SetupAxis(const char* xLabel = nullptr, const char* yLabel = nullptr);
 // begin plot and impl default settings
 bool BeginPlotEx(const char* title_id, const char* xLabel = nullptr, const char* yLabel = nullptr);
+bool BeginSubPlotEx(const char* title_id, int rows, int cols);
 
 using CoordUpdater = std::function<double(const double)>;
 
