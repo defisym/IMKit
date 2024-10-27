@@ -27,7 +27,7 @@ void RawData(Ctx* pCtx)  {
         DisplayPlot(I18N("CH1", "ImPlot/Raw/CH1/Plot"),
                     pBuffer,
                     static_cast<int>(bufferFrameSize),
-                    static_cast<int>(bufferStride));
+                    { static_cast<int>(bufferStride) });
 
         ImPlot::EndPlot();
     }
@@ -35,7 +35,7 @@ void RawData(Ctx* pCtx)  {
         DisplayPlot(I18N("CH2", "ImPlot/Raw/CH2/Plot"),
                     pBuffer + 1,
                     static_cast<int>(bufferFrameSize),
-                    static_cast<int>(bufferStride));
+                    { static_cast<int>(bufferStride) });
 
         ImPlot::EndPlot();
     }
