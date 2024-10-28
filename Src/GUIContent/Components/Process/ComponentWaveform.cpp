@@ -112,8 +112,7 @@ void VibrationLocalization(Ctx* pCtx) {
                 PlotInfo plotInfo = {};
 #ifdef WAVEFORM_RESTORE_USE_MILLISECOND
                 plotInfo.xUpdater = [&] (const double index) {
-                    const auto resolution = pCtx->deviceHandler.deviceParams.resolution;
-                    return static_cast<double>(index * resolution);
+                    return index * pCtx->deviceHandler.deviceParams.resolution;
                     };
 #endif
 
