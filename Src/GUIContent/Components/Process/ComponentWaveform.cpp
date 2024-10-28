@@ -188,14 +188,19 @@ void WaveformRestore(Ctx* pCtx) {
 
     if (ImGui::BeginTabItem(I18N("Wave Shake"))) {
 #endif
-        ComponentWaveformDisplay(pCtx, pHandler->GetRestore());
+        ComponentWaveformDisplayResult(pCtx, pHandler->GetRestore());
 #ifndef WAVEFORM_RESTORE_ONLY_SHOW_RESULT
         ImGui::EndTabItem();
     }
 #endif
 }
 
-void ComponentWaveformDisplay(Ctx* pCtx, const WaveformRestoreOutput& waveform) {
+void ComponentWaveformDisplayResult(Ctx* pCtx, const WaveformRestoreOutput& waveform) {
+#ifdef WAVEFORM_RESTORE_DISPLAY_WAVE_AND_FFT_IN_SUBPLOT
+    const EmbraceHelper subPlotHelper = { BeginSubPlotEx(I18N("Waveform Shake"),1,2), ImPlot::EndSubplots };
+    if (!subPlotHelper.State()) { return; }
+#endif
+
     const auto& deviceParams = pCtx->deviceHandler.deviceParams;
 
     if (BeginPlotEx(I18N("Wave Shake", "ImPlot/Wave/Wave Shake"),
