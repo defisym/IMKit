@@ -138,7 +138,16 @@ void VibrationLocalization(Ctx* pCtx) {
 
 #ifdef VIBRATION_LOCALIZATION_LOG_WAVEFORM
             if (ImGui::BeginTabBar("Wave", TAB_BAR_FLAGS)) {
-                pCtx->loggerHandler.LogVibrationWaveformDisplay(pCtx);
+                const auto& data = pCtx->processHandler.pPeakWaveformRestoreHandler->GetPeakWaveformRestoreResult();
+
+                for(size_t index = 0;index< data.size();index++) {
+                    const auto& ctx = data[index];
+                    if (ImGui::BeginTabItem(I18NFMT("Wave {}", index))) {
+                        ComponentWaveformDisplayResult(pCtx, ctx.restore);
+                        ImGui::EndTabItem();
+                    }
+                }
+
                 ImGui::EndTabBar();
             }
 #endif
@@ -256,17 +265,23 @@ void ComponentWaveform(Ctx* pCtx) {
     const auto err = pCtx->deviceHandler.ReadData();
 #if defined(VIBRATION_LOCALIZATION_ALWAYS_UPDATE) || defined(WAVEFORM_RESTORE_ALWAYS_UPDATE)
     if (err == DeviceHandler::ReadResult::OK) {
-#ifdef WAVEFORM_RESTORE_ALWAYS_UPDATE
-        // call before log to obtain wave raw data
-        pCtx->processHandler.ProcessWaveform();
-#endif
 #ifdef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
         pCtx->processHandler.ProcessVibrationLocalization();
         pCtx->loggerHandler.LogVibration(pCtx);
+#endif
+#ifdef WAVEFORM_RESTORE_ALWAYS_UPDATE        
+        pCtx->processHandler.ProcessWaveform();
 #ifdef VIBRATION_LOCALIZATION_LOG_WAVEFORM
-        pCtx->loggerHandler.LogVibrationWaveform(pCtx);
+        const auto& loggerParams = pCtx->loggerHandler.loggerParams;
+        if (loggerParams.bUseThreshold) {
+            if (pCtx->processHandler.ProcessPeakWaveform(loggerParams.threshold)) {
+                // TODO log here
+            }
+        }
 #endif
 #endif
+
+
     }
 #endif
 
