@@ -188,51 +188,56 @@ void WaveformRestore(Ctx* pCtx) {
 
     if (ImGui::BeginTabItem(I18N("Wave Shake"))) {
 #endif
-        if (BeginPlotEx(I18N("Wave Shake", "ImPlot/Wave/Wave Shake"),
-#ifdef WAVEFORM_RESTORE_USE_MILLISECOND
-            I18NSTR("ms")
-#else
-            I18NSTR("Point")
-#endif
-            )) {
-            PlotInfo plotInfo = {};
-#ifdef WAVEFORM_RESTORE_USE_MILLISECOND
-            const auto& deviceParam = pCtx->deviceHandler.deviceParams;
-            const auto timeScale = (1000.0 / deviceParam.scanRate);
-
-            plotInfo.xUpdater = [&] (const double index) {
-                return static_cast<double>(index * timeScale);
-                };
-#endif
-
-            DisplayPlot(I18N("Wave Shake", "ImPlot/Wave/Wave Shake"),
-                pHandler->GetRestoreWave().data(),
-                static_cast<int>(pHandler->GetRestoreWave().size()),
-                plotInfo
-            );
-
-            ImPlot::EndPlot();
-        }
-
-        if (BeginPlotEx(I18N("Wave FFT Amplitude", "ImPlot/Wave/Wave FFT Amplitude"), I18NSTR("Hz"))) {
-            PlotInfo plotInfo = {};
-            plotInfo.xUpdater = [&] (const double index) {
-                // use the original element size for frequency calculation
-                return static_cast<double>(Util_FFT_GetFrequency(static_cast<size_t>(index),
-                    pHandler->GetRestoreWaveFFT().size(),
-                    static_cast<float>(deviceParams.scanRate)));
-                };
-            DisplayPlot(I18N("Wave FFT Amplitude", "ImPlot/Wave/Wave FFT Amplitude"),
-                pHandler->GetRestoreWaveFFT().data(),
-                static_cast<int>(pHandler->GetRestoreWaveFFTElement()),
-                plotInfo);
-
-            ImPlot::EndPlot();
-        }
+        ComponentWaveformDisplay(pCtx, pHandler->GetRestore());
 #ifndef WAVEFORM_RESTORE_ONLY_SHOW_RESULT
         ImGui::EndTabItem();
     }
 #endif
+}
+
+void ComponentWaveformDisplay(Ctx* pCtx, 
+    const WaveformRestoreHandler::WaveformRestoreOutput& waveform) {
+    const auto& deviceParams = pCtx->deviceHandler.deviceParams;
+
+    if (BeginPlotEx(I18N("Wave Shake", "ImPlot/Wave/Wave Shake"),
+#ifdef WAVEFORM_RESTORE_USE_MILLISECOND
+        I18NSTR("ms")
+#else
+        I18NSTR("Point")
+#endif
+        )) {
+        PlotInfo plotInfo = {};
+#ifdef WAVEFORM_RESTORE_USE_MILLISECOND
+        const auto& deviceParam = pCtx->deviceHandler.deviceParams;
+        const auto timeScale = (1000.0 / deviceParam.scanRate);
+
+        plotInfo.xUpdater = [&] (const double index) { return index * timeScale; };
+#endif
+
+        DisplayPlot(I18N("Wave Shake", "ImPlot/Wave/Wave Shake"),
+            waveform.restore.data(),            
+            static_cast<int>(waveform.restore.size()),
+            plotInfo
+        );
+
+        ImPlot::EndPlot();
+    }
+
+    if (BeginPlotEx(I18N("Wave FFT Amplitude", "ImPlot/Wave/Wave FFT Amplitude"), I18NSTR("Hz"))) {
+        PlotInfo plotInfo = {};
+        plotInfo.xUpdater = [&] (const double index) {
+            // use the original element size for frequency calculation
+            return static_cast<double>(Util_FFT_GetFrequency(static_cast<size_t>(index),
+                waveform.fft.size(),
+                static_cast<float>(deviceParams.scanRate)));
+            };
+        DisplayPlot(I18N("Wave FFT Amplitude", "ImPlot/Wave/Wave FFT Amplitude"),
+            waveform.fft.data(),
+            static_cast<int>(waveform.fftElement),
+            plotInfo);
+
+        ImPlot::EndPlot();
+    }
 }
 
 // Note: ImGui call this each frame
