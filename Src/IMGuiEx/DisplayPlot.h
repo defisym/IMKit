@@ -88,20 +88,12 @@ inline void DisplayPlot(const char* pLabel,
         const CoordUpdater* pXUpdater = nullptr;
     } data = { (*info.GetYUpdater())(point),dataCount,info.GetXUpdater() };
 
-    // original version
-    //ImPlot::PlotLineG(pLabel, [] (int idx, void* pData) {
-    //    const auto pPointData = static_cast<PointData*>(pData);
-    //
-    //    return ImPlotPoint{ (*pPointData->pXUpdater)(idx),
-    //        static_cast<double>(pPointData->point) };
-    //    }, & data, dataCount, info.flags | ImPlotLineFlags_Shaded);
-
-    // optimzied version
-    ImPlot::PlotLineG(pLabel, [] (const int idx, void* pData) {
+    // for single point, only display two points for a line is enough
+    ImPlot::PlotLineG(pLabel, [] (int idx, void* pData) {
         const auto pPointData = static_cast<PointData*>(pData);
-        const auto index = idx == 0 ? 0 : pPointData->dataCount;
+        idx = idx == 0 ? 0 : pPointData->dataCount;
 
-        return ImPlotPoint{ (*pPointData->pXUpdater)(index),
+        return ImPlotPoint{ (*pPointData->pXUpdater)(idx),
             static_cast<double>(pPointData->point) };
-        }, & data, 2, info.flags | ImPlotLineFlags_Shaded);
+        }, &data, 2, info.flags | ImPlotLineFlags_Shaded);
 }
