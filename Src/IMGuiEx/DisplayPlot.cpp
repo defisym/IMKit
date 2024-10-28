@@ -9,14 +9,13 @@ void SetupAxis(const char* xLabel, const char* yLabel) {
 	ImPlot::SetupAxis(ImAxis_Y1, yLabel, AXIS_FLAGS);
 }
 
-bool BeginPlotEx(const char* title_id, const char* xLabel, const char* yLabel) {
-	bool bBegin = ImPlot::BeginPlot(title_id, PLOT_SIZE, PLOT_FLAGS);
+bool BeginPlotEx(const char* pTitle, const char* xLabel, const char* yLabel) {
+	bool bBegin = ImPlot::BeginPlot(pTitle, PLOT_SIZE, PLOT_FLAGS);
 	if (bBegin) { SetupAxis(xLabel, yLabel); }
 
 	return bBegin;
 }
 
-bool BeginSubPlotEx(const char* title_id, int rows, int cols) {
-    return ImPlot::BeginSubplots(title_id, rows, cols,
-        PLOT_SIZE);
+bool BeginSubPlotEx(const char* pTitle, const int rows, const int cols) {
+    return ImPlot::BeginSubplots(pTitle, rows, cols, PLOT_SIZE);
 }

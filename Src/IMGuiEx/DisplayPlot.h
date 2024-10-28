@@ -10,8 +10,10 @@
 // setup axis with default settings
 void SetupAxis(const char* xLabel = nullptr, const char* yLabel = nullptr);
 // begin plot and impl default settings
-bool BeginPlotEx(const char* title_id, const char* xLabel = nullptr, const char* yLabel = nullptr);
-bool BeginSubPlotEx(const char* title_id, int rows, int cols);
+bool BeginPlotEx(const char* pTitle, const char* xLabel = nullptr, const char* yLabel = nullptr);
+// it's okay to call `BeginPlotEx` inside this, as the size of plot
+// will be updated by the parent plot automatically
+bool BeginSubPlotEx(const char* pTitle, int rows, int cols);
 
 using CoordUpdater = std::function<double(const double)>;
 
@@ -83,17 +85,17 @@ template<PointData T>
 inline void DisplayPlot(const char* pLabel,
     const T point, const int dataCount, const PlotInfo& info = {}) {
     struct PointData {
-        T point;
+        double point;
         int dataCount;
         const CoordUpdater* pXUpdater = nullptr;
-    } data = { (*info.GetYUpdater())(point),dataCount,info.GetXUpdater() };
+    } data = { (*info.GetYUpdater())(point),
+        dataCount,info.GetXUpdater() };
 
     // for single point, only display two points for a line is enough
     ImPlot::PlotLineG(pLabel, [] (int idx, void* pData) {
         const auto pPointData = static_cast<PointData*>(pData);
         idx = idx == 0 ? 0 : pPointData->dataCount;
 
-        return ImPlotPoint{ (*pPointData->pXUpdater)(idx),
-            static_cast<double>(pPointData->point) };
+        return ImPlotPoint{ (*pPointData->pXUpdater)(idx), pPointData->point };
         }, &data, 2, info.flags | ImPlotLineFlags_Shaded);
 }
