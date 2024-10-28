@@ -142,7 +142,7 @@ inline T ComboEx(const ComboInfoEx<T>& comboInfoEx, const std::vector<ComboItem<
         }
     }
 
-    ComboInfo comboInfo = { comboInfoEx.label,comboInfoEx.pCtx,defaultIndex,comboInfoEx.flags };
+    const ComboInfo comboInfo = { comboInfoEx.label,comboInfoEx.pCtx,defaultIndex,comboInfoEx.flags };
 
     return ComboExImpl::ComboEx<T, ComboItem<T>>(comboInfo, comboItems);
 }
