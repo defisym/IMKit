@@ -201,8 +201,6 @@ void ComponentWaveformDisplayResult(Ctx* pCtx, const WaveformRestoreOutput& wave
     if (!subPlotHelper.State()) { return; }
 #endif
 
-    const auto& deviceParams = pCtx->deviceHandler.deviceParams;
-
     if (BeginPlotEx(I18N("Wave Shake", "ImPlot/Wave/Wave Shake"),
 #ifdef WAVEFORM_RESTORE_USE_MILLISECOND
         I18NSTR("ms")
@@ -229,6 +227,7 @@ void ComponentWaveformDisplayResult(Ctx* pCtx, const WaveformRestoreOutput& wave
 
     if (BeginPlotEx(I18N("Wave FFT Amplitude", "ImPlot/Wave/Wave FFT Amplitude"), I18NSTR("Hz"))) {
         PlotInfo plotInfo = {};
+        const auto& deviceParams = pCtx->deviceHandler.deviceParams;
         plotInfo.xUpdater = [&] (const double index) {
             // use the original element size for frequency calculation
             return static_cast<double>(Util_FFT_GetFrequency(static_cast<size_t>(index),
