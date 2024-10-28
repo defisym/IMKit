@@ -195,8 +195,7 @@ void WaveformRestore(Ctx* pCtx) {
 #endif
 }
 
-void ComponentWaveformDisplay(Ctx* pCtx, 
-    const WaveformRestoreHandler::WaveformRestoreOutput& waveform) {
+void ComponentWaveformDisplay(Ctx* pCtx, const WaveformRestoreOutput& waveform) {
     const auto& deviceParams = pCtx->deviceHandler.deviceParams;
 
     if (BeginPlotEx(I18N("Wave Shake", "ImPlot/Wave/Wave Shake"),
