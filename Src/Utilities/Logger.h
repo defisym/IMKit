@@ -92,10 +92,12 @@ struct LoggerHelper {
         const LogDataConfig& logDataConf = {})
         :logger(loggerConf), loggerData(logDataConf) {}
 
+private:
     using DataType = decltype(loggerData.GetData());
     void UpdateData(const DataType& data) { loggerData.UpdateData(data); }
     void AddData() { logger.AddData(&loggerData); }
 
+public:
     void AddData(const DataType& data) { UpdateData(data); AddData(); }
     bool SaveDataWhenNeeded() { return logger.SaveDataWhenNeeded(); }
 };
