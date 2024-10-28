@@ -136,6 +136,13 @@ void VibrationLocalization(Ctx* pCtx) {
 
                 ImPlot::EndPlot();
             }
+
+#ifdef VIBRATION_LOCALIZATION_LOG_WAVEFORM
+            if (ImGui::BeginTabBar("Wave", TAB_BAR_FLAGS)) {
+                pCtx->loggerHandler.LogVibrationWaveformDisplay(pCtx);
+                ImGui::EndTabBar();
+            }
+#endif
 #ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
             ImGui::EndTabItem();
         }
@@ -257,6 +264,9 @@ void ComponentWaveform(Ctx* pCtx) {
 #ifdef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
         pCtx->processHandler.ProcessVibrationLocalization();
         pCtx->loggerHandler.LogVibration(pCtx);
+#ifdef VIBRATION_LOCALIZATION_LOG_WAVEFORM
+        pCtx->loggerHandler.LogVibrationWaveform(pCtx);
+#endif
 #endif
     }
 #endif
