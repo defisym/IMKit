@@ -18,6 +18,7 @@ class OTDRLogData final :public LogData {
 public:
     OTDRLogData(const LogDataConfig& conf = {});
 
+    const OTDRData& GetData() const { return logData; }
     void UpdateData(const OTDRData& data);
     [[nodiscard]] const std::string& ToString() override;
 

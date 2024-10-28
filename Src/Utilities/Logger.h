@@ -77,7 +77,13 @@ public:
 };
 
 template<typename Data>
-    requires std::is_base_of_v<LogData, Data>
+concept ValidDataType = requires(Data device) {
+    std::is_base_of_v<LogData, Data>;
+    device.GetData();
+    device.UpdateData(decltype(device.GetData()){});
+};
+
+template<ValidDataType Data>
 struct LoggerHelper {
     Logger logger;
     Data loggerData;
@@ -85,6 +91,11 @@ struct LoggerHelper {
     LoggerHelper(const LoggerConfig& loggerConf = {},
         const LogDataConfig& logDataConf = {})
         :logger(loggerConf), loggerData(logDataConf) {}
+
+    using DataType = decltype(loggerData.GetData());
+    void UpdateData(const DataType& data) { loggerData.UpdateData(data); }
     void AddData() { logger.AddData(&loggerData); }
+
+    void AddData(const DataType& data) { UpdateData(data); AddData(); }
     bool SaveDataWhenNeeded() { return logger.SaveDataWhenNeeded(); }
 };
