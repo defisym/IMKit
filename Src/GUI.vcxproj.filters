@@ -243,6 +243,9 @@
     <ClCompile Include="IMGuiEx\DisplayPlot.cpp">
       <Filter>源文件\IMGuiEx</Filter>
     </ClCompile>
+    <ClCompile Include="GUIContext\Handler\FilterHandler.cpp">
+      <Filter>源文件\GUIContext\Handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\IMGUIInterface.h">
@@ -382,6 +385,9 @@
     </ClInclude>
     <ClInclude Include="GUIContext\Param.h">
       <Filter>头文件\GUIContext</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContext\Handler\FilterHandler.h">
+      <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

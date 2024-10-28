@@ -227,6 +227,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContext\GUIContext.cpp" />
     <ClCompile Include="GUIContext\Handler\AudioHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\DeviceHandler.cpp" />
+    <ClCompile Include="GUIContext\Handler\FilterHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\LoggerHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\VibrationLocalizationHandler.cpp" />
@@ -289,6 +290,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContext\GUIContext.h" />
     <ClInclude Include="GUIContext\Handler\AudioHandler.h" />
     <ClInclude Include="GUIContext\Handler\DeviceHandler.h" />
+    <ClInclude Include="GUIContext\Handler\FilterHandler.h" />
     <ClInclude Include="GUIContext\Handler\LoggerHandler.h" />
     <ClInclude Include="GUIContext\Handler\ProcessHandler.h" />
     <ClInclude Include="GUIContext\Handler\VibrationLocalizationHandler.h" />
