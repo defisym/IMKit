@@ -272,7 +272,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="Utilities\DataConverter.cpp" />
     <ClCompile Include="Utilities\LoadFileToWStr.cpp" />
     <ClCompile Include="Utilities\Logger.cpp" />
-    <ClCompile Include="Utilities\OTDRLogData.cpp" />
+    <ClCompile Include="Utilities\OTDRDataInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUIContent\Components\Basic\ComponentBase.h" />
@@ -321,7 +321,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Utilities\DataConverter.h" />
     <ClInclude Include="Utilities\LoadFileToWStr.h" />
     <ClInclude Include="Utilities\Logger.h" />
-    <ClInclude Include="Utilities\OTDRLogData.h" />
+    <ClInclude Include="Utilities\OTDRDataInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GUI.rc" />

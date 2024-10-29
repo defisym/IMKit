@@ -59,7 +59,7 @@ Logger::~Logger() { SaveData(); }
 
 using namespace std::chrono_literals;
 
-void Logger::AddData(LogData* pLogData) {
+void Logger::AddData(LogDataInterface* pLogData) {
     // update timestamp
     const auto currentTimeStamp = std::chrono::system_clock::now();
 

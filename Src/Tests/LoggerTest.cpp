@@ -4,7 +4,7 @@
 #include <windows.h>
 
 #include "Utilities/Logger.h"
-#include "Utilities/OTDRLogData.h"
+#include "Utilities/OTDRDataInterface.h"
 
 namespace LoggerTest {
     constexpr auto DEFAULT_POINT = 128000;
@@ -18,7 +18,7 @@ namespace LoggerTest {
         constexpr auto conf = LoggerConfig{ 3000,"log/test" };
         auto logger = Logger{ conf };
 
-        auto inf = OTDRLogData{ {false,true} };
+        auto inf = OTDRDataInterface{ {false,true} };
         [[maybe_unused]] auto sz = inf.GetEsitimateSize(250'000'000, 2000, 1280, 1000);
 
         for (;;) {

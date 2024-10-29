@@ -15,13 +15,14 @@ struct std::hash<LogDataConfig> {
     std::size_t operator()(LogDataConfig const& s) const noexcept;
 };
 
-class LogData {  // NOLINT(cppcoreguidelines-special-member-functions)
+// Defines how data should be logged
+class LogDataInterface {  // NOLINT(cppcoreguidelines-special-member-functions)
 protected:
     LogDataConfig config = {};
 
 public:
-    LogData(const LogDataConfig& conf = {}) { LogData::UpdateConfig(conf); }
-    virtual ~LogData() = default;
+    LogDataInterface(const LogDataConfig& conf = {}) { UpdateConfig(conf); }
+    virtual ~LogDataInterface() = default;
 
     void UpdateConfig(const LogDataConfig& conf = {}) { this->config = conf; }
     [[nodiscard]] virtual const std::string& ToString() = 0;
@@ -43,7 +44,8 @@ struct std::hash<LoggerConfig> {
 
 struct Ctx;
 
-class Logger {
+// log data to the disk
+class Logger { // NOLINT(cppcoreguidelines-special-member-functions)
     LoggerConfig config = {};
 
     bool bValid = false;
@@ -65,7 +67,7 @@ public:
     ~Logger();
 
     // add data to internal cache
-    void AddData(LogData* pLogData);
+    void AddData(LogDataInterface* pLogData);
     // write cache to disk
     // return true if file saved
     bool SaveData();
@@ -76,26 +78,26 @@ public:
     static std::string GetFormattedTimeStamp(const TimeStamp timeStamp, char const* pFmt = "%Y-%m-%d %H-%M-%S");
 };
 
-template<typename Data>
-concept ValidDataType = requires(Data device) {
-    std::is_base_of_v<LogData, Data>;
+template<typename DataInterface>
+concept ValidDataInterface = requires(DataInterface device) {
+    std::is_base_of_v<LogDataInterface, DataInterface>;
     device.GetData();
     device.UpdateData(decltype(device.GetData()){});
 };
 
-template<ValidDataType Data>
+template<ValidDataInterface DataInterface>
 struct LoggerHelper {
     Logger logger;
-    Data loggerData;
+    DataInterface dataInterface;
 
     LoggerHelper(const LoggerConfig& loggerConf = {},
         const LogDataConfig& logDataConf = {})
-        :logger(loggerConf), loggerData(logDataConf) {}
+        :logger(loggerConf), dataInterface(logDataConf) {}
 
 private:
-    using DataType = decltype(loggerData.GetData());
-    void UpdateData(const DataType& data) { loggerData.UpdateData(data); }
-    void AddData() { logger.AddData(&loggerData); }
+    using DataType = decltype(dataInterface.GetData());
+    void UpdateData(const DataType& data) { dataInterface.UpdateData(data); }
+    void AddData() { logger.AddData(&dataInterface); }
 
 public:
     void AddData(const DataType& data) { UpdateData(data); AddData(); }
