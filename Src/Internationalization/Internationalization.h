@@ -4,8 +4,16 @@
 #include <string>
 #include <vector>
 
+constexpr auto LANGUAGE_LENGTH = 16;
+constexpr auto LANGUAGE_CHINESE = "zh-cn";
+constexpr auto LANGUAGE_ENGLISH = "en-us";
+
+// language used in source code
+constexpr auto LANGUAGE_INTERNAL = LANGUAGE_ENGLISH;
+
 struct Internationalization {
-    std::string curLang = "zh-cn";
+    bool bCurLangDefault = true;
+    std::string curLang = LANGUAGE_ENGLISH;
     std::vector<std::string> supportLang;
     std::map<std::string, std::map<std::string, std::string>> tokenMap;
 

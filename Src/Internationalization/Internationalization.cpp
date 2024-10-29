@@ -61,9 +61,13 @@ Internationalization::Internationalization() {
 
 void Internationalization::UpdateLanguage(const std::string& lang) {
     curLang = ToLower(lang);
+    bCurLangDefault = curLang == LANGUAGE_INTERNAL;
 }
 
 const std::string& Internationalization::GetInternationalization(const std::string& token) const {
+    // no process needed in English
+    if (bCurLangDefault) { return token; }
+
     const auto lowerToken = ToLower(token);
     const auto& tokenIt = tokenMap.find(lowerToken);
 
