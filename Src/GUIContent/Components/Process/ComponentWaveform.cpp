@@ -164,7 +164,8 @@ void VibrationLocalization(Ctx* pCtx) {
                     for (size_t index = 0; index < peakData.size(); index++) {
                         const auto& ctx = peakData[index];
                         if (ImGui::BeginTabItem(I18NFMT("Wave {}", index))) {
-                            ComponentWaveformDisplayResult(pCtx, ctx.restore);
+                            const auto position = plotInfo.xUpdater(ctx.opt.shakeStart + ctx.opt.unwrap2DStart);
+                            ComponentWaveformDisplayResult(pCtx, I18NFMT("Shake waveform at {} m", position), ctx.restore);
                             ImGui::EndTabItem();
                         }
                     }
