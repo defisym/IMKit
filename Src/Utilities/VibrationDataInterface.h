@@ -5,7 +5,6 @@
 
 class VibrationDataInterface :public LogDataInterface {
     using DataType = OTDRData;
-
     DataType logData;
     OTDRDataStringify stringify;
 

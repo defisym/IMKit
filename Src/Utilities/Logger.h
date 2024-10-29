@@ -97,7 +97,7 @@ struct LoggerHelper {
         :logger(loggerConf), dataInterface(logDataConf) {}
 
 private:
-    using DataType = decltype(dataInterface.GetData());
+    using DataType = std::decay_t<decltype(dataInterface.GetData())>;
     void UpdateData(const DataType& data) { dataInterface.UpdateData(data); }
     void AddData() { logger.AddData(&dataInterface); }
 
