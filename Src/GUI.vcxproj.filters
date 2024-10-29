@@ -407,6 +407,9 @@
     <ClInclude Include="GUIContext\Param\Param.h">
       <Filter>头文件\GUIContext\Param</Filter>
     </ClInclude>
+    <ClInclude Include="GUIContext\Param\FibreParams.h">
+      <Filter>头文件\GUIContext\Param</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GUI.rc">
