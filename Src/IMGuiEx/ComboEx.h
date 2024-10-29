@@ -116,6 +116,15 @@ namespace ComboExImpl {
 
         return GetValue(currentIdx);
     }
+
+    template<typename T>
+    bool Compare(const T& l, const T& r) {
+        return l == r;
+    }
+    template<>
+    inline bool Compare(const char* const& l, const char* const& r) {
+        return strcmp(l, r) == 0;
+    }
 }
 
 inline const char* ComboEx(const ComboInfo& comboInfo, const std::vector<const char*>& comboItems) {
@@ -136,7 +145,7 @@ inline T ComboEx(const ComboInfoEx<T>& comboInfoEx, const std::vector<ComboItem<
     size_t defaultIndex = 0;
     
     for (size_t index = 0; index < comboItems.size(); index++) {
-        if (comboItems[index].value == comboInfoEx.defaultValue) {
+        if (ComboExImpl::Compare(comboItems[index].value, comboInfoEx.defaultValue)) {
             defaultIndex = index;
             break;
         }
