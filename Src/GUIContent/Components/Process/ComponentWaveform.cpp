@@ -296,15 +296,12 @@ void ComponentWaveform(Ctx* pCtx) {
         pCtx->processHandler.ProcessWaveform();
 #ifdef VIBRATION_LOCALIZATION_LOG_WAVEFORM
         const auto& loggerParams = pCtx->loggerHandler.loggerParams;
-        if (loggerParams.bUseThreshold) {
-            if (pCtx->processHandler.ProcessPeakWaveform(loggerParams.threshold)) {
-                // TODO log here
-            }
+        if (loggerParams.bUseThreshold
+            && pCtx->processHandler.ProcessPeakWaveform(loggerParams.threshold)) {
+            pCtx->loggerHandler.LogWaveform(pCtx);
         }
 #endif
 #endif
-
-
     }
 #endif
 
