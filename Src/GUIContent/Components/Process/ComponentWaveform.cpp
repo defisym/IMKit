@@ -62,12 +62,11 @@ void DisplayLoggerThreshold(Ctx* pCtx) {
         PlotInfo* plotInfo = nullptr;
     } thresholdData = { pCtx->loggerHandler.loggerParams.threshold,&plotInfo };
 
-    ImPlot::PlotLineG(I18N("Threshold", "ImPlot/Shake/MD/Accumulate/Threshold"),
+    ImPlot::PlotLineG(I18N("Threshold", "DisplayLoggerThreshold"),
         [] (int idx, void* pData) {
-    const auto pThresholdData = static_cast<ThresholdData*>(pData);
-
-    return ImPlotPoint{ pThresholdData->plotInfo->xUpdater(idx),
-        pThresholdData->threshold };
+            const auto pThresholdData = static_cast<ThresholdData*>(pData);
+            return ImPlotPoint{ (*pThresholdData->plotInfo->GetXUpdater())(idx),
+                pThresholdData->threshold };
         }, &thresholdData, frameSize, ImPlotLineFlags_Shaded);
 #endif
 }
@@ -190,8 +189,7 @@ void DisplayWaveformRestoreOutput(Ctx* pCtx, const char* pTitle, const WaveformR
         DisplayPlot(I18N("Wave Shake", "ImPlot/Wave/Wave Shake"),
             waveform.restore.data(),            
             static_cast<int>(waveform.restore.size()),
-            plotInfo
-        );
+            plotInfo);
 
         ImPlot::EndPlot();
     }
@@ -262,11 +260,7 @@ void PeakWaveformRestore(Ctx* pCtx) {
             for (size_t index = 0; index < peakData.size(); index++) {
                 const auto& ctx = peakData[index];
                 if (ImGui::BeginTabItem(I18NFMT("Wave {}", index))) {
-                    auto startPoint = ctx.opt.shakeStart;
-#ifdef SKIP_INTERNAL_POINTS
-                    startPoint -= pCtx->deviceHandler.deviceParams.internalPoint;
-#endif
-                    const auto position = plotInfo.xUpdater(startPoint + ctx.opt.unwrap2DStart);
+                    const auto position = (*plotInfo.GetXUpdater())(ctx.opt.shakeStart + ctx.opt.unwrap2DStart);
                     DisplayWaveformRestoreOutput(pCtx, I18NFMT("Shake waveform at {} m", position), ctx.restore);
                     ImGui::EndTabItem();
                 }
