@@ -216,11 +216,6 @@ void SpecificWaveformRestore(Ctx* pCtx) {
     pCtx->processHandler.ProcessWaveform();
 #endif
 
-    if (!pCtx->processHandler.processResult.bWaveFromProcessed) {
-        ImGui::TextUnformatted(I18N("Data not enough"));
-        return;
-    }
-
 #ifndef WAVEFORM_RESTORE_ONLY_SHOW_RESULT
     const EmbraceHelper tabBarHelper = { ImGui::BeginTabBar("Wave/Tab", TAB_BAR_FLAGS), ImGui::EndTabBar };
     if (!tabBarHelper.State()) { return; }
@@ -252,19 +247,31 @@ void SpecificWaveformRestore(Ctx* pCtx) {
 }
 
 void WaveformRestore(Ctx* pCtx) {
+    const EmbraceHelper tabItemHelper = { ImGui::BeginTabItem(I18N("Waveform Restore")), ImGui::EndTabItem };
+    if (tabItemHelper.State()) { SpecificWaveformRestore(pCtx); }
+
+    if (!pCtx->processHandler.processResult.bWaveFromProcessed) {
+        ImGui::TextUnformatted(I18N("Data not enough"));
+        return;
+    }
+
     if (pCtx->EasyMode()) {
         PeakWaveformRestore(pCtx);
         return;
     }
 
-    {
-        const EmbraceHelper tabItemHelper = { ImGui::BeginTabItem(I18N("Specific Waveform Restore")), ImGui::EndTabItem };
-        if (tabItemHelper.State()) { SpecificWaveformRestore(pCtx); }
+    if (ImGui::BeginTabBar(I18N("Waveform Restore"), TAB_BAR_FLAGS)) {
+        if (ImGui::BeginTabItem(I18N("Specific Waveform Restore"))) {
+            SpecificWaveformRestore(pCtx);
+            ImGui::EndTabItem();
+        }
+
+        if (ImGui::BeginTabItem(I18N("Peak Waveform Restore"))) {
+            PeakWaveformRestore(pCtx);
+            ImGui::EndTabItem();
     }
 
-    {
-        const EmbraceHelper tabItemHelper = { ImGui::BeginTabItem(I18N("Peak Waveform Restore")), ImGui::EndTabItem };
-        if (tabItemHelper.State()) { PeakWaveformRestore(pCtx); }
+        ImGui::EndTabBar();
     }
 }
 
