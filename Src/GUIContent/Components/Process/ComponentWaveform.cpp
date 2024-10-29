@@ -136,7 +136,7 @@ void VibrationLocalization(Ctx* pCtx) {
                 ImPlot::EndPlot();
             }
 
-#ifdef VIBRATION_LOCALIZATION_LOG_WAVEFORM
+#if defined(WAVEFORM_RESTORE_LOG_PEAK_WAVEFORM) && defined(WAVEFORM_RESTORE_LOG_PEAK_SHOW_LOGGED_WAVEFORM)
             const auto pPeakHandler = pCtx->processHandler.pPeakWaveformRestoreHandler;
             const auto& peakData = pPeakHandler->GetPeakWaveformRestoreResult();
 
@@ -294,7 +294,7 @@ void ComponentWaveform(Ctx* pCtx) {
 #endif
 #ifdef WAVEFORM_RESTORE_ALWAYS_UPDATE        
         pCtx->processHandler.ProcessWaveform();
-#ifdef VIBRATION_LOCALIZATION_LOG_WAVEFORM
+#ifdef WAVEFORM_RESTORE_LOG_PEAK_WAVEFORM
         const auto& loggerParams = pCtx->loggerHandler.loggerParams;
         if (loggerParams.bUseThreshold
             && pCtx->processHandler.ProcessPeakWaveform(loggerParams.threshold)) {
