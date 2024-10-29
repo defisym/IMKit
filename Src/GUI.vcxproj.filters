@@ -258,6 +258,9 @@
     <ClCompile Include="Utilities\VibrationDataInterface.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="GUIContext\Param\SoftwareParams.cpp">
+      <Filter>源文件\GUIContext\Param</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\IMGUIInterface.h">
@@ -405,6 +408,9 @@
       <Filter>头文件\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="GUIContext\Param\Param.h">
+      <Filter>头文件\GUIContext\Param</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContext\Param\SoftwareParams.h">
       <Filter>头文件\GUIContext\Param</Filter>
     </ClInclude>
     <ClInclude Include="GUIContext\Param\FibreParams.h">
