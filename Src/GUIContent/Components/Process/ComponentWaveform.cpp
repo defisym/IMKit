@@ -137,11 +137,32 @@ void VibrationLocalization(Ctx* pCtx) {
             }
 
 #ifdef VIBRATION_LOCALIZATION_LOG_WAVEFORM
-            if (ImGui::BeginTabBar("Wave", TAB_BAR_FLAGS)) {
-                const auto& data = pCtx->processHandler.pPeakWaveformRestoreHandler->GetPeakWaveformRestoreResult();
+            const auto pPeakHandler = pCtx->processHandler.pPeakWaveformRestoreHandler;
+            const auto& peakData = pPeakHandler->GetPeakWaveformRestoreResult();
 
-                for(size_t index = 0;index< data.size();index++) {
-                    const auto& ctx = data[index];
+            if (BeginSubPlotEx(I18N("Restore base"), 1, 2)) {
+                if (BeginPlotEx(I18N("Restore base (Vibration Localization Result)"), xLabel.c_str())) {
+                    DisplayPlot(I18N("Restore base", "ImPlot/ShakePeakWaveRestore"),
+                        // internal point NOT included
+                        pPeakHandler->GetVibrationLocalizationData(), frameSize, plotInfo);
+                    ImPlot::EndPlot();
+                }
+                if (BeginPlotEx(I18N("Process base (Filtered)"), xLabel.c_str())) {
+                    DisplayPlot(I18N("Process base", "ImPlot/ShakePeakWaveRestore"),
+                        // filtered, internal point NOT included
+                        pPeakHandler->GetVibrationLocalizationFilteredData(), frameSize, plotInfo);
+                    ImPlot::EndPlot();
+                }
+                ImPlot::EndSubplots();
+            }
+
+            if (peakData.empty()) {
+                ImGui::TextUnformatted(I18N("No peak found"));
+            }
+            else {
+                if (ImGui::BeginTabBar(I18N("Wave"), TAB_BAR_FLAGS)) {
+                    for (size_t index = 0; index < peakData.size(); index++) {
+                        const auto& ctx = peakData[index];
                     if (ImGui::BeginTabItem(I18NFMT("Wave {}", index))) {
                         ComponentWaveformDisplayResult(pCtx, ctx.restore);
                         ImGui::EndTabItem();
