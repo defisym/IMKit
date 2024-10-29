@@ -273,6 +273,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="Utilities\LoadFileToWStr.cpp" />
     <ClCompile Include="Utilities\Logger.cpp" />
     <ClCompile Include="Utilities\OTDRDataInterface.cpp" />
+    <ClCompile Include="Utilities\VibrationDataInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUIContent\Components\Basic\ComponentBase.h" />
@@ -322,6 +323,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Utilities\LoadFileToWStr.h" />
     <ClInclude Include="Utilities\Logger.h" />
     <ClInclude Include="Utilities\OTDRDataInterface.h" />
+    <ClInclude Include="Utilities\VibrationDataInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GUI.rc" />
