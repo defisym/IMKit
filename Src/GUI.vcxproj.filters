@@ -112,6 +112,12 @@
     <Filter Include="源文件\GUIContent\Components\Config\Environment">
       <UniqueIdentifier>{bff85f3d-fe8f-44b7-a8ff-0792a6a965ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\GUIContext\Param">
+      <UniqueIdentifier>{de76c6d0-77f3-4d3b-a0ce-f5e3fa10830b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContext\Param">
+      <UniqueIdentifier>{9cf6c573-e8ba-445a-a8e1-625185a06b8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imguiInterface\IMGUIInterface.cpp">
@@ -389,9 +395,6 @@
     <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigLogger.h">
       <Filter>头文件\GUIContent\Components\Config\Environment</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContext\Param.h">
-      <Filter>头文件\GUIContext</Filter>
-    </ClInclude>
     <ClInclude Include="GUIContext\Handler\FilterHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
@@ -400,6 +403,9 @@
     </ClInclude>
     <ClInclude Include="Utilities\WaveformDataInterface.h">
       <Filter>头文件\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContext\Param\Param.h">
+      <Filter>头文件\GUIContext\Param</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

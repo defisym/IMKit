@@ -7,7 +7,7 @@
 
 #include <_3rdLib/Compress/zlibInterface.h>
 
-#include "GUIContext/Param.h"
+#include "GUIContext/Param/Param.h"
 
 namespace fs = std::filesystem;
 
