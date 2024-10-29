@@ -163,13 +163,14 @@ void VibrationLocalization(Ctx* pCtx) {
                 if (ImGui::BeginTabBar(I18N("Wave"), TAB_BAR_FLAGS)) {
                     for (size_t index = 0; index < peakData.size(); index++) {
                         const auto& ctx = peakData[index];
-                    if (ImGui::BeginTabItem(I18NFMT("Wave {}", index))) {
-                        ComponentWaveformDisplayResult(pCtx, ctx.restore);
-                        ImGui::EndTabItem();
+                        if (ImGui::BeginTabItem(I18NFMT("Wave {}", index))) {
+                            ComponentWaveformDisplayResult(pCtx, ctx.restore);
+                            ImGui::EndTabItem();
+                        }
                     }
-                }
 
-                ImGui::EndTabBar();
+                    ImGui::EndTabBar();
+                }
             }
 #endif
 #ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
