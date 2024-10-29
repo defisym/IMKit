@@ -65,17 +65,30 @@ void VibrationLocalization(Ctx* pCtx) {
         return;
     }
 
+    std::string xLabel =
+#ifdef VIBRATION_LOCALIZATION_USE_METER
+        I18NSTR("Meter");
+#else
+        I18NSTR("Point");
+#endif
+    PlotInfo plotInfo = {};
+#ifdef WAVEFORM_RESTORE_USE_MILLISECOND
+    plotInfo.xUpdater = [&] (const double index) {
+        return index * pCtx->deviceHandler.deviceParams.resolution;
+        };
+#endif
+
 #ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
     if (ImGui::BeginTabBar("Shake/Tab", TAB_BAR_FLAGS)) {
         // Handle Moving Average
         if (ImGui::BeginTabItem(I18N("Shake MA"))) {
-            if (BeginPlotEx(I18N("MA", "ImPlot/Shake/MA"), I18NSTR("Point"))) {
+            if (BeginPlotEx(I18N("MA", "ImPlot/Shake/MA"), xLabel.c_str())) {
                 const auto maxFrameCount = GetDisplayFrame(pHandler->GetProcessor()->maFrameCount);
                 for (size_t frameIdx = 0; frameIdx < maxFrameCount; frameIdx++) {
                     const std::string plotName = I18NFMT("Plot {}", frameIdx);
                     DisplayPlot(std::format("{}##ImPlot/Shake/MA/{}", plotName, plotName).c_str(),
                         pHandler->GetProcessor()->GetMovingAverageFrame(frameIdx) + internalPoint,
-                        frameSize);
+                        frameSize, plotInfo);
                 }
 
                 ImPlot::EndPlot();
@@ -85,7 +98,7 @@ void VibrationLocalization(Ctx* pCtx) {
 
         // Handle Moving Difference
         if (ImGui::BeginTabItem(I18N("Shake MD"))) {
-            if (BeginPlotEx(I18N("MD", "ImPlot/Shake/MD"), I18NSTR("Point"))) {
+            if (BeginPlotEx(I18N("MD", "ImPlot/Shake/MD"), xLabel.c_str())) {
                 // accumulateFrameIndex
                 const auto maxFrameCount = GetDisplayFrame(pHandler->GetProcessor()->mdFrameCount) - 1;
 
@@ -93,7 +106,7 @@ void VibrationLocalization(Ctx* pCtx) {
                     const std::string plotName = I18NFMT("Plot {}", frameIdx);
                     DisplayPlot(std::format("{}##ImPlot/Shake/MD/{}", plotName, plotName).c_str(),
                         pHandler->GetProcessor()->GetMovingDifferenceFrame(frameIdx) + internalPoint,
-                        frameSize);
+                        frameSize, plotInfo);
                 }
 
                 ImPlot::EndPlot();
@@ -102,20 +115,7 @@ void VibrationLocalization(Ctx* pCtx) {
         }
         if (ImGui::BeginTabItem(I18N("Shake MD Accumulate"))) {
 #endif                
-            if (BeginPlotEx(I18N("Vibration Localization", "ImPlot/Shake/MD/Accumulate"),
-#ifdef VIBRATION_LOCALIZATION_USE_METER
-                I18NSTR("Meter")
-#else
-                I18NSTR("Point")
-#endif
-                )) {
-                PlotInfo plotInfo = {};
-#ifdef WAVEFORM_RESTORE_USE_MILLISECOND
-                plotInfo.xUpdater = [&] (const double index) {
-                    return index * pCtx->deviceHandler.deviceParams.resolution;
-                    };
-#endif
-
+            if (BeginPlotEx(I18N("Vibration Localization", "ImPlot/Shake/MD/Accumulate"), xLabel.c_str())) {
 #ifdef VIBRATION_LOCALIZATION_SHOW_LOGGER_THRESHOLD
                 struct ThresholdData {
                     OTDRProcessValueType threshold;
