@@ -44,6 +44,34 @@ void RawData(Ctx* pCtx)  {
     ImGui::EndTabItem();
 }
 
+// display this first, or other lines will be overlapped
+void DisplayLoggerThreshold(Ctx* pCtx) {
+#ifdef VIBRATION_LOCALIZATION_SHOW_LOGGER_THRESHOLD
+    PlotInfo plotInfo = {};
+#ifdef VIBRATION_LOCALIZATION_USE_METER
+    plotInfo.xUpdater = [&] (const double index) {
+        return index * pCtx->deviceHandler.deviceParams.resolution;
+        };
+#endif
+
+    const auto& deviceParams = pCtx->deviceHandler.deviceParams;
+    const auto frameSize = static_cast<int>(deviceParams.pointNumProcess);
+
+    struct ThresholdData {
+        OTDRProcessValueType threshold;
+        PlotInfo* plotInfo = nullptr;
+    } thresholdData = { pCtx->loggerHandler.loggerParams.threshold,&plotInfo };
+
+    ImPlot::PlotLineG(I18N("Threshold", "ImPlot/Shake/MD/Accumulate/Threshold"),
+        [] (int idx, void* pData) {
+    const auto pThresholdData = static_cast<ThresholdData*>(pData);
+
+    return ImPlotPoint{ pThresholdData->plotInfo->xUpdater(idx),
+        pThresholdData->threshold };
+        }, &thresholdData, frameSize, ImPlotLineFlags_Shaded);
+#endif
+}
+
 void VibrationLocalization(Ctx* pCtx) {
     const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Vibration Localization")), ImGui::EndTabItem };
     if (!tabHelper.State()) { return; }
@@ -118,20 +146,7 @@ void VibrationLocalization(Ctx* pCtx) {
         if (ImGui::BeginTabItem(I18N("Shake MD Accumulate"))) {
 #endif                
             if (BeginPlotEx(I18N("Vibration Localization", "ImPlot/Shake/MD/Accumulate"), xLabel.c_str())) {
-#ifdef VIBRATION_LOCALIZATION_SHOW_LOGGER_THRESHOLD
-                struct ThresholdData {
-                    OTDRProcessValueType threshold;
-                    PlotInfo* plotInfo = nullptr;
-                } thresholdData = { pCtx->loggerHandler.loggerParams.threshold,&plotInfo };
-
-                ImPlot::PlotLineG(I18N("Threshold", "ImPlot/Shake/MD/Accumulate/Threshold"),
-                    [] (int idx, void* pData) {
-                        const auto pThresholdData = static_cast<ThresholdData*>(pData);
-
-                        return ImPlotPoint{ pThresholdData->plotInfo->xUpdater(idx),
-                            pThresholdData->threshold };
-                    }, &thresholdData, frameSize, ImPlotLineFlags_Shaded);
-#endif
+                DisplayLoggerThreshold(pCtx);
                 DisplayPlot(I18N("Vibration Localization", "ImPlot/Shake/MD/Accumulate/Vibration Localization"),
                     pHandler->GetVibrationLocalizationResult() + internalPoint, frameSize, plotInfo);
 
@@ -150,132 +165,8 @@ void VibrationLocalization(Ctx* pCtx) {
 #endif
 }
 
-void PeakWaveformRestore(Ctx* pCtx) {
-#if defined(WAVEFORM_RESTORE_LOG_PEAK_WAVEFORM) && defined(WAVEFORM_RESTORE_LOG_PEAK_SHOW_LOGGED_WAVEFORM)
-    const auto& deviceParams = pCtx->deviceHandler.deviceParams;
-    const auto frameSize = static_cast<int>(deviceParams.pointNumProcess);
-
-    const auto pPeakHandler = pCtx->processHandler.pPeakWaveformRestoreHandler;
-    const auto& peakData = pPeakHandler->GetPeakWaveformRestoreResult();
-
-    std::string xLabel =
-#ifdef VIBRATION_LOCALIZATION_USE_METER
-        I18NSTR("Meter");
-#else
-        I18NSTR("Point");
-#endif
-
-    PlotInfo plotInfo = {};
-#ifdef VIBRATION_LOCALIZATION_USE_METER
-    plotInfo.xUpdater = [&] (const double index) {
-        return index * pCtx->deviceHandler.deviceParams.resolution;
-        };
-#endif
-
-    if (BeginSubPlotEx(I18N("Peak waveform restore"), 1, 2)) {
-        if (BeginPlotEx(I18N("Restore base (Vibration Localization Result)"), xLabel.c_str())) {
-            DisplayPlot(I18N("Restore base", "ImPlot/ShakePeakWaveRestore"),
-                // internal point NOT included
-                pPeakHandler->GetVibrationLocalizationData(), frameSize, plotInfo);
-            ImPlot::EndPlot();
-        }
-        if (BeginPlotEx(I18N("Process base (Filtered)"), xLabel.c_str())) {
-            DisplayPlot(I18N("Process base", "ImPlot/ShakePeakWaveRestore"),
-                // filtered, internal point NOT included
-                pPeakHandler->GetVibrationLocalizationFilteredData(), frameSize, plotInfo);
-            ImPlot::EndPlot();
-        }
-        ImPlot::EndSubplots();
-    }
-
-    if (peakData.empty()) {
-        ImGui::TextUnformatted(I18N("No peak found"));
-    }
-    else {
-        if (ImGui::BeginTabBar(I18N("Wave"), TAB_BAR_FLAGS)) {
-            for (size_t index = 0; index < peakData.size(); index++) {
-                const auto& ctx = peakData[index];
-                if (ImGui::BeginTabItem(I18NFMT("Wave {}", index))) {
-                    const auto position = plotInfo.xUpdater(ctx.opt.shakeStart + ctx.opt.unwrap2DStart);
-                    ComponentWaveformDisplayResult(pCtx, I18NFMT("Shake waveform at {} m", position), ctx.restore);
-                    ImGui::EndTabItem();
-                }
-            }
-
-            ImGui::EndTabBar();
-        }
-    }
-#endif
-}
-
-void SpecificWaveformRestore(Ctx* pCtx) {
-    const auto pHandler = pCtx->processHandler.pWaveformRestoreHandler;
-    const auto& deviceParams = pCtx->deviceHandler.deviceParams;
-
-#ifndef WAVEFORM_RESTORE_ALWAYS_UPDATE
-    pCtx->processHandler.ProcessWaveform();
-#endif
-
-#ifndef WAVEFORM_RESTORE_ONLY_SHOW_RESULT
-    const EmbraceHelper tabBarHelper = { ImGui::BeginTabBar("Wave/Tab", TAB_BAR_FLAGS), ImGui::EndTabBar };
-    if (!tabBarHelper.State()) { return; }
-
-    if (ImGui::BeginTabItem(I18N("Wave Unprocessed"))) {       
-        if (BeginPlotEx(I18N("Wave Unprocessed", "ImPlot/Wave/Wave Unprocessed"), I18NSTR("Point"))) {
-            for (size_t frameIdx = 0;
-                frameIdx < GetDisplayFrame(deviceParams.processFrameCount);
-                frameIdx++) {
-                const std::string plotName = I18NFMT("Plot {}", frameIdx);
-                DisplayPlot(std::format("{}##ImPlot/Wave/Wave Unprocessed/{}", plotName, plotName).c_str(),
-                    Context_GetConstFrameBuffer(pHandler->GetWaveDisplay(),
-                    deviceParams.pointNumPerScan, frameIdx),
-                    deviceParams.pointNumPerScan);
-            }
-
-            ImPlot::EndPlot();
-        }
-        ImGui::EndTabItem();
-    }
-
-    if (ImGui::BeginTabItem(I18N("Wave Shake"))) {
-#endif
-        ComponentWaveformDisplayResult(pCtx, I18N("Shake waveform"), pHandler->GetRestore());
-#ifndef WAVEFORM_RESTORE_ONLY_SHOW_RESULT
-        ImGui::EndTabItem();
-    }
-#endif
-}
-
-void WaveformRestore(Ctx* pCtx) {
-    const EmbraceHelper tabItemHelper = { ImGui::BeginTabItem(I18N("Waveform Restore")), ImGui::EndTabItem };
-    if (tabItemHelper.State()) { SpecificWaveformRestore(pCtx); }
-
-    if (!pCtx->processHandler.processResult.bWaveFromProcessed) {
-        ImGui::TextUnformatted(I18N("Data not enough"));
-        return;
-    }
-
-    if (pCtx->EasyMode()) {
-        PeakWaveformRestore(pCtx);
-        return;
-    }
-
-    if (ImGui::BeginTabBar(I18N("Waveform Restore"), TAB_BAR_FLAGS)) {
-        if (ImGui::BeginTabItem(I18N("Specific Waveform Restore"))) {
-            SpecificWaveformRestore(pCtx);
-            ImGui::EndTabItem();
-        }
-
-        if (ImGui::BeginTabItem(I18N("Peak Waveform Restore"))) {
-            PeakWaveformRestore(pCtx);
-            ImGui::EndTabItem();
-    }
-
-        ImGui::EndTabBar();
-    }
-}
-
-void ComponentWaveformDisplayResult(Ctx* pCtx, const char* pTitle, const WaveformRestoreOutput& waveform) {
+// display waveform and it's FFT
+void DisplayWaveformRestoreOutput(Ctx* pCtx, const char* pTitle, const WaveformRestoreOutput& waveform) {
 #ifdef WAVEFORM_RESTORE_DISPLAY_WAVE_AND_FFT_IN_SUBPLOT
     const EmbraceHelper subPlotHelper = { BeginSubPlotEx(pTitle,1,2), ImPlot::EndSubplots };
     if (!subPlotHelper.State()) { return; }
@@ -320,6 +211,137 @@ void ComponentWaveformDisplayResult(Ctx* pCtx, const char* pTitle, const Wavefor
             plotInfo);
 
         ImPlot::EndPlot();
+    }
+}
+
+void PeakWaveformRestore(Ctx* pCtx) {
+#if defined(WAVEFORM_RESTORE_LOG_PEAK_WAVEFORM) && defined(WAVEFORM_RESTORE_LOG_PEAK_SHOW_LOGGED_WAVEFORM)
+    const auto& deviceParams = pCtx->deviceHandler.deviceParams;
+    const auto frameSize = static_cast<int>(deviceParams.pointNumProcess);
+
+    const auto pPeakHandler = pCtx->processHandler.pPeakWaveformRestoreHandler;
+    const auto& peakData = pPeakHandler->GetPeakWaveformRestoreResult();
+
+    std::string xLabel =
+#ifdef VIBRATION_LOCALIZATION_USE_METER
+        I18NSTR("Meter");
+#else
+        I18NSTR("Point");
+#endif
+
+    PlotInfo plotInfo = {};
+#ifdef VIBRATION_LOCALIZATION_USE_METER
+    plotInfo.xUpdater = [&] (const double index) {
+        return index * pCtx->deviceHandler.deviceParams.resolution;
+        };
+#endif
+
+    if (BeginSubPlotEx(I18N("Peak waveform restore"), 1, 2)) {
+        if (BeginPlotEx(I18N("Restore base (Vibration Localization Result)"), xLabel.c_str())) {
+            DisplayLoggerThreshold(pCtx);
+            DisplayPlot(I18N("Restore base", "ImPlot/ShakePeakWaveRestore"),
+                // internal point NOT included
+                pPeakHandler->GetVibrationLocalizationData(), frameSize, plotInfo);
+            ImPlot::EndPlot();
+        }
+        if (BeginPlotEx(I18N("Process base (Filtered)"), xLabel.c_str())) {
+            DisplayLoggerThreshold(pCtx);
+            DisplayPlot(I18N("Process base", "ImPlot/ShakePeakWaveRestore"),
+                // filtered, internal point NOT included
+                pPeakHandler->GetVibrationLocalizationFilteredData(), frameSize, plotInfo);
+            ImPlot::EndPlot();
+        }
+        ImPlot::EndSubplots();
+    }
+
+    if (peakData.empty()) {
+        ImGui::TextUnformatted(I18N("No peak found"));
+    }
+    else {
+        if (ImGui::BeginTabBar(I18N("Wave"), TAB_BAR_FLAGS)) {
+            for (size_t index = 0; index < peakData.size(); index++) {
+                const auto& ctx = peakData[index];
+                if (ImGui::BeginTabItem(I18NFMT("Wave {}", index))) {
+                    auto startPoint = ctx.opt.shakeStart;
+#ifdef SKIP_INTERNAL_POINTS
+                    startPoint -= pCtx->deviceHandler.deviceParams.internalPoint;
+#endif
+                    const auto position = plotInfo.xUpdater(startPoint + ctx.opt.unwrap2DStart);
+                    DisplayWaveformRestoreOutput(pCtx, I18NFMT("Shake waveform at {} m", position), ctx.restore);
+                    ImGui::EndTabItem();
+                }
+            }
+
+            ImGui::EndTabBar();
+        }
+    }
+#endif
+}
+
+void SpecificWaveformRestore(Ctx* pCtx) {
+    const auto pHandler = pCtx->processHandler.pWaveformRestoreHandler;
+    const auto& deviceParams = pCtx->deviceHandler.deviceParams;
+
+#ifndef WAVEFORM_RESTORE_ALWAYS_UPDATE
+    pCtx->processHandler.ProcessWaveform();
+#endif
+
+#ifndef WAVEFORM_RESTORE_ONLY_SHOW_RESULT
+    const EmbraceHelper tabBarHelper = { ImGui::BeginTabBar("Wave/Tab", TAB_BAR_FLAGS), ImGui::EndTabBar };
+    if (!tabBarHelper.State()) { return; }
+
+    if (ImGui::BeginTabItem(I18N("Wave Unprocessed"))) {
+        if (BeginPlotEx(I18N("Wave Unprocessed", "ImPlot/Wave/Wave Unprocessed"), I18NSTR("Point"))) {
+            for (size_t frameIdx = 0;
+                frameIdx < GetDisplayFrame(deviceParams.processFrameCount);
+                frameIdx++) {
+                const std::string plotName = I18NFMT("Plot {}", frameIdx);
+                DisplayPlot(std::format("{}##ImPlot/Wave/Wave Unprocessed/{}", plotName, plotName).c_str(),
+                    Context_GetConstFrameBuffer(pHandler->GetWaveDisplay(),
+                    deviceParams.pointNumPerScan, frameIdx),
+                    deviceParams.pointNumPerScan);
+            }
+
+            ImPlot::EndPlot();
+        }
+        ImGui::EndTabItem();
+    }
+
+    if (ImGui::BeginTabItem(I18N("Wave Shake"))) {
+#endif
+        DisplayWaveformRestoreOutput(pCtx, I18N("Shake waveform"), pHandler->GetRestore());
+#ifndef WAVEFORM_RESTORE_ONLY_SHOW_RESULT
+        ImGui::EndTabItem();
+    }
+#endif
+}
+
+void WaveformRestore(Ctx* pCtx) {
+    const EmbraceHelper tabItemHelper = { ImGui::BeginTabItem(I18N("Waveform Restore")), ImGui::EndTabItem };
+    if (!tabItemHelper.State()) { return; }
+
+    if (!pCtx->processHandler.processResult.bWaveFromProcessed) {
+        ImGui::TextUnformatted(I18N("Data not enough"));
+        return;
+    }
+
+    if (pCtx->EasyMode()) {
+        PeakWaveformRestore(pCtx);
+        return;
+    }
+
+    if (ImGui::BeginTabBar(I18N("Waveform Restore"), TAB_BAR_FLAGS)) {
+        if (ImGui::BeginTabItem(I18N("Specific Waveform Restore"))) {
+            SpecificWaveformRestore(pCtx);
+            ImGui::EndTabItem();
+        }
+
+        if (ImGui::BeginTabItem(I18N("Peak Waveform Restore"))) {
+            PeakWaveformRestore(pCtx);
+            ImGui::EndTabItem();
+        }
+
+        ImGui::EndTabBar();
     }
 }
 
