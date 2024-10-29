@@ -19,12 +19,14 @@ struct std::hash<LogDataConfig> {
 class LogDataInterface {  // NOLINT(cppcoreguidelines-special-member-functions)
 protected:
     LogDataConfig config = {};
+    std::string compressed;
 
 public:
     LogDataInterface(const LogDataConfig& conf = {}) { UpdateConfig(conf); }
     virtual ~LogDataInterface() = default;
 
     void UpdateConfig(const LogDataConfig& conf = {}) { this->config = conf; }
+    [[nodiscard]] const std::string& Compress(const std::string& str);
     [[nodiscard]] virtual const std::string& ToString() = 0;
 };
 
@@ -82,7 +84,7 @@ template<typename DataInterface>
 concept ValidDataInterface = requires(DataInterface device) {
     std::is_base_of_v<LogDataInterface, DataInterface>;
     device.GetData();
-    device.UpdateData(decltype(device.GetData()){});
+    device.UpdateData(std::decay_t<decltype(device.GetData())>{});
 };
 
 template<ValidDataInterface DataInterface>
