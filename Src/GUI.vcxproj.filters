@@ -258,6 +258,9 @@
     <ClCompile Include="Utilities\VibrationDataInterface.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="GUIContent\Components\Config\Environment\ComponentConfigSoftware.cpp">
+      <Filter>源文件\GUIContent\Components\Config\Environment</Filter>
+    </ClCompile>
     <ClCompile Include="GUIContext\Param\SoftwareParams.cpp">
       <Filter>源文件\GUIContext\Param</Filter>
     </ClCompile>
@@ -406,6 +409,9 @@
     </ClInclude>
     <ClInclude Include="Utilities\WaveformDataInterface.h">
       <Filter>头文件\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigSoftware.h">
+      <Filter>头文件\GUIContent\Components\Config\Environment</Filter>
     </ClInclude>
     <ClInclude Include="GUIContext\Param\Param.h">
       <Filter>头文件\GUIContext\Param</Filter>
