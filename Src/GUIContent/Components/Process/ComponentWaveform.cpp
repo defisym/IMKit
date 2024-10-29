@@ -140,7 +140,7 @@ void VibrationLocalization(Ctx* pCtx) {
             const auto pPeakHandler = pCtx->processHandler.pPeakWaveformRestoreHandler;
             const auto& peakData = pPeakHandler->GetPeakWaveformRestoreResult();
 
-            if (BeginSubPlotEx(I18N("Restore base"), 1, 2)) {
+            if (BeginSubPlotEx(I18N("Peak waveform restore"), 1, 2)) {
                 if (BeginPlotEx(I18N("Restore base (Vibration Localization Result)"), xLabel.c_str())) {
                     DisplayPlot(I18N("Restore base", "ImPlot/ShakePeakWaveRestore"),
                         // internal point NOT included
@@ -225,16 +225,16 @@ void WaveformRestore(Ctx* pCtx) {
 
     if (ImGui::BeginTabItem(I18N("Wave Shake"))) {
 #endif
-        ComponentWaveformDisplayResult(pCtx, pHandler->GetRestore());
+        ComponentWaveformDisplayResult(pCtx, I18N("Shake waveform"), pHandler->GetRestore());
 #ifndef WAVEFORM_RESTORE_ONLY_SHOW_RESULT
         ImGui::EndTabItem();
     }
 #endif
 }
 
-void ComponentWaveformDisplayResult(Ctx* pCtx, const WaveformRestoreOutput& waveform) {
+void ComponentWaveformDisplayResult(Ctx* pCtx, const char* pTitle, const WaveformRestoreOutput& waveform) {
 #ifdef WAVEFORM_RESTORE_DISPLAY_WAVE_AND_FFT_IN_SUBPLOT
-    const EmbraceHelper subPlotHelper = { BeginSubPlotEx(I18N("Waveform Shake"),1,2), ImPlot::EndSubplots };
+    const EmbraceHelper subPlotHelper = { BeginSubPlotEx(pTitle,1,2), ImPlot::EndSubplots };
     if (!subPlotHelper.State()) { return; }
 #endif
 
