@@ -12,6 +12,7 @@ size_t GetDisplayFrame(const size_t frameCount) {
 }
 
 void RawData(Ctx* pCtx)  {
+    if (pCtx->EasyMode()) { return; }
     if (!ImGui::BeginTabItem(I18N("Raw"))) { return; }
 
     const auto& [pBuffer,
