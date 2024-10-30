@@ -264,6 +264,9 @@
     <ClCompile Include="GUIContext\Param\SoftwareParams.cpp">
       <Filter>源文件\GUIContext\Param</Filter>
     </ClCompile>
+    <ClCompile Include="GUIContext\Handler\CalibrateHandler.cpp">
+      <Filter>源文件\GUIContext\Handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\IMGUIInterface.h">
@@ -421,6 +424,9 @@
     </ClInclude>
     <ClInclude Include="GUIContext\Param\FibreParams.h">
       <Filter>头文件\GUIContext\Param</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContext\Handler\CalibrateHandler.h">
+      <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
