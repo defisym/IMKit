@@ -62,7 +62,7 @@ inline void DisplayPlot(const char* pLabel,
         }
 
         ImPlotPoint GetCoord(const int idx) {
-            auto pElement = pData + static_cast<size_t>(std::floor(idx * pInfo->stride * coordCoef));
+            auto pElement = pData + static_cast<size_t>(std::floor(idx * coordCoef)) * pInfo->stride;
 
             return { (*pXUpdater)(idx * coordCoef),
                 (*pYUpdater)(static_cast<double>(*pElement)) };
