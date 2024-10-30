@@ -58,6 +58,9 @@
 // allow custom mode in easy mode
 #define CONFIG_ALLOW_CUSTOM_IN_EASYMODE
 
+// auto create device, if failed, show the divice select part
+#define CONFIG_AUTO_CREATE_DEVICE
+
 // force enable in debug mode
 #ifndef NDEBUG
 #ifndef CONFIG_ALLOW_CUSTOM_IN_EASYMODE
