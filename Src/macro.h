@@ -111,6 +111,12 @@
 #define WAVEFORM_RESTORE_ALWAYS_UPDATE
 #endif
 
+// don't filter raw data
+//#define WAVEFORM_RESTORE_LOG_PEAK_NO_FILTER
+
+// don't remove peak that is too small
+//#define WAVEFORM_RESTORE_LOG_PEAK_ALL_PEAK
+
 // display logged waveforms of each peak
 #define WAVEFORM_RESTORE_LOG_PEAK_SHOW_LOGGED_WAVEFORM
 
