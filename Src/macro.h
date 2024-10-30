@@ -55,6 +55,16 @@
 #define CONFIG_TRY_READ_CONFIG
 #endif
 
+// allow custom mode in easy mode
+#define CONFIG_ALLOW_CUSTOM_IN_EASYMODE
+
+// force enable in debug mode
+#ifndef NDEBUG
+#ifndef CONFIG_ALLOW_CUSTOM_IN_EASYMODE
+#define CONFIG_ALLOW_CUSTOM_IN_EASYMODE
+#endif
+#endif
+
 // skip internal points in optical module
 // as it's too complicated to change the process algorithm
 // and comparing to the total length the internal part can be ignored
