@@ -357,7 +357,7 @@ void ComponentWaveform(Ctx* pCtx) {
         pCtx->processHandler.ProcessVibrationLocalization();
         pCtx->loggerHandler.LogVibration(pCtx);
 #endif
-#ifdef WAVEFORM_RESTORE_ALWAYS_UPDATE        
+#ifdef WAVEFORM_RESTORE_ALWAYS_UPDATE
         pCtx->processHandler.ProcessWaveform();
 #ifdef WAVEFORM_RESTORE_LOG_PEAK_WAVEFORM
         const auto& loggerParams = pCtx->loggerHandler.loggerParams;
