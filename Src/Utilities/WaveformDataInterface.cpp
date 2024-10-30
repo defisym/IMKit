@@ -4,9 +4,9 @@ const std::string& WaveformRestoreContextStringify::ToString(const WaveformResto
     result = std::format("Waveform at : {}\n", data.opt.shakeStart + data.opt.unwrap2DStart);
 
     const auto restore = OTDRData{ data.restore.restore.data(),data.restore.restore.size() };
-    result += std::format("Waveform : {}\n", stringify.ToString(restore));
+    result += std::format("Waveform : \n{}", stringify.ToString(restore));
     const auto fft = OTDRData{ data.restore.fft.data(),data.restore.fftElement };
-    result += std::format("Waveform : {}\n", stringify.ToString(fft));
+    result += std::format("Waveform FFT: \n{}", stringify.ToString(fft));
 
     return result;
 }
