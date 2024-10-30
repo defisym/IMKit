@@ -35,7 +35,7 @@ struct PlotInfo {
 // display elements
 template<ArithmeticConcept T>
 inline void DisplayPlot(const char* pLabel,
-    const T* pData, int dataCount, const PlotInfo& info = {}) {
+    const T* pData, int dataCount, const PlotInfo& info = {}) {    
     constexpr static auto THRESHOLD = 500;
     if (dataCount <= THRESHOLD && !info.xUpdater && !info.yUpdater) {
         ImPlot::PlotLine(pLabel, pData, dataCount);
@@ -57,13 +57,12 @@ inline void DisplayPlot(const char* pLabel,
             constexpr static auto MIN_OFFSET = 1.0;
             coordCoef = (std::max)(MIN_OFFSET,
                 static_cast<double>(dataCount) / static_cast<double>(THRESHOLD));
-            offset = static_cast<int>(coordCoef);
             pXUpdater = pInfo->GetXUpdater();
             pYUpdater = pInfo->GetYUpdater();
         }
 
         ImPlotPoint GetCoord(const int idx) {
-            auto pElement = pData + idx * pInfo->stride * offset;
+            auto pElement = pData + static_cast<size_t>(std::floor(idx * pInfo->stride * coordCoef));
 
             return { (*pXUpdater)(idx * coordCoef),
                 (*pYUpdater)(static_cast<double>(*pElement)) };
