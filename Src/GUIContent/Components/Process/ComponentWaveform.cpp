@@ -260,7 +260,7 @@ void PeakWaveformRestore(Ctx* pCtx) {
             for (size_t index = 0; index < peakData.size(); index++) {
                 const auto& ctx = peakData[index];
                 if (ImGui::BeginTabItem(I18NFMT("Wave {}", index))) {
-                    const auto position = (*plotInfo.GetXUpdater())(ctx.opt.shakeStart + ctx.opt.unwrap2DStart);
+                    const auto position = static_cast<size_t>((*plotInfo.GetXUpdater())(ctx.opt.shakeStart + ctx.opt.unwrap2DStart));
                     DisplayWaveformRestoreOutput(pCtx,
 #ifdef VIBRATION_LOCALIZATION_USE_METER
                         I18NFMT("Shake waveform at {} m", position),
