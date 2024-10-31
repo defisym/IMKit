@@ -38,17 +38,12 @@ template<ArithmeticConcept T>
 inline void DisplayPlot(const char* pLabel,
     const T* pData, int dataCount, const PlotInfo& info = {}) {    
     constexpr static auto THRESHOLD = OPTIMIZE_PLOT_DSIPLAY_THRESHOLD;
-    if (dataCount <= THRESHOLD && !info.xUpdater && !info.yUpdater) {
-        ImPlot::PlotLine(pLabel, pData, dataCount);
-        return;
-    }
 
     struct Data {
         const T* pData = nullptr;
         int dataCount = 0;
         const PlotInfo* pInfo = nullptr;
 
-        int offset = 1;          // read data
         double coordCoef = 1.0;  // display coord
         const CoordUpdater* pXUpdater = nullptr;
         const CoordUpdater* pYUpdater = nullptr;
