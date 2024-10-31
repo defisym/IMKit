@@ -83,6 +83,19 @@
 // output debug string when skip triggered
 #define READER_OUTPUT_DEBUG_STRING_WHEN_SKIP_FRAME
 
+// optimize plot display by using threshold, by skip interval points
+// the shape of plot will be changed if the orginal data fluctates dramatically
+// and affect zoom in
+// disable it if your want the exactly result, or the target PC is powerful enough
+#define OPTIMIZE_PLOT_DSIPLAY
+
+#ifdef OPTIMIZE_PLOT_DSIPLAY
+#define OPTIMIZE_PLOT_DSIPLAY_THRESHOLD 512
+#else
+#include <limits.h>
+#define OPTIMIZE_PLOT_DSIPLAY_THRESHOLD INT_MAX
+#endif
+
 // normalize result by frame count
 #define VIBRATION_LOCALIZATION_NORMALIZE_RESULT_BY_FRAMECOUNT
 

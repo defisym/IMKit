@@ -5,6 +5,7 @@
 
 #include <_DeLib/ArithmeticTraits.h>
 
+#include "macro.h"
 #include "implot/implot.h"
 
 // setup axis with default settings
@@ -36,7 +37,7 @@ struct PlotInfo {
 template<ArithmeticConcept T>
 inline void DisplayPlot(const char* pLabel,
     const T* pData, int dataCount, const PlotInfo& info = {}) {    
-    constexpr static auto THRESHOLD = 500;
+    constexpr static auto THRESHOLD = OPTIMIZE_PLOT_DSIPLAY_THRESHOLD;
     if (dataCount <= THRESHOLD && !info.xUpdater && !info.yUpdater) {
         ImPlot::PlotLine(pLabel, pData, dataCount);
         return;
