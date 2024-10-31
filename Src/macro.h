@@ -21,8 +21,11 @@
 // show font debug
 //#define FONT_SHOW_FONT_DEBUG
 
-// always show device config even if no device created
+// always show device config even if device not created
 #define CONFIG_ALWAYS_SHOW_DEVICE_PARAM
+
+// always show calibrate config even if device not started
+#define CONFIG_ALWAYS_SHOW_CALIBRATE_PARAM
 #endif
 
 // ------------------------------------
