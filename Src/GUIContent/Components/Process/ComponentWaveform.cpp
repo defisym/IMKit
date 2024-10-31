@@ -24,7 +24,7 @@ void RawData(Ctx* pCtx)  {
     using DataType = std::remove_cvref_t<std::remove_pointer_t<decltype(pBuffer)>>;
     [[maybe_unused]] auto stride = static_cast<int>(sizeof(DataType) * bufferStride);
 
-    if (BeginPlotEx(I18NSTR("CH1", "ImPlot/Raw/CH1"), I18NSTR("Point"))) {
+    if (BeginPlotEx(I18NCSTR("CH1", "ImPlot/Raw/CH1"), I18NCSTR("Point"))) {
         DisplayPlot(I18N("CH1", "ImPlot/Raw/CH1/Plot"),
                     pBuffer,
                     static_cast<int>(bufferFrameSize),
@@ -32,7 +32,7 @@ void RawData(Ctx* pCtx)  {
 
         ImPlot::EndPlot();
     }
-    if (BeginPlotEx(I18NSTR("CH2", "ImPlot/Raw/CH2"), I18NSTR("Point"))) {
+    if (BeginPlotEx(I18NCSTR("CH2", "ImPlot/Raw/CH2"), I18NCSTR("Point"))) {
         DisplayPlot(I18N("CH2", "ImPlot/Raw/CH2/Plot"),
                     pBuffer + 1,
                     static_cast<int>(bufferFrameSize),
@@ -96,9 +96,9 @@ void VibrationLocalization(Ctx* pCtx) {
 
     std::string xLabel =
 #ifdef VIBRATION_LOCALIZATION_USE_METER
-        I18NSTR("Meter");
+        I18NCSTR("Meter");
 #else
-        I18NSTR("Point");
+        I18NCSTR("Point");
 #endif
     PlotInfo plotInfo = {};
 #ifdef VIBRATION_LOCALIZATION_USE_METER
@@ -173,9 +173,9 @@ void DisplayWaveformRestoreOutput(Ctx* pCtx, const char* pTitle, const WaveformR
 
     if (BeginPlotEx(I18N("Wave Shake", "ImPlot/Wave/Wave Shake"),
 #ifdef WAVEFORM_RESTORE_USE_MILLISECOND
-        I18NSTR("ms")
+        I18NCSTR("ms")
 #else
-        I18NSTR("Point")
+        I18NCSTR("Point")
 #endif
         )) {
         PlotInfo plotInfo = {};
@@ -194,7 +194,7 @@ void DisplayWaveformRestoreOutput(Ctx* pCtx, const char* pTitle, const WaveformR
         ImPlot::EndPlot();
     }
 
-    if (BeginPlotEx(I18N("Wave FFT Amplitude", "ImPlot/Wave/Wave FFT Amplitude"), I18NSTR("Hz"))) {
+    if (BeginPlotEx(I18N("Wave FFT Amplitude", "ImPlot/Wave/Wave FFT Amplitude"), I18NCSTR("Hz"))) {
         PlotInfo plotInfo = {};
         const auto& deviceParams = pCtx->deviceHandler.deviceParams;
         plotInfo.xUpdater = [&] (const double index) {
@@ -222,9 +222,9 @@ void PeakWaveformRestore(Ctx* pCtx) {
 
     std::string xLabel =
 #ifdef VIBRATION_LOCALIZATION_USE_METER
-        I18NSTR("Meter");
+        I18NCSTR("Meter");
 #else
-        I18NSTR("Point");
+        I18NCSTR("Point");
 #endif
 
     PlotInfo plotInfo = {};
@@ -292,7 +292,7 @@ void SpecificWaveformRestore(Ctx* pCtx) {
     if (!tabBarHelper.State()) { return; }
 
     if (ImGui::BeginTabItem(I18N("Wave Unprocessed"))) {
-        if (BeginPlotEx(I18N("Wave Unprocessed", "ImPlot/Wave/Wave Unprocessed"), I18NSTR("Point"))) {
+        if (BeginPlotEx(I18N("Wave Unprocessed", "ImPlot/Wave/Wave Unprocessed"), I18NCSTR("Point"))) {
             for (size_t frameIdx = 0;
                 frameIdx < GetDisplayFrame(deviceParams.processFrameCount);
                 frameIdx++) {
