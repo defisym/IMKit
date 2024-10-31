@@ -117,8 +117,16 @@
 // don't filter raw data
 //#define WAVEFORM_RESTORE_LOG_PEAK_NO_FILTER
 
+#ifndef WAVEFORM_RESTORE_LOG_PEAK_NO_FILTER
+#define WAVEFORM_RESTORE_LOG_PEAK_FILTER_RADIUS 1
+#endif
+
 // don't remove peak that is too small
 //#define WAVEFORM_RESTORE_LOG_PEAK_ALL_PEAK
+
+#ifndef WAVEFORM_RESTORE_LOG_PEAK_ALL_PEAK
+#define WAVEFORM_RESTORE_LOG_PEAK_ALL_PEAK_RANGE 3
+#endif
 
 // display logged waveforms of each peak
 #define WAVEFORM_RESTORE_LOG_PEAK_SHOW_LOGGED_WAVEFORM
