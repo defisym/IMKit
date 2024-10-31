@@ -5,6 +5,7 @@
 
 #include "imgui.h"
 
+// Note: AddSpin does NOT need i18n
 template<typename T>
 inline bool AddSpin(const char* label,
     T* v, T min, T max, T step = 1) {
