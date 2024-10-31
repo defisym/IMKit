@@ -87,7 +87,7 @@
 // the shape of plot will be changed if the orginal data fluctates dramatically
 // and affect zoom in
 // disable it if your want the exactly result, or the target PC is powerful enough
-#define OPTIMIZE_PLOT_DSIPLAY
+//#define OPTIMIZE_PLOT_DSIPLAY
 
 #ifdef OPTIMIZE_PLOT_DSIPLAY
 #define OPTIMIZE_PLOT_DSIPLAY_THRESHOLD 512
