@@ -44,8 +44,8 @@ struct IMGUIContext {
 
     const char* GetI18NLabel(const char* displayName);
     const char* GetI18NLabel(const char* displayName, const char* label);
-    std::string GetI18NLabelStr(const char* displayName);
-    std::string GetI18NLabelStr(const char* displayName, const char* label);
+    std::string GetI18NLabelStr(const char* displayName) const;
+    std::string GetI18NLabelStr(const char* displayName, const char* label) const;
 
     template <class... Types>
     const char* GetI18NLabelFMT(const char* displayName, Types&&... args) {
@@ -56,7 +56,7 @@ struct IMGUIContext {
     template <class... Types>
     const char* GetI18NLabelFMT(const char* displayName, const char* label, Types&&... args) {
         const auto fmt = GetI18NLabelFMT(displayName, args...);
-        return labelMaker.UpdateCache(labelMaker.ConnectLabel(fmt, label)).c_str();
+        return labelMaker.UpdateCache(LabelMaker::ConnectLabel(fmt, label)).c_str();
     }
 
     IMGUIContext() = default;

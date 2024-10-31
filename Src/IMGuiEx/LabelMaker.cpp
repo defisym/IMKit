@@ -21,11 +21,11 @@ const std::string& LabelMaker::MakeLabel(const char* displayName, const char* la
     return cache;
 }
 
-const std::string LabelMaker::MakeLabelStr(const char* displayName) {
+std::string LabelMaker::MakeLabelStr(const char* displayName) const {
     return pCtx->i18n.GetInternationalization(displayName);
 }
 
-const std::string LabelMaker::MakeLabelStr(const char* displayName, const char* label) {
+std::string LabelMaker::MakeLabelStr(const char* displayName, const char* label) const {
     return ConnectLabel(pCtx->i18n.GetInternationalization(displayName).c_str(), label);
 }
 
