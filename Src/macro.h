@@ -102,6 +102,11 @@
 #define OPTIMIZE_PLOT_DSIPLAY_THRESHOLD INT_MAX
 #endif
 
+// using context to calibrate, more accurate
+// note: peak wave restore will process when wave buffer filled
+//       disable it to have the same behaviour
+//#define CALIBRATE_USING_CONTEXT
+
 // normalize result by frame count
 #define VIBRATION_LOCALIZATION_NORMALIZE_RESULT_BY_FRAMECOUNT
 
