@@ -86,18 +86,24 @@
 
 // skip if process takes too long
 #define READER_SKIP_FRAME
+
+#ifdef READER_SKIP_FRAME
 // do not skip frame until receive processFrameCount frames
 // if internal frames are dropped, there will be a quick change of waveform
 // and create other frequency in FFT result
 // especially on low-end PCs
+// 
 // NOTE: 1. disable context has the same effect
 //       2. if the macro is defined, and context mode enabled
 //          then the vibration result will be affected, as
 //          internal data are ignored but context mode assume
-//          all data are consecutive 
-#define READER_SKIP_FRAME_WHEN_FILLED
+//          all data are consecutive
+//       3. drain may cost a long time as buffer may accumulated too many data
+//#define READER_SKIP_FRAME_WHEN_FILLED
+
 // output debug string when skip triggered
 #define READER_SKIP_FRAME_OUTPUT_DEBUG_STRING
+#endif
 
 // optimize plot display by using threshold, by skip interval points
 // the shape of plot will be changed if the orginal data fluctates dramatically
