@@ -142,7 +142,6 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;dxgi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <Profile>true</Profile>
     </Link>
     <PostBuildEvent>
       <Command>copy $(OutputPath)$(ProjectName).exe "$(SolutionDir)$(ProjectName).exe"</Command>
