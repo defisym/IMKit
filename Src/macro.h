@@ -31,6 +31,12 @@
 // ------------------------------------
 // General
 // ------------------------------------
+// set priority to ABOVE_NORMAL_PRIORITY_CLASS
+#define PROCESS_SET_PRIORITY
+
+// bind to CPU core 0
+#define PROCESS_SET_AFFINITY
+
 // load all fonts in fonts folder, disabled will use 
 //#define FONT_LOAD_ALL_FONTS
 
