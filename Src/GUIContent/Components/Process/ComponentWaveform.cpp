@@ -214,6 +214,15 @@ void DisplayWaveformRestoreOutput(Ctx* pCtx, const char* pTitle, const WaveformR
 
 void PeakWaveformRestore(Ctx* pCtx) {
 #if defined(WAVEFORM_RESTORE_LOG_PEAK_WAVEFORM) && defined(WAVEFORM_RESTORE_LOG_PEAK_SHOW_LOGGED_WAVEFORM)
+    const auto& loggerParams = pCtx->loggerHandler.loggerParams;
+    if (!loggerParams.bUseThreshold) {
+        ImGui::TextUnformatted(I18N("Threshold needs to be enabled to log peak waveform"));
+        
+        // return to fix crash if threshold not enabled at start
+        // data not processed -> trying to display nullptr
+        return;
+    }
+
     const auto& deviceParams = pCtx->deviceHandler.deviceParams;
     const auto frameSize = static_cast<int>(deviceParams.pointNumProcess);
 
