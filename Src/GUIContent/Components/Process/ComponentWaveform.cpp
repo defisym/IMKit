@@ -330,7 +330,7 @@ void WaveformRestore(Ctx* pCtx) {
     const EmbraceHelper tabItemHelper = { ImGui::BeginTabItem(I18N("Waveform Restore")), ImGui::EndTabItem };
     if (!tabItemHelper.State()) { return; }
 
-    if (!pCtx->processHandler.processResult.bWaveFromProcessed) {
+    if (!pCtx->processHandler.processResult.bWaveFormProcessed) {
         ImGui::TextUnformatted(I18N("Data not enough"));
         return;
     }

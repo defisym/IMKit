@@ -142,7 +142,7 @@
 #define WAVEFORM_RESTORE_LOG_PEAK_WAVEFORM
 
 #ifdef WAVEFORM_RESTORE_LOG_PEAK_WAVEFORM
-// this shares the wave raw data, so wavefrom always update
+// this shares the wave raw data, so waveform always update
 // must be enabled
 #ifndef WAVEFORM_RESTORE_ALWAYS_UPDATE
 #define WAVEFORM_RESTORE_ALWAYS_UPDATE
