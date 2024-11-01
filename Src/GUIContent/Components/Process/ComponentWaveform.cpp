@@ -359,7 +359,7 @@ void WaveformRestore(Ctx* pCtx) {
 //       if move to other UI lib should change the read logic
 void ComponentWaveform(Ctx* pCtx) {
     // out of tab: should always pull data
-    const auto err = pCtx->deviceHandler.ReadData(pCtx->processHandler);
+    const auto err = pCtx->deviceHandler.ReadData(&pCtx->processHandler);
 #if defined(VIBRATION_LOCALIZATION_ALWAYS_UPDATE) || defined(WAVEFORM_RESTORE_ALWAYS_UPDATE)
     if (err == DeviceHandler::ReadResult::OK) {
 #ifdef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
