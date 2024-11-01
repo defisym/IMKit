@@ -24,7 +24,8 @@ constexpr static ImGuiSliderFlags SLIDER_FLAGS = ImGuiSliderFlags_AlwaysClamp;
 
 #define I18N pCtx->GetI18NLabel
 #define I18NFMT pCtx->GetI18NLabelFMT
-#define I18NSTR(...) pCtx->GetI18NLabelStr(__VA_ARGS__).c_str()
+#define I18NSTR(...) pCtx->GetI18NLabelStr(__VA_ARGS__)
+#define I18NCSTR(...) pCtx->GetI18NLabelStr(__VA_ARGS__).c_str()
 
 struct IMGUIContext {
     const wchar_t* pWindowName = L"Dear ImGui DirectX11 Example";
@@ -44,8 +45,8 @@ struct IMGUIContext {
 
     const char* GetI18NLabel(const char* displayName);
     const char* GetI18NLabel(const char* displayName, const char* label);
-    std::string GetI18NLabelStr(const char* displayName);
-    std::string GetI18NLabelStr(const char* displayName, const char* label);
+    std::string GetI18NLabelStr(const char* displayName) const;
+    std::string GetI18NLabelStr(const char* displayName, const char* label) const;
 
     template <class... Types>
     const char* GetI18NLabelFMT(const char* displayName, Types&&... args) {
@@ -56,7 +57,7 @@ struct IMGUIContext {
     template <class... Types>
     const char* GetI18NLabelFMT(const char* displayName, const char* label, Types&&... args) {
         const auto fmt = GetI18NLabelFMT(displayName, args...);
-        return labelMaker.UpdateCache(labelMaker.ConnectLabel(fmt, label)).c_str();
+        return labelMaker.UpdateCache(LabelMaker::ConnectLabel(fmt, label)).c_str();
     }
 
     IMGUIContext() = default;

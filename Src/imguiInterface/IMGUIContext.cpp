@@ -8,11 +8,11 @@ const char* IMGUIContext::GetI18NLabel(const char* displayName, const char* labe
     return labelMaker.MakeLabel(displayName, label).c_str();
 }
 
-std::string IMGUIContext::GetI18NLabelStr(const char* displayName) {
+std::string IMGUIContext::GetI18NLabelStr(const char* displayName) const {
     return labelMaker.MakeLabelStr(displayName);
 }
 
-std::string IMGUIContext::GetI18NLabelStr(const char* displayName, const char* label) {
+std::string IMGUIContext::GetI18NLabelStr(const char* displayName, const char* label) const {
     return labelMaker.MakeLabelStr(displayName, label);
 }
 
