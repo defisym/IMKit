@@ -94,11 +94,21 @@
 // especially on low-end PCs
 // 
 // NOTE: 1. disable context has the same effect
+//          but also have side effect in 3.
 //       2. if the macro is defined, and context mode enabled
 //          then the vibration result will be affected, as
 //          internal data are ignored but context mode assume
 //          all data are consecutive
 //       3. drain may cost a long time as buffer may accumulated too many data
+//          E.g., 1. sample 75000 points, uses 300KB, as one frame 
+//                2. average by 2560 frames, uses 768MB, as one bunch
+//                3. assume PC needs to skip two bunches, uses about 1.5GB
+//                   and PCIe speed of DAQ is 1.5GB/s, skip will take 1000ms
+//                   which causes more delay and more data needs to be skipped
+//          so it's a choice, drop interval frames will affect the result
+//          but won't take long when drain data (E.g., 200 frames, only takes 40ms)
+// Advice: 1. Enable context
+//         2. By a decent PC
 //#define READER_SKIP_FRAME_WHEN_FILLED
 
 // output debug string when skip triggered
