@@ -85,10 +85,6 @@ void VibrationLocalization(Ctx* pCtx) {
     const auto internalPoint = 0;
 #endif
 
-#ifndef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
-    pCtx->processHandler.ProcessVibrationLocalization();
-#endif
-
     if (!pCtx->processHandler.processResult.bVibrationLocalizationProcessed) {
         ImGui::TextUnformatted(I18N("Data not enough"));
         return;
@@ -157,10 +153,6 @@ void VibrationLocalization(Ctx* pCtx) {
 
         ImGui::EndTabBar();
     }
-#endif
-
-#ifndef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
-    pCtx->loggerHandler.LogVibration(pCtx);
 #endif
 }
 
@@ -291,10 +283,6 @@ void PeakWaveformRestore(Ctx* pCtx) {
 void SpecificWaveformRestore(Ctx* pCtx) {
     const auto pHandler = pCtx->processHandler.pWaveformRestoreHandler;
     const auto& deviceParams = pCtx->deviceHandler.deviceParams;
-
-#ifndef WAVEFORM_RESTORE_ALWAYS_UPDATE
-    pCtx->processHandler.ProcessWaveform();
-#endif
 
 #ifndef WAVEFORM_RESTORE_ONLY_SHOW_RESULT
     const EmbraceHelper tabBarHelper = { ImGui::BeginTabBar("Wave/Tab", TAB_BAR_FLAGS), ImGui::EndTabBar };

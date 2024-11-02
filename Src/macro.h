@@ -140,30 +140,11 @@
 #define VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
 #define WAVEFORM_RESTORE_ONLY_SHOW_RESULT
 
-// always update
-#ifdef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
-#define VIBRATION_LOCALIZATION_ALWAYS_UPDATE
-#endif
-
-#ifdef WAVEFORM_RESTORE_ONLY_SHOW_RESULT
-#define WAVEFORM_RESTORE_ALWAYS_UPDATE
-#endif
-
-// log viberation waveform
-// only work when vibration localization is always update
-#ifdef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
-
 // log viberation waveform of the point
 // that exceed the threshold
 #define WAVEFORM_RESTORE_LOG_PEAK_WAVEFORM
 
 #ifdef WAVEFORM_RESTORE_LOG_PEAK_WAVEFORM
-// this shares the wave raw data, so waveform always update
-// must be enabled
-#ifndef WAVEFORM_RESTORE_ALWAYS_UPDATE
-#define WAVEFORM_RESTORE_ALWAYS_UPDATE
-#endif
-
 // don't filter raw data
 //#define WAVEFORM_RESTORE_LOG_PEAK_NO_FILTER
 
@@ -181,7 +162,6 @@
 // display logged waveforms of each peak
 #define WAVEFORM_RESTORE_LOG_PEAK_SHOW_LOGGED_WAVEFORM
 
-#endif
 #endif
 
 // show logger threshold
