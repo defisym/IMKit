@@ -355,36 +355,8 @@ void WaveformRestore(Ctx* pCtx) {
     }
 }
 
-// Note: ImGui call this each frame
-//       if move to other UI lib should change the read logic
 void ComponentProcess(Ctx* pCtx) {
-    // out of tab: should always pull data
-    const auto err = pCtx->deviceHandler.ReadData(&pCtx->processHandler);
-#if defined(VIBRATION_LOCALIZATION_ALWAYS_UPDATE) || defined(WAVEFORM_RESTORE_ALWAYS_UPDATE)
-    if (err == DeviceHandler::ReadResult::OK) {
-#ifdef VIBRATION_LOCALIZATION_ALWAYS_UPDATE
-        pCtx->processHandler.ProcessVibrationLocalization();
-        pCtx->loggerHandler.LogVibration(pCtx);
-#endif
-#ifdef WAVEFORM_RESTORE_ALWAYS_UPDATE
-        pCtx->processHandler.ProcessWaveform();
-#ifdef WAVEFORM_RESTORE_LOG_PEAK_WAVEFORM
-        const auto& loggerParams = pCtx->loggerHandler.loggerParams;
-        if (loggerParams.bUseThreshold
-            && pCtx->processHandler.ProcessPeakWaveform(loggerParams.threshold)) {
-            pCtx->loggerHandler.LogWaveform(pCtx);
-        }
-#endif
-#endif
-    }
-#endif
-
-    // TODO move this header
-	if (!ImGui::CollapsingHeader(I18N("Waveform"), ImGuiTreeNodeFlags_DefaultOpen)) {
-		return;
-	}
-
-    switch (err) {
+    switch (pCtx->deviceHandler.readerState) {
     case DeviceHandler::ReadResult::NO_DEVICE:
         ImGui::TextUnformatted(I18N("Device not started"));
         break;

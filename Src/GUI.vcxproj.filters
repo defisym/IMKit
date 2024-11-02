@@ -329,9 +329,6 @@
     <ClInclude Include="implot\implot_internal.h">
       <Filter>头文件\imguiInterface\implot</Filter>
     </ClInclude>
-    <ClInclude Include="imguiInterface\imguiDemo.h">
-      <Filter>头文件\imguiInterface</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\LoadFileToWStr.h">
       <Filter>头文件\Utilities</Filter>
     </ClInclude>
@@ -481,6 +478,9 @@
     </ClInclude>
     <ClInclude Include="GUIContent\Components\Waveform\ComponentWaveform.h">
       <Filter>头文件\GUIContent\Components\Waveform</Filter>
+    </ClInclude>
+    <ClInclude Include="imguiInterface\imguiDemo.h">
+      <Filter>头文件\imguiInterface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
