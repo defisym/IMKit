@@ -288,12 +288,6 @@
     <ClCompile Include="GUIContext\Handler\InspectHandler.cpp">
       <Filter>源文件\GUIContext\Handler</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\Inspect\ComponentConfigVibration.cpp">
-      <Filter>源文件\GUIContent\Components\Config\Inspect</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\Inspect\ComponentConfigWaveform.cpp">
-      <Filter>源文件\GUIContent\Components\Config\Inspect</Filter>
-    </ClCompile>
     <ClCompile Include="GUIContent\Components\Waveform\Process\ComponentProcess.cpp">
       <Filter>源文件\GUIContent\Components\Waveform\Process</Filter>
     </ClCompile>
@@ -302,6 +296,9 @@
     </ClCompile>
     <ClCompile Include="GUIContent\Components\Waveform\ComponentWaveform.cpp">
       <Filter>源文件\GUIContent\Components\Waveform</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\Config\Inspect\ComponentConfigInspect.cpp">
+      <Filter>源文件\GUIContent\Components\Config\Inspect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -464,12 +461,6 @@
     <ClInclude Include="GUIContext\Handler\InspectHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\Inspect\ComponentConfigVibration.h">
-      <Filter>头文件\GUIContent\Components\Config\Inspect</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\Inspect\ComponentConfigWaveform.h">
-      <Filter>头文件\GUIContent\Components\Config\Inspect</Filter>
-    </ClInclude>
     <ClInclude Include="GUIContent\Components\Waveform\Process\ComponentProcess.h">
       <Filter>头文件\GUIContent\Components\Waveform\Process</Filter>
     </ClInclude>
@@ -481,6 +472,9 @@
     </ClInclude>
     <ClInclude Include="imguiInterface\imguiDemo.h">
       <Filter>头文件\imguiInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\Config\Inspect\ComponentConfigInspect.h">
+      <Filter>头文件\GUIContent\Components\Config\Inspect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

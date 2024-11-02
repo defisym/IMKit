@@ -1,3 +1,10 @@
 #include "ComponentInspect.h"
 
-void ComponentInspect(Ctx* pCtx) {}
+#include "GUIContext/Handler/InspectHandler.h"
+
+void ComponentInspect(Ctx* pCtx) {
+    if (ImGui::Button("Prev")) {}
+    ImGui::SameLine();
+    if (ImGui::Button("Next")) {}
+
+}
