@@ -1,9 +1,12 @@
 #include "ComponentFrameRate.h"
 
-void ComponentFrameRate(Ctx* pCtx) {
-    const auto ms = 1000.0f / pCtx->pIO->Framerate;
+void ComponentFrameRate(Ctx* pCtx) {    
     ImGui::Text(I18N("Application average %.3f ms/frame (%.1f FPS)"),
-        ms, pCtx->pIO->Framerate);
+         1000.0f / pCtx->pIO->Framerate, pCtx->pIO->Framerate);
+    ImGui::SameLine();
+
+    const auto ms = 1000.0f * pCtx->pIO->DeltaTime;
+    ImGui::Text(I18N("Last frame: %.3f ms"), ms);
     ImGui::SameLine();
 
     ImGui::Text(I18N("Main loop: %.3f ms, GUI: %.3f ms"),
