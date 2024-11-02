@@ -11,10 +11,17 @@ struct WaveformRestoreContextStringify {
     [[nodiscard]] const std::string& ToString(const WaveformRestoreContext& data, const bool bBinary = false);
 };
 
+struct PeakWaveformRestoreStringify {
+    std::string result;
+    OTDRDataStringify stringify = {};
+    WaveformRestoreContextStringify waveformStringify = {};
+    [[nodiscard]] const std::string& ToString(const PeakWaveformRestoreHandler& data, const bool bBinary = false);
+};
+
 class WaveformDataInterface final :public LogDataInterface {
-    using DataType = const WaveformRestoreContext*;
+    using DataType = const PeakWaveformRestoreHandler*;
     DataType logData = nullptr;
-    WaveformRestoreContextStringify stringify;
+    PeakWaveformRestoreStringify stringify;
 
 public:
     WaveformDataInterface(const LogDataConfig& conf = {});

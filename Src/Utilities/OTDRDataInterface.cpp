@@ -15,6 +15,5 @@ const std::string& OTDRDataStringify::ToString(const OTDRData& data, const bool 
     }
 
     return builder.result;
-
 }
 
