@@ -35,6 +35,9 @@ struct IMGUIContext {
     bool bVSync = true;
     HINSTANCE hInstance = nullptr;
 
+    float mainLoopTime = 0;
+    float guiTime = 0;
+
     bool bDarkMode = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
     D3DContext renderContext = {};
@@ -77,5 +80,5 @@ struct IMGUIContext {
     virtual bool DestroyContext() { return true; }
 
     // main loop, called before UI refresh
-    virtual void MainLoop() = 0;
+    virtual void MainLoop() {};
 };

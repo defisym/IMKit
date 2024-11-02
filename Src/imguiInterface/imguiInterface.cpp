@@ -4,6 +4,8 @@
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 
+#include <chrono>
+
 #include <tchar.h>
 #include <resource.h>
 
@@ -30,6 +32,17 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 // ------------------------------------------------------------
 // Main code
 // ------------------------------------------------------------
+
+using namespace std::chrono_literals;
+
+auto GetNow() { return std::chrono::system_clock::now(); }
+// get us
+auto GetIntervalUs(const decltype(GetNow()) prev) {
+    return (GetNow() - prev) / 1us;
+}
+auto GetIntervalMs(const decltype(GetNow()) prev) {
+    return static_cast<float>(GetIntervalUs(prev)) / 1000.0f;
+}
 
 int IMGUIInterface(IMGUIContext* pCtx,
     const std::function<void(IMGUIContext*)>& gui) {
@@ -114,14 +127,22 @@ int IMGUIInterface(IMGUIContext* pCtx,
         }
 
         // Mainloop
-        pCtx->MainLoop();
+        {
+            const auto now = GetNow();
+            pCtx->MainLoop();
+            pCtx->mainLoopTime = GetIntervalMs(now);
+        }
 
         // Start the Dear ImGui frame
         ImGui_ImplDX11_NewFrame();
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
 
-        gui(pCtx);
+        {
+            const auto now = GetNow();
+            gui(pCtx);
+            pCtx->guiTime = GetIntervalMs(now);
+        }
 
         // Rendering
         ImGui::Render();
