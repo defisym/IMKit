@@ -2,4 +2,4 @@
 
 #include "GUIContext/GUIContext.h"
 
-void ComponentWaveform(Ctx* pCtx);
+void ComponentInspect(Ctx* pCtx);

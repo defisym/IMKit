@@ -91,11 +91,9 @@ int IMGUIInterface(IMGUIContext* pCtx,
             if (msg.message == WM_QUIT)
                 done = true;
         }
-        if (done)
-            break;
+        if (done) { break; }
 
-        // Handle window resize (we don't resize directly in the WM_SIZE handler)
-       
+        // Handle window resize (we don't resize directly in the WM_SIZE handler)       
         if (pCtx->renderContext.resizeWidth != 0 && pCtx->renderContext.resizeHeight != 0) {
             CleanupRenderTarget(pCtx);            
             pCtx->renderContext.pSwapChain->ResizeBuffers(0, 

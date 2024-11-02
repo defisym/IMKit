@@ -82,12 +82,6 @@
     <Filter Include="源文件\GUIContent\Components\Config">
       <UniqueIdentifier>{5f7a0835-73f6-4258-a20c-42e3ecaf7810}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\GUIContent\Components\Process">
-      <UniqueIdentifier>{308c17a4-4ed3-4847-a211-18f8563e05f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\GUIContent\Components\Process">
-      <UniqueIdentifier>{aec95022-85a8-42b1-a0f7-6075c60ab23a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="头文件\GUIContent\Components\Config\Device">
       <UniqueIdentifier>{d557e126-5c12-4c0d-bc98-ea8d60ebb37d}</UniqueIdentifier>
     </Filter>
@@ -117,6 +111,30 @@
     </Filter>
     <Filter Include="源文件\GUIContext\Param">
       <UniqueIdentifier>{9cf6c573-e8ba-445a-a8e1-625185a06b8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\GUIContent\Components\Config\Inspect">
+      <UniqueIdentifier>{2c9f3317-71ce-4d8c-8bb4-829e96d95d4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContent\Components\Config\Inspect">
+      <UniqueIdentifier>{fa368774-78b1-4df3-b4b2-115529bdfde7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\GUIContent\Components\Waveform">
+      <UniqueIdentifier>{bd6fb7ae-29ba-4e1e-8c3e-37d94eabf978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\GUIContent\Components\Waveform\Process">
+      <UniqueIdentifier>{308c17a4-4ed3-4847-a211-18f8563e05f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContent\Components\Waveform">
+      <UniqueIdentifier>{88e6216a-9981-4c0f-ad17-9f0be70af6cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContent\Components\Waveform\Process">
+      <UniqueIdentifier>{aec95022-85a8-42b1-a0f7-6075c60ab23a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\GUIContent\Components\Waveform\Inspect">
+      <UniqueIdentifier>{e5e8430f-292f-4ae0-b8f9-29c4d8a18108}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContent\Components\Waveform\Inspect">
+      <UniqueIdentifier>{2bca413e-c389-427f-8124-c656f6976256}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -188,9 +206,6 @@
     </ClCompile>
     <ClCompile Include="GUIContent\Components\Config\Device\ComponentConfigParam.cpp">
       <Filter>源文件\GUIContent\Components\Config\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Process\ComponentWaveform.cpp">
-      <Filter>源文件\GUIContent\Components\Process</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
@@ -270,6 +285,24 @@
     <ClCompile Include="GUIContent\Components\Config\Environment\ComponentConfigCalibrate.cpp">
       <Filter>源文件\GUIContent\Components\Config\Environment</Filter>
     </ClCompile>
+    <ClCompile Include="GUIContext\Handler\InspectHandler.cpp">
+      <Filter>源文件\GUIContext\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\Config\Inspect\ComponentConfigVibration.cpp">
+      <Filter>源文件\GUIContent\Components\Config\Inspect</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\Config\Inspect\ComponentConfigWaveform.cpp">
+      <Filter>源文件\GUIContent\Components\Config\Inspect</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\Waveform\Process\ComponentProcess.cpp">
+      <Filter>源文件\GUIContent\Components\Waveform\Process</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\Waveform\Inspect\ComponentInspect.cpp">
+      <Filter>源文件\GUIContent\Components\Waveform\Inspect</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\Waveform\ComponentWaveform.cpp">
+      <Filter>源文件\GUIContent\Components\Waveform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\IMGUIInterface.h">
@@ -346,9 +379,6 @@
     </ClInclude>
     <ClInclude Include="GUIContent\Components\Config\Device\ComponentConfigParam.h">
       <Filter>头文件\GUIContent\Components\Config\Device</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Process\ComponentWaveform.h">
-      <Filter>头文件\GUIContent\Components\Process</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiEx\EmbraceHelper.h">
       <Filter>头文件\IMGuiEx</Filter>
@@ -433,6 +463,24 @@
     </ClInclude>
     <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigCalibrate.h">
       <Filter>头文件\GUIContent\Components\Config\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContext\Handler\InspectHandler.h">
+      <Filter>头文件\GUIContext\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\Config\Inspect\ComponentConfigVibration.h">
+      <Filter>头文件\GUIContent\Components\Config\Inspect</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\Config\Inspect\ComponentConfigWaveform.h">
+      <Filter>头文件\GUIContent\Components\Config\Inspect</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\Waveform\Process\ComponentProcess.h">
+      <Filter>头文件\GUIContent\Components\Waveform\Process</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\Waveform\Inspect\ComponentInspect.h">
+      <Filter>头文件\GUIContent\Components\Waveform\Inspect</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\Waveform\ComponentWaveform.h">
+      <Filter>头文件\GUIContent\Components\Waveform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

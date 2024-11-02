@@ -1,4 +1,4 @@
-#include "ComponentWaveform.h"
+#include "ComponentProcess.h"
 
 #include "macro.h"
 #include "IMGuiEx/DisplayPlot.h"
@@ -357,7 +357,7 @@ void WaveformRestore(Ctx* pCtx) {
 
 // Note: ImGui call this each frame
 //       if move to other UI lib should change the read logic
-void ComponentWaveform(Ctx* pCtx) {
+void ComponentProcess(Ctx* pCtx) {
     // out of tab: should always pull data
     const auto err = pCtx->deviceHandler.ReadData(&pCtx->processHandler);
 #if defined(VIBRATION_LOCALIZATION_ALWAYS_UPDATE) || defined(WAVEFORM_RESTORE_ALWAYS_UPDATE)
@@ -379,6 +379,7 @@ void ComponentWaveform(Ctx* pCtx) {
     }
 #endif
 
+    // TODO move this header
 	if (!ImGui::CollapsingHeader(I18N("Waveform"), ImGuiTreeNodeFlags_DefaultOpen)) {
 		return;
 	}
