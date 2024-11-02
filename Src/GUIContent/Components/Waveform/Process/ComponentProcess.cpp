@@ -79,6 +79,8 @@ void VibrationLocalization(Ctx* pCtx) {
     const auto frameSize = static_cast<int>(deviceParams.pointNumProcess);
     const auto pHandler = pCtx->processHandler.pVibrationLocalizationHandler;
 
+    if (pHandler == nullptr) { return; }
+
 #ifdef SKIP_INTERNAL_POINTS
     const auto internalPoint = pCtx->deviceHandler.deviceParams.internalPoint;
 #else
@@ -217,8 +219,9 @@ void PeakWaveformRestore(Ctx* pCtx) {
 
     const auto& deviceParams = pCtx->deviceHandler.deviceParams;
     const auto frameSize = static_cast<int>(deviceParams.pointNumProcess);
-
     const auto pPeakHandler = pCtx->processHandler.pPeakWaveformRestoreHandler;
+    if (pPeakHandler == nullptr) { return; }
+
     const auto& peakData = pPeakHandler->GetPeakWaveformRestoreResult();
 
     std::string xLabel =
@@ -281,8 +284,10 @@ void PeakWaveformRestore(Ctx* pCtx) {
 }
 
 void SpecificWaveformRestore(Ctx* pCtx) {
-    const auto pHandler = pCtx->processHandler.pWaveformRestoreHandler;
     const auto& deviceParams = pCtx->deviceHandler.deviceParams;
+    const auto pHandler = pCtx->processHandler.pWaveformRestoreHandler;
+
+    if (pHandler == nullptr) { return; }
 
 #ifndef WAVEFORM_RESTORE_ONLY_SHOW_RESULT
     const EmbraceHelper tabBarHelper = { ImGui::BeginTabBar("Wave/Tab", TAB_BAR_FLAGS), ImGui::EndTabBar };
