@@ -32,7 +32,7 @@ struct IMGUIContext {
     int width = 1280;
     int height = 800;
     bool bDPIAware = false;
-    bool bVSync = false;
+    bool bVSync = true;
     HINSTANCE hInstance = nullptr;
 
     bool bDarkMode = false;
