@@ -211,17 +211,18 @@ bool CreateDeviceD3D(IMGUIContext* pCtx, HWND hWnd) {
         &pCtx->renderContext.pSwapChain, &pCtx->renderContext.pD3DDevice,
         &featureLevel, &pCtx->renderContext.pD3DDeviceContext);
 
-    if (res == DXGI_ERROR_UNSUPPORTED) // Try high-performance WARP software driver if hardware is not available.
-        res = 
-        D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_WARP,
-        nullptr, createDeviceFlags, 
-        featureLevelArray, 2, 
-        D3D11_SDK_VERSION, &sd, 
-        &pCtx->renderContext.pSwapChain, &pCtx->renderContext.pD3DDevice,
-        &featureLevel, &pCtx->renderContext.pD3DDeviceContext);
+    // Try high-performance WARP software driver if hardware is not available.
+    if (res == DXGI_ERROR_UNSUPPORTED) {
+        res =
+            D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_WARP,
+            nullptr, createDeviceFlags,
+            featureLevelArray, 2,
+            D3D11_SDK_VERSION, &sd,
+            &pCtx->renderContext.pSwapChain, &pCtx->renderContext.pD3DDevice,
+            &featureLevel, &pCtx->renderContext.pD3DDeviceContext);
+    }
 
-    if (res != S_OK)
-        return false;
+    if (res != S_OK) { return false; }
 
     CreateRenderTarget(pCtx);
     return true;
