@@ -7,7 +7,9 @@
 #include <tchar.h>
 #include <resource.h>
 
-// Dear ImGui: standalone example application for DirectX 11
+// ------------------------------------------------------------
+// Dear ImGui: standalone application for DirectX 11
+// ------------------------------------------------------------
 
 // Learn about Dear ImGui:
 // - FAQ                  https://dearimgui.com/faq
@@ -15,14 +17,20 @@
 // - Documentation        https://dearimgui.com/docs (same as your local docs/ folder).
 // - Introduction, links and more at the top of imgui.cpp
 
+// ------------------------------------------------------------
 // Forward declarations of helper functions
+// ------------------------------------------------------------
+
 bool CreateDeviceD3D(IMGUIContext* pCtx, HWND hWnd);
 void CleanupDeviceD3D(IMGUIContext* pCtx);
 void CreateRenderTarget(IMGUIContext* pCtx);
 void CleanupRenderTarget(IMGUIContext* pCtx);
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+// ------------------------------------------------------------
 // Main code
+// ------------------------------------------------------------
+
 int IMGUIInterface(IMGUIContext* pCtx,
     const std::function<void(IMGUIContext*)>& gui) {
     // Create application window
@@ -30,14 +38,15 @@ int IMGUIInterface(IMGUIContext* pCtx,
         ImGui_ImplWin32_EnableDpiAwareness();
     }
 
-    pCtx->hInstance = GetModuleHandle(nullptr);    
+    pCtx->hInstance = GetModuleHandle(nullptr);
     WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC,
         WndProc, 0L, 0L,
         pCtx->hInstance,
         LoadIcon(pCtx->hInstance, MAKEINTRESOURCE(IDI_ICON)),
         nullptr, nullptr, nullptr,
         L"ImGui Example", nullptr };
-    ::RegisterClassExW(&wc);
+    RegisterClassExW(&wc);
+
     HWND hwnd = ::CreateWindowW(wc.lpszClassName,
         pCtx->pWindowName,
         WS_OVERLAPPEDWINDOW,
@@ -48,13 +57,14 @@ int IMGUIInterface(IMGUIContext* pCtx,
     // Initialize Direct3D
     if (!CreateDeviceD3D(pCtx, hwnd)) {
         CleanupDeviceD3D(pCtx);
-        ::UnregisterClassW(wc.lpszClassName, wc.hInstance);
+        UnregisterClassW(wc.lpszClassName, wc.hInstance);
+
         return 1;
     }
 
     // Show the window
-    ::ShowWindow(hwnd, SW_SHOWDEFAULT);
-    ::UpdateWindow(hwnd);
+    ShowWindow(hwnd, SW_SHOWDEFAULT);
+    UpdateWindow(hwnd);
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -86,10 +96,10 @@ int IMGUIInterface(IMGUIContext* pCtx,
         // See the WndProc() function below for our to dispatch events to the Win32 backend.
         MSG msg;
         while (::PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE)) {
-            ::TranslateMessage(&msg);
+            TranslateMessage(&msg);
             ::DispatchMessage(&msg);
-            if (msg.message == WM_QUIT)
-                done = true;
+
+            if (msg.message == WM_QUIT) { done = true; }
         }
         if (done) { break; }
 
@@ -102,6 +112,9 @@ int IMGUIInterface(IMGUIContext* pCtx,
             pCtx->renderContext.resizeWidth = pCtx->renderContext.resizeHeight = 0;
             CreateRenderTarget(pCtx);
         }
+
+        // Mainloop
+        pCtx->MainLoop();
 
         // Start the Dear ImGui frame
         ImGui_ImplDX11_NewFrame();
@@ -119,10 +132,9 @@ int IMGUIInterface(IMGUIContext* pCtx,
             pCtx->clear_color.w };
         pCtx->renderContext.pD3DDeviceContext->OMSetRenderTargets(1, &pCtx->renderContext.pRenderTargetView, nullptr);
         pCtx->renderContext.pD3DDeviceContext->ClearRenderTargetView(pCtx->renderContext.pRenderTargetView, clear_color_with_alpha);
-        ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+        ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());        
 
-        pCtx->renderContext.pSwapChain->Present(1, 0); // Present with vsync
-        //pCtx->renderContext.pSwapChain->Present(0, 0); // Present without vsync
+        pCtx->renderContext.pSwapChain->Present(pCtx->bVSync ? 1 : 0, 0); 
     }
 
     // Cleanup
@@ -134,13 +146,19 @@ int IMGUIInterface(IMGUIContext* pCtx,
     ImGui::DestroyContext();
 
     CleanupDeviceD3D(pCtx);
-    ::DestroyWindow(hwnd);
-    ::UnregisterClassW(wc.lpszClassName, wc.hInstance);
+    DestroyWindow(hwnd);
+    UnregisterClassW(wc.lpszClassName, wc.hInstance);
 
     return 0;
 }
 
+// ------------------------------------------------------------
 // Helper functions
+// ------------------------------------------------------------
+
+// ------------------------------------------
+// D3D
+// ------------------------------------------
 
 bool CreateDeviceD3D(IMGUIContext* pCtx, HWND hWnd) {
     // Setup swap chain
@@ -219,6 +237,10 @@ void CleanupRenderTarget(IMGUIContext* pCtx) {
     }
 }
 
+// ------------------------------------------
+// Window loop
+// ------------------------------------------
+
 // Forward declare message handler from imgui_impl_win32.cpp
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -236,7 +258,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     switch (msg) {
     case WM_CREATE:
     {
-        CREATESTRUCT* pCreate = reinterpret_cast<CREATESTRUCT*>(lParam);
+        const CREATESTRUCT* pCreate = reinterpret_cast<CREATESTRUCT*>(lParam);  // NOLINT(performance-no-int-to-ptr)
         pCtx = static_cast<IMGUIContext*>(pCreate->lpCreateParams);
 
         return 0;

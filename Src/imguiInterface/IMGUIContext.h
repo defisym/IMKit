@@ -32,6 +32,7 @@ struct IMGUIContext {
     int width = 1280;
     int height = 800;
     bool bDPIAware = false;
+    bool bVSync = false;
     HINSTANCE hInstance = nullptr;
 
     bool bDarkMode = false;
@@ -74,4 +75,7 @@ struct IMGUIContext {
 
     virtual bool CreateContext() { return true; }
     virtual bool DestroyContext() { return true; }
+
+    // main loop, called before UI refresh
+    virtual void MainLoop() = 0;
 };
