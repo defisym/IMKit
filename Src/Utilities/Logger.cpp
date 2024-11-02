@@ -65,7 +65,7 @@ Logger::Logger(const LoggerConfig& config) {
         // create dir
         const auto path = fs::path{ filePath };
 
-        std::error_code ec;
+        std::error_code ec = {};
         fs::create_directories(path, ec);
 
         if (ec.value() != 0) { break; }

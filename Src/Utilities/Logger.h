@@ -103,5 +103,6 @@ private:
 
 public:
     void AddData(const DataType& data) { UpdateData(data); AddData(); }
+    bool SaveData() { return logger.SaveData(); }
     bool SaveDataWhenNeeded() { return logger.SaveDataWhenNeeded(); }
 };
