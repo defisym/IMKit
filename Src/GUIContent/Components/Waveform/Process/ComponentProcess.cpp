@@ -106,7 +106,7 @@ void VibrationLocalization(Ctx* pCtx) {
 #endif
 
 #ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
-    if (ImGui::BeginTabBar("Shake/Tab", TAB_BAR_FLAGS)) {
+    if (ImGui::BeginTabBar("Vibration/Tab", TAB_BAR_FLAGS)) {
         // Handle Moving Average
         if (ImGui::BeginTabItem(I18N("Shake MA"))) {
             if (BeginPlotEx(I18N("MA", "ImPlot/Shake/MA"), xLabel.c_str())) {
@@ -333,7 +333,7 @@ void WaveformRestore(Ctx* pCtx) {
         return;
     }
 
-    if (ImGui::BeginTabBar(I18N("Waveform Restore"), TAB_BAR_FLAGS)) {
+    if (ImGui::BeginTabBar("Waveform Restore/Tab", TAB_BAR_FLAGS)) {
         if (ImGui::BeginTabItem(I18N("Specific Waveform Restore"))) {
             SpecificWaveformRestore(pCtx);
             ImGui::EndTabItem();
@@ -357,7 +357,7 @@ void ComponentProcess(Ctx* pCtx) {
         ImGui::TextUnformatted(I18N("Context not created"));
         break;
 	case DeviceHandler::ReadResult::OK:
-        if (ImGui::BeginTabBar("Waveform/Tab", TAB_BAR_FLAGS)) {
+        if (ImGui::BeginTabBar("Waveform/Process/Tab", TAB_BAR_FLAGS)) {
             RawData(pCtx);
             VibrationLocalization(pCtx);
             WaveformRestore(pCtx);
