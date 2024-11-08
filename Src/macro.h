@@ -39,7 +39,10 @@
 
 // json crahes in profile mode
 // enable this macro to measure performance
-#define NO_I18N
+//#define NO_I18N
+
+// disable vsync
+#define DISPLAY_NO_SYNC
 
 // load all fonts in fonts folder, disabled will use 
 //#define FONT_LOAD_ALL_FONTS
