@@ -3,7 +3,10 @@
 #include <_3rdLib/JsonInterface.h>
 #include <_DeLib/GeneralDefinition.h>
 
+#include "macro.h"
+
 Internationalization::Internationalization() {
+#ifndef NO_I18N
     JsonInterface inf = {};
     inf.SetComment(true);
 
@@ -57,11 +60,16 @@ Internationalization::Internationalization() {
             languageMap[langName] = langContent;
         }
     }
+#endif
 }
 
 void Internationalization::UpdateLanguage(const std::string& lang) {
+#ifndef NO_I18N
     curLang = ToLower(lang);
     bCurLangDefault = curLang == LANGUAGE_INTERNAL;
+#else
+    bCurLangDefault = true;
+#endif    
 }
 
 const std::string& Internationalization::GetInternationalization(const std::string& token) const {
