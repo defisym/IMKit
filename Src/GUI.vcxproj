@@ -325,6 +325,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContext\Handler\WaveformRestoreHandler.h" />
     <ClInclude Include="GUIContext\Param\FibreParams.h" />
     <ClInclude Include="GUIContext\Param\Param.h" />
+    <ClInclude Include="GUIContext\Param\PerformanceParams.h" />
     <ClInclude Include="GUIContext\Param\SoftwareParams.h" />
     <ClInclude Include="IMGuiEx\AddSpin.h" />
     <ClInclude Include="IMGuiEx\ComboEx.h" />

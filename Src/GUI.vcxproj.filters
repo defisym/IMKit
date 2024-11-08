@@ -476,6 +476,9 @@
     <ClInclude Include="GUIContent\Components\Config\Inspect\ComponentConfigInspect.h">
       <Filter>头文件\GUIContent\Components\Config\Inspect</Filter>
     </ClInclude>
+    <ClInclude Include="GUIContext\Param\PerformanceParams.h">
+      <Filter>头文件\GUIContext\Param</Filter>
+    </ClInclude>
     <ClInclude Include="Utilities\MeasureHelper.h">
       <Filter>头文件\Utilities</Filter>
     </ClInclude>

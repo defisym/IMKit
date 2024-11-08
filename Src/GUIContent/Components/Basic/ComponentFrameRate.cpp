@@ -19,4 +19,8 @@ void ComponentFrameRate(Ctx* pCtx) {
     }else {
         ImGui::Text(I18N("Other process: %.3f ms"), other);
     }
+
+    const auto& performaceParams = pCtx->performanceParams;
+    ImGui::Text(I18N("Read Data: %.3f ms, Vibration Localization: %.3f ms, Waveform Restore: %.3f ms"),
+       performaceParams.readTime, performaceParams.vibrationLocalizationTime, performaceParams.waveformRestoreTime);
 }
