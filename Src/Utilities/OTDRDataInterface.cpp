@@ -7,6 +7,9 @@ const std::string& OTDRDataStringify::ToString(const OTDRData& data, const bool 
         for (size_t index = 0; index < data.sz; index++) {
             builder.AddNewItem(_ftos<std::string>(data.pData[index]));
         }
+
+        // last character is ',', remove it here
+        builder.result.pop_back();
     }
     else {
         const auto binSz = sizeof(OTDRProcessValueType) * data.sz;
