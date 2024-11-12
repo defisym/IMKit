@@ -2,6 +2,7 @@
 
 #include <string>
 #include <chrono>
+#include <functional>
 
 struct LogDataConfig {
     // save file in binary, otherwise is human-readable
@@ -70,6 +71,11 @@ public:
 
     // add data to internal cache
     void AddData(LogDataInterface* pLogData);
+
+    using MetaDataCb = std::function<const std::string& ()>;
+    MetaDataCb metaDataCb = nullptr;
+    // add metadata, which is written to the beginning of file
+    void AddMetaData(const MetaDataCb& cb) { metaDataCb = cb; }
     // write cache to disk
     // return true if file saved
     bool SaveData();
@@ -103,6 +109,7 @@ private:
 
 public:
     void AddData(const DataType& data) { UpdateData(data); AddData(); }
+    void AddMetaData(const Logger::MetaDataCb& cb) { logger.AddMetaData(cb); }
     bool SaveData() { return logger.SaveData(); }
     bool SaveDataWhenNeeded() { return logger.SaveDataWhenNeeded(); }
 };

@@ -109,16 +109,50 @@ bool Logger::SaveData() {
     if (err != 0 || fp == nullptr) { return false; }
 
     size_t elementCount = 0u;
+    auto writeString = [&] (const std::string& str) {
+        return fwrite(str.data(), str.size(), 1, fp);
+        };
+
+    if (metaDataCb != nullptr) {
+        // write meta data
+        elementCount += writeString("MetaData: ");
+        elementCount += writeString(metaDataCb());
+        elementCount += writeString("\r\n");
+    }
+
+    // write dummy jump table
+    fpos_t jumpTableStart = 0;
+    if (fgetpos(fp, &jumpTableStart) != 0) { return false; }
+
+    constexpr size_t filePosition = 0;
+    elementCount += fwrite(&filePosition, sizeof(size_t), cache.size(), fp);
+
+    // write cache
+    std::vector<fpos_t> jumpTable;
 
     for (auto& it : cache) {
-        auto writeString = [&] (const std::string& str) {
-            return fwrite(str.data(), str.size(), 1, fp);
-            };
+        // save jump table
+        fpos_t curPos = 0;
+        if (fgetpos(fp, &curPos) != 0) { return false; }
+        jumpTable.emplace_back(curPos);
+
+        // save cache size
+        const auto cacheSize = it.timeStampFormatted.length()
+            + it.data.length()
+            + 3 * strlen("\r\n");
+        elementCount += fwrite(&cacheSize, sizeof(size_t), 1, fp);
+        elementCount += writeString("\r\n");
 
         elementCount += writeString(it.timeStampFormatted);
         elementCount += writeString("\r\n");
         elementCount += writeString(it.data);
         elementCount += writeString("\r\n");
+    }
+
+    // write jump table
+    if (fsetpos(fp, &jumpTableStart) != 0) { return false; }
+    for (auto& it : jumpTable) {
+        elementCount += fwrite(&it, sizeof(it), 1, fp);
     }
 
     cache.clear();
