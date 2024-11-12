@@ -23,7 +23,7 @@ const std::string& PeakWaveformRestoreStringify::ToString(const PeakWaveformRest
     result += std::format("Process base (Filtered): {}\n", stringify.ToString(vlFilteredResult, bBinary));
 
     // waveform
-    const auto results = data.GetPeakWaveformRestoreResult();
+    const auto& results = data.GetPeakWaveformRestoreResult();
     for (const auto& it : results) {
         result += waveformStringify.ToString(it, bBinary);
     }
