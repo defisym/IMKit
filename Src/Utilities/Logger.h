@@ -72,7 +72,7 @@ public:
     // add data to internal cache
     void AddData(LogDataInterface* pLogData);
 
-    using MetaDataCb = std::function<const std::string& ()>;
+    using MetaDataCb = std::function<const std::string* ()>;
     MetaDataCb metaDataCb = nullptr;
     // add metadata, which is written to the beginning of file
     void AddMetaData(const MetaDataCb& cb) { metaDataCb = cb; }

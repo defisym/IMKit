@@ -116,16 +116,25 @@ bool Logger::SaveData() {
     if (metaDataCb != nullptr) {
         // write meta data
         elementCount += writeString("MetaData: ");
-        elementCount += writeString(metaDataCb());
+        elementCount += writeString("\r\n");
+        elementCount += writeString(*metaDataCb());
         elementCount += writeString("\r\n");
     }
 
     // write dummy jump table
+    elementCount += writeString("JumpTable: ");
+    elementCount += writeString("\r\n");
+    
     fpos_t jumpTableStart = 0;
     if (fgetpos(fp, &jumpTableStart) != 0) { return false; }
 
     constexpr size_t filePosition = 0;
     elementCount += fwrite(&filePosition, sizeof(size_t), cache.size(), fp);
+    elementCount += writeString("\r\n");
+
+    // data region
+    elementCount += writeString("Data Region: ");
+    elementCount += writeString("\r\n");
 
     // write cache
     std::vector<fpos_t> jumpTable;
