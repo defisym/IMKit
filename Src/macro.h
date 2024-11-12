@@ -169,6 +169,9 @@
 // display logged waveforms of each peak
 #define WAVEFORM_RESTORE_LOG_PEAK_SHOW_LOGGED_WAVEFORM
 
+// multithread
+//#define WAVEFORM_RESTORE_LOG_PEAK_MULTITHREAD
+
 #endif
 
 // show logger threshold
