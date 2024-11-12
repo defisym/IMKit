@@ -1,7 +1,7 @@
 #include "FontEx.h"
 
 #include <d3d11.h>
-#include <_DeLib/WindowsCommon.h>
+#include <WindowsCommon.h>
 
 #include "macro.h"
 

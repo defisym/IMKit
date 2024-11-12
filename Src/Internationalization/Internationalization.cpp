@@ -1,7 +1,7 @@
 #include "Internationalization.h"
 
-#include <_3rdLib/JsonInterface.h>
-#include <_DeLib/GeneralDefinition.h>
+#include <JsonInterface.h>
+#include <GeneralDefinition.h>
 
 #include "macro.h"
 

@@ -6,7 +6,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
-#include <_DeLib/ThreadSafeRingBuffer.h>
+#include <ThreadSafeRingBuffer.h>
 
 namespace RingBufferTest {
     [[noreturn]] void RingBufferReadTest() {

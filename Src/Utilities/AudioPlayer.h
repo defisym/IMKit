@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include <_DeLib/ThreadSafeRingBuffer.h>
+#include <ThreadSafeRingBuffer.h>
 
 #include "DataConverter.h"
 

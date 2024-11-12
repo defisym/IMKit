@@ -5,7 +5,7 @@
 #include <windows.h>
 #include <filesystem>
 
-#include <_3rdLib/Compress/zlibInterface.h>
+#include <Compress/zlibInterface.h>
 
 #include "GUIContext/Param/Param.h"
 

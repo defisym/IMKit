@@ -2,7 +2,7 @@
 
 #define NOMINMAX
 #include <d3d11.h>
-#include <_DeLib/GeneralDefinition.h>
+#include <GeneralDefinition.h>
 
 #include "imgui/imgui.h"
 

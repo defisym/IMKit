@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <functional>
 
-#include <_DeLib/ArithmeticTraits.h>
+#include <ArithmeticTraits.h>
 
 #include "macro.h"
 #include "implot/implot.h"

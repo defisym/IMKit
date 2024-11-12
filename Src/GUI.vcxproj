@@ -100,7 +100,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\;imgui;imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;imgui;imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -133,7 +133,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\;imgui;imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;imgui;imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -164,7 +164,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\;imgui;imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;imgui;imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -197,7 +197,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\;imgui;imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;imgui;imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>

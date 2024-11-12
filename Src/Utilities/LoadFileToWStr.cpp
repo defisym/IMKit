@@ -1,10 +1,10 @@
 #include "LoadFileToWStr.h"
 
-#include <_DeLib/GeneralDefinition.h>
+#include <GeneralDefinition.h>
 
-#include <_DeLib/Encryption.h>
+#include <Encryption.h>
 // ReSharper disable once CppUnusedIncludeDirective
-#include <_DeLib/Encryption.cpp>
+#include <Encryption.cpp>
 
 bool LoadFileToWStr(std::wstring& wStr, const wchar_t* pFilePath, bool bUnicode) {
     // load file
