@@ -482,6 +482,9 @@
     <ClInclude Include="Utilities\MeasureHelper.h">
       <Filter>头文件\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities\HoldHelper.h">
+      <Filter>头文件\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GUI.rc">
