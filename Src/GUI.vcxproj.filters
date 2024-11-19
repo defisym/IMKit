@@ -136,6 +136,12 @@
     <Filter Include="源文件\GUIContent\Components\Waveform\Inspect">
       <UniqueIdentifier>{2bca413e-c389-427f-8124-c656f6976256}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Worker">
+      <UniqueIdentifier>{30b8cf93-8222-421a-bdad-688cfcf7c294}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Worker">
+      <UniqueIdentifier>{12bb1453-689b-4d2f-8678-90a198f89687}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imguiInterface\IMGUIInterface.cpp">
@@ -299,6 +305,12 @@
     </ClCompile>
     <ClCompile Include="GUIContent\Components\Config\Inspect\ComponentConfigInspect.cpp">
       <Filter>源文件\GUIContent\Components\Config\Inspect</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContext\Handler\ThreadHandler.cpp">
+      <Filter>源文件\GUIContext\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="Worker\ThreadBase.cpp">
+      <Filter>源文件\Worker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -484,6 +496,15 @@
     </ClInclude>
     <ClInclude Include="Utilities\HoldHelper.h">
       <Filter>头文件\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContext\Handler\ThreadHandler.h">
+      <Filter>头文件\GUIContext\Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker\ThreadBase.h">
+      <Filter>头文件\Worker</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker\Lock.h">
+      <Filter>头文件\Worker</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

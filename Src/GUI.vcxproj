@@ -248,6 +248,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContext\Handler\InspectHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\LoggerHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp" />
+    <ClCompile Include="GUIContext\Handler\ThreadHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\VibrationLocalizationHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\WaveformRestoreHandler.cpp" />
     <ClCompile Include="GUIContext\Param\SoftwareParams.cpp" />
@@ -294,6 +295,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="Utilities\OTDRDataInterface.cpp" />
     <ClCompile Include="Utilities\VibrationDataInterface.cpp" />
     <ClCompile Include="Utilities\WaveformDataInterface.cpp" />
+    <ClCompile Include="Worker\ThreadBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUIContent\Components\Basic\ComponentBase.h" />
@@ -321,6 +323,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContext\Handler\InspectHandler.h" />
     <ClInclude Include="GUIContext\Handler\LoggerHandler.h" />
     <ClInclude Include="GUIContext\Handler\ProcessHandler.h" />
+    <ClInclude Include="GUIContext\Handler\ThreadHandler.h" />
     <ClInclude Include="GUIContext\Handler\VibrationLocalizationHandler.h" />
     <ClInclude Include="GUIContext\Handler\WaveformRestoreHandler.h" />
     <ClInclude Include="GUIContext\Param\FibreParams.h" />
@@ -357,6 +360,8 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Utilities\OTDRDataInterface.h" />
     <ClInclude Include="Utilities\VibrationDataInterface.h" />
     <ClInclude Include="Utilities\WaveformDataInterface.h" />
+    <ClInclude Include="Worker\Lock.h" />
+    <ClInclude Include="Worker\ThreadBase.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GUI.rc" />
