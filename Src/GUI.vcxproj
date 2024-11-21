@@ -225,6 +225,8 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CPUAffinity\CPUAffinity.cpp" />
+    <ClCompile Include="CPUAffinity\SKU\Intel\13700K.cpp" />
     <ClCompile Include="GUIContent\Components\Basic\ComponentFrameRate.cpp" />
     <ClCompile Include="GUIContent\Components\Config\ComponentConfig.cpp" />
     <ClCompile Include="GUIContent\Components\Config\Device\ComponentConfigDevice.cpp" />
@@ -298,6 +300,8 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="Worker\ThreadBase.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CPUAffinity\CPUAffinity.h" />
+    <ClInclude Include="CPUAffinity\SKU\Intel\13700K.h" />
     <ClInclude Include="GUIContent\Components\Basic\ComponentBase.h" />
     <ClInclude Include="GUIContent\Components\Basic\ComponentFrameRate.h" />
     <ClInclude Include="GUIContent\Components\Basic\ComponentWindow.h" />

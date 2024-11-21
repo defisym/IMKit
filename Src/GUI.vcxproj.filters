@@ -142,6 +142,24 @@
     <Filter Include="源文件\Worker">
       <UniqueIdentifier>{12bb1453-689b-4d2f-8678-90a198f89687}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\CPUAffinity">
+      <UniqueIdentifier>{c3582864-1b20-4f57-8107-f91d8e0ab85f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\CPUAffinity">
+      <UniqueIdentifier>{fe609f11-d3a7-428e-9c6f-8f4990987998}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\CPUAffinity\SKU">
+      <UniqueIdentifier>{d6d9bd5f-5e98-482d-a859-861c855e8b9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\CPUAffinity\SKU">
+      <UniqueIdentifier>{c25a7972-08d8-4f45-804f-008dd9712822}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\CPUAffinity\SKU\Intel">
+      <UniqueIdentifier>{b735567c-bb2d-4d19-a925-477e67537ef4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\CPUAffinity\SKU\Intel">
+      <UniqueIdentifier>{a7ea3098-424a-48e3-b1b5-e1dc5584cea1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imguiInterface\IMGUIInterface.cpp">
@@ -311,6 +329,12 @@
     </ClCompile>
     <ClCompile Include="Worker\ThreadBase.cpp">
       <Filter>源文件\Worker</Filter>
+    </ClCompile>
+    <ClCompile Include="CPUAffinity\CPUAffinity.cpp">
+      <Filter>源文件\CPUAffinity</Filter>
+    </ClCompile>
+    <ClCompile Include="CPUAffinity\SKU\Intel\13700K.cpp">
+      <Filter>源文件\CPUAffinity\SKU\Intel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -505,6 +529,12 @@
     </ClInclude>
     <ClInclude Include="Worker\Lock.h">
       <Filter>头文件\Worker</Filter>
+    </ClInclude>
+    <ClInclude Include="CPUAffinity\CPUAffinity.h">
+      <Filter>头文件\CPUAffinity</Filter>
+    </ClInclude>
+    <ClInclude Include="CPUAffinity\SKU\Intel\13700K.h">
+      <Filter>头文件\CPUAffinity\SKU\Intel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
