@@ -1,6 +1,5 @@
 #include "13700K.h"
 
-// 8P 8E
 Intel13700K::Intel13700K() {
     size_t CPUID = 0;
 
@@ -50,7 +49,7 @@ DWORD Intel13700K::BindToFreePerformaceCore(const HANDLE hThread, const CoreStat
     if (state != CoreState::Keep) { SetPerformaceCoreState(CPUID, state); }
     return BindToPerformaceCore(hThread, CPUID);
 }
-DWORD Intel13700K::BindToFreeEfficiencyCore(HANDLE hThread, CoreState state) {
+DWORD Intel13700K::BindToFreeEfficiencyCore(const HANDLE hThread, const CoreState state) {
     const auto it = std::ranges::find(ECoreState, CoreState::Free);
     if (it == ECoreState.end()) { return ERROR_SUCCESS; }
 
