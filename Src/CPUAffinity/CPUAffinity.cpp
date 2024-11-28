@@ -2,17 +2,29 @@
 
 #include "macro.h"
 
+DWORD CPUAffinity::SetPriorityClass(HANDLE hProcess, DWORD dwPriorityClass) {
+#ifdef PROCESS_SET_PRIORITY
+    // Set priority
+    // https://learn.microsoft.com/zh-cn/windows/win32/api/processthreadsapi/nf-processthreadsapi-setpriorityclass
+    if (!::SetPriorityClass(hProcess, dwPriorityClass)) {
+        return GetLastError();
+    }
+#endif
+
+    return ERROR_SUCCESS;
+}
+
 DWORD CPUAffinity::SetThreadAffinity(const HANDLE hThread, const DWORD_PTR dwThreadAffinityMask) {
 #ifdef PROCESS_SET_AFFINITY
     // Do not bind process -> may using multi-thread later
     //                        unwrap, etc. uses auto parallel
     // https://learn.microsoft.com/zh-cn/windows/win32/api/winbase/nf-winbase-setprocessaffinitymask
-    if (!SetThreadAffinityMask(hThread, dwThreadAffinityMask)) {
+    if (!::SetThreadAffinityMask(hThread, dwThreadAffinityMask)) {
         return GetLastError();
     }
+#endif
 
     return ERROR_SUCCESS;
-#endif
 }
 
 DWORD_PTR CPUAffinity::GetCPUMask(const size_t CPUID) {

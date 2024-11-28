@@ -26,7 +26,8 @@
 struct CPUAffinity {
     virtual ~CPUAffinity() = default;
 
-    // a wrapper for disable by macro
+    // wrapper for disable by macro
+    static DWORD SetPriorityClass(HANDLE hProcess, DWORD dwPriorityClass);
     static DWORD SetThreadAffinity(HANDLE hThread, DWORD_PTR dwThreadAffinityMask);
     static DWORD_PTR GetCPUMask(size_t CPUID);
 
