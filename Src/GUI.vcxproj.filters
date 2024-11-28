@@ -536,6 +536,9 @@
     <ClInclude Include="CPUAffinity\SKU\Intel\13700K.h">
       <Filter>头文件\CPUAffinity\SKU\Intel</Filter>
     </ClInclude>
+    <ClInclude Include="Worker\ThreadWrapper.h">
+      <Filter>头文件\Worker</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GUI.rc">
