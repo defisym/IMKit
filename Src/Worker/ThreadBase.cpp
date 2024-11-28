@@ -19,10 +19,13 @@ bool ThreadBase::Start(const ThreadInfo& info) {
     if (pThread != nullptr) { return false; }
 
     pThread = SDL_CreateThread([] (void* pData)->int {
-                               return static_cast<ThreadBase*>(pData)->Worker();
-                               },
-                               GetThreadName(info.pName), this);
-    if (pThread == nullptr) { const auto err = SDL_GetError(); return false; }
+            return static_cast<ThreadBase*>(pData)->Worker();
+        },
+        GetThreadName(info.pName), this);
+    if (pThread == nullptr) {
+        [[maybe_unused]] const auto err = SDL_GetError();
+        return false;
+    }
 
     if (info.bDetach) {
         SDL_AtomicSet(&detachThread, ThreadConstanst::DETACH);
@@ -30,6 +33,13 @@ bool ThreadBase::Start(const ThreadInfo& info) {
     }
 
     return true;
+}
+
+bool ThreadBase::ReStart(const ThreadInfo& info) {
+    Stop(); pThread = nullptr;
+    SDL_AtomicSet(&quitThread, ThreadConstanst::WORK);
+
+    return Start(info);
 }
 
 bool ThreadBase::Stop() {

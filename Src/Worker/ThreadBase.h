@@ -34,5 +34,6 @@ public:
     virtual int Worker() = 0;
 
     bool Start(const ThreadInfo& info = {});
+    bool ReStart(const ThreadInfo& info = {});
     bool Stop();
 };
