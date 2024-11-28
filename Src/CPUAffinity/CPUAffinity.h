@@ -22,17 +22,27 @@
 #include <windows.h>
 
 #include <cstdint>
+#include <vector>
+
+struct CPUInfo {
+    size_t pCore = 0;
+    size_t eCore = 0;
+    bool bHyperThread = false;
+};
 
 struct CPUAffinity {
-    virtual ~CPUAffinity() = default;
+    std::vector<DWORD_PTR> PCoreMask = {};
+    std::vector<DWORD_PTR> ECoreMask = {};
+
+    CPUAffinity(const CPUInfo& info);
 
     // wrapper for disable by macro
     static DWORD SetPriorityClass(HANDLE hProcess, DWORD dwPriorityClass);
     static DWORD SetThreadAffinity(HANDLE hThread, DWORD_PTR dwThreadAffinityMask);
     static DWORD_PTR GetCPUMask(size_t CPUID);
 
-    virtual DWORD BindToPerformaceCore(HANDLE hThread, size_t CPUID) = 0;
-    virtual DWORD BindToEfficiencyCore(HANDLE hThread, size_t CPUID) = 0;
+    DWORD BindToPerformaceCore(HANDLE hThread, size_t CPUID) const;
+    DWORD BindToEfficiencyCore(HANDLE hThread, size_t CPUID) const;
         
     enum class CoreState :std::uint8_t {
         Keep = 0,   // reserve
@@ -41,9 +51,12 @@ struct CPUAffinity {
         Exclusive,  // mark as Exclusive: heave long term worker
     };
 
-    virtual void SetPerformaceCoreState(size_t CPUID, CoreState state) = 0;
-    virtual void SetEfficiencyCoreState(size_t CPUID, CoreState state) = 0;
+    std::vector<CoreState> PCoreState = {};
+    std::vector<CoreState> ECoreState = {};
 
-    virtual DWORD BindToFreePerformaceCore(HANDLE hThread, CoreState state = CoreState::Keep) = 0;
-    virtual DWORD BindToFreeEfficiencyCore(HANDLE hThread, CoreState state = CoreState::Keep) = 0;
+    void SetPerformaceCoreState(size_t CPUID, CoreState state);
+    void SetEfficiencyCoreState(size_t CPUID, CoreState state);
+
+    DWORD BindToFreePerformaceCore(HANDLE hThread, CoreState state = CoreState::Keep);
+    DWORD BindToFreeEfficiencyCore(HANDLE hThread, CoreState state = CoreState::Keep);
 };
