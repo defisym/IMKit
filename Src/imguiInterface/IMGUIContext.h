@@ -55,7 +55,7 @@ struct IMGUIContext {
     template <class... Types>
     const char* GetI18NLabelFMT(const char* displayName, Types&&... args) {
         const auto fmt = std::vformat(to_wide_string(labelMaker.MakeLabel(displayName)),
-            std::make_wformat_args(args...));
+            std::make_wformat_args(std::forward<Types>(args)...));
         return labelMaker.UpdateCache(to_byte_string(fmt)).c_str();
     }
     template <class... Types>
