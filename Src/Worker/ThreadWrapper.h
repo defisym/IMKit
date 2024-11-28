@@ -20,4 +20,6 @@ public:
     bool Start(const ThreadInfo& info = {}) const { return thread->Start(info); }
     bool ReStart(const ThreadInfo& info = {}) const { return thread->ReStart(info); }
     bool Stop() const { return thread->Stop(); }
+
+    SDL_threadID GetThreadID() const { return thread->GetThreadID(); }
 };

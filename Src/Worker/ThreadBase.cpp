@@ -22,10 +22,13 @@ bool ThreadBase::Start(const ThreadInfo& info) {
             return static_cast<ThreadBase*>(pData)->Worker();
         },
         GetThreadName(info.pName), this);
+
     if (pThread == nullptr) {
         [[maybe_unused]] const auto err = SDL_GetError();
         return false;
     }
+
+    threadId = SDL_GetThreadID(pThread);
 
     if (info.bDetach) {
         SDL_AtomicSet(&detachThread, ThreadConstanst::DETACH);

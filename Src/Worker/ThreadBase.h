@@ -36,4 +36,6 @@ public:
     bool Start(const ThreadInfo& info = {});
     bool ReStart(const ThreadInfo& info = {});
     bool Stop();
+
+    SDL_threadID GetThreadID() const { return threadId; }
 };
