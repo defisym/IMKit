@@ -4,7 +4,7 @@
 
 DataReader::DataReader(Ctx* p) :pCtx(p) {}
 
-int DataReader::Worker() {
+int DataReader::LoopBody() {
     pCtx->deviceHandler.ReadData(&pCtx->processHandler);
 
     return 0;
