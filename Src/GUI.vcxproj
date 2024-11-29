@@ -366,7 +366,6 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Utilities\VibrationDataInterface.h" />
     <ClInclude Include="Utilities\WaveformDataInterface.h" />
     <ClInclude Include="Worker\DataReader.h" />
-    <ClInclude Include="Worker\Lock.h" />
     <ClInclude Include="Worker\ThreadBase.h" />
     <ClInclude Include="Worker\ThreadWrapper.h" />
   </ItemGroup>

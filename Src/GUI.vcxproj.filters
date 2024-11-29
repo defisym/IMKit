@@ -333,8 +333,8 @@
     <ClCompile Include="CPUAffinity\CPUAffinity.cpp">
       <Filter>源文件\CPUAffinity</Filter>
     </ClCompile>
-    <ClCompile Include="CPUAffinity\SKU\Intel\13700K.cpp">
-      <Filter>源文件\CPUAffinity\SKU\Intel</Filter>
+    <ClCompile Include="Worker\DataReader.cpp">
+      <Filter>源文件\Worker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -527,9 +527,6 @@
     <ClInclude Include="Worker\ThreadBase.h">
       <Filter>头文件\Worker</Filter>
     </ClInclude>
-    <ClInclude Include="Worker\Lock.h">
-      <Filter>头文件\Worker</Filter>
-    </ClInclude>
     <ClInclude Include="CPUAffinity\CPUAffinity.h">
       <Filter>头文件\CPUAffinity</Filter>
     </ClInclude>
@@ -537,6 +534,12 @@
       <Filter>头文件\CPUAffinity\SKU\Intel</Filter>
     </ClInclude>
     <ClInclude Include="Worker\ThreadWrapper.h">
+      <Filter>头文件\Worker</Filter>
+    </ClInclude>
+    <ClInclude Include="CPUAffinity\SKU\Intel\13500H.h">
+      <Filter>头文件\CPUAffinity\SKU\Intel</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker\DataReader.h">
       <Filter>头文件\Worker</Filter>
     </ClInclude>
   </ItemGroup>
