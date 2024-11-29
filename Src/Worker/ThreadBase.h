@@ -4,7 +4,7 @@
 #include <SDL_thread.h>
 #include <SDL_atomic.h>
 
-namespace ThreadConstanst {
+namespace ThreadConstant {
     constexpr int WORK = 0;
     constexpr int WAITING = 1;
     constexpr int QUIT = 2;
@@ -23,8 +23,8 @@ class ThreadBase {
     SDL_threadID threadId = 0;
     int threadReturn = 0;
 
-    SDL_atomic_t detachThread = { ThreadConstanst::ATTACH };
-    SDL_atomic_t quitThread = { ThreadConstanst::WORK };
+    SDL_atomic_t detachThread = { ThreadConstant::ATTACH };
+    SDL_atomic_t quitThread = { ThreadConstant::WORK };
 
     // generate a name if name is nullptr
     static const char* GetThreadName(const char* pName = nullptr);
@@ -35,7 +35,39 @@ public:
 
     bool Start(const ThreadInfo& info = {});
     bool ReStart(const ThreadInfo& info = {});
-    bool Stop();
 
-    SDL_threadID GetThreadID() const { return threadId; }
+    virtual bool Stop();
+
+    [[nodiscard]] SDL_threadID GetThreadID() const { return threadId; }
+};
+
+#include <_DeLib/LockHelper.h>
+
+namespace MutexConstant {
+    constexpr int WAKE = 0;
+    constexpr int HIBERNATE = 1;
+
+    constexpr int LOOP = 0;
+    constexpr int BREAK = 1;
+}
+
+class ThreadHibernate :ThreadBase {
+    SDL_mutex* pMutex = nullptr;
+    SDL_cond* pCond = nullptr;
+
+    SDL_atomic_t loopState = { MutexConstant::LOOP };
+    SDL_atomic_t hibernateState = { MutexConstant::WAKE };
+
+public:
+    ThreadHibernate();
+    ~ThreadHibernate() override;
+
+    bool Stop() override;
+
+    void Hibernate();
+    void Wake();
+    void BreakLoop();
+
+    int Worker() override;
+    virtual int LoopBody() = 0;
 };
