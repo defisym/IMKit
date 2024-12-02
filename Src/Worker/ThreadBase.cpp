@@ -29,6 +29,7 @@ bool ThreadBase::Start(const ThreadInfo& info) {
     }
 
     threadId = SDL_GetThreadID(pThread);
+    SDL_AtomicSet(&quitThread, ThreadConstant::WORK);
 
     if (info.bDetach) {
         SDL_AtomicSet(&detachThread, ThreadConstant::DETACH);
@@ -39,10 +40,7 @@ bool ThreadBase::Start(const ThreadInfo& info) {
 }
 
 bool ThreadBase::ReStart(const ThreadInfo& info) {
-    Stop(); pThread = nullptr;
-    SDL_AtomicSet(&quitThread, ThreadConstant::WORK);
-
-    return Start(info);
+    Stop(); return Start(info);
 }
 
 bool ThreadBase::Stop() {
@@ -53,6 +51,8 @@ bool ThreadBase::Stop() {
 
         SDL_AtomicSet(&quitThread, ThreadConstant::WAITING);
         SDL_WaitThread(pThread, &threadReturn);
+        pThread = nullptr;
+
         SDL_AtomicSet(&quitThread, ThreadConstant::QUIT);
 
         return true;
@@ -71,9 +71,17 @@ ThreadHibernate::~ThreadHibernate() {
     SDL_DestroyMutex(pMutex);
 }
 
+bool ThreadHibernate::Start(const ThreadHibernateInfo& info) {
+    if (info.bHibernateAtStart) { Hibernate(); }
+    return ThreadBase::Start(info);
+}
+
+bool ThreadHibernate::ReStart(const ThreadHibernateInfo& info) {
+    Stop(); return Start(info);
+}
+
 bool ThreadHibernate::Stop() {
-    Wake();
-    return ThreadBase::Stop();
+    Wake(); return ThreadBase::Stop();
 }
 
 void ThreadHibernate::Hibernate() {

@@ -51,6 +51,10 @@ namespace MutexConstant {
     constexpr int BREAK = 1;
 }
 
+struct ThreadHibernateInfo :ThreadInfo {
+    bool bHibernateAtStart = false;
+};
+
 class ThreadHibernate :ThreadBase {
     SDL_mutex* pMutex = nullptr;
     SDL_cond* pCond = nullptr;
@@ -61,6 +65,9 @@ class ThreadHibernate :ThreadBase {
 public:
     ThreadHibernate();
     ~ThreadHibernate() override;
+
+    bool Start(const ThreadHibernateInfo& info = {});
+    bool ReStart(const ThreadHibernateInfo& info = {});
 
     bool Stop() override;
 
