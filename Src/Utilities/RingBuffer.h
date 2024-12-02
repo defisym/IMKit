@@ -34,6 +34,18 @@ struct RingBuffer :Buffer<Type> {
         RingBuffer::WriteData(pData + write, left);
     }
 
+    // get buffer at current index and forward sz
+    // caller should grantee that pointer and offset are valid
+    virtual Type* WriteData(const size_t sz) {
+        assert(sz + writeIndex <= this->_sz);
+        auto pStart = this->_pBuf + writeIndex;
+
+        writeIndex += sz;
+        if (writeIndex == this->_sz) { writeIndex = 0; }
+
+        return pStart;
+    }
+
     // copy buffer to pBuf
     virtual void ReadData(Type* pBuf, const size_t sz) {
         const auto remain = this->_sz - readIndex;
@@ -52,9 +64,9 @@ struct RingBuffer :Buffer<Type> {
 
     // get buffer at current index and forward sz
     // caller should grantee that pointer and offset are valid
-    Type* ReadData(const size_t sz) {
+    virtual Type* ReadData(const size_t sz) {
         assert(sz + readIndex <= this->_sz);
-        auto pStart = this->_sz + readIndex;
+        auto pStart = this->_pBuf + readIndex;
 
         readIndex += sz;
         if (readIndex == this->_sz) { readIndex = 0; }
@@ -64,5 +76,5 @@ struct RingBuffer :Buffer<Type> {
 
     virtual void ResetIndex() { writeIndex = 0; readIndex = 0; }
 
-    void DiscardUnreadBuffer() { readIndex = writeIndex; }
+    virtual void DiscardUnreadBuffer() { readIndex = writeIndex; }
 };

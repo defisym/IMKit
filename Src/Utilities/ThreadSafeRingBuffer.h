@@ -6,32 +6,54 @@
 #include "RingBuffer.h"
 #include "LockHelper.h"
 
-template<typename Type = OTDRProcessValueType>
+template<typename Type = OTDRProcessValueType, LockConcept LockType = SDL_SpinLock>
 struct ThreadSafeRingBuffer :private RingBuffer<Type> {
-    SDL_SpinLock lock = 0;
+    Lock<LockType> lock;
+    using BufferLockHelper = typename GetLockHelper<LockType>::Type;
 
     ThreadSafeRingBuffer() = default;
     ThreadSafeRingBuffer(const size_t sz) :RingBuffer<Type>(sz) {}
 
     ~ThreadSafeRingBuffer() override {
-        const auto lockHelper = SpinLockHelper(&lock);
+        const auto lockHelper = BufferLockHelper(lock);
         RingBuffer<Type>::Release();
     }
 
     void WriteData(const Type* pBuf, const size_t sz) override {
-        const auto lockHelper = SpinLockHelper(&lock);
+        const auto lockHelper = BufferLockHelper(lock);
         RingBuffer<Type>::WriteData(pBuf, sz);
     }
+    Type* WriteData(const size_t sz) override {
+        const auto lockHelper = BufferLockHelper(lock);
+        return RingBuffer<Type>::WriteData(sz);
+    }
     void ReadData(Type* pBuf, const size_t sz) override {
-        const auto lockHelper = SpinLockHelper(&lock);
+        const auto lockHelper = BufferLockHelper(lock);
         RingBuffer<Type>::ReadData(pBuf, sz);
     }
+    Type* ReadData(const size_t sz) override {
+        const auto lockHelper = BufferLockHelper(lock);
+        return RingBuffer<Type>::ReadData(sz);
+    }
     void ResetIndex() override {
-        const auto lockHelper = SpinLockHelper(&lock);
+        const auto lockHelper = BufferLockHelper(lock);
         RingBuffer<Type>::ResetIndex();
     }
+    void DiscardUnreadBuffer() override {
+        const auto lockHelper = BufferLockHelper(lock);
+        RingBuffer<Type>::DiscardUnreadBuffer();
+    }
+
+    bool AllocBuffer(const size_t sz) {
+        const auto lockHelper = BufferLockHelper(lock);
+        return RingBuffer<Type>::Alloc(sz);
+    }
+    bool ExtendBuffer(const size_t sz, int val = 0) {
+        const auto lockHelper = BufferLockHelper(lock);
+        return RingBuffer<Type>::Extend(sz, val);
+    }
     void ResetBuffer() {
-        const auto lockHelper = SpinLockHelper(&lock);
+        const auto lockHelper = BufferLockHelper(lock);
         RingBuffer<Type>::Reset();
     }
 };
