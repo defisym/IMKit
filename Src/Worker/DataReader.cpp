@@ -29,7 +29,11 @@ void DataReader::UpdateQueue() {
 }
 
 int DataReader::LoopBody() {
-    pCtx->deviceHandler.ReadData(&pCtx->processHandler);
+    auto deviceHandler = pCtx->deviceHandler;
+    deviceHandler.ReadDataInternal([&] {
+        Context_UpdateInfo(deviceHandler.hContext, &deviceHandler.bufferInfo);
+        queue.AddData(deviceHandler.hContext);
+    });
 
     return 0;
 }
