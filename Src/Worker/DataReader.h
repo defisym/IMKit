@@ -5,39 +5,41 @@
 #include "../Src/DLL/include/OTDR.h"
 
 #include "ThreadBase.h"
+#include "Utilities/ThreadSafeRingBuffer.h"
 
 // usually sample rate is above 2000Hz, aka less than 0.5ms
 // mutex & cond will let operate system handle the thread
 // which will take longer, usuall several ms
 // that's why spin lock is used here
 struct DataQueue {
-    SDL_SpinLock lock = 0;
+    // ------------------------
+    // Following are protected by lock
+    // ------------------------
+    ThreadSafeRingBuffer<> phaseBuffer;
+    ThreadSafeRingBuffer<> amplitudeBuffer;
+    // ------------------------
+    // Above are protected by lock
+    // ------------------------
 
-    struct Data {
-        size_t sz = 0;
-        OTDRProcessValueType* pPhase = nullptr;
-        OTDRProcessValueType* pAmplitude = nullptr;
+    size_t frameSize = 0;
 
-        Data() {
-            //Context_UpdateToBuffer();
-        }
-        ~Data() {
-            delete[] pAmplitude;
-            delete[] pPhase;
-        }
-    };
+    void UpdateQueue(const size_t count, const size_t size);
 
-    std::vector<Data> queue;
+    void AddData(const OTDRContextHandle handle);
 
-    DataQueue() { }
-    ~DataQueue() { }
+    OTDRProcessValueType* GetPhaseData();
+
+    OTDRProcessValueType* GetAmplitudeData();
 };
 
 struct Ctx;
 
 struct DataReader :ThreadHibernate {
     Ctx* pCtx = nullptr;
+    DataQueue queue;
 
     DataReader(Ctx* p);
+    void UpdateQueue();
+
     int LoopBody() override;
 };
