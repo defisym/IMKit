@@ -3,9 +3,8 @@
 
 #include <string>
 
-#include <ThreadSafeRingBuffer.h>
-
 #include "DataConverter.h"
+#include "ThreadSafeRingBuffer.h"
 
 constexpr auto SDL_BUFFER_SIZE = 4096;
 constexpr auto CHUNK_SIZE = 4 * SDL_BUFFER_SIZE;
