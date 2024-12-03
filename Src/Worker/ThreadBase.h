@@ -33,9 +33,13 @@ public:
     virtual ~ThreadBase() = default;
     virtual int Worker() = 0;
 
+    // called before thread start, for re-alloc
+    virtual void StartCallback();
     bool Start(const ThreadInfo& info = {});
     bool ReStart(const ThreadInfo& info = {});
 
+    // called after thread stop
+    virtual void StopCallback();
     virtual bool Stop();
 
     [[nodiscard]] SDL_threadID GetThreadID() const { return threadId; }
@@ -71,10 +75,15 @@ public:
 
     bool Stop() override;
 
+    // called before thread hibernate
+    virtual void HibernateCallback();
     void Hibernate();
+
+    // called after thread wake, for re-alloc
+    virtual void WakeCallback();
     void Wake();
-    void BreakLoop();
 
     int Worker() override;
     virtual int LoopBody() = 0;
+    void BreakLoop();
 };

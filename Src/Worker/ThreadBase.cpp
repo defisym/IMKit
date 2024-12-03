@@ -15,9 +15,12 @@ const char* ThreadBase::GetThreadName(const char* pName) {
     return pName;
 }
 
+void ThreadBase::StartCallback() {}
+
 bool ThreadBase::Start(const ThreadInfo& info) {
     if (pThread != nullptr) { return false; }
 
+    StartCallback();
     pThread = SDL_CreateThread([] (void* pData)->int {
             return static_cast<ThreadBase*>(pData)->Worker();
         },
@@ -43,6 +46,8 @@ bool ThreadBase::ReStart(const ThreadInfo& info) {
     Stop(); return Start(info);
 }
 
+void ThreadBase::StopCallback() {}
+
 bool ThreadBase::Stop() {
     do {
         if (pThread == nullptr) { break; }
@@ -51,6 +56,7 @@ bool ThreadBase::Stop() {
 
         SDL_AtomicSet(&quitThread, ThreadConstant::WAITING);
         SDL_WaitThread(pThread, &threadReturn);
+        StopCallback();
         pThread = nullptr;
 
         SDL_AtomicSet(&quitThread, ThreadConstant::QUIT);
@@ -81,13 +87,17 @@ bool ThreadHibernate::ReStart(const ThreadHibernateInfo& info) {
 }
 
 bool ThreadHibernate::Stop() {
-    Wake(); return ThreadBase::Stop();
+    Wake(); BreakLoop(); return ThreadBase::Stop();
 }
+
+void ThreadHibernate::HibernateCallback() {}
 
 void ThreadHibernate::Hibernate() {
     if (SDL_AtomicGet(&hibernateState) == MutexConstant::HIBERNATE) { return; }
     SDL_AtomicSet(&hibernateState, MutexConstant::HIBERNATE);
 }
+
+void ThreadHibernate::WakeCallback() {}
 
 void ThreadHibernate::Wake() {
     if (SDL_AtomicGet(&hibernateState) != MutexConstant::HIBERNATE) { return; }
@@ -110,8 +120,10 @@ int ThreadHibernate::Worker() {
         }
 
         if (SDL_AtomicGet(&hibernateState) == MutexConstant::HIBERNATE) {
+            HibernateCallback();
             SDL_CondWait(pCond, pMutex);
             SDL_AtomicSet(&hibernateState, MutexConstant::WAKE);
+            WakeCallback();
         }
 
         LoopBody();

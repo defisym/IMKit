@@ -23,7 +23,9 @@ OTDRProcessValueType* DataQueue::GetAmplitudeData() {
 
 DataReader::DataReader(Ctx* p) :pCtx(p) {}
 
-void DataReader::UpdateQueue() {
+void DataReader::WakeCallback() {
+    // call this before re-start thread as info may be changed by user
+    // make sure the queue can hold all data
     const auto& deviceParams = pCtx->deviceHandler.deviceParams;
     queue.UpdateQueue(deviceParams.processFrameCount, deviceParams.pointNumPerScan);
 }

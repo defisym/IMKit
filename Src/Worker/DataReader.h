@@ -39,8 +39,7 @@ struct DataReader :ThreadHibernate {
     DataQueue queue;
 
     DataReader(Ctx* p);
-    // call this before re-start thread
-    // as info may be changed by user
-    void UpdateQueue();
+
+    void WakeCallback() override;
     int LoopBody() override;
 };
