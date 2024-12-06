@@ -22,7 +22,10 @@ bool ThreadBase::Start(const ThreadInfo& info) {
 
     StartCallback();
     pThread = SDL_CreateThread([] (void* pData)->int {
-            return static_cast<ThreadBase*>(pData)->Worker();
+            const auto p = static_cast<ThreadBase*>(pData);
+            p->ExecuteCallback();
+
+            return p->Worker();
         },
         GetThreadName(info.pName), this);
 
@@ -30,9 +33,6 @@ bool ThreadBase::Start(const ThreadInfo& info) {
         [[maybe_unused]] const auto err = SDL_GetError();
         return false;
     }
-
-    threadId = SDL_GetThreadID(pThread);
-    SDL_AtomicSet(&quitThread, ThreadConstant::WORK);
 
     if (info.bDetach) {
         SDL_AtomicSet(&detachThread, ThreadConstant::DETACH);
@@ -46,6 +46,15 @@ bool ThreadBase::ReStart(const ThreadInfo& info) {
     Stop(); return Start(info);
 }
 
+inline void ThreadBase::ExecuteCallback() {
+    threadId = SDL_GetThreadID(pThread);
+
+    // permission that can bind CPU core
+    threadHandle = OpenThread(THREAD_SET_INFORMATION | THREAD_QUERY_INFORMATION,
+        TRUE, threadId);
+    SDL_AtomicSet(&quitThread, ThreadConstant::WORK);
+}
+
 void ThreadBase::StopCallback() {}
 
 bool ThreadBase::Stop() {
@@ -57,6 +66,10 @@ bool ThreadBase::Stop() {
         SDL_AtomicSet(&quitThread, ThreadConstant::WAITING);
         SDL_WaitThread(pThread, &threadReturn);
         StopCallback();
+
+        CloseHandle(threadHandle);
+        threadHandle = nullptr;
+        threadId = 0;
         pThread = nullptr;
 
         SDL_AtomicSet(&quitThread, ThreadConstant::QUIT);
@@ -66,6 +79,12 @@ bool ThreadBase::Stop() {
 
     return false;
 }
+
+SDL_threadID ThreadBase::GetThreadID() const { return threadId; }
+
+HANDLE ThreadBase::GetThreadHandle() const { return threadHandle; }
+
+#include <_DeLib/LockHelper.h>
 
 ThreadHibernate::ThreadHibernate() {
     pMutex = SDL_CreateMutex();

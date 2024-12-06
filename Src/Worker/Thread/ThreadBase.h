@@ -1,5 +1,9 @@
 #pragma once
 
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#include <windows.h>
+
 #include <SDL.h>
 #include <SDL_thread.h>
 #include <SDL_atomic.h>
@@ -21,6 +25,7 @@ struct ThreadInfo {
 class ThreadBase {
     SDL_Thread* pThread = nullptr;
     SDL_threadID threadId = 0;
+    HANDLE threadHandle = nullptr;
     int threadReturn = 0;
 
     SDL_atomic_t detachThread = { ThreadConstant::ATTACH };
@@ -45,14 +50,16 @@ public:
     // ReSharper disable once CppHiddenFunction
     bool ReStart(const ThreadInfo& info = {});
 
+    // called when thread actually start
+    virtual void ExecuteCallback();
+
     // called after thread stop
     virtual void StopCallback();
     virtual bool Stop();
 
-    [[nodiscard]] SDL_threadID GetThreadID() const { return threadId; }
+    [[nodiscard]] SDL_threadID GetThreadID() const;
+    [[nodiscard]] HANDLE GetThreadHandle() const;
 };
-
-#include <_DeLib/LockHelper.h>
 
 namespace MutexConstant {
     constexpr int WAKE = 0;
@@ -62,11 +69,11 @@ namespace MutexConstant {
     constexpr int BREAK = 1;
 }
 
-struct ThreadHibernateInfo :ThreadInfo {
+struct ThreadHibernateInfo : ThreadInfo {
     bool bHibernateAtStart = false;
 };
 
-class ThreadHibernate :ThreadBase {
+class ThreadHibernate :public ThreadBase {
     SDL_mutex* pMutex = nullptr;
     SDL_cond* pCond = nullptr;
 
