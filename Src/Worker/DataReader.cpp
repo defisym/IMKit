@@ -21,7 +21,7 @@ OTDRProcessValueType* DataQueue::GetAmplitudeData() {
     return amplitudeBuffer.ReadData(frameSize);
 }
 
-DataReader::DataReader(Ctx* p) :pCtx(p) {}
+DataReader::DataReader(Ctx* p, const ExecuteCallbackType& cb) :WorkerBase(p, cb) {}
 
 void DataReader::WakeCallback() {
     // call this before re-start thread as info may be changed by user

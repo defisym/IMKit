@@ -2,7 +2,7 @@
 
 #include "../Src/DLL/include/OTDR.h"
 
-#include "Thread/ThreadBase.h"
+#include "WorkerBase.h"
 #include "Utilities/ThreadSafeRingBuffer.h"
 
 // usually sample rate is above 2000Hz, aka less than 0.5ms
@@ -32,11 +32,10 @@ struct DataQueue {
 
 struct Ctx;
 
-struct DataReader :ThreadHibernate {
-    Ctx* pCtx = nullptr;
+struct DataReader : WorkerBase {
     DataQueue queue;
 
-    DataReader(Ctx* p);
+    DataReader(Ctx* p, const ExecuteCallbackType& cb);
 
     void WakeCallback() override;
     int LoopBody() override;
