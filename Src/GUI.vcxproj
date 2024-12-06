@@ -296,8 +296,8 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="Utilities\OTDRDataInterface.cpp" />
     <ClCompile Include="Utilities\VibrationDataInterface.cpp" />
     <ClCompile Include="Utilities\WaveformDataInterface.cpp" />
-    <ClCompile Include="Worker\ThreadBase.cpp" />
     <ClCompile Include="Worker\DataReader.cpp" />
+    <ClCompile Include="Worker\Thread\ThreadBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPUAffinity\CPUAffinity.h" />
@@ -368,8 +368,8 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Utilities\VibrationDataInterface.h" />
     <ClInclude Include="Utilities\WaveformDataInterface.h" />
     <ClInclude Include="Worker\DataReader.h" />
-    <ClInclude Include="Worker\ThreadBase.h" />
-    <ClInclude Include="Worker\ThreadWrapper.h" />
+    <ClInclude Include="Worker\Thread\ThreadBase.h" />
+    <ClInclude Include="Worker\Thread\ThreadWrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GUI.rc" />

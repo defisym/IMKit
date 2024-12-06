@@ -160,6 +160,12 @@
     <Filter Include="源文件\CPUAffinity\SKU\Intel">
       <UniqueIdentifier>{a7ea3098-424a-48e3-b1b5-e1dc5584cea1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Worker\Thread">
+      <UniqueIdentifier>{71993fb6-8604-40f5-8479-0602e19286c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Worker\Thread">
+      <UniqueIdentifier>{aaa306cd-366c-4c04-8c9a-89229dacbbdd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imguiInterface\IMGUIInterface.cpp">
@@ -327,14 +333,14 @@
     <ClCompile Include="GUIContext\Handler\ThreadHandler.cpp">
       <Filter>源文件\GUIContext\Handler</Filter>
     </ClCompile>
-    <ClCompile Include="Worker\ThreadBase.cpp">
-      <Filter>源文件\Worker</Filter>
-    </ClCompile>
     <ClCompile Include="CPUAffinity\CPUAffinity.cpp">
       <Filter>源文件\CPUAffinity</Filter>
     </ClCompile>
     <ClCompile Include="Worker\DataReader.cpp">
       <Filter>源文件\Worker</Filter>
+    </ClCompile>
+    <ClCompile Include="Worker\Thread\ThreadBase.cpp">
+      <Filter>源文件\Worker\Thread</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -524,17 +530,11 @@
     <ClInclude Include="GUIContext\Handler\ThreadHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
-    <ClInclude Include="Worker\ThreadBase.h">
-      <Filter>头文件\Worker</Filter>
-    </ClInclude>
     <ClInclude Include="CPUAffinity\CPUAffinity.h">
       <Filter>头文件\CPUAffinity</Filter>
     </ClInclude>
     <ClInclude Include="CPUAffinity\SKU\Intel\13700K.h">
       <Filter>头文件\CPUAffinity\SKU\Intel</Filter>
-    </ClInclude>
-    <ClInclude Include="Worker\ThreadWrapper.h">
-      <Filter>头文件\Worker</Filter>
     </ClInclude>
     <ClInclude Include="CPUAffinity\SKU\Intel\13500H.h">
       <Filter>头文件\CPUAffinity\SKU\Intel</Filter>
@@ -547,6 +547,12 @@
     </ClInclude>
     <ClInclude Include="Utilities\ThreadSafeRingBuffer.h">
       <Filter>头文件\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker\Thread\ThreadBase.h">
+      <Filter>头文件\Worker\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker\Thread\ThreadWrapper.h">
+      <Filter>头文件\Worker\Thread</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

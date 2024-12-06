@@ -1,10 +1,8 @@
 #pragma once
 
-#include <vector>
-
 #include "../Src/DLL/include/OTDR.h"
 
-#include "ThreadBase.h"
+#include "Thread/ThreadBase.h"
 #include "Utilities/ThreadSafeRingBuffer.h"
 
 // usually sample rate is above 2000Hz, aka less than 0.5ms
