@@ -342,6 +342,9 @@
     <ClCompile Include="Worker\Thread\ThreadBase.cpp">
       <Filter>源文件\Worker\Thread</Filter>
     </ClCompile>
+    <ClCompile Include="Worker\WorkerBase.cpp">
+      <Filter>源文件\Worker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\IMGUIInterface.h">
@@ -553,6 +556,9 @@
     </ClInclude>
     <ClInclude Include="Worker\Thread\ThreadWrapper.h">
       <Filter>头文件\Worker\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker\WorkerBase.h">
+      <Filter>头文件\Worker</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -298,6 +298,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="Utilities\WaveformDataInterface.cpp" />
     <ClCompile Include="Worker\DataReader.cpp" />
     <ClCompile Include="Worker\Thread\ThreadBase.cpp" />
+    <ClCompile Include="Worker\WorkerBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPUAffinity\CPUAffinity.h" />
@@ -370,6 +371,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Worker\DataReader.h" />
     <ClInclude Include="Worker\Thread\ThreadBase.h" />
     <ClInclude Include="Worker\Thread\ThreadWrapper.h" />
+    <ClInclude Include="Worker\WorkerBase.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GUI.rc" />
