@@ -6,20 +6,21 @@
 #include "ThreadBase.h"
 
 template<typename ThreadType>
-    requires std::is_base_of_v<ThreadBase, ThreadType>
+concept ThreadTypeContept = requires(ThreadType buffer) {
+    std::is_base_of_v<ThreadBase, ThreadType>;
+};
+
+template<ThreadTypeContept ThreadType>
 class ThreadWrapper {
-    std::unique_ptr<ThreadBase> thread;
+    using Thread = std::unique_ptr<ThreadType>;
+    Thread thread;
 
 public:
     template <class... ParamTypes>
     ThreadWrapper(ParamTypes&&... args) {
         thread = std::make_unique<ThreadType>(std::forward<ParamTypes>(args)...);
     }
-    ~ThreadWrapper() { [[maybe_unused]] const auto b = Stop(); }
+    ~ThreadWrapper() { [[maybe_unused]] const auto b = GetThread()->Stop(); }
 
-    bool Start(const ThreadInfo& info = {}) const { return thread->Start(info); }
-    bool ReStart(const ThreadInfo& info = {}) const { return thread->ReStart(info); }
-    bool Stop() const { return thread->Stop(); }
-
-    SDL_threadID GetThreadID() const { return thread->GetThreadID(); }
+    const Thread& GetThread() { return thread; }    
 };
