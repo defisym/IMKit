@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cassert>
 
 #include "./../Src/Module/General/Definition.h"
