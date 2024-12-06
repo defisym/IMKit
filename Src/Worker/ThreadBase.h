@@ -33,9 +33,16 @@ public:
     virtual ~ThreadBase() = default;
     virtual int Worker() = 0;
 
+    // ReSharper clang tidy is disabled here
+    // as mark base virtual or mark derive override
+    // will cause compile error, it's by design
+    // to hide this member
+
     // called before thread start, for re-alloc
     virtual void StartCallback();
+    // ReSharper disable once CppHiddenFunction
     bool Start(const ThreadInfo& info = {});
+    // ReSharper disable once CppHiddenFunction
     bool ReStart(const ThreadInfo& info = {});
 
     // called after thread stop
@@ -70,7 +77,16 @@ public:
     ThreadHibernate();
     ~ThreadHibernate() override;
 
+    // ReSharper clang tidy is disabled here
+    // as mark base virtual or mark derive override
+    // will cause compile error, it's by design
+    // to hide this member
+
+    // ReSharper disable once CppHidingFunction
+    bool Start(const ThreadInfo& info = {}) = delete;
     bool Start(const ThreadHibernateInfo& info = {});
+    // ReSharper disable once CppHidingFunction
+    bool ReStart(const ThreadInfo& info = {}) = delete;
     bool ReStart(const ThreadHibernateInfo& info = {});
 
     bool Stop() override;
