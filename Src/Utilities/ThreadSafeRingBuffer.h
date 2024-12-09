@@ -10,6 +10,7 @@ template<typename Type = OTDRProcessValueType, LockConcept LockType = SDL_SpinLo
 struct ThreadSafeRingBuffer :private RingBuffer<Type> {
     Lock<LockType> lock;
     using BufferLockHelper = typename GetLockHelper<LockType>::Type;
+    using Callback = typename RingBuffer<Type>::Callback;
 
     ThreadSafeRingBuffer() = default;
     ThreadSafeRingBuffer(const size_t sz) :RingBuffer<Type>(sz) {}
@@ -23,17 +24,17 @@ struct ThreadSafeRingBuffer :private RingBuffer<Type> {
         const auto lockHelper = BufferLockHelper(lock);
         RingBuffer<Type>::WriteData(pBuf, sz);
     }
-    Type* WriteData(const size_t sz) override {
+    void WriteData(const size_t sz, const Callback& cb) override {
         const auto lockHelper = BufferLockHelper(lock);
-        return RingBuffer<Type>::WriteData(sz);
+        RingBuffer<Type>::WriteData(sz, cb);
     }
     void ReadData(Type* pBuf, const size_t sz) override {
         const auto lockHelper = BufferLockHelper(lock);
         RingBuffer<Type>::ReadData(pBuf, sz);
     }
-    Type* ReadData(const size_t sz) override {
+    void ReadData(const size_t sz, const Callback& cb) override {
         const auto lockHelper = BufferLockHelper(lock);
-        return RingBuffer<Type>::ReadData(sz);
+        RingBuffer<Type>::ReadData(sz, cb);
     }
     void ResetIndex() override {
         const auto lockHelper = BufferLockHelper(lock);

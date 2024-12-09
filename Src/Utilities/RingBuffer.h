@@ -1,7 +1,8 @@
 #pragma once
 
-#include <algorithm>
 #include <cassert>
+#include <algorithm>
+#include <functional>
 
 #include "./../Src/Module/General/Definition.h"
 #include "./../Src/Utilities/Buffer.h"
@@ -13,6 +14,8 @@ struct RingBuffer :Buffer<Type> {
 
     RingBuffer() = default;
     RingBuffer(const size_t sz) :Buffer<Type>(sz) {}
+
+    using Callback = std::function<void(Type*)>;
 
     // ------------------------
     // Read & Write logic are almost the same
@@ -37,14 +40,14 @@ struct RingBuffer :Buffer<Type> {
 
     // get buffer at current index and forward sz
     // caller should grantee that pointer and offset are valid
-    virtual Type* WriteData(const size_t sz) {
+    // then write data
+    virtual void WriteData(const size_t sz, const Callback& cb) {
         assert(sz + writeIndex <= this->_sz);
         auto pStart = this->_pBuf + writeIndex;
+        cb(pStart);
 
         writeIndex += sz;
         if (writeIndex == this->_sz) { writeIndex = 0; }
-
-        return pStart;
     }
 
     // copy buffer to pBuf
@@ -65,14 +68,18 @@ struct RingBuffer :Buffer<Type> {
 
     // get buffer at current index and forward sz
     // caller should grantee that pointer and offset are valid
-    virtual Type* ReadData(const size_t sz) {
+    // then read data
+    //
+    // return nullptr if data not enough (readIndex + sz > writeIndex)
+    virtual void ReadData(const size_t sz, const Callback& cb) {
         assert(sz + readIndex <= this->_sz);
+        if (readIndex + sz > writeIndex) { cb(nullptr); return; }
+
         auto pStart = this->_pBuf + readIndex;
+        cb(pStart);
 
         readIndex += sz;
         if (readIndex == this->_sz) { readIndex = 0; }
-
-        return pStart;
     }
 
     virtual void ResetIndex() { writeIndex = 0; readIndex = 0; }
