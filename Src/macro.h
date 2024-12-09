@@ -31,6 +31,9 @@
 // ------------------------------------
 // General
 // ------------------------------------
+// multi-thread
+#define MULTITHREAD
+
 // set priority to ABOVE_NORMAL_PRIORITY_CLASS
 #define PROCESS_SET_PRIORITY
 
@@ -106,7 +109,7 @@
 //          then the vibration result will be affected, as
 //          internal data are ignored but context mode assume
 //          all data are consecutive
-//       3. drain may cost a long time as buffer may accumulated too many data
+//       3. drain may cost a long time as buffer may have accumulated too many data
 //          E.g., 1. sample 75000 points, uses 300KB, as one frame 
 //                2. average by 2560 frames, uses 768MB, as one bunch
 //                3. assume PC needs to skip two bunches, uses about 1.5GB
