@@ -296,7 +296,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="Utilities\OTDRDataInterface.cpp" />
     <ClCompile Include="Utilities\VibrationDataInterface.cpp" />
     <ClCompile Include="Utilities\WaveformDataInterface.cpp" />
-    <ClCompile Include="Worker\DataReader.cpp" />
+    <ClCompile Include="Worker\ReaderThread.cpp" />
     <ClCompile Include="Worker\Thread\ThreadBase.cpp" />
     <ClCompile Include="Worker\WorkerBase.cpp" />
   </ItemGroup>
@@ -368,7 +368,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Utilities\ThreadSafeRingBuffer.h" />
     <ClInclude Include="Utilities\VibrationDataInterface.h" />
     <ClInclude Include="Utilities\WaveformDataInterface.h" />
-    <ClInclude Include="Worker\DataReader.h" />
+    <ClInclude Include="Worker\ReaderThread.h" />
     <ClInclude Include="Worker\Thread\ThreadBase.h" />
     <ClInclude Include="Worker\Thread\ThreadWrapper.h" />
     <ClInclude Include="Worker\WorkerBase.h" />
