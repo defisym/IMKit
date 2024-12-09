@@ -6,12 +6,12 @@
 
 // do not display more than MAX_DISPLAY_FRAME
 // for raw data -> nobody cares!
-size_t GetDisplayFrame(const size_t frameCount) {
+static size_t GetDisplayFrame(const size_t frameCount) {
     constexpr size_t MAX_DISPLAY_FRAME = 15;
     return std::min(frameCount, MAX_DISPLAY_FRAME);
 }
 
-void RawData(Ctx* pCtx)  {
+static void RawData(Ctx* pCtx)  {
     if (pCtx->EasyMode()) { return; }
     if (!ImGui::BeginTabItem(I18N("Raw"))) { return; }
 
@@ -45,7 +45,7 @@ void RawData(Ctx* pCtx)  {
 }
 
 // display this first, or other lines will be overlapped
-void DisplayLoggerThreshold(Ctx* pCtx) {
+static void DisplayLoggerThreshold(Ctx* pCtx) {
 #ifdef VIBRATION_LOCALIZATION_SHOW_LOGGER_THRESHOLD
     PlotInfo plotInfo = {};
 #ifdef VIBRATION_LOCALIZATION_USE_METER
@@ -71,7 +71,7 @@ void DisplayLoggerThreshold(Ctx* pCtx) {
 #endif
 }
 
-void VibrationLocalization(Ctx* pCtx) {
+static void VibrationLocalization(Ctx* pCtx) {
     const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Vibration Localization")), ImGui::EndTabItem };
     if (!tabHelper.State()) { return; }
 
@@ -159,7 +159,7 @@ void VibrationLocalization(Ctx* pCtx) {
 }
 
 // display waveform and it's FFT
-void DisplayWaveformRestoreOutput(Ctx* pCtx, const char* pTitle, const WaveformRestoreOutput& waveform) {
+static void DisplayWaveformRestoreOutput(Ctx* pCtx, const char* pTitle, const WaveformRestoreOutput& waveform) {
 #ifdef WAVEFORM_RESTORE_DISPLAY_WAVE_AND_FFT_IN_SUBPLOT
     const EmbraceHelper subPlotHelper = { BeginSubPlotEx(pTitle,1,2), ImPlot::EndSubplots };
     if (!subPlotHelper.State()) { return; }
@@ -206,7 +206,7 @@ void DisplayWaveformRestoreOutput(Ctx* pCtx, const char* pTitle, const WaveformR
     }
 }
 
-void PeakWaveformRestore(Ctx* pCtx) {
+static void PeakWaveformRestore(Ctx* pCtx) {
 #if defined(WAVEFORM_RESTORE_LOG_PEAK_WAVEFORM) && defined(WAVEFORM_RESTORE_LOG_PEAK_SHOW_LOGGED_WAVEFORM)
     const auto& loggerParams = pCtx->loggerHandler.loggerParams;
     if (!loggerParams.bUseThreshold) {
@@ -283,7 +283,7 @@ void PeakWaveformRestore(Ctx* pCtx) {
 #endif
 }
 
-void SpecificWaveformRestore(Ctx* pCtx) {
+static void SpecificWaveformRestore(Ctx* pCtx) {
     const auto& deviceParams = pCtx->deviceHandler.deviceParams;
     const auto pHandler = pCtx->processHandler.pWaveformRestoreHandler;
 
@@ -319,7 +319,7 @@ void SpecificWaveformRestore(Ctx* pCtx) {
 #endif
 }
 
-void WaveformRestore(Ctx* pCtx) {
+static void WaveformRestore(Ctx* pCtx) {
     const EmbraceHelper tabItemHelper = { ImGui::BeginTabItem(I18N("Waveform Restore")), ImGui::EndTabItem };
     if (!tabItemHelper.State()) { return; }
 
