@@ -298,6 +298,8 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="Utilities\WaveformDataInterface.cpp" />
     <ClCompile Include="Worker\ReaderThread.cpp" />
     <ClCompile Include="Worker\Thread\ThreadBase.cpp" />
+    <ClCompile Include="Worker\VibrationThread.cpp" />
+    <ClCompile Include="Worker\WaveformThread.cpp" />
     <ClCompile Include="Worker\WorkerBase.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -371,6 +373,8 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Worker\ReaderThread.h" />
     <ClInclude Include="Worker\Thread\ThreadBase.h" />
     <ClInclude Include="Worker\Thread\ThreadWrapper.h" />
+    <ClInclude Include="Worker\VibrationThread.h" />
+    <ClInclude Include="Worker\WaveformThread.h" />
     <ClInclude Include="Worker\WorkerBase.h" />
   </ItemGroup>
   <ItemGroup>
