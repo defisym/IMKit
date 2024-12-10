@@ -336,13 +336,19 @@
     <ClCompile Include="CPUAffinity\CPUAffinity.cpp">
       <Filter>源文件\CPUAffinity</Filter>
     </ClCompile>
-    <ClCompile Include="Worker\DataReader.cpp">
-      <Filter>源文件\Worker</Filter>
-    </ClCompile>
     <ClCompile Include="Worker\Thread\ThreadBase.cpp">
       <Filter>源文件\Worker\Thread</Filter>
     </ClCompile>
     <ClCompile Include="Worker\WorkerBase.cpp">
+      <Filter>源文件\Worker</Filter>
+    </ClCompile>
+    <ClCompile Include="Worker\ReaderThread.cpp">
+      <Filter>源文件\Worker</Filter>
+    </ClCompile>
+    <ClCompile Include="Worker\VibrationThread.cpp">
+      <Filter>源文件\Worker</Filter>
+    </ClCompile>
+    <ClCompile Include="Worker\WaveformThread.cpp">
       <Filter>源文件\Worker</Filter>
     </ClCompile>
   </ItemGroup>
@@ -542,9 +548,6 @@
     <ClInclude Include="CPUAffinity\SKU\Intel\13500H.h">
       <Filter>头文件\CPUAffinity\SKU\Intel</Filter>
     </ClInclude>
-    <ClInclude Include="Worker\DataReader.h">
-      <Filter>头文件\Worker</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\RingBuffer.h">
       <Filter>头文件\Utilities</Filter>
     </ClInclude>
@@ -558,6 +561,15 @@
       <Filter>头文件\Worker\Thread</Filter>
     </ClInclude>
     <ClInclude Include="Worker\WorkerBase.h">
+      <Filter>头文件\Worker</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker\ReaderThread.h">
+      <Filter>头文件\Worker</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker\VibrationThread.h">
+      <Filter>头文件\Worker</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker\WaveformThread.h">
       <Filter>头文件\Worker</Filter>
     </ClInclude>
   </ItemGroup>
