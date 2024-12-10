@@ -15,6 +15,8 @@ static void RawData(Ctx* pCtx)  {
     if (pCtx->EasyMode()) { return; }
     if (!ImGui::BeginTabItem(I18N("Raw"))) { return; }
 
+    const auto helper = pCtx->threadHandler.GetReaderLockHelper();
+
     const auto& [pBuffer,
         bufferSz,
         bufferStride,
@@ -74,6 +76,8 @@ static void DisplayLoggerThreshold(Ctx* pCtx) {
 static void VibrationLocalization(Ctx* pCtx) {
     const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Vibration Localization")), ImGui::EndTabItem };
     if (!tabHelper.State()) { return; }
+
+    const auto helper = pCtx->threadHandler.GetVibrationLockHelper();
 
     const auto& deviceParams = pCtx->deviceHandler.deviceParams;
     const auto frameSize = static_cast<int>(deviceParams.pointNumProcess);
@@ -318,6 +322,8 @@ static void SpecificWaveformRestore(Ctx* pCtx) {
 static void WaveformRestore(Ctx* pCtx) {
     const EmbraceHelper tabItemHelper = { ImGui::BeginTabItem(I18N("Waveform Restore")), ImGui::EndTabItem };
     if (!tabItemHelper.State()) { return; }
+
+    const auto helper = pCtx->threadHandler.GetWaveformLockHelper();
 
     if (!pCtx->processHandler.processResult.bWaveFormProcessed) {
         ImGui::TextUnformatted(I18N("Data not enough"));
