@@ -81,12 +81,6 @@ static void VibrationLocalization(Ctx* pCtx) {
 
     if (pHandler == nullptr) { return; }
 
-#ifdef SKIP_INTERNAL_POINTS
-    const auto internalPoint = pCtx->deviceHandler.deviceParams.internalPoint;
-#else
-    const auto internalPoint = 0;
-#endif
-
     if (!pCtx->processHandler.processResult.bVibrationLocalizationProcessed) {
         ImGui::TextUnformatted(I18N("Data not enough"));
         return;
@@ -106,6 +100,8 @@ static void VibrationLocalization(Ctx* pCtx) {
 #endif
 
 #ifndef VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
+    const auto internalPoint = pCtx->deviceHandler.GetInternalPoint();
+
     if (ImGui::BeginTabBar("Vibration/Tab", TAB_BAR_FLAGS)) {
         // Handle Moving Average
         if (ImGui::BeginTabItem(I18N("Shake MA"))) {
