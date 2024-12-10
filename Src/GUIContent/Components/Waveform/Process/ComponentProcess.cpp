@@ -30,7 +30,7 @@ static void RawData(Ctx* pCtx)  {
         DisplayPlot(I18N("CH1", "ImPlot/Raw/CH1/Plot"),
                     pBuffer,
                     static_cast<int>(bufferFrameSize),
-                    { static_cast<int>(bufferStride) });
+                    { .stride = static_cast<int>(bufferStride) });
 
         ImPlot::EndPlot();
     }
@@ -38,7 +38,7 @@ static void RawData(Ctx* pCtx)  {
         DisplayPlot(I18N("CH2", "ImPlot/Raw/CH2/Plot"),
                     pBuffer + 1,
                     static_cast<int>(bufferFrameSize),
-                    { static_cast<int>(bufferStride) });
+                    { .stride = static_cast<int>(bufferStride) });
 
         ImPlot::EndPlot();
     }
@@ -62,7 +62,9 @@ static void DisplayLoggerThreshold(Ctx* pCtx) {
     struct ThresholdData {
         OTDRProcessValueType threshold;
         PlotInfo* plotInfo = nullptr;
-    } thresholdData = { pCtx->loggerHandler.loggerParams.threshold,&plotInfo };
+    } thresholdData
+        = { .threshold = pCtx->loggerHandler.loggerParams.threshold,
+            .plotInfo = &plotInfo };
 
     ImPlot::PlotLineG(I18N("Threshold", "DisplayLoggerThreshold"),
         [] (int idx, void* pData) {
