@@ -106,7 +106,7 @@ bool ThreadHibernate::ReStart(const ThreadHibernateInfo& info) {
 }
 
 bool ThreadHibernate::Stop() {
-    Wake(); BreakLoop(); return ThreadBase::Stop();
+    BreakLoop(); Wake(); return ThreadBase::Stop();
 }
 
 void ThreadHibernate::HibernateCallback() {}
@@ -134,15 +134,15 @@ int ThreadHibernate::Worker() {
     auto lockerHelper = MutexLockHelper{ pMutex };
 
     while (true) {
-        if (SDL_AtomicGet(&loopState) == MutexConstant::BREAK) {
-            break;
-        }
-
         if (SDL_AtomicGet(&hibernateState) == MutexConstant::HIBERNATE) {
             HibernateCallback();
             SDL_CondWait(pCond, pMutex);
             SDL_AtomicSet(&hibernateState, MutexConstant::WAKE);
             WakeCallback();
+        }
+
+        if (SDL_AtomicGet(&loopState) == MutexConstant::BREAK) {
+            break;
         }
 
         LoopBody();
