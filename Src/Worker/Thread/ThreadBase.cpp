@@ -86,6 +86,30 @@ HANDLE ThreadBase::GetThreadHandle() const { return threadHandle; }
 
 #include <_DeLib/LockHelper.h>
 
+HibernateContext::HibernateContext() {
+    pMutex = SDL_CreateMutex();
+    pCond = SDL_CreateCond();
+}
+
+HibernateContext::~HibernateContext() {
+    SDL_DestroyCond(pCond);
+    SDL_DestroyMutex(pMutex);
+}
+
+void HibernateContext::Hibernate() const {
+    SDL_CondWait(pCond, pMutex);
+}
+
+void HibernateContext::Wake() const {
+    auto lockerHelper = MutexLockHelper{ pMutex };
+    SDL_CondSignal(pCond);
+}
+
+void HibernateContext::WakeAll() const {
+    auto lockerHelper = MutexLockHelper{ pMutex };
+    SDL_CondBroadcast(pCond);
+}
+
 ThreadHibernate::ThreadHibernate() {
     pMutex = SDL_CreateMutex();
     pCond = SDL_CreateCond();

@@ -69,6 +69,18 @@ namespace MutexConstant {
     constexpr int BREAK = 1;
 }
 
+struct HibernateContext {
+    SDL_mutex* pMutex = nullptr;
+    SDL_cond* pCond = nullptr;
+
+    HibernateContext();
+    ~HibernateContext();
+
+    void Hibernate() const;
+    void Wake() const;
+    void WakeAll() const;
+};
+
 struct ThreadHibernateInfo : ThreadInfo {
     bool bHibernateAtStart = false;
 };
