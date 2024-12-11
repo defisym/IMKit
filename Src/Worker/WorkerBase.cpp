@@ -1,6 +1,6 @@
 #include "WorkerBase.h"
 
-WorkerBase::WorkerBase(Ctx* p, ExecuteCallbackType cb)
+WorkerBase::WorkerBase(Ctx* p, CallbackType cb)
     :pCtx(p), executeCallback(std::move(cb)) {}
 
 void WorkerBase::ExecuteCallback() {

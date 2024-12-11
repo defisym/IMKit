@@ -14,9 +14,9 @@ struct WorkerBase : ThreadHibernate {
 
     auto GetUILockHelper() { /*RVO*/ return SpinLockHelper{ UILock }; }
 
-    using ExecuteCallbackType = std::function<void()>;
-    ExecuteCallbackType executeCallback;
+    using CallbackType = std::function<void()>;
+    CallbackType executeCallback;
 
-    WorkerBase(Ctx* p, ExecuteCallbackType cb);
+    WorkerBase(Ctx* p, CallbackType cb);
     void ExecuteCallback() override;
 };
