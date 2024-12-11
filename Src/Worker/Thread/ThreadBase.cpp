@@ -165,11 +165,11 @@ int ThreadHibernate::Worker() {
         if (SDL_AtomicGet(&hibernateState) == MutexConstant::HIBERNATE) {
             HibernateCallback();
 #ifdef _DEBUG
-            OutputDebugStringA(std::format("Thread {}: Hibernate", GetThreadName()).c_str());
+            OutputDebugStringA(std::format("Thread {}: Hibernate\n", GetThreadName()).c_str());
 #endif
             SDL_CondWait(pCond, pMutex);
 #ifdef _DEBUG
-            OutputDebugStringA(std::format("Thread {}: Wake", GetThreadName()).c_str());
+            OutputDebugStringA(std::format("Thread {}: Wake\n", GetThreadName()).c_str());
 #endif
             SDL_AtomicSet(&hibernateState, MutexConstant::WAKE);
             WakeCallback();
@@ -180,7 +180,7 @@ int ThreadHibernate::Worker() {
         }
 
 #ifdef _DEBUG
-        OutputDebugStringA(std::format("Thread {}: Call LoopBody", GetThreadName()).c_str());
+        OutputDebugStringA(std::format("Thread {}: Call LoopBody\n", GetThreadName()).c_str());
 #endif
 
         LoopBody();
