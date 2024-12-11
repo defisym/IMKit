@@ -12,7 +12,7 @@ struct WorkerBase : ThreadHibernate {
     Ctx* pCtx = nullptr;
     Lock<SDL_SpinLock> UILock;
 
-    auto GetLockHelper() { /*RVO*/ return SpinLockHelper{ UILock }; }
+    auto GetUILockHelper() { /*RVO*/ return SpinLockHelper{ UILock }; }
 
     using ExecuteCallbackType = std::function<void()>;
     ExecuteCallbackType executeCallback;
