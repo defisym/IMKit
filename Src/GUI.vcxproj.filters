@@ -351,6 +351,9 @@
     <ClCompile Include="Worker\WaveformThread.cpp">
       <Filter>源文件\Worker</Filter>
     </ClCompile>
+    <ClCompile Include="Worker\RestoreThread.cpp">
+      <Filter>源文件\Worker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\IMGUIInterface.h">
@@ -570,6 +573,9 @@
       <Filter>头文件\Worker</Filter>
     </ClInclude>
     <ClInclude Include="Worker\WaveformThread.h">
+      <Filter>头文件\Worker</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker\RestoreThread.h">
       <Filter>头文件\Worker</Filter>
     </ClInclude>
   </ItemGroup>
