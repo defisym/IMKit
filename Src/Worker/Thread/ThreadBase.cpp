@@ -2,7 +2,7 @@
 
 #include <format>
 
-const char* ThreadBase::GetThreadName(const char* pName) {
+const char* ThreadBase::GenerateThreadName(const char* pName) {
     static size_t threadIndex = 0u;
     static std::string threadName = {};
 
@@ -27,7 +27,7 @@ bool ThreadBase::Start(const ThreadInfo& info) {
 
             return p->Worker();
         },
-        GetThreadName(info.pName), this);
+        GenerateThreadName(info.pName), this);
 
     if (pThread == nullptr) {
         [[maybe_unused]] const auto err = SDL_GetError();
@@ -83,6 +83,10 @@ bool ThreadBase::Stop() {
 SDL_threadID ThreadBase::GetThreadID() const { return threadId; }
 
 HANDLE ThreadBase::GetThreadHandle() const { return threadHandle; }
+
+const char* ThreadBase::GetThreadName() const {
+    return SDL_GetThreadName(pThread);
+}
 
 #include <_DeLib/LockHelper.h>
 
@@ -160,7 +164,13 @@ int ThreadHibernate::Worker() {
     while (true) {
         if (SDL_AtomicGet(&hibernateState) == MutexConstant::HIBERNATE) {
             HibernateCallback();
+#ifdef _DEBUG
+            OutputDebugStringA(std::format("Thread {}: Hibernate", GetThreadName()).c_str());
+#endif
             SDL_CondWait(pCond, pMutex);
+#ifdef _DEBUG
+            OutputDebugStringA(std::format("Thread {}: Wake", GetThreadName()).c_str());
+#endif
             SDL_AtomicSet(&hibernateState, MutexConstant::WAKE);
             WakeCallback();
         }
@@ -168,6 +178,10 @@ int ThreadHibernate::Worker() {
         if (SDL_AtomicGet(&loopState) == MutexConstant::BREAK) {
             break;
         }
+
+#ifdef _DEBUG
+        OutputDebugStringA(std::format("Thread {}: Call LoopBody", GetThreadName()).c_str());
+#endif
 
         LoopBody();
     }

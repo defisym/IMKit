@@ -32,7 +32,7 @@ class ThreadBase {
     SDL_atomic_t quitThread = { ThreadConstant::WORK };
 
     // generate a name if name is nullptr
-    static const char* GetThreadName(const char* pName = nullptr);
+    static const char* GenerateThreadName(const char* pName = nullptr);
 
 public:
     virtual ~ThreadBase() = default;
@@ -59,6 +59,8 @@ public:
 
     [[nodiscard]] SDL_threadID GetThreadID() const;
     [[nodiscard]] HANDLE GetThreadHandle() const;
+
+    [[nodiscard]] const char* GetThreadName() const;
 };
 
 namespace MutexConstant {
