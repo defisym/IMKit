@@ -90,38 +90,12 @@ const char* ThreadBase::GetThreadName() const {
 
 #include <_DeLib/LockHelper.h>
 
-HibernateContext::HibernateContext() {
-    pMutex = SDL_CreateMutex();
-    pCond = SDL_CreateCond();
-}
-
-HibernateContext::~HibernateContext() {
-    SDL_DestroyCond(pCond);
-    SDL_DestroyMutex(pMutex);
-}
-
-void HibernateContext::Hibernate() const {
-    SDL_CondWait(pCond, pMutex);
-}
-
-void HibernateContext::Wake() const {
-    auto lockerHelper = MutexLockHelper{ pMutex };
-    SDL_CondSignal(pCond);
-}
-
-void HibernateContext::WakeAll() const {
-    auto lockerHelper = MutexLockHelper{ pMutex };
-    SDL_CondBroadcast(pCond);
-}
-
 ThreadHibernate::ThreadHibernate() {
-    pMutex = SDL_CreateMutex();
-    pCond = SDL_CreateCond();
+    pContext = std::make_shared<HibernateContext>();
 }
 
-ThreadHibernate::~ThreadHibernate() {
-    SDL_DestroyCond(pCond);
-    SDL_DestroyMutex(pMutex);
+ThreadHibernate::ThreadHibernate(const std::shared_ptr<HibernateContext>& ctx)
+    :pContext(ctx) {
 }
 
 bool ThreadHibernate::Start(const ThreadHibernateInfo& info) {
@@ -148,9 +122,7 @@ void ThreadHibernate::WakeCallback() {}
 
 void ThreadHibernate::Wake() {
     if (SDL_AtomicGet(&hibernateState) != MutexConstant::HIBERNATE) { return; }
-
-    auto lockerHelper = MutexLockHelper{ pMutex };
-    SDL_CondSignal(pCond);
+    pContext->Wake();
 }
 
 void ThreadHibernate::BreakLoop() {
@@ -159,7 +131,7 @@ void ThreadHibernate::BreakLoop() {
 }
 
 int ThreadHibernate::Worker() {
-    auto lockerHelper = MutexLockHelper{ pMutex };
+    auto lockerHelper = pContext->GetLockHelper();
 
     while (true) {
         if (SDL_AtomicGet(&hibernateState) == MutexConstant::HIBERNATE) {
@@ -167,7 +139,7 @@ int ThreadHibernate::Worker() {
 #ifdef _DEBUG
             OutputDebugStringA(std::format("Thread {}: Hibernate\n", GetThreadName()).c_str());
 #endif
-            SDL_CondWait(pCond, pMutex);
+            pContext->Hibernate();
 #ifdef _DEBUG
             OutputDebugStringA(std::format("Thread {}: Wake\n", GetThreadName()).c_str());
 #endif

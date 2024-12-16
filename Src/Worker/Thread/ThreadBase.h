@@ -4,6 +4,8 @@
 #define NOMINMAX
 #include <windows.h>
 
+#include <memory>
+
 #include <SDL.h>
 #include <SDL_thread.h>
 #include <SDL_atomic.h>
@@ -63,6 +65,8 @@ public:
     [[nodiscard]] const char* GetThreadName() const;
 };
 
+#include <HibernateContext.h>
+
 namespace MutexConstant {
     constexpr int WAKE = 0;
     constexpr int HIBERNATE = 1;
@@ -71,32 +75,20 @@ namespace MutexConstant {
     constexpr int BREAK = 1;
 }
 
-struct HibernateContext {
-    SDL_mutex* pMutex = nullptr;
-    SDL_cond* pCond = nullptr;
-
-    HibernateContext();
-    ~HibernateContext();
-
-    void Hibernate() const;
-    void Wake() const;
-    void WakeAll() const;
-};
-
 struct ThreadHibernateInfo : ThreadInfo {
     bool bHibernateAtStart = false;
 };
 
 class ThreadHibernate :public ThreadBase {
-    SDL_mutex* pMutex = nullptr;
-    SDL_cond* pCond = nullptr;
+    std::shared_ptr<HibernateContext> pContext = nullptr;
 
     SDL_atomic_t loopState = { MutexConstant::LOOP };
     SDL_atomic_t hibernateState = { MutexConstant::WAKE };
 
 public:
     ThreadHibernate();
-    ~ThreadHibernate() override;
+    ThreadHibernate(const std::shared_ptr<HibernateContext>& ctx);
+    ~ThreadHibernate() override = default;
 
     // ReSharper clang tidy is disabled here
     // as mark base virtual or mark derive override
