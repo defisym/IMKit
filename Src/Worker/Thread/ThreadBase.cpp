@@ -55,7 +55,13 @@ inline void ThreadBase::ExecuteCallback() {
     SDL_AtomicSet(&quitThread, ThreadConstant::WORK);
 }
 
-void ThreadBase::StopCallback() {}
+void ThreadBase::BeforeStopCallback() {}
+
+void ThreadBase::AfterStopCallback() {}
+
+bool ThreadBase::WaitStop() {
+    return SDL_AtomicGet(&quitThread) == ThreadConstant::WAITING;
+}
 
 bool ThreadBase::Stop() {
     do {
@@ -64,8 +70,9 @@ bool ThreadBase::Stop() {
         if (SDL_AtomicGet(&quitThread) == ThreadConstant::QUIT) { break; }
 
         SDL_AtomicSet(&quitThread, ThreadConstant::WAITING);
+        BeforeStopCallback();
         SDL_WaitThread(pThread, &threadReturn);
-        StopCallback();
+        AfterStopCallback();
 
         CloseHandle(threadHandle);
         threadHandle = nullptr;
@@ -107,8 +114,8 @@ bool ThreadHibernate::ReStart(const ThreadHibernateInfo& info) {
     Stop(); return Start(info);
 }
 
-bool ThreadHibernate::Stop() {
-    BreakLoop(); Wake(); return ThreadBase::Stop();
+void ThreadHibernate::BeforeStopCallback() {
+    BreakLoop(); Wake();
 }
 
 void ThreadHibernate::HibernateCallback() {}

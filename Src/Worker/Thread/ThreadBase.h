@@ -55,9 +55,13 @@ public:
     // called when thread actually start
     virtual void ExecuteCallback();
 
+    // called before thread stop
+    virtual void BeforeStopCallback();
     // called after thread stop
-    virtual void StopCallback();
-    virtual bool Stop();
+    virtual void AfterStopCallback();
+
+    bool WaitStop();
+    bool Stop();
 
     [[nodiscard]] SDL_threadID GetThreadID() const;
     [[nodiscard]] HANDLE GetThreadHandle() const;
@@ -102,7 +106,7 @@ public:
     bool ReStart(const ThreadInfo& info = {}) = delete;
     bool ReStart(const ThreadHibernateInfo& info = {});
 
-    bool Stop() override;
+    void BeforeStopCallback() override;
 
     // called before thread hibernate
     virtual void HibernateCallback();
