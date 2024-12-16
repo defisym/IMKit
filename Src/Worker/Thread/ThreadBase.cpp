@@ -125,6 +125,10 @@ void ThreadHibernate::Hibernate() {
     SDL_AtomicSet(&hibernateState, MutexConstant::HIBERNATE);
 }
 
+void ThreadHibernate::WaitUntilHibernated() {
+    const auto helper = pContext->GetLockHelper();
+}
+
 void ThreadHibernate::WakeCallback() {}
 
 void ThreadHibernate::Wake() {
@@ -158,9 +162,9 @@ int ThreadHibernate::Worker() {
             break;
         }
 
-#ifdef _DEBUG
-        OutputDebugStringA(std::format("Thread {}: Call LoopBody\n", GetThreadName()).c_str());
-#endif
+//#ifdef _DEBUG
+//        OutputDebugStringA(std::format("Thread {}: Call LoopBody\n", GetThreadName()).c_str());
+//#endif
 
         LoopBody();
     }
