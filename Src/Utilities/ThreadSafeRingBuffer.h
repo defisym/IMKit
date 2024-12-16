@@ -20,6 +20,11 @@ struct ThreadSafeRingBuffer :private RingBuffer<Type> {
         RingBuffer<Type>::Release();
     }
 
+    size_t GetElementCount() override {
+        const auto lockHelper = BufferLockHelper(lock);
+        return RingBuffer<Type>::GetElementCount();
+    }
+
     void WriteData(const Type* pBuf, const size_t sz) override {
         const auto lockHelper = BufferLockHelper(lock);
         RingBuffer<Type>::WriteData(pBuf, sz);

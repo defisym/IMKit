@@ -11,6 +11,10 @@ template<typename Type = OTDRProcessValueType>
 struct RingBuffer :Buffer<Type> {
     size_t readIndex = 0;
     size_t writeIndex = 0;
+    size_t elementCount = 0;
+
+    // TODO: Overflow Not Protected!
+    virtual size_t GetElementCount() { return elementCount; }
 
     RingBuffer() = default;
     RingBuffer(const size_t sz) :Buffer<Type>(sz) {}
@@ -31,6 +35,7 @@ struct RingBuffer :Buffer<Type> {
         const auto pStart = this->_pBuf + writeIndex;
         memcpy(pStart, pData, sizeof(Type) * write);
 
+        elementCount += write;
         writeIndex += write;
         if (writeIndex == this->_sz) { writeIndex = 0; }
 
@@ -46,6 +51,7 @@ struct RingBuffer :Buffer<Type> {
         auto pStart = this->_pBuf + writeIndex;
         cb(pStart);
 
+        elementCount += sz;
         writeIndex += sz;
         if (writeIndex == this->_sz) { writeIndex = 0; }
     }
@@ -59,6 +65,7 @@ struct RingBuffer :Buffer<Type> {
         const auto pStart = this->_pBuf + readIndex;
         memcpy(pBuf, pStart, sizeof(Type) * read);
 
+        elementCount -= read;
         readIndex += read;
         if (readIndex == this->_sz) { readIndex = 0; }
 
@@ -73,16 +80,18 @@ struct RingBuffer :Buffer<Type> {
     // return nullptr if data not enough (readIndex + sz > writeIndex)
     virtual void ReadData(const size_t sz, const Callback& cb) {
         assert(sz + readIndex <= this->_sz);
-        if (readIndex + sz > writeIndex) { cb(nullptr); return; }
+        //if (readIndex + sz > writeIndex) { cb(nullptr); return; }
+        if (elementCount == 0) { cb(nullptr); return; }
 
         auto pStart = this->_pBuf + readIndex;
         cb(pStart);
 
+        elementCount -= sz;
         readIndex += sz;
         if (readIndex == this->_sz) { readIndex = 0; }
     }
 
     virtual void ResetIndex() { writeIndex = 0; readIndex = 0; }
 
-    virtual void DiscardUnreadBuffer() { readIndex = writeIndex; }
+    virtual void DiscardUnreadBuffer() { readIndex = writeIndex; elementCount = 0; }
 };
