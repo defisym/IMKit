@@ -45,7 +45,11 @@
 //#define NO_I18N
 
 // disable vsync
+#ifndef MULTITHREAD
+// UI uses a spin lock to protect data
+// disable it as processor may cannot get the lock
 #define DISPLAY_NO_SYNC
+#endif
 
 // load all fonts in fonts folder, disabled will use 
 //#define FONT_LOAD_ALL_FONTS
