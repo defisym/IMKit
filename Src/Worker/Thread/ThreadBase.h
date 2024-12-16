@@ -87,7 +87,7 @@ class ThreadHibernate :public ThreadBase {
 
 public:
     ThreadHibernate();
-    ThreadHibernate(const std::shared_ptr<HibernateContext>& ctx);
+    explicit ThreadHibernate(const std::shared_ptr<HibernateContext>& ctx);
     ~ThreadHibernate() override = default;
 
     // ReSharper clang tidy is disabled here
