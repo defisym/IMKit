@@ -50,16 +50,16 @@ struct ThreadSafeRingBuffer :private RingBuffer<Type> {
         RingBuffer<Type>::DiscardUnreadBuffer();
     }
 
-    bool AllocBuffer(const size_t sz) {
+    bool Alloc(const size_t sz) override {
         const auto lockHelper = BufferLockHelper(lock);
         return RingBuffer<Type>::Alloc(sz);
     }
-    bool ExtendBuffer(const size_t sz, int val = 0) {
+    bool Extend(const size_t sz, int val = 0) override {
         const auto lockHelper = BufferLockHelper(lock);
         return RingBuffer<Type>::Extend(sz, val);
     }
-    void ResetBuffer() {
+    void Reset(int val = 0) override {
         const auto lockHelper = BufferLockHelper(lock);
-        RingBuffer<Type>::Reset();
+        RingBuffer<Type>::Reset(val);
     }
 };
