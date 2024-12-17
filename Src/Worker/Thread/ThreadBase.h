@@ -111,8 +111,6 @@ public:
     // called before thread hibernate
     virtual void HibernateCallback();
     void Hibernate();
-
-    // get mutex -> hibernated
     void WaitUntilHibernated();
 
     // called after thread wake, for re-alloc

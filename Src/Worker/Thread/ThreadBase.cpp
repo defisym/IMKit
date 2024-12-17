@@ -126,6 +126,8 @@ void ThreadHibernate::Hibernate() {
 }
 
 void ThreadHibernate::WaitUntilHibernated() {
+    Hibernate();
+    // get mutex -> hibernated
     const auto helper = pContext->GetLockHelper();
 }
 
