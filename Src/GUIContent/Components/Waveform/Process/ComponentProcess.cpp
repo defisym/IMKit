@@ -147,7 +147,8 @@ static void VibrationLocalization(Ctx* pCtx) {
             if (BeginPlotEx(I18N("Vibration Localization", "ImPlot/Shake/MD/Accumulate"), xLabel.c_str())) {
                 DisplayLoggerThreshold(pCtx);
                 DisplayPlot(I18N("Vibration Localization", "ImPlot/Shake/MD/Accumulate/Vibration Localization"),
-                    pHandler->GetVibrationLocalizationResult(), frameSize, plotInfo);
+                    static_cast<const OTDRProcessValueType*>(pHandler->GetVibrationLocalizationResult()),
+                    frameSize, plotInfo);
 
                 ImPlot::EndPlot();
             }
