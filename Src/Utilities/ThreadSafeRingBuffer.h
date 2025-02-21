@@ -25,6 +25,16 @@ struct ThreadSafeRingBuffer :private RingBuffer<Type> {
         return RingBuffer<Type>::GetElementCount();
     }
 
+    size_t GetWriteIndex() {
+        const auto lockHelper = BufferLockHelper(lock);
+        return RingBuffer<Type>::writeIndex;
+    }
+
+    size_t GetReadIndex() {
+        const auto lockHelper = BufferLockHelper(lock);
+        return RingBuffer<Type>::readIndex;
+    }
+
     void WriteData(const Type* pBuf, const size_t sz) override {
         const auto lockHelper = BufferLockHelper(lock);
         RingBuffer<Type>::WriteData(pBuf, sz);
