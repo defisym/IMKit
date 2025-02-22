@@ -154,6 +154,10 @@
 #define VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
 #define WAVEFORM_RESTORE_ONLY_SHOW_RESULT
 
+// use moving diff
+#define WAVEFORM_RESTORE_MOVING_DIFF
+#define WAVEFORM_RESTORE_MOVING_DIFF_DEFAULTRANGE 2
+
 // log viberation waveform of the point
 // that exceed the threshold
 #define WAVEFORM_RESTORE_LOG_PEAK_WAVEFORM
