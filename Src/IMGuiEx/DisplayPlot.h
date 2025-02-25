@@ -37,6 +37,8 @@ struct PlotInfo {
 template<ArithmeticConcept T>
 inline void DisplayPlot(const char* pLabel,
     const T* pData, int dataCount, const PlotInfo& info = {}) {    
+    if (pData == nullptr) { return; }
+    
     constexpr static auto THRESHOLD = OPTIMIZE_PLOT_DSIPLAY_THRESHOLD;
 
     struct Data {
