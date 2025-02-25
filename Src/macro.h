@@ -157,9 +157,21 @@
 // TODO Range should be passed in `WaveformRestoreParams`
 // current it will be force enabled and cause crash
 // that's why this macro is disabled for now
+
 // use moving diff
 //#define WAVEFORM_RESTORE_MOVING_DIFF
+#ifdef WAVEFORM_RESTORE_MOVING_DIFF
 #define WAVEFORM_RESTORE_MOVING_DIFF_DEFAULTRANGE 2
+#endif
+
+// use rising edge instead of peak
+//#define WAVEFORM_RESTORE_USING_RISING_EDGE
+#ifdef WAVEFORM_RESTORE_USING_RISING_EDGE
+// default percent
+// if shake starts at 0, peak at 10, the point for unwrap 2D is 5
+// aka start + (peak - start) * WAVEFORM_RESTORE_USING_RISING_EDGE_PERCENT
+#define WAVEFORM_RESTORE_USING_RISING_EDGE_PERCENT 0.5
+#endif
 
 // log viberation waveform of the point
 // that exceed the threshold
