@@ -354,6 +354,9 @@
     <ClCompile Include="Worker\RestoreThread.cpp">
       <Filter>源文件\Worker</Filter>
     </ClCompile>
+    <ClCompile Include="GUIContext\Param\FibreParams.cpp">
+      <Filter>源文件\GUIContext\Param</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\IMGUIInterface.h">

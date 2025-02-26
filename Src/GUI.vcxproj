@@ -252,6 +252,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContext\Handler\ThreadHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\VibrationLocalizationHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\WaveformRestoreHandler.cpp" />
+    <ClCompile Include="GUIContext\Param\FibreParams.cpp" />
     <ClCompile Include="GUIContext\Param\SoftwareParams.cpp" />
     <ClCompile Include="IMGuiEx\DisplayPlot.cpp" />
     <ClCompile Include="IMGuiEx\FontEx.cpp" />
