@@ -357,6 +357,9 @@
     <ClCompile Include="GUIContext\Param\FibreParams.cpp">
       <Filter>源文件\GUIContext\Param</Filter>
     </ClCompile>
+    <ClCompile Include="IMGuiEx\SliderSpin.cpp">
+      <Filter>源文件\IMGuiEx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\IMGUIInterface.h">
@@ -580,6 +583,9 @@
     </ClInclude>
     <ClInclude Include="Worker\RestoreThread.h">
       <Filter>头文件\Worker</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGuiEx\SliderSpin.h">
+      <Filter>头文件\IMGuiEx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
