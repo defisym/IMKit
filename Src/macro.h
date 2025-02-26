@@ -170,6 +170,7 @@
 // default percent
 // if shake starts at 0, peak at 10, the point for unwrap 2D is 5
 // aka start + (peak - start) * WAVEFORM_RESTORE_USING_RISING_EDGE_PERCENT
+// set this to 1 is the same as disable this macro
 #define WAVEFORM_RESTORE_USING_RISING_EDGE_PERCENT 0.5
 #endif
 
