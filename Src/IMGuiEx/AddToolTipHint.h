@@ -1,9 +1,8 @@
 #pragma once
-#include <string>
 
-struct AddToolTipHint {
-    std::string label;
+#include "../Utilities/StringResult.h"
 
+struct AddToolTipHint : StringResult {
     AddToolTipHint(const char* pLabel);
-    operator const char* () const;
+    AddToolTipHint(const std::string& label);
 };
