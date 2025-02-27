@@ -1,19 +1,11 @@
 #include "IMGUIContext.h"
 
-const char* IMGUIContext::GetI18NLabel(const char* displayName) {    
-    return labelMaker.MakeLabel(displayName).c_str();
+StringResult IMGUIContext::GetI18NLabel(const char* displayName) const {
+    return labelMaker.MakeLabel(displayName);
 }
 
-const char* IMGUIContext::GetI18NLabel(const char* displayName, const char* label) {
-    return labelMaker.MakeLabel(displayName, label).c_str();
-}
-
-std::string IMGUIContext::GetI18NLabelStr(const char* displayName) const {
-    return labelMaker.MakeLabelStr(displayName);
-}
-
-std::string IMGUIContext::GetI18NLabelStr(const char* displayName, const char* label) const {
-    return labelMaker.MakeLabelStr(displayName, label);
+StringResult IMGUIContext::GetI18NLabel(const char* displayName, const char* label) const {
+    return labelMaker.MakeLabel(displayName, label);
 }
 
 bool IMGUIContext::InitContext() {

@@ -6,19 +6,12 @@
 
 LabelMaker::LabelMaker(IMGUIContext* p) :pCtx(p) {}
 
-const std::string& LabelMaker::UpdateCache(const std::string& str) {
-    cache = str;
-    return cache;
+StringResult LabelMaker::MakeLabel(const char* displayName) const {
+    return MakeLabelStr(displayName);
 }
 
-const std::string& LabelMaker::MakeLabel(const char* displayName) {
-    cache = MakeLabelStr(displayName);
-    return cache;
-}
-
-const std::string& LabelMaker::MakeLabel(const char* displayName, const char* label) {
-    cache = MakeLabelStr(displayName, label);
-    return cache;
+StringResult LabelMaker::MakeLabel(const char* displayName, const char* label) const {
+    return MakeLabelStr(displayName, label);
 }
 
 std::string LabelMaker::MakeLabelStr(const char* displayName) const {

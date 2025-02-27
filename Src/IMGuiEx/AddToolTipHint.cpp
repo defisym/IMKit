@@ -2,10 +2,14 @@
 
 #include <format>
 
-AddToolTipHint::AddToolTipHint(const char* pLabel) {
-    label = std::format("{}(?)", pLabel);
+AddToolTipHint::AddToolTipHint(const char* pLabel)
+    :StringResult(std::format("{}(?)", pLabel)) {
 }
 
-AddToolTipHint::operator const char* () const {
-    return label.c_str();
+AddToolTipHint::AddToolTipHint(const std::string& label)
+    :AddToolTipHint(label.c_str()) {
+}
+
+AddToolTipHint::AddToolTipHint(const StringResult& label)
+    :AddToolTipHint(label.result) {
 }

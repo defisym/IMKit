@@ -363,6 +363,9 @@
     <ClCompile Include="IMGuiEx\AddToolTipHint.cpp">
       <Filter>源文件\IMGuiEx</Filter>
     </ClCompile>
+    <ClCompile Include="Utilities\StringResult.cpp">
+      <Filter>源文件\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\IMGUIInterface.h">
@@ -592,6 +595,9 @@
     </ClInclude>
     <ClInclude Include="IMGuiEx\AddToolTipHint.h">
       <Filter>头文件\IMGuiEx</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\StringResult.h">
+      <Filter>头文件\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
