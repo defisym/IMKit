@@ -26,7 +26,7 @@ static void RawData(Ctx* pCtx)  {
     using DataType = std::remove_cvref_t<std::remove_pointer_t<decltype(pBuffer)>>;
     [[maybe_unused]] auto stride = static_cast<int>(sizeof(DataType) * bufferStride);
 
-    if (BeginPlotEx(I18NCSTR("CH1", "ImPlot/Raw/CH1"), I18NCSTR("Point"))) {
+    if (BeginPlotEx(I18N("CH1", "ImPlot/Raw/CH1"), I18N("Point"))) {
         DisplayPlot(I18N("CH1", "ImPlot/Raw/CH1/Plot"),
                     pBuffer,
                     static_cast<int>(bufferFrameSize),
@@ -34,7 +34,7 @@ static void RawData(Ctx* pCtx)  {
 
         ImPlot::EndPlot();
     }
-    if (BeginPlotEx(I18NCSTR("CH2", "ImPlot/Raw/CH2"), I18NCSTR("Point"))) {
+    if (BeginPlotEx(I18N("CH2", "ImPlot/Raw/CH2"), I18N("Point"))) {
         DisplayPlot(I18N("CH2", "ImPlot/Raw/CH2/Plot"),
                     pBuffer + 1,
                     static_cast<int>(bufferFrameSize),
@@ -94,9 +94,9 @@ static void VibrationLocalization(Ctx* pCtx) {
 
     std::string xLabel =
 #ifdef VIBRATION_LOCALIZATION_USE_METER
-        I18NCSTR("Meter");
+        I18N("Meter");
 #else
-        I18NCSTR("Point");
+        I18N("Point");
 #endif
     PlotInfo plotInfo = {};
 #ifdef VIBRATION_LOCALIZATION_USE_METER
@@ -170,9 +170,9 @@ static void DisplayWaveformRestoreOutput(Ctx* pCtx, const char* pTitle, const Wa
 
     if (BeginPlotEx(I18N("Wave Shake", "ImPlot/Wave/Wave Shake"),
 #ifdef WAVEFORM_RESTORE_USE_MILLISECOND
-        I18NCSTR("ms")
+        I18N("ms")
 #else
-        I18NCSTR("Point")
+        I18N("Point")
 #endif
         )) {
         PlotInfo plotInfo = {};
@@ -191,7 +191,7 @@ static void DisplayWaveformRestoreOutput(Ctx* pCtx, const char* pTitle, const Wa
         ImPlot::EndPlot();
     }
 
-    if (BeginPlotEx(I18N("Wave FFT Amplitude", "ImPlot/Wave/Wave FFT Amplitude"), I18NCSTR("Hz"))) {
+    if (BeginPlotEx(I18N("Wave FFT Amplitude", "ImPlot/Wave/Wave FFT Amplitude"), I18N("Hz"))) {
         PlotInfo plotInfo = {};
         const auto& deviceParams = pCtx->deviceHandler.deviceParams;
         plotInfo.xUpdater = [&] (const double index) {
@@ -229,9 +229,9 @@ static void PeakWaveformRestore(Ctx* pCtx) {
 
     std::string xLabel =
 #ifdef VIBRATION_LOCALIZATION_USE_METER
-        I18NCSTR("Meter");
+        I18N("Meter");
 #else
-        I18NCSTR("Point");
+        I18N("Point");
 #endif
 
     PlotInfo plotInfo = {};

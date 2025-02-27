@@ -22,10 +22,8 @@ struct D3DContext {
 constexpr static ImGuiTabBarFlags TAB_BAR_FLAGS = ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_TabListPopupButton;
 constexpr static ImGuiSliderFlags SLIDER_FLAGS = ImGuiSliderFlags_AlwaysClamp;
 
-#define I18N pCtx->GetI18NLabel
-#define I18NFMT pCtx->GetI18NLabelFMT
-#define I18NSTR(...) pCtx->GetI18NLabelStr(__VA_ARGS__)
-#define I18NCSTR(...) pCtx->GetI18NLabelStr(__VA_ARGS__).c_str()
+#define I18N(...) pCtx->GetI18NLabel(__VA_ARGS__)
+#define I18NFMT(...) pCtx->GetI18NLabelFMT(__VA_ARGS__)
 
 struct IMGUIContext {
     const wchar_t* pWindowName = L"Dear ImGui DirectX11 Example";
@@ -47,21 +45,19 @@ struct IMGUIContext {
     Internationalization i18n = {};
     LabelMaker labelMaker = { this };
 
-    const char* GetI18NLabel(const char* displayName);
-    const char* GetI18NLabel(const char* displayName, const char* label);
-    std::string GetI18NLabelStr(const char* displayName) const;
-    std::string GetI18NLabelStr(const char* displayName, const char* label) const;
+    StringResult GetI18NLabel(const char* displayName) const;
+    StringResult GetI18NLabel(const char* displayName, const char* label) const;
 
     template <class... Types>
-    const char* GetI18NLabelFMT(const char* displayName, Types&&... args) {
+    StringResult GetI18NLabelFMT(const char* displayName, Types&&... args) {
         const auto fmt = std::vformat(to_wide_string(labelMaker.MakeLabel(displayName)),
             std::make_wformat_args(std::forward<Types>(args)...));
-        return labelMaker.UpdateCache(to_byte_string(fmt)).c_str();
+        return to_byte_string(fmt);
     }
     template <class... Types>
-    const char* GetI18NLabelFMT(const char* displayName, const char* label, Types&&... args) {
-        const auto fmt = GetI18NLabelFMT(displayName, args...);
-        return labelMaker.UpdateCache(LabelMaker::ConnectLabel(fmt, label)).c_str();
+    StringResult GetI18NLabelFMT(const char* displayName, const char* label, Types&&... args) {
+        const auto fmt = GetI18NLabelFMT(displayName, std::forward<Types>(args)...);
+        return LabelMaker::ConnectLabel(fmt, label);
     }
 
     IMGUIContext() = default;
