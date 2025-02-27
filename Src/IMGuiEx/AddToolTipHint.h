@@ -5,4 +5,5 @@
 struct AddToolTipHint : StringResult {
     AddToolTipHint(const char* pLabel);
     AddToolTipHint(const std::string& label);
+    AddToolTipHint(const StringResult& label);
 };
