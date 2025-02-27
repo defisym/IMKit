@@ -360,6 +360,9 @@
     <ClCompile Include="IMGuiEx\SliderSpin.cpp">
       <Filter>源文件\IMGuiEx</Filter>
     </ClCompile>
+    <ClCompile Include="IMGuiEx\AddToolTipHint.cpp">
+      <Filter>源文件\IMGuiEx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\IMGUIInterface.h">
@@ -585,6 +588,9 @@
       <Filter>头文件\Worker</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiEx\SliderSpin.h">
+      <Filter>头文件\IMGuiEx</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGuiEx\AddToolTipHint.h">
       <Filter>头文件\IMGuiEx</Filter>
     </ClInclude>
   </ItemGroup>

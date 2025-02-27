@@ -254,6 +254,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContext\Handler\WaveformRestoreHandler.cpp" />
     <ClCompile Include="GUIContext\Param\FibreParams.cpp" />
     <ClCompile Include="GUIContext\Param\SoftwareParams.cpp" />
+    <ClCompile Include="IMGuiEx\AddToolTipHint.cpp" />
     <ClCompile Include="IMGuiEx\DisplayPlot.cpp" />
     <ClCompile Include="IMGuiEx\FontEx.cpp" />
     <ClCompile Include="IMGuiEx\IndentHelper.cpp" />
@@ -342,6 +343,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContext\Param\PerformanceParams.h" />
     <ClInclude Include="GUIContext\Param\SoftwareParams.h" />
     <ClInclude Include="IMGuiEx\AddSpin.h" />
+    <ClInclude Include="IMGuiEx\AddToolTipHint.h" />
     <ClInclude Include="IMGuiEx\ComboEx.h" />
     <ClInclude Include="IMGuiEx\DisableHelper.h" />
     <ClInclude Include="IMGuiEx\DisplayPlot.h" />
