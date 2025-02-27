@@ -160,9 +160,15 @@
 // that's why this macro is disabled for now
 
 // use moving diff
-//#define WAVEFORM_RESTORE_MOVING_DIFF
+// this will calculate the stable range's phase change
+// then remove it as white noise
+// 
+// note: param members will not be removed 
+//		 as that will trigger param reset
+#define WAVEFORM_RESTORE_MOVING_DIFF
 #ifdef WAVEFORM_RESTORE_MOVING_DIFF
-#define WAVEFORM_RESTORE_MOVING_DIFF_DEFAULTRANGE 2
+// set to 0 equals to not enable
+#define WAVEFORM_RESTORE_MOVING_DIFF_DEFAULTRANGE 0
 #endif
 
 // use rising edge instead of peak
