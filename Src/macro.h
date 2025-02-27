@@ -37,7 +37,8 @@
 // set priority to ABOVE_NORMAL_PRIORITY_CLASS
 #define PROCESS_SET_PRIORITY
 
-// bind to CPU core 0
+// bind process to given CPU core instead of 
+// let operarte system schedule
 #define PROCESS_SET_AFFINITY
 
 // json crahes in profile mode
