@@ -4,12 +4,14 @@
 #include "IMGuiEx/DisplayPlot.h"
 #include "IMGuiEx/EmbraceHelper.h"
 
+#if !defined (VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT) || !defined (WAVEFORM_RESTORE_ONLY_SHOW_RESULT) 
 // do not display more than MAX_DISPLAY_FRAME
 // for raw data -> nobody cares!
 static size_t GetDisplayFrame(const size_t frameCount) {
     constexpr size_t MAX_DISPLAY_FRAME = 15;
     return std::min(frameCount, MAX_DISPLAY_FRAME);
 }
+#endif
 
 static void RawData(Ctx* pCtx)  {
     if (pCtx->EasyMode()) { return; }
@@ -111,8 +113,8 @@ static void VibrationLocalization(Ctx* pCtx) {
     if (ImGui::BeginTabBar("Vibration/Tab", TAB_BAR_FLAGS)) {
         // Handle Moving Average
         if (ImGui::BeginTabItem(I18N("Shake MA"))) {
-            if (BeginPlotEx(I18N("MA", "ImPlot/Shake/MA"), xLabel.c_str())) {
-                const auto maxFrameCount = GetDisplayFrame(pHandler->GetProcessor()->maFrameCount);
+            if (BeginPlotEx(I18N("MA", "ImPlot/Shake/MA"), xLabel.c_str())) {                
+                const auto maxFrameCount = GetDisplayFrame(pHandler->GetProcessor()->param.resultFrameCount.maFrameCount);
                 for (size_t frameIdx = 0; frameIdx < maxFrameCount; frameIdx++) {
                     const std::string plotName = I18NFMT("Plot {}", frameIdx);
                     DisplayPlot(std::format("{}##ImPlot/Shake/MA/{}", plotName, plotName).c_str(),
@@ -129,7 +131,7 @@ static void VibrationLocalization(Ctx* pCtx) {
         if (ImGui::BeginTabItem(I18N("Shake MD"))) {
             if (BeginPlotEx(I18N("MD", "ImPlot/Shake/MD"), xLabel.c_str())) {
                 // accumulateFrameIndex
-                const auto maxFrameCount = GetDisplayFrame(pHandler->GetProcessor()->mdFrameCount) - 1;
+                const auto maxFrameCount = GetDisplayFrame(pHandler->GetProcessor()->param.resultFrameCount.mdFrameCount) - 1;
 
                 for (size_t frameIdx = 0; frameIdx < maxFrameCount; frameIdx++) {
                     const std::string plotName = I18NFMT("Plot {}", frameIdx);
@@ -297,7 +299,7 @@ static void SpecificWaveformRestore(Ctx* pCtx) {
     if (!tabBarHelper.State()) { return; }
 
     if (ImGui::BeginTabItem(I18N("Wave Unprocessed"))) {
-        if (BeginPlotEx(I18N("Wave Unprocessed", "ImPlot/Wave/Wave Unprocessed"), I18NCSTR("Point"))) {
+        if (BeginPlotEx(I18N("Wave Unprocessed", "ImPlot/Wave/Wave Unprocessed"), I18N("Point"))) {
             for (size_t frameIdx = 0;
                 frameIdx < GetDisplayFrame(deviceParams.processFrameCount);
                 frameIdx++) {
