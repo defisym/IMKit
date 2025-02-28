@@ -155,7 +155,6 @@
 #define VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
 #define WAVEFORM_RESTORE_ONLY_SHOW_RESULT
 
-// TODO Range should be passed in `WaveformRestoreParams`
 // current it will be force enabled and cause crash
 // that's why this macro is disabled for now
 
