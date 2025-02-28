@@ -25,11 +25,11 @@
 // Forward declarations of helper functions
 // ------------------------------------------------------------
 
-bool CreateDeviceD3D(IMGUIContext* pCtx, HWND hWnd);
-void CleanupDeviceD3D(IMGUIContext* pCtx);
-void CreateRenderTarget(IMGUIContext* pCtx);
-void CleanupRenderTarget(IMGUIContext* pCtx);
-LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+static bool CreateDeviceD3D(IMGUIContext* pCtx, HWND hWnd);
+static void CleanupDeviceD3D(IMGUIContext* pCtx);
+static void CreateRenderTarget(IMGUIContext* pCtx);
+static void CleanupRenderTarget(IMGUIContext* pCtx);
+static LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // ------------------------------------------------------------
 // Main code

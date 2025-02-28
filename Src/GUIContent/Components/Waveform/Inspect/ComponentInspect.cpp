@@ -3,7 +3,7 @@
 #include "GUIContext/Handler/InspectHandler.h"
 #include "IMGuiEx/IndentHelper.h"
 
-void ChangePage(const Ctx* pCtx, const char* pLabel) {
+static void ChangePage(const Ctx* pCtx, const char* pLabel) {
     ImGui::SeparatorText(I18N("ChangePage"));
     if (ImGui::Button(I18N("Prev", pLabel))) {}
     ImGui::SameLine();

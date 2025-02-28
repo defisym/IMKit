@@ -21,7 +21,7 @@ namespace AudioTest {
     constexpr auto DEFAULT_FREQ = 200.0;
     constexpr auto DEFAULT_DURA = 1000;
 
-    const OTDRProcessValueType* AllocBuffer(const size_t sz = DEFAULT_BUFFER_SZ) {
+    const static OTDRProcessValueType* AllocBuffer(const size_t sz = DEFAULT_BUFFER_SZ) {
 #ifdef USE_CONSOLE
         AllocConsole();
         freopen("CONIN$", "r", stdin);
