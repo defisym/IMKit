@@ -288,7 +288,7 @@ static void PeakWaveformRestore(Ctx* pCtx) {
 #endif
 }
 
-static void SpecificWaveformRestore(Ctx* pCtx) {
+static void SpecificWaveformRestore(const Ctx* pCtx) {
     const auto& deviceParams = pCtx->deviceHandler.deviceParams;
     const auto pHandler = pCtx->processHandler.pWaveformRestoreHandler;
 
