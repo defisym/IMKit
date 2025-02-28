@@ -47,7 +47,7 @@ static void RawData(Ctx* pCtx)  {
 }
 
 // display this first, or other lines will be overlapped
-static void DisplayLoggerThreshold(Ctx* pCtx) {
+static void DisplayLoggerThreshold(const Ctx* pCtx) {
 #ifdef VIBRATION_LOCALIZATION_SHOW_LOGGER_THRESHOLD
     PlotInfo plotInfo = {};
 #ifdef VIBRATION_LOCALIZATION_USE_METER
@@ -162,7 +162,7 @@ static void VibrationLocalization(Ctx* pCtx) {
 }
 
 // display waveform and it's FFT
-static void DisplayWaveformRestoreOutput(Ctx* pCtx, const char* pTitle, const WaveformRestoreOutput& waveform) {
+static void DisplayWaveformRestoreOutput(const Ctx* pCtx, const char* pTitle, const WaveformRestoreOutput& waveform) {
 #ifdef WAVEFORM_RESTORE_DISPLAY_WAVE_AND_FFT_IN_SUBPLOT
     const EmbraceHelper subPlotHelper = { BeginSubPlotEx(pTitle,1,2), ImPlot::EndSubplots };
     if (!subPlotHelper.State()) { return; }

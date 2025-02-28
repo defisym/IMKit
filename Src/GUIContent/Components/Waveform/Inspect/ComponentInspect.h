@@ -2,4 +2,4 @@
 
 #include "GUIContext/GUIContext.h"
 
-void ComponentInspect(Ctx* pCtx);
+void ComponentInspect(const Ctx* pCtx);
