@@ -17,8 +17,8 @@ namespace LoggerTest {
         const auto pBuffer = new OTDRProcessValueType[DEFAULT_POINT];
         memset(pBuffer, 0, DEFAULT_POINT * sizeof(OTDRProcessValueType));
 
-        constexpr auto conf = LoggerConfig{ 3000,"log/test" };
-        auto logger = Logger{ conf };
+        constexpr auto conf = FileLoggerConfig{ 3000,"log/test" };
+        auto logger = FileLogger{ conf };
 
         auto inf = VibrationDataInterface{ {false,true} };
         [[maybe_unused]] auto sz = LoggerHandler{}.GetEsitimateSize(250'000'000, 2000, 1280, 1000);

@@ -239,6 +239,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContent\Components\Config\Process\ComponentConfigWaveformRestore.cpp" />
     <ClCompile Include="GUIContent\Components\Waveform\ComponentWaveform.cpp" />
     <ClCompile Include="GUIContent\Components\Waveform\Inspect\ComponentInspect.cpp" />
+    <ClCompile Include="GUIContent\Components\Waveform\Logger\ComponentLogger.cpp" />
     <ClCompile Include="GUIContent\Components\Waveform\Process\ComponentProcess.cpp" />
     <ClCompile Include="GUIContent\GUIContent.cpp" />
     <ClCompile Include="GUIContext\GUIContext.cpp" />
@@ -326,6 +327,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContent\Components\Config\Process\ComponentConfigWaveformRestore.h" />
     <ClInclude Include="GUIContent\Components\Waveform\ComponentWaveform.h" />
     <ClInclude Include="GUIContent\Components\Waveform\Inspect\ComponentInspect.h" />
+    <ClInclude Include="GUIContent\Components\Waveform\Logger\ComponentLogger.h" />
     <ClInclude Include="GUIContent\Components\Waveform\Process\ComponentProcess.h" />
     <ClInclude Include="GUIContent\GUIContent.h" />
     <ClInclude Include="GUIContext\GUIContext.h" />

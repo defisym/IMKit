@@ -17,7 +17,10 @@ std::size_t std::hash<LogDataConfig>::operator()(LogDataConfig const& s) const n
 
 const std::string& LogDataInterface::Compress(const std::string& str) {
     // safe to pass reference
-    if (!config.bCompress) { return str; }
+    if (!config.bCompress) {
+        compressed = str;
+        return compressed;
+    }
 
     const auto sz = compressBound(static_cast<uLong>(str.size()));
     compressed.clear();
@@ -36,7 +39,44 @@ const std::string& LogDataInterface::Compress(const std::string& str) {
     return compressed;
 }
 
+std::string LogDataInterface::GetFormattedTimeStamp(const TimeStamp timeStamp, char const* pFmt) {
+    std::tm time = {};
+    const auto t = std::chrono::system_clock::to_time_t(timeStamp);
+    [[maybe_unused]] const auto err = localtime_s(&time, &t);
+
+    // https://stackoverflow.com/questions/28977585/how-to-get-put-time-into-a-variable
+    auto timeString = std::string(MAX_PATH, 0);
+    const auto sz = std::strftime(timeString.data(), timeString.size(), pFmt, &time);
+    timeString.resize(sz);
+
+    return timeString;
+}
+
 std::size_t std::hash<LoggerConfig>::operator()(LoggerConfig const& s) const noexcept {
+    std::size_t hash = 0xcbf29ce484222325; // FNV-1a
+    hash ^= std::hash<size_t>{}(s.bAutoScroll);
+    hash *= 0x100000001b3;  // FNV-1a
+
+    return hash;
+}
+
+void Logger::Clear() {
+    lines.clear();
+}
+
+void Logger::AddLog(const char* pLog) {
+    lines.emplace_back(pLog);
+}
+
+inline void Logger::AddLog(const std::string& log) {
+    lines.emplace_back(log);
+}
+
+inline void Logger::AddLog(const std::string&& log) {
+    lines.emplace_back(log);
+}
+
+std::size_t std::hash<FileLoggerConfig>::operator()(FileLoggerConfig const& s) const noexcept {
     std::size_t hash = 0xcbf29ce484222325; // FNV-1a
     hash ^= std::hash<size_t>{}(s.interval);
     hash *= 0x100000001b3;  // FNV-1a
@@ -49,7 +89,7 @@ std::size_t std::hash<LoggerConfig>::operator()(LoggerConfig const& s) const noe
     return hash;
 }
 
-Logger::Logger(const LoggerConfig& config) {
+FileLogger::FileLogger(const FileLoggerConfig& config) {
     this->config = config;
     
     do {
@@ -78,21 +118,25 @@ Logger::Logger(const LoggerConfig& config) {
     bValid = false;   
 }
 
-Logger::~Logger() { SaveData(); }
+FileLogger::~FileLogger() { SaveData(); }
+
+void FileLogger::UpdateInterval(const size_t interval) {
+    config.interval = interval;
+}
 
 using namespace std::chrono_literals;
 
-void Logger::AddData(LogDataInterface* pLogData) {
+void FileLogger::AddData(LogDataInterface* pLogData) {
     // update timestamp
     const auto currentTimeStamp = std::chrono::system_clock::now();
 
     // update cache
     cache.emplace_back(currentTimeStamp,
-        GetFormattedTimeStamp(currentTimeStamp),
+        LogDataInterface::GetFormattedTimeStamp(currentTimeStamp),
         pLogData->ToString());
 }
 
-bool Logger::SaveData() {
+bool FileLogger::SaveData() {
     if (!bValid) { return false; }
     if (cache.empty()) { return false; }
 
@@ -171,7 +215,7 @@ bool Logger::SaveData() {
     return ret == 0;
 }
 
-bool Logger::SaveDataWhenNeeded() {
+bool FileLogger::SaveDataWhenNeeded() {
     // update timestamp
     const auto currentTimeStamp = std::chrono::system_clock::now();
     if (lastSaveTimeStamp == TimeStamp{}) [[unlikely]] { lastSaveTimeStamp = currentTimeStamp; }
@@ -182,21 +226,4 @@ bool Logger::SaveDataWhenNeeded() {
     lastSaveTimeStamp = currentTimeStamp;
 
     return SaveData();
-}
-
-void Logger::UpdateInterval(const size_t interval) {
-    config.interval = interval;
-}
-
-std::string Logger::GetFormattedTimeStamp(const TimeStamp timeStamp, char const* pFmt) {
-    std::tm time = {};
-    const auto t = std::chrono::system_clock::to_time_t(timeStamp);
-    [[maybe_unused]] const auto err = localtime_s(&time, &t);
-
-    // https://stackoverflow.com/questions/28977585/how-to-get-put-time-into-a-variable
-    auto timeString = std::string(MAX_PATH, 0);
-    const auto sz = std::strftime(timeString.data(), timeString.size(), pFmt, &time);
-    timeString.resize(sz);
-
-    return timeString;
 }

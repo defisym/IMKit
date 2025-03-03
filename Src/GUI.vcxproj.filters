@@ -166,6 +166,12 @@
     <Filter Include="源文件\Worker\Thread">
       <UniqueIdentifier>{aaa306cd-366c-4c04-8c9a-89229dacbbdd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\GUIContent\Components\Waveform\Logger">
+      <UniqueIdentifier>{65becb63-f35f-4cb8-a121-212e91cecaef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContent\Components\Waveform\Logger">
+      <UniqueIdentifier>{477004cd-2756-48ea-9ecf-61f73734e1e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imguiInterface\IMGUIInterface.cpp">
@@ -365,6 +371,9 @@
     </ClCompile>
     <ClCompile Include="Utilities\StringResult.cpp">
       <Filter>源文件\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\Waveform\Logger\ComponentLogger.cpp">
+      <Filter>源文件\GUIContent\Components\Waveform\Logger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -598,6 +607,9 @@
     </ClInclude>
     <ClInclude Include="Utilities\StringResult.h">
       <Filter>头文件\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\Waveform\Logger\ComponentLogger.h">
+      <Filter>头文件\GUIContent\Components\Waveform\Logger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

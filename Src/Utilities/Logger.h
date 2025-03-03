@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 #include <chrono>
 #include <functional>
 
@@ -29,15 +30,13 @@ public:
     void UpdateConfig(const LogDataConfig& conf = {}) { this->config = conf; }
     [[nodiscard]] const std::string& Compress(const std::string& str);
     [[nodiscard]] virtual const std::string& ToString() = 0;
+
+    using TimeStamp = decltype(std::chrono::system_clock::now());
+    static std::string GetFormattedTimeStamp(const TimeStamp timeStamp, char const* pFmt = "%Y-%m-%d %H-%M-%S");
 };
 
-constexpr auto DEFAULT_LOG_INTERVAL = 1000;
-constexpr auto FILEPATH_LENGTH = 512;
-
 struct LoggerConfig {
-    // interval to write to disk
-    size_t interval = DEFAULT_LOG_INTERVAL;
-    char filePath[FILEPATH_LENGTH] = "Log/";
+    bool bAutoScroll = true;  // Keep scrolling if already at the bottom.
 };
 
 template<>
@@ -45,16 +44,39 @@ struct std::hash<LoggerConfig> {
     std::size_t operator()(LoggerConfig const& s) const noexcept;
 };
 
+struct Logger {
+    std::vector<std::string> lines;
+
+    void Clear();
+    void AddLog(const char* pLog);
+    void AddLog(const std::string& log);
+    void AddLog(const std::string&& log);
+};
+
+constexpr auto DEFAULT_LOG_INTERVAL = 1000;
+constexpr auto FILEPATH_LENGTH = 512;
+
+struct FileLoggerConfig {
+    // interval to write to disk
+    size_t interval = DEFAULT_LOG_INTERVAL;
+    char filePath[FILEPATH_LENGTH] = "Log/";
+};
+
+template<>
+struct std::hash<FileLoggerConfig> {
+    std::size_t operator()(FileLoggerConfig const& s) const noexcept;
+};
+
 struct Ctx;
 
 // log data to the disk
-class Logger { // NOLINT(cppcoreguidelines-special-member-functions)
-    LoggerConfig config = {};
+class FileLogger { // NOLINT(cppcoreguidelines-special-member-functions)
+    FileLoggerConfig config = {};
 
     bool bValid = false;
     std::string filePath;
 
-    using TimeStamp = decltype(std::chrono::system_clock::now());
+    using TimeStamp = LogDataInterface::TimeStamp;
     TimeStamp lastSaveTimeStamp = {};
 
     struct CacheData {
@@ -66,9 +88,10 @@ class Logger { // NOLINT(cppcoreguidelines-special-member-functions)
     std::vector<CacheData> cache;
 
 public:
-    Logger(const LoggerConfig& config = {});
-    ~Logger();
+    FileLogger(const FileLoggerConfig& config = {});
+    ~FileLogger();
 
+    void UpdateInterval(const size_t interval);
     // add data to internal cache
     void AddData(LogDataInterface* pLogData);
 
@@ -81,9 +104,6 @@ public:
     bool SaveData();
     // similiar as above, but check interval
     bool SaveDataWhenNeeded();
-
-    void UpdateInterval(const size_t interval);
-    static std::string GetFormattedTimeStamp(const TimeStamp timeStamp, char const* pFmt = "%Y-%m-%d %H-%M-%S");
 };
 
 template<typename DataInterface>
@@ -94,11 +114,11 @@ concept ValidDataInterface = requires(DataInterface device) {
 };
 
 template<ValidDataInterface DataInterface>
-struct LoggerHelper {
-    Logger logger;
+struct FileLoggerHelper {
+    FileLogger logger;
     DataInterface dataInterface;
 
-    LoggerHelper(const LoggerConfig& loggerConf = {},
+    FileLoggerHelper(const FileLoggerConfig& loggerConf = {},
         const LogDataConfig& logDataConf = {})
         :logger(loggerConf), dataInterface(logDataConf) {}
 
@@ -108,8 +128,15 @@ private:
     void AddData() { logger.AddData(&dataInterface); }
 
 public:
+    // ------------------------
+    // serialization
+    // ------------------------
     void AddData(const DataType& data) { UpdateData(data); AddData(); }
-    void AddMetaData(const Logger::MetaDataCb& cb) { logger.AddMetaData(cb); }
+    void AddMetaData(const FileLogger::MetaDataCb& cb) { logger.AddMetaData(cb); }
+
+    // ------------------------
+    // save to file
+    // ------------------------
     bool SaveData() { return logger.SaveData(); }
     bool SaveDataWhenNeeded() { return logger.SaveDataWhenNeeded(); }
 };
