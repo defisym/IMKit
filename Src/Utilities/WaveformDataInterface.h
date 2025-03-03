@@ -5,9 +5,16 @@
 
 #include "GUIContext/Handler/WaveformRestoreHandler.h"
 
+struct ShakeInfoStringify {
+    std::string result;
+    [[nodiscard]] const std::string& ToString(const ShakeInfo& opt, const bool bBinary = false);
+
+};
+
 struct WaveformRestoreContextStringify {
     std::string result;
     OTDRDataStringify stringify = {};
+    ShakeInfoStringify shakeInfoStringify = {};
     [[nodiscard]] const std::string& ToString(const WaveformRestoreContext& data, const bool bBinary = false);
 };
 

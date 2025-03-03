@@ -1,8 +1,17 @@
 #include "WaveformDataInterface.h"
 
-const std::string& WaveformRestoreContextStringify::ToString(const WaveformRestoreContext& data, const bool bBinary) {
-    result = std::format("Waveform at: {}\n", data.opt.shakeStart + data.opt.unwrap2DStart);
+const std::string& ShakeInfoStringify::ToString(const ShakeInfo& opt, const bool bBinary) {
+    result = std::format("Waveform start at: {}m, Peak at: {}m, "
+        "Max value: {}, Length: {}m\n",
+        opt.shakeStart / opt.resolution,
+        (opt.shakeStart + opt.unwrap2DStart) / opt.resolution,
+        opt.maxValue, opt.shakeRange / opt.resolution);
 
+    return result;
+}
+
+const std::string& WaveformRestoreContextStringify::ToString(const WaveformRestoreContext& data, const bool bBinary) {
+    result = shakeInfoStringify.ToString(data.opt);
     const auto restore = OTDRData{ data.restore.restore.data(),data.restore.restore.size() };
     result += std::format("Waveform: \n{}\n", stringify.ToString(restore, bBinary));
     const auto fft = OTDRData{ data.restore.fft.data(),data.restore.fftElement };
