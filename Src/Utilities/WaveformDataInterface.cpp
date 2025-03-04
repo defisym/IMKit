@@ -46,3 +46,7 @@ WaveformDataInterface::WaveformDataInterface(const LogDataConfig& conf) :LogData
 const std::string& WaveformDataInterface::ToString() {
     return Compress(stringify.ToString(*logData, config.bBinary));
 }
+
+const char* WaveformDataInterface::DataTypeInfo() {
+    return "Waveform";
+}
