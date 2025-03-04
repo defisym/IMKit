@@ -47,6 +47,9 @@
 #define LOG_DEBUG_STRING_OUTPUT
 #endif
 
+// indent inside tab
+//#define INDENT_INSIDE_TAB
+
 // json crahes in profile mode
 // enable this macro to measure performance
 //#define NO_I18N

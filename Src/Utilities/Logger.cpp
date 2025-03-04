@@ -184,7 +184,9 @@ bool FileLogger::SaveData() {
     if (fgetpos(fp, &jumpTableStart) != 0) { return false; }
 
     constexpr size_t filePosition = 0;
-    elementCount += fwrite(&filePosition, sizeof(size_t), cache.size(), fp);
+    for (size_t index = 0; index < cache.size(); index++) {
+        elementCount += fwrite(&filePosition, sizeof(size_t), 1, fp);
+    }
     elementCount += writeString("\r\n");
 
     // data region
