@@ -6,20 +6,20 @@ void ComponentLogger(Ctx* pCtx) {
 
     // Options menu
     if (ImGui::BeginPopup("Options")) {
-        ImGui::Checkbox("Auto-scroll", &bAutoScroll);
+        ImGui::Checkbox(I18N("Auto-scroll"), &bAutoScroll);
         ImGui::EndPopup();
     }
-    if (ImGui::Button("Options")) { ImGui::OpenPopup("Options"); }
+    if (ImGui::Button(I18N("Options"))) { ImGui::OpenPopup("Options"); }
     ImGui::SameLine();
 
-    const bool bClear = ImGui::Button("Clear");
+    const bool bClear = ImGui::Button(I18N("Clear"));
     ImGui::SameLine();
-    const bool bCopy = ImGui::Button("Copy");
+    const bool bCopy = ImGui::Button(I18N("Copy"));
     ImGui::SameLine();
 
     // Main window
     static ImGuiTextFilter filter;
-    filter.Draw("Filter", -100.0f);
+    filter.Draw(I18N("Filter Log"), -100.0f);
     ImGui::Separator();
 
     if (ImGui::BeginChild("scrolling", ImVec2(0, 0), ImGuiChildFlags_None, ImGuiWindowFlags_HorizontalScrollbar)) {
@@ -33,11 +33,11 @@ void ComponentLogger(Ctx* pCtx) {
         while (clipper.Step()) {
             for (auto pLine = logger.lines.crbegin() + clipper.DisplayStart;
                 pLine != logger.lines.crbegin() + clipper.DisplayEnd;
-            ++pLine) {
-            if (!filter.IsActive() || filter.PassFilter(pLine->c_str())) {
-                ImGui::TextUnformatted(pLine->c_str());
+                ++pLine) {
+                if (!filter.IsActive() || filter.PassFilter(pLine->c_str())) {
+                    ImGui::TextUnformatted(pLine->c_str());
+                }
             }
-        }
         }
         clipper.End();
         ImGui::PopStyleVar();
