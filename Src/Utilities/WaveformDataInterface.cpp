@@ -12,9 +12,11 @@ const std::string& ShakeInfoStringify::ToString(const ShakeInfo& opt, const bool
 
 const std::string& WaveformRestoreContextStringify::ToString(const WaveformRestoreContext& data, const bool bBinary) {
     result = shakeInfoStringify.ToString(data.opt);
-    const auto restore = OTDRData{ data.restore.restore.data(),data.restore.restore.size() };
+    const auto restore = OTDRData{ .pData = data.restore.restore.data(),
+        .sz = data.restore.restore.size() };
     result += std::format("Waveform: \n{}\n", stringify.ToString(restore, bBinary));
-    const auto fft = OTDRData{ data.restore.fft.data(),data.restore.fftElement };
+    const auto fft = OTDRData{ .pData = data.restore.fft.data(),
+        .sz = data.restore.fftElement };
     result += std::format("Waveform FFT: \n{}\n", stringify.ToString(fft, bBinary));
 
     return result;
@@ -25,11 +27,15 @@ const std::string& PeakWaveformRestoreStringify::ToString(const PeakWaveformRest
     result = {};
 
     // vibration
-    const auto vlResult = OTDRData{ data.GetVibrationLocalizationData(), data.GetVibrationLocalizationSize() };
-    result += std::format("Restore base (Vibration Localization Result): \n{}\n", stringify.ToString(vlResult, bBinary));
+    const auto vlResult = OTDRData{ .pData = data.GetVibrationLocalizationData(),
+        .sz = data.GetVibrationLocalizationSize() };
+    result += std::format("Restore base (Vibration Localization Result): \n{}\n",
+        stringify.ToString(vlResult, bBinary));
 
-    const auto vlFilteredResult = OTDRData{ data.GetVibrationLocalizationFilteredData(), data.GetVibrationLocalizationFilteredSize() };
-    result += std::format("Process base (Filtered): \n{}\n", stringify.ToString(vlFilteredResult, bBinary));
+    const auto vlFilteredResult = OTDRData{ .pData = data.GetVibrationLocalizationFilteredData(),
+        .sz = data.GetVibrationLocalizationFilteredSize() };
+    result += std::format("Process base (Filtered): \n{}\n",
+        stringify.ToString(vlFilteredResult, bBinary));
 
     // waveform
     const auto& results = data.GetPeakWaveformRestoreResult();
@@ -41,7 +47,9 @@ const std::string& PeakWaveformRestoreStringify::ToString(const PeakWaveformRest
 }
 
 
-WaveformDataInterface::WaveformDataInterface(const LogDataConfig& conf) :LogDataInterface(conf) {}
+WaveformDataInterface::WaveformDataInterface(const LogDataConfig& conf)
+    :LogDataInterface(conf) {
+}
 
 const std::string& WaveformDataInterface::ToString() {
     return Compress(stringify.ToString(*logData, config.bBinary));
