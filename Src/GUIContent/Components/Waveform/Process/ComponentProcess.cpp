@@ -94,15 +94,15 @@ static void RawData(Ctx* pCtx)  {
 static void DisplayWaterfallChat(Ctx* pCtx) {
     const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Waterfall Chat")), ImGui::EndTabItem };
     if (!tabHelper.State()) { return; }
-
+#ifdef INDENT_INSIDE_TAB
+    IndentHelper indentHelper = {};
+#endif
     const auto& handler = pCtx->waterfallChatHandler;
 }
 
 static void DisplayVibrationLocalization(Ctx* pCtx) {
     const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Vibration Localization")), ImGui::EndTabItem };
     if (!tabHelper.State()) { return; }
-
-    const auto helper = pCtx->threadHandler.GetVibrationUILockHelper();
 #ifdef INDENT_INSIDE_TAB
     IndentHelper indentHelper = {};
 #endif
@@ -192,6 +192,9 @@ static void VibrationLocalization(Ctx* pCtx) {
     if (!tabHelper.State()) { return; }
 
     const auto helper = pCtx->threadHandler.GetVibrationUILockHelper();
+#ifdef INDENT_INSIDE_TAB
+    IndentHelper indentHelper = {};
+#endif
 
     DisplayVibrationLocalization(pCtx);
     DisplayWaterfallChat(pCtx);
