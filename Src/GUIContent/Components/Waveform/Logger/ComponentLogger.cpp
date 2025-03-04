@@ -4,13 +4,13 @@ void ComponentLogger(Ctx* pCtx) {
     auto& logger = pCtx->loggerHandler.logger;
     auto& bAutoScroll = pCtx->loggerHandler.loggerParams.loggerConfig.bAutoScroll;
 
-    // Options menu
-    if (ImGui::BeginPopup("Options")) {
-        ImGui::Checkbox(I18N("Auto-scroll"), &bAutoScroll);
-        ImGui::EndPopup();
-    }
-    if (ImGui::Button(I18N("Options"))) { ImGui::OpenPopup("Options"); }
-    ImGui::SameLine();
+    //// Options menu
+    //if (ImGui::BeginPopup("Options")) {
+    //    ImGui::Checkbox(I18N("Auto-scroll"), &bAutoScroll);
+    //    ImGui::EndPopup();
+    //}
+    //if (ImGui::Button(I18N("Options"))) { ImGui::OpenPopup("Options"); }
+    //ImGui::SameLine();
 
     const bool bClear = ImGui::Button(I18N("Clear"));
     ImGui::SameLine();
