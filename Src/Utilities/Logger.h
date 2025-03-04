@@ -48,10 +48,14 @@ struct Logger {
     std::vector<std::string> lines;
 
     void Clear();
+    // directly add
     void AddLog(const char* pLog);
     void AddLog(const std::string& log);
     void AddLog(const std::string&& log);
+    // with timestamp
     void AddLog(LogDataInterface* pLogData);
+    void AddLog(const char* pType, const char* pLog);
+    void AddLog(const std::string& type, const std::string& log);
 };
 
 constexpr auto DEFAULT_LOG_INTERVAL = 1000;

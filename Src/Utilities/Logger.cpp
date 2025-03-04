@@ -75,6 +75,18 @@ void Logger::AddLog(LogDataInterface* pLogData) {
         pLogData->ToString()));
 }
 
+void Logger::AddLog(const char* pType, const char* pLog) {
+    AddLog(std::format("[{}] {}: {}",
+        GetFormattedTimeStamp(),
+        pType, pLog));
+}
+
+void Logger::AddLog(const std::string& type, const std::string& log) {
+    AddLog(std::format("[{}] {}: {}",
+        GetFormattedTimeStamp(),
+        type, log));
+}
+
 std::size_t std::hash<FileLoggerConfig>::operator()(FileLoggerConfig const& s) const noexcept {
     std::size_t hash = 0xcbf29ce484222325; // FNV-1a
     hash ^= std::hash<size_t>{}(s.interval);
