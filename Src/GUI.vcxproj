@@ -301,6 +301,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="Utilities\OTDRDataInterface.cpp" />
     <ClCompile Include="Utilities\StringResult.cpp" />
     <ClCompile Include="Utilities\Surface.cpp" />
+    <ClCompile Include="Utilities\TimeStampHelper.cpp" />
     <ClCompile Include="Utilities\VibrationDataInterface.cpp" />
     <ClCompile Include="Utilities\WaveformDataInterface.cpp" />
     <ClCompile Include="Worker\ReaderThread.cpp" />
@@ -382,6 +383,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Utilities\StringResult.h" />
     <ClInclude Include="Utilities\Surface.h" />
     <ClInclude Include="Utilities\ThreadSafeRingBuffer.h" />
+    <ClInclude Include="Utilities\TimeStampHelper.h" />
     <ClInclude Include="Utilities\VibrationDataInterface.h" />
     <ClInclude Include="Utilities\WaveformDataInterface.h" />
     <ClInclude Include="Worker\ReaderThread.h" />

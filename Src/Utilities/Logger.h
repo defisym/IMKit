@@ -33,8 +33,6 @@ public:
     [[nodiscard]] virtual const char* DataTypeInfo();
 
     using TimeStamp = decltype(std::chrono::system_clock::now());
-    static std::string GetFormattedTimeStamp(const TimeStamp timeStamp = std::chrono::system_clock::now(),
-        char const* pFmt = "%Y-%m-%d %H-%M-%S");
 };
 
 struct LoggerConfig {

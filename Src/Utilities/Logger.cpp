@@ -7,6 +7,7 @@
 
 #include <Compress/zlibInterface.h>
 
+#include "TimeStampHelper.h"
 #include "GUIContext/Param/Param.h"
 
 namespace fs = std::filesystem;
@@ -43,19 +44,6 @@ const char* LogDataInterface::DataTypeInfo() {
     return "General";
 }
 
-std::string LogDataInterface::GetFormattedTimeStamp(const TimeStamp timeStamp, char const* pFmt) {
-    std::tm time = {};
-    const auto t = std::chrono::system_clock::to_time_t(timeStamp);
-    [[maybe_unused]] const auto err = localtime_s(&time, &t);
-
-    // https://stackoverflow.com/questions/28977585/how-to-get-put-time-into-a-variable
-    auto timeString = std::string(MAX_PATH, 0);
-    const auto sz = std::strftime(timeString.data(), timeString.size(), pFmt, &time);
-    timeString.resize(sz);
-
-    return timeString;
-}
-
 std::size_t std::hash<LoggerConfig>::operator()(LoggerConfig const& s) const noexcept {
     std::size_t hash = 0xcbf29ce484222325; // FNV-1a
     hash ^= std::hash<size_t>{}(s.bAutoScroll);
@@ -82,7 +70,7 @@ inline void Logger::AddLog(const std::string&& log) {
 
 void Logger::AddLog(LogDataInterface* pLogData) {
     AddLog(std::format("[{}] {}: {}",
-        LogDataInterface::GetFormattedTimeStamp(),
+        GetFormattedTimeStamp(),
         pLogData->DataTypeInfo(),
         pLogData->ToString()));
 }
@@ -143,7 +131,7 @@ void FileLogger::AddData(LogDataInterface* pLogData) {
 
     // update cache
     cache.emplace_back(currentTimeStamp,
-        LogDataInterface::GetFormattedTimeStamp(currentTimeStamp),
+        GetFormattedTimeStamp(currentTimeStamp),
         pLogData->ToString());
 }
 
