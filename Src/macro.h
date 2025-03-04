@@ -41,6 +41,12 @@
 // let operarte system schedule
 #define PROCESS_SET_AFFINITY
 
+// log debug string to logger 
+#define LOG_DEBUG_STRING
+#if defined(_DEBUG) && defined(LOG_DEBUG_STRING)
+#define LOG_DEBUG_STRING_OUTPUT
+#endif
+
 // json crahes in profile mode
 // enable this macro to measure performance
 //#define NO_I18N
