@@ -133,7 +133,9 @@
 //#define READER_SKIP_FRAME_WHEN_FILLED
 
 // output debug string when skip triggered
-#define READER_SKIP_FRAME_OUTPUT_DEBUG_STRING
+#ifdef LOG_DEBUG_STRING
+#define READER_SKIP_FRAME_LOG_DEBUG_STRING
+#endif
 #endif
 
 // optimize plot display by using threshold, by skip interval points
