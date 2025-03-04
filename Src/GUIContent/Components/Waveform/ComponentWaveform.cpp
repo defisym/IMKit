@@ -16,14 +16,14 @@ void ComponentWaveform(Ctx* pCtx) {
             ImGui::EndTabItem();
         }
 
-        if (ImGui::BeginTabItem(I18N("Inspect"))) {
-            ComponentInspect(pCtx);
+        if (ImGui::BeginTabItem(I18N("Log"))) {
+            ComponentLogger(pCtx);
 
             ImGui::EndTabItem();
         }
 
-        if (ImGui::BeginTabItem(I18N("Log"))) {
-            ComponentLogger(pCtx);
+        if (ImGui::BeginTabItem(I18N("Inspect"))) {
+            ComponentInspect(pCtx);
 
             ImGui::EndTabItem();
         }
