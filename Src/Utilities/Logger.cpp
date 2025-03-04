@@ -80,6 +80,13 @@ inline void Logger::AddLog(const std::string&& log) {
     lines.emplace_back(log);
 }
 
+void Logger::AddLog(LogDataInterface* pLogData) {
+    AddLog(std::format("[{}] {}: {}",
+        LogDataInterface::GetFormattedTimeStamp(),
+        pLogData->DataTypeInfo(),
+        pLogData->ToString()));
+}
+
 std::size_t std::hash<FileLoggerConfig>::operator()(FileLoggerConfig const& s) const noexcept {
     std::size_t hash = 0xcbf29ce484222325; // FNV-1a
     hash ^= std::hash<size_t>{}(s.interval);

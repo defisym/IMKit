@@ -53,6 +53,7 @@ struct Logger {
     void AddLog(const char* pLog);
     void AddLog(const std::string& log);
     void AddLog(const std::string&& log);
+    void AddLog(LogDataInterface* pLogData);
 };
 
 constexpr auto DEFAULT_LOG_INTERVAL = 1000;
