@@ -11,6 +11,22 @@ struct ShakeInfoStringify {
 
 };
 
+class ShakeInfoInterface final :public LogDataInterface {
+    using DataType = const  ShakeInfo*;
+    DataType logData = nullptr;
+    ShakeInfoStringify stringify;
+
+public:
+    ShakeInfoInterface(const LogDataConfig& conf = {});
+
+    void UpdateData(const DataType& data) { logData = data; }
+    [[nodiscard]] const DataType& GetData() const { return logData; }
+    [[nodiscard]] const std::string& ToString() override;
+    [[nodiscard]] const char* DataTypeInfo() override;
+};
+
+static_assert(ValidDataInterface<ShakeInfoInterface>);
+
 struct WaveformRestoreContextStringify {
     std::string result;
     OTDRDataStringify stringify = {};

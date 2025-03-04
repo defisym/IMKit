@@ -10,6 +10,18 @@ const std::string& ShakeInfoStringify::ToString(const ShakeInfo& opt, const bool
     return result;
 }
 
+ShakeInfoInterface::ShakeInfoInterface(const LogDataConfig& conf)
+    :LogDataInterface(conf) {
+}
+
+const std::string& ShakeInfoInterface::ToString() {
+    return Compress(stringify.ToString(*logData, config.bBinary));
+}
+
+const char* ShakeInfoInterface::DataTypeInfo() {
+    return "ShakeInfo";
+}
+
 const std::string& WaveformRestoreContextStringify::ToString(const WaveformRestoreContext& data, const bool bBinary) {
     result = shakeInfoStringify.ToString(data.opt);
     const auto restore = OTDRData{ .pData = data.restore.restore.data(),
