@@ -36,7 +36,7 @@ public:
 };
 
 struct LoggerConfig {
-    bool bAutoScroll = true;  // Keep scrolling if already at the bottom.
+    bool bAutoScroll = false;  // Keep scrolling if already at the bottom.
 };
 
 template<>
