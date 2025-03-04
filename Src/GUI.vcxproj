@@ -252,6 +252,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\ThreadHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\VibrationLocalizationHandler.cpp" />
+    <ClCompile Include="GUIContext\Handler\WaterfallChatHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\WaveformRestoreHandler.cpp" />
     <ClCompile Include="GUIContext\Param\FibreParams.cpp" />
     <ClCompile Include="GUIContext\Param\SoftwareParams.cpp" />
@@ -299,6 +300,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="Utilities\Logger.cpp" />
     <ClCompile Include="Utilities\OTDRDataInterface.cpp" />
     <ClCompile Include="Utilities\StringResult.cpp" />
+    <ClCompile Include="Utilities\Surface.cpp" />
     <ClCompile Include="Utilities\VibrationDataInterface.cpp" />
     <ClCompile Include="Utilities\WaveformDataInterface.cpp" />
     <ClCompile Include="Worker\ReaderThread.cpp" />
@@ -340,6 +342,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContext\Handler\ProcessHandler.h" />
     <ClInclude Include="GUIContext\Handler\ThreadHandler.h" />
     <ClInclude Include="GUIContext\Handler\VibrationLocalizationHandler.h" />
+    <ClInclude Include="GUIContext\Handler\WaterfallChatHandler.h" />
     <ClInclude Include="GUIContext\Handler\WaveformRestoreHandler.h" />
     <ClInclude Include="GUIContext\Param\FibreParams.h" />
     <ClInclude Include="GUIContext\Param\Param.h" />
@@ -377,6 +380,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Utilities\OTDRDataInterface.h" />
     <ClInclude Include="Utilities\RingBuffer.h" />
     <ClInclude Include="Utilities\StringResult.h" />
+    <ClInclude Include="Utilities\Surface.h" />
     <ClInclude Include="Utilities\ThreadSafeRingBuffer.h" />
     <ClInclude Include="Utilities\VibrationDataInterface.h" />
     <ClInclude Include="Utilities\WaveformDataInterface.h" />
