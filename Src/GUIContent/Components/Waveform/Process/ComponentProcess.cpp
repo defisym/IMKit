@@ -1,8 +1,12 @@
 #include "ComponentProcess.h"
 
 #include "macro.h"
+
 #include "IMGuiEx/DisplayPlot.h"
 #include "IMGuiEx/EmbraceHelper.h"
+#ifdef INDENT_INSIDE_TAB
+#include "IMGuiEx/IndentHelper.h"
+#endif
 
 #if !defined (VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT) || !defined (WAVEFORM_RESTORE_ONLY_SHOW_RESULT) 
 // do not display more than MAX_DISPLAY_FRAME
@@ -16,9 +20,11 @@ static size_t GetDisplayFrame(const size_t frameCount) {
 static void RawData(Ctx* pCtx)  {
     if (pCtx->EasyMode()) { return; }
     if (!ImGui::BeginTabItem(I18N("Raw"))) { return; }
-
+    
     const auto helper = pCtx->threadHandler.GetReaderUILockHelper();
-
+#ifdef INDENT_INSIDE_TAB
+    IndentHelper indentHelper = {};
+#endif
     const auto& [pBuffer,
         bufferSz,
         bufferStride,
@@ -82,7 +88,9 @@ static void VibrationLocalization(Ctx* pCtx) {
     if (!tabHelper.State()) { return; }
 
     const auto helper = pCtx->threadHandler.GetVibrationUILockHelper();
-
+#ifdef INDENT_INSIDE_TAB
+    IndentHelper indentHelper = {};
+#endif
     const auto& deviceParams = pCtx->deviceHandler.deviceParams;
     const auto frameSize = static_cast<int>(deviceParams.pointNumProcess);
     const auto pHandler = pCtx->processHandler.pVibrationLocalizationHandler;
@@ -329,24 +337,35 @@ static void WaveformRestore(Ctx* pCtx) {
     if (!tabItemHelper.State()) { return; }
 
     const auto helper = pCtx->threadHandler.GetWaveformUILockHelper();
-
+#ifdef INDENT_INSIDE_TAB
+    IndentHelper indentHelper = {};
+#endif
     if (!pCtx->processHandler.processResult.bWaveFormProcessed) {
         ImGui::TextUnformatted(I18N("Data not enough"));
         return;
     }
 
     if (pCtx->EasyMode()) {
+#ifdef INDENT_INSIDE_TAB
+        IndentHelper helper = {};
+#endif
         PeakWaveformRestore(pCtx);
         return;
     }
 
     if (ImGui::BeginTabBar("Waveform Restore/Tab", TAB_BAR_FLAGS)) {
         if (ImGui::BeginTabItem(I18N("Specific Waveform Restore"))) {
+#ifdef INDENT_INSIDE_TAB
+            IndentHelper helper = {};
+#endif
             SpecificWaveformRestore(pCtx);
             ImGui::EndTabItem();
         }
 
         if (ImGui::BeginTabItem(I18N("Peak Waveform Restore"))) {
+#ifdef INDENT_INSIDE_TAB
+            IndentHelper helper = {};
+#endif
             PeakWaveformRestore(pCtx);
             ImGui::EndTabItem();
         }
