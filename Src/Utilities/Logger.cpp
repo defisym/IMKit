@@ -39,6 +39,10 @@ const std::string& LogDataInterface::Compress(const std::string& str) {
     return compressed;
 }
 
+const char* LogDataInterface::DataType() {
+    return "General";
+}
+
 std::string LogDataInterface::GetFormattedTimeStamp(const TimeStamp timeStamp, char const* pFmt) {
     std::tm time = {};
     const auto t = std::chrono::system_clock::to_time_t(timeStamp);
