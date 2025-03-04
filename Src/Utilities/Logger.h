@@ -30,7 +30,7 @@ public:
     void UpdateConfig(const LogDataConfig& conf = {}) { this->config = conf; }
     [[nodiscard]] const std::string& Compress(const std::string& str);
     [[nodiscard]] virtual const std::string& ToString() = 0;
-    [[nodiscard]] virtual const char* DataType();
+    [[nodiscard]] virtual const char* DataTypeInfo();
 
     using TimeStamp = decltype(std::chrono::system_clock::now());
     static std::string GetFormattedTimeStamp(const TimeStamp timeStamp = std::chrono::system_clock::now(),

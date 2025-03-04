@@ -39,7 +39,7 @@ const std::string& LogDataInterface::Compress(const std::string& str) {
     return compressed;
 }
 
-const char* LogDataInterface::DataType() {
+const char* LogDataInterface::DataTypeInfo() {
     return "General";
 }
 
