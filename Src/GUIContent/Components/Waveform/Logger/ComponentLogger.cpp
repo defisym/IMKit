@@ -30,12 +30,14 @@ void ComponentLogger(Ctx* pCtx) {
 
         ImGuiListClipper clipper;
         clipper.Begin(static_cast<int>(logger.lines.size()));
-        for (auto pLine = logger.lines.crbegin(); 
-            clipper.Step() && pLine != logger.lines.crend();
+        while (clipper.Step()) {
+            for (auto pLine = logger.lines.crbegin() + clipper.DisplayStart;
+                pLine != logger.lines.crbegin() + clipper.DisplayEnd;
             ++pLine) {
             if (!filter.IsActive() || filter.PassFilter(pLine->c_str())) {
                 ImGui::TextUnformatted(pLine->c_str());
             }
+        }
         }
         clipper.End();
         ImGui::PopStyleVar();
