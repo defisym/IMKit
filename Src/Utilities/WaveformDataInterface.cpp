@@ -3,9 +3,9 @@
 const std::string& ShakeInfoStringify::ToString(const ShakeInfo& opt, const bool bBinary) {
     result = std::format("Waveform start at: {}m, Peak at: {}m, "
         "Max value: {}, Length: {}m\n",
-        opt.shakeStart / opt.resolution,
-        (opt.shakeStart + opt.unwrap2DStart) / opt.resolution,
-        opt.maxValue, opt.shakeRange / opt.resolution);
+        opt.shakeStart * opt.resolution,
+        (opt.shakeStart + opt.unwrap2DStart) * opt.resolution,
+        opt.maxValue, opt.shakeRange * opt.resolution);
 
     return result;
 }
