@@ -1,7 +1,10 @@
 #pragma once
 
+#include <utility>
+
 #include "Internationalization/Internationalization.h"
 #include "Utilities/StringResult.h"
+#include "IMGuiEx/LabelMaker.h"
 
 struct I18NInterface;
 extern I18NInterface i18nInf;
@@ -19,14 +22,14 @@ public:
     StringResult GetI18NLabel(const char* displayName, const char* label) const;
 
     template <class... Types>
-    StringResult GetI18NLabelFMT(const char* displayName, Types&&... args) {
-        const auto fmt = std::vformat(to_wide_string(GetInternationalization(displayName)),
-            std::make_wformat_args(std::forward<Types>(args)...));
+    StringResult GetI18NLabelFMT(const char* pFmt, Types&&... args) {
+        const auto fmt = std::vformat(to_wide_string(GetInternationalization(pFmt)),
+            std::make_wformat_args(args...));
         return to_byte_string(fmt);
     }
     template <class... Types>
-    StringResult GetI18NLabelFMT(const char* displayName, const char* label, Types&&... args) {
-        const auto fmt = GetI18NLabelFMT(displayName, std::forward<Types>(args)...);
+    StringResult GetI18NLabelFMT(const char* pFmt, const char* label, Types&&... args) {
+        const auto fmt = GetI18NLabelFMT(pFmt, std::forward<Types>(args)...);
         return ConnectLabel(fmt, label);
     }
 };
