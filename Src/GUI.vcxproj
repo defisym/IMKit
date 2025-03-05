@@ -258,6 +258,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="IMGuiEx\AddToolTipHint.cpp" />
     <ClCompile Include="IMGuiEx\DisplayPlot.cpp" />
     <ClCompile Include="IMGuiEx\FontEx.cpp" />
+    <ClCompile Include="IMGuiEx\I18NInterface.cpp" />
     <ClCompile Include="IMGuiEx\IndentHelper.cpp" />
     <ClCompile Include="IMGuiEx\LabelMaker.cpp" />
     <ClCompile Include="IMGuiEx\SliderSpin.cpp" />
@@ -353,6 +354,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="IMGuiEx\DisplayPlot.h" />
     <ClInclude Include="IMGuiEx\EmbraceHelper.h" />
     <ClInclude Include="IMGuiEx\FontEx.h" />
+    <ClInclude Include="IMGuiEx\I18NInterface.h" />
     <ClInclude Include="IMGuiEx\IndentHelper.h" />
     <ClInclude Include="IMGuiEx\LabelMaker.h" />
     <ClInclude Include="IMGuiEx\SliderSpin.h" />
