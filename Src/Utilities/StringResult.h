@@ -12,9 +12,8 @@ struct StringResult {
 
     operator const char* () const&;
     operator const std::string& () const&;
-    operator std::string() const&;
 
-    operator std::string()&&;
+    const char* c_str() const;
 };
 
 template <>

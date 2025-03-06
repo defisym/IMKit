@@ -9,6 +9,7 @@
 
 #include "TimeStampHelper.h"
 #include "GUIContext/Param/Param.h"
+#include "IMGuiEx/I18NInterface.h"
 
 namespace fs = std::filesystem;
 
@@ -40,8 +41,8 @@ const std::string& LogDataInterface::Compress(const std::string& str) {
     return compressed;
 }
 
-const char* LogDataInterface::DataTypeInfo() {
-    return "General";
+StringResult LogDataInterface::DataTypeInfo() {
+    return I18N("General");
 }
 
 std::size_t std::hash<LoggerConfig>::operator()(LoggerConfig const& s) const noexcept {

@@ -1,5 +1,7 @@
 #include "VibrationDataInterface.h"
 
+#include "IMGuiEx/I18NInterface.h"
+
 VibrationDataInterface::VibrationDataInterface(const LogDataConfig& conf)
     :LogDataInterface(conf) {
 }
@@ -12,6 +14,6 @@ const std::string& VibrationDataInterface::ToString() {
     return Compress(stringify.ToString(logData, config.bBinary));    
 }
 
-const char* VibrationDataInterface::DataTypeInfo() {
-    return "Vibration";
+StringResult VibrationDataInterface::DataTypeInfo() {
+    return I18N("Vibration");
 }

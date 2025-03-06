@@ -5,6 +5,8 @@
 #include <chrono>
 #include <functional>
 
+#include "StringResult.h"
+
 struct LogDataConfig {
     // save file in binary, otherwise is human-readable
     bool bBinary = false;
@@ -30,7 +32,7 @@ public:
     void UpdateConfig(const LogDataConfig& conf = {}) { this->config = conf; }
     [[nodiscard]] const std::string& Compress(const std::string& str);
     [[nodiscard]] virtual const std::string& ToString() = 0;
-    [[nodiscard]] virtual const char* DataTypeInfo();
+    [[nodiscard]] virtual StringResult DataTypeInfo();
 };
 
 struct LoggerConfig {
