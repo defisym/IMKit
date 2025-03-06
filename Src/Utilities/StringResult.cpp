@@ -20,10 +20,6 @@ StringResult::operator const std::string& () const& {
     return result;
 }
 
-StringResult::operator std::string() const& {
-    return result;
-}
-
-StringResult::operator std::string() && {
-    return std::move(result);
+const char* StringResult::c_str() const {
+    return result.c_str();
 }
