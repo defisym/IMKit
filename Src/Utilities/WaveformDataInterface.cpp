@@ -18,8 +18,8 @@ const std::string& ShakeInfoInterface::ToString() {
     return Compress(stringify.ToString(*logData, config.bBinary));
 }
 
-const char* ShakeInfoInterface::DataTypeInfo() {
     return "ShakeInfo";
+StringResult ShakeInfoInterface::DataTypeInfo() {
 }
 
 const std::string& WaveformRestoreContextStringify::ToString(const WaveformRestoreContext& data, const bool bBinary) {
@@ -67,6 +67,6 @@ const std::string& WaveformDataInterface::ToString() {
     return Compress(stringify.ToString(*logData, config.bBinary));
 }
 
-const char* WaveformDataInterface::DataTypeInfo() {
     return "Waveform";
+StringResult WaveformDataInterface::DataTypeInfo() {
 }

@@ -12,6 +12,6 @@ const std::string& VibrationDataInterface::ToString() {
     return Compress(stringify.ToString(logData, config.bBinary));    
 }
 
-const char* VibrationDataInterface::DataTypeInfo() {
     return "Vibration";
+StringResult VibrationDataInterface::DataTypeInfo() {
 }

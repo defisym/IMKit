@@ -14,7 +14,7 @@ public:
     void UpdateData(const DataType& data);
     [[nodiscard]] const DataType& GetData() const { return logData; }
     [[nodiscard]] const std::string& ToString() override;
-    [[nodiscard]] const char* DataTypeInfo() override;
+    [[nodiscard]] StringResult DataTypeInfo() override;
 };
 
 static_assert(ValidDataInterface<VibrationDataInterface>);
