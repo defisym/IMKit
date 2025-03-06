@@ -3,7 +3,7 @@
 #include "IMGuiEx/I18NInterface.h"
 
 const std::string& ShakeInfoStringify::ToString(const ShakeInfo& opt, const bool bBinary) {
-    result = I18NFMT("Waveform start at: {}m, Peak at: {}m, "
+    result = I18NFMT("Shake start at: {}m, Peak at: {}m, "
         "Max value: {}, Length: {}m\n",
         opt.shakeStart * opt.resolution,
         (opt.shakeStart + opt.unwrap2DStart) * opt.resolution,
