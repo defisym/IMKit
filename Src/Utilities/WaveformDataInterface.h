@@ -8,7 +8,6 @@
 struct ShakeInfoStringify {
     std::string result;
     [[nodiscard]] const std::string& ToString(const ShakeInfo& opt, const bool bBinary = false);
-
 };
 
 class ShakeInfoInterface final :public LogDataInterface {
@@ -22,7 +21,7 @@ public:
     void UpdateData(const DataType& data) { logData = data; }
     [[nodiscard]] const DataType& GetData() const { return logData; }
     [[nodiscard]] const std::string& ToString() override;
-    [[nodiscard]] const char* DataTypeInfo() override;
+    [[nodiscard]] StringResult DataTypeInfo() override;
 };
 
 static_assert(ValidDataInterface<ShakeInfoInterface>);
@@ -52,7 +51,7 @@ public:
     void UpdateData(const DataType& data) { logData = data; }
     [[nodiscard]] const DataType& GetData() const { return logData; }
     [[nodiscard]] const std::string& ToString() override;
-    [[nodiscard]] const char* DataTypeInfo() override;
+    [[nodiscard]] StringResult DataTypeInfo() override;
 };
 
 static_assert(ValidDataInterface<WaveformDataInterface>);

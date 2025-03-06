@@ -1,11 +1,13 @@
 #include "WaveformDataInterface.h"
 
+#include "IMGuiEx/I18NInterface.h"
+
 const std::string& ShakeInfoStringify::ToString(const ShakeInfo& opt, const bool bBinary) {
-    result = std::format("Waveform start at: {}m, Peak at: {}m, "
+    result = I18NFMT("Waveform start at: {}m, Peak at: {}m, "
         "Max value: {}, Length: {}m\n",
         opt.shakeStart * opt.resolution,
         (opt.shakeStart + opt.unwrap2DStart) * opt.resolution,
-        opt.maxValue, opt.shakeRange * opt.resolution);
+        opt.maxValue, opt.shakeRange * opt.resolution).c_str();
 
     return result;
 }
@@ -18,18 +20,20 @@ const std::string& ShakeInfoInterface::ToString() {
     return Compress(stringify.ToString(*logData, config.bBinary));
 }
 
-const char* ShakeInfoInterface::DataTypeInfo() {
-    return "ShakeInfo";
+StringResult ShakeInfoInterface::DataTypeInfo() {
+    return I18N("ShakeInfo");
 }
 
 const std::string& WaveformRestoreContextStringify::ToString(const WaveformRestoreContext& data, const bool bBinary) {
     result = shakeInfoStringify.ToString(data.opt);
     const auto restore = OTDRData{ .pData = data.restore.restore.data(),
         .sz = data.restore.restore.size() };
-    result += std::format("Waveform: \n{}\n", stringify.ToString(restore, bBinary));
+    result += I18NFMT("Waveform: \n{}\n",
+        stringify.ToString(restore, bBinary)).c_str();
     const auto fft = OTDRData{ .pData = data.restore.fft.data(),
         .sz = data.restore.fftElement };
-    result += std::format("Waveform FFT: \n{}\n", stringify.ToString(fft, bBinary));
+    result += I18NFMT("Waveform FFT: \n{}\n",
+        stringify.ToString(fft, bBinary)).c_str();
 
     return result;
 }
@@ -41,13 +45,13 @@ const std::string& PeakWaveformRestoreStringify::ToString(const PeakWaveformRest
     // vibration
     const auto vlResult = OTDRData{ .pData = data.GetVibrationLocalizationData(),
         .sz = data.GetVibrationLocalizationSize() };
-    result += std::format("Restore base (Vibration Localization Result): \n{}\n",
-        stringify.ToString(vlResult, bBinary));
+    result += I18NFMT("Restore base (Vibration Localization Result): \n{}\n",
+        stringify.ToString(vlResult, bBinary)).c_str();
 
     const auto vlFilteredResult = OTDRData{ .pData = data.GetVibrationLocalizationFilteredData(),
         .sz = data.GetVibrationLocalizationFilteredSize() };
-    result += std::format("Process base (Filtered): \n{}\n",
-        stringify.ToString(vlFilteredResult, bBinary));
+    result += I18NFMT("Process base (Filtered): \n{}\n",
+        stringify.ToString(vlFilteredResult, bBinary)).c_str();
 
     // waveform
     const auto& results = data.GetPeakWaveformRestoreResult();
@@ -67,6 +71,6 @@ const std::string& WaveformDataInterface::ToString() {
     return Compress(stringify.ToString(*logData, config.bBinary));
 }
 
-const char* WaveformDataInterface::DataTypeInfo() {
-    return "Waveform";
+StringResult WaveformDataInterface::DataTypeInfo() {
+    return I18N("Waveform");
 }

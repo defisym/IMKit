@@ -375,6 +375,12 @@
     <ClCompile Include="GUIContent\Components\Waveform\Logger\ComponentLogger.cpp">
       <Filter>源文件\GUIContent\Components\Waveform\Logger</Filter>
     </ClCompile>
+    <ClCompile Include="Utilities\TimeStampHelper.cpp">
+      <Filter>源文件\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGuiEx\I18NInterface.cpp">
+      <Filter>源文件\IMGuiEx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\IMGUIInterface.h">
@@ -610,6 +616,12 @@
     </ClInclude>
     <ClInclude Include="GUIContent\Components\Waveform\Logger\ComponentLogger.h">
       <Filter>头文件\GUIContent\Components\Waveform\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\TimeStampHelper.h">
+      <Filter>头文件\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGuiEx\I18NInterface.h">
+      <Filter>头文件\IMGuiEx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

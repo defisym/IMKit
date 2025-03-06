@@ -2,13 +2,11 @@
 
 #define NOMINMAX
 #include <d3d11.h>
-#include <GeneralDefinition.h>
 
 #include "imgui/imgui.h"
 
 #include "IMGuiEx/FontEx.h"
-#include "IMGuiEx/LabelMaker.h"
-#include "Internationalization/Internationalization.h"
+#include "IMGuiEx/I18NInterface.h"
 
 struct D3DContext {
     ID3D11Device* pD3DDevice = nullptr;
@@ -21,9 +19,6 @@ struct D3DContext {
 
 constexpr static ImGuiTabBarFlags TAB_BAR_FLAGS = ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_TabListPopupButton;
 constexpr static ImGuiSliderFlags SLIDER_FLAGS = ImGuiSliderFlags_AlwaysClamp;
-
-#define I18N(...) pCtx->GetI18NLabel(__VA_ARGS__)
-#define I18NFMT(...) pCtx->GetI18NLabelFMT(__VA_ARGS__)
 
 struct IMGUIContext {
     const wchar_t* pWindowName = L"Dear ImGui DirectX11 Example";
@@ -41,24 +36,7 @@ struct IMGUIContext {
     D3DContext renderContext = {};
 
     ImGuiIO* pIO = nullptr;
-    FontEx* pFont = nullptr;
-    Internationalization i18n = {};
-    LabelMaker labelMaker = { this };
-
-    StringResult GetI18NLabel(const char* displayName) const;
-    StringResult GetI18NLabel(const char* displayName, const char* label) const;
-
-    template <class... Types>
-    StringResult GetI18NLabelFMT(const char* displayName, Types&&... args) {
-        const auto fmt = std::vformat(to_wide_string(labelMaker.MakeLabel(displayName)),
-            std::make_wformat_args(std::forward<Types>(args)...));
-        return to_byte_string(fmt);
-    }
-    template <class... Types>
-    StringResult GetI18NLabelFMT(const char* displayName, const char* label, Types&&... args) {
-        const auto fmt = GetI18NLabelFMT(displayName, std::forward<Types>(args)...);
-        return LabelMaker::ConnectLabel(fmt, label);
-    }
+    FontEx* pFont = nullptr;   
 
     IMGUIContext() = default;
     virtual ~IMGUIContext() = default;
