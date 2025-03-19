@@ -381,6 +381,12 @@
     <ClCompile Include="IMGuiEx\I18NInterface.cpp">
       <Filter>源文件\IMGuiEx</Filter>
     </ClCompile>
+    <ClCompile Include="GUIContext\Handler\WaterfallChatHandler.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\Surface.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imguiInterface\IMGUIInterface.h">
@@ -563,9 +569,6 @@
     <ClInclude Include="Utilities\MeasureHelper.h">
       <Filter>头文件\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities\HoldHelper.h">
-      <Filter>头文件\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="GUIContext\Handler\ThreadHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
@@ -622,6 +625,12 @@
     </ClInclude>
     <ClInclude Include="IMGuiEx\I18NInterface.h">
       <Filter>头文件\IMGuiEx</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContext\Handler\WaterfallChatHandler.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Surface.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
