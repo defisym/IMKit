@@ -172,6 +172,15 @@
     <Filter Include="源文件\GUIContent\Components\Waveform\Logger">
       <UniqueIdentifier>{477004cd-2756-48ea-9ecf-61f73734e1e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="着色器">
+      <UniqueIdentifier>{94fcf838-006c-4679-87e8-69d15f0fbec6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="着色器\Pixel Shader">
+      <UniqueIdentifier>{88ba819d-69ef-4065-b578-0c7f65d56721}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="着色器\Vertex Shader">
+      <UniqueIdentifier>{ba317bf8-6c31-4848-a74f-80e12a34ea6a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imguiInterface\IMGUIInterface.cpp">
@@ -642,5 +651,16 @@
     <Image Include="icon1.ico">
       <Filter>资源文件</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\VS.hlsl">
+      <Filter>着色器\Vertex Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\PS.hlsl">
+      <Filter>着色器\Pixel Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Shift.hlsl">
+      <Filter>着色器\Pixel Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
