@@ -91,8 +91,6 @@ static void RawData(Ctx* pCtx)  {
 // Vibration Localization
 // ------------------------------------------------
 
-#include "imgui_internal.h"
-
 static void DisplayWaterfallChat(Ctx* pCtx) {
     const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Waterfall Chat")), ImGui::EndTabItem };
     if (!tabHelper.State()) { return; }
@@ -100,8 +98,7 @@ static void DisplayWaterfallChat(Ctx* pCtx) {
     IndentHelper indentHelper = {};
 #endif
     auto& handler = pCtx->waterfallChatHandler;
-    const auto padding = ImGui::GetIO().Ctx->Style.ItemSpacing.x;
-    const auto width = std::floor((ImGui::GetContentRegionAvail().x - 2 * padding));
+    const auto width = ImGui::GetContentRegionAvail().x;
 
     handler.CreateRenderTarget((UINT)width, WaterfallChatHandler::RTT_DEFAULT_HEIGHT);
     handler.BeginRender();
@@ -425,14 +422,6 @@ static void WaveformRestore(Ctx* pCtx) {
 // ------------------------------------------------
 
 void ComponentProcess(Ctx* pCtx) {
-    if (ImGui::BeginTabBar("Waveform/Process/Tab", TAB_BAR_FLAGS)) {
-        DisplayWaterfallChat(pCtx);
-
-        ImGui::EndTabBar();
-    }
-
-    return;
-
     switch (pCtx->deviceHandler.readerState) {
     case DeviceHandler::ReadResult::NO_DEVICE:
         ImGui::TextUnformatted(I18N("Device not started"));
