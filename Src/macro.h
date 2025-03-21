@@ -54,6 +54,9 @@
 // enable this macro to measure performance
 //#define NO_I18N
 
+// audio thread will always run and mess the profile result
+#define NO_AUDIO
+
 // disable vsync
 #ifndef MULTITHREAD
 // UI uses a spin lock to protect data
