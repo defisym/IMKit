@@ -108,7 +108,7 @@ static void DisplayWaterfallChat(Ctx* pCtx) {
 
     auto& pSrv = handler.pSrvRTT;
     ImGui::Image((ImTextureID)(intptr_t)pSrv.Get(),
-        ImVec2((float)handler.width, (float)handler.height));
+        ImVec2((float)handler.rttWidth, (float)handler.rttHeight));
 
     handler.EndRender();
 }
