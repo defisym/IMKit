@@ -91,13 +91,26 @@ static void RawData(Ctx* pCtx)  {
 // Vibration Localization
 // ------------------------------------------------
 
+#include "imgui_internal.h"
+
 static void DisplayWaterfallChat(Ctx* pCtx) {
     const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Waterfall Chat")), ImGui::EndTabItem };
     if (!tabHelper.State()) { return; }
 #ifdef INDENT_INSIDE_TAB
     IndentHelper indentHelper = {};
 #endif
-    const auto& handler = pCtx->waterfallChatHandler;
+    auto& handler = pCtx->waterfallChatHandler;
+    const auto padding = ImGui::GetIO().Ctx->Style.ItemSpacing.x;
+    const auto width = std::floor((ImGui::GetContentRegionAvail().x - 2 * padding));
+
+    handler.CreateRenderTarget((UINT)width, WaterfallChatHandler::RTT_DEFAULT_HEIGHT);
+    handler.BeginRender();
+
+    auto& pSrv = handler.pSrvRTT;
+    ImGui::Image((ImTextureID)(intptr_t)pSrv.Get(),
+        ImVec2((float)handler.width, (float)handler.height));
+
+    handler.EndRender();
 }
 
 static void DisplayVibrationLocalization(Ctx* pCtx) {
@@ -412,6 +425,14 @@ static void WaveformRestore(Ctx* pCtx) {
 // ------------------------------------------------
 
 void ComponentProcess(Ctx* pCtx) {
+    if (ImGui::BeginTabBar("Waveform/Process/Tab", TAB_BAR_FLAGS)) {
+        DisplayWaterfallChat(pCtx);
+
+        ImGui::EndTabBar();
+    }
+
+    return;
+
     switch (pCtx->deviceHandler.readerState) {
     case DeviceHandler::ReadResult::NO_DEVICE:
         ImGui::TextUnformatted(I18N("Device not started"));

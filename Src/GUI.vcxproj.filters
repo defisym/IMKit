@@ -391,10 +391,7 @@
       <Filter>源文件\IMGuiEx</Filter>
     </ClCompile>
     <ClCompile Include="GUIContext\Handler\WaterfallChatHandler.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\Surface.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\GUIContext\Handler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -636,10 +633,7 @@
       <Filter>头文件\IMGuiEx</Filter>
     </ClInclude>
     <ClInclude Include="GUIContext\Handler\WaterfallChatHandler.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Utilities\Surface.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
