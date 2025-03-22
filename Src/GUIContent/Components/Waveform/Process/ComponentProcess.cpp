@@ -111,7 +111,7 @@ static void DisplayWaterfallChat(Ctx* pCtx) {
 }
 
 static void DisplayVibrationLocalization(Ctx* pCtx) {
-    const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Vibration Localization")), ImGui::EndTabItem };
+    const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Localization Display")), ImGui::EndTabItem };
     if (!tabHelper.State()) { return; }
 #ifdef INDENT_INSIDE_TAB
     IndentHelper indentHelper = {};
@@ -197,14 +197,18 @@ static void DisplayVibrationLocalization(Ctx* pCtx) {
 }
 
 static void VibrationLocalization(Ctx* pCtx) {
-    const EmbraceHelper tabHelper
-        = { ImGui::BeginTabBar("Waveform/Process/Tab/VibrationLocalization", TAB_BAR_FLAGS), ImGui::EndTabBar };
+    const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Vibration Localization")), ImGui::EndTabItem };
     if (!tabHelper.State()) { return; }
 
-    const auto helper = pCtx->threadHandler.GetVibrationUILockHelper();
 #ifdef INDENT_INSIDE_TAB
     IndentHelper indentHelper = {};
 #endif
+
+    const EmbraceHelper tabBarHelper
+        = { ImGui::BeginTabBar("Waveform/Process/Tab/VibrationLocalization", TAB_BAR_FLAGS), ImGui::EndTabBar };
+    if (!tabBarHelper.State()) { return; }
+
+    const auto helper = pCtx->threadHandler.GetVibrationUILockHelper();
 
     DisplayVibrationLocalization(pCtx);
     DisplayWaterfallChat(pCtx);
