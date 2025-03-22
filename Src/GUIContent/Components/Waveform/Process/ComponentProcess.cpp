@@ -98,9 +98,10 @@ static void DisplayWaterfallChat(Ctx* pCtx) {
     IndentHelper indentHelper = {};
 #endif
     auto& handler = pCtx->waterfallChatHandler;
-    const auto width = ImGui::GetContentRegionAvail().x;
+    auto lockHelper = handler.GetLockHelper();
 
-    handler.CreateRenderTarget((UINT)width, WaterfallChatHandler::RTT_DEFAULT_HEIGHT);
+    handler.CreateRenderTarget((UINT)ImGui::GetContentRegionAvail().x,
+        WaterfallChatHandler::RTT_DEFAULT_HEIGHT);
     handler.BeginRender();
 
     auto& pSrv = handler.pSrvRTT;

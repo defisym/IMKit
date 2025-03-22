@@ -5,7 +5,7 @@
 #define NOMINMAX
 #include <d3d11.h>
 #ifdef MULTITHREAD
-#include <d3d11_4.h>
+#include "D3DUtilities/MultiThreadHelper.h"
 #endif
 
 #include "imgui/imgui.h"
@@ -17,7 +17,7 @@ struct D3DContext {
     ID3D11Device* pD3DDevice = nullptr;
     ID3D11DeviceContext* pD3DDeviceContext = nullptr;
 #ifdef MULTITHREAD
-    ID3D11Multithread* pD3D11Multithread = nullptr;
+    MultiThreadHelper* pD3D11Multithread = nullptr;
 #endif
     IDXGISwapChain* pSwapChain = nullptr;
     UINT resizeWidth = 0;

@@ -216,10 +216,8 @@ bool CreateDeviceD3D(IMGUIContext* pCtx, HWND hWnd) {
     if (res != S_OK) { return false; }
 
 #ifdef MULTITHREAD
-    res = pCtx->renderContext.pD3DDeviceContext->QueryInterface(IID_PPV_ARGS(&pCtx->renderContext.pD3D11Multithread));
-    if (res != S_OK) { return false; }
-
-    pCtx->renderContext.pD3D11Multithread->SetMultithreadProtected(TRUE);
+    pCtx->renderContext.pD3D11Multithread = new MultiThreadHelper{ pCtx->renderContext.pD3DDeviceContext };
+    if (pCtx->renderContext.pD3D11Multithread->hr != S_OK) { return false; }
 #endif
 
     CreateRenderTarget(pCtx);
@@ -231,7 +229,7 @@ void CleanupDeviceD3D(IMGUIContext* pCtx) {
 
 #ifdef MULTITHREAD
     if (pCtx->renderContext.pD3D11Multithread) {
-        pCtx->renderContext.pD3D11Multithread->Release();
+        delete pCtx->renderContext.pD3D11Multithread;
         pCtx->renderContext.pD3D11Multithread = nullptr;
     }
 #endif
