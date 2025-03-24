@@ -168,6 +168,7 @@ HRESULT D3DContextTexture::CreateRenderTarget(UINT width, UINT height) {
     desc.Usage = D3D11_USAGE_DEFAULT;
     desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
     desc.SampleDesc = { .Count = 1,.Quality = 0 };
+    desc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
 
     hr = pDevice->CreateTexture2D(&desc, nullptr, &pRTT);
     if (FAILED(hr)) { return hr; }
