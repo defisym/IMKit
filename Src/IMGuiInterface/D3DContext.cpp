@@ -114,7 +114,7 @@ HRESULT D3DContextSwapChain::DestroyContext() {
     return D3DContext::DestroyContext();
 }
 
-HRESULT D3DContextSwapChain::CreateRenderTarget() {
+HRESULT D3DContextSwapChain::CreateRenderTarget(UINT width, UINT height) {
     HRESULT hr = S_OK;
 
     hr = DestroyRenderTarget();
@@ -141,10 +141,72 @@ HRESULT D3DContextSwapChain::UpdateResolution(UINT width, UINT height) {
     hr = pSwapChain->ResizeBuffers(0, width, height, DXGI_FORMAT_UNKNOWN, 0);
     if (FAILED(hr)) { return hr; }
 
-    return CreateRenderTarget();
+    return CreateRenderTarget(width, height);
 }
 
 void D3DContextSwapChain::EndRender(UINT SyncInterval) {
-    D3DContext::EndRender();
     pSwapChain->Present(SyncInterval, 0);
+    D3DContext::EndRender();
+}
+
+// ------------------------------------------------
+// D3DContextTexture
+// ------------------------------------------------
+
+HRESULT D3DContextTexture::CreateRenderTarget(UINT width, UINT height) {
+    HRESULT hr = S_OK;
+
+    hr = DestroyRenderTarget();
+    if (FAILED(hr)) { return hr; }
+
+    D3D11_TEXTURE2D_DESC desc = {};
+    desc.Width = width;
+    desc.Height = height;
+    desc.MipLevels = 1;
+    desc.ArraySize = 1;
+    desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    desc.Usage = D3D11_USAGE_DEFAULT;
+    desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+    desc.SampleDesc = { .Count = 1,.Quality = 0 };
+
+    hr = pDevice->CreateTexture2D(&desc, nullptr, &pRTT);
+    if (FAILED(hr)) { return hr; }
+
+    // create srv
+    D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+    srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+    srvDesc.Texture2D.MostDetailedMip = 0;
+    srvDesc.Texture2D.MipLevels = 1;
+
+    hr = pDevice->CreateShaderResourceView(pRTT.Get(), &srvDesc, &pSrvRTT);
+    if (FAILED(hr)) { return hr; }
+
+    D3D11_RENDER_TARGET_VIEW_DESC rttDesc = {};
+    rttDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    rttDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+    rttDesc.Texture2D = { .MipSlice = 0 };
+
+    return pDevice->CreateRenderTargetView(pRTT.Get(), &rttDesc, &pRTV);
+}
+
+HRESULT D3DContextTexture::DestroyRenderTarget() {
+    pRTT = nullptr;
+    pSrvRTT = nullptr;
+    pRTV = nullptr;
+
+    return D3DContext::DestroyRenderTarget();
+}
+
+HRESULT D3DContextTexture::UpdateResolution(UINT width, UINT height) {
+    if (!ResolutionChanged(width, height)) {
+        return S_OK;
+    }
+
+    return CreateRenderTarget(width, height);
+}
+
+void D3DContextTexture::EndRender(UINT IndexCount) {
+    pDeviceContext->DrawIndexed(IndexCount, 0, 0);
+    D3DContext::EndRender();
 }
