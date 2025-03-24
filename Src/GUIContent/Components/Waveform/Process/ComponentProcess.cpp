@@ -104,6 +104,7 @@ static void DisplayWaterfallChat(Ctx* pCtx) {
     handler.UpdateRenderParam();
     handler.CallRender();
 
+    handler.CreateSharedTexture();
     auto& pSrv = handler.pSrvSharedTexture;
     if (pSrv == nullptr) { return; }
 
