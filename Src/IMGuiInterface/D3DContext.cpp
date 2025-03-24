@@ -138,6 +138,11 @@ HRESULT D3DContextSwapChain::UpdateResolution(UINT width, UINT height) {
 
     HRESULT hr = S_OK;
 
+    // must destroy here, or swap chain cannot be resized
+    // unless all outstanding buffer references have been released.
+    hr = DestroyRenderTarget();
+    if (FAILED(hr)) { return hr; }
+
     hr = pSwapChain->ResizeBuffers(0, width, height, DXGI_FORMAT_UNKNOWN, 0);
     if (FAILED(hr)) { return hr; }
 
