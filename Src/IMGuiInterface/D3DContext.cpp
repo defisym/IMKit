@@ -188,13 +188,12 @@ HRESULT D3DContextTexture::CreateRenderTarget(UINT width, UINT height) {
     rttDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
     rttDesc.Texture2D = { .MipSlice = 0 };
 
-    return pDevice->CreateRenderTargetView(pRTT.Get(), &rttDesc, &pRTV);
+    return pDevice->CreateRenderTargetView(pRTT.Get(), &rttDesc, &pRenderTargetView);
 }
 
 HRESULT D3DContextTexture::DestroyRenderTarget() {
     pRTT = nullptr;
     pSrvRTT = nullptr;
-    pRTV = nullptr;
 
     return D3DContext::DestroyRenderTarget();
 }

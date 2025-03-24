@@ -48,8 +48,7 @@ struct D3DContextSwapChain : D3DContext {
 
 struct D3DContextTexture :D3DContext {
     ComPtr<ID3D11Texture2D> pRTT = nullptr;
-    ComPtr<ID3D11ShaderResourceView> pSrvRTT = nullptr;
-    ComPtr<ID3D11RenderTargetView> pRTV = nullptr;
+    ComPtr<ID3D11ShaderResourceView> pSrvRTT = nullptr;    
 
     HRESULT CreateRenderTarget(UINT width, UINT height) override;
     HRESULT DestroyRenderTarget() override;
