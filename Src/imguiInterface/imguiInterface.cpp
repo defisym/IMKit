@@ -25,10 +25,6 @@
 // Forward declarations of helper functions
 // ------------------------------------------------------------
 
-static bool CreateDeviceD3D(IMGUIContext* pCtx, HWND hWnd);
-static void CleanupDeviceD3D(IMGUIContext* pCtx);
-static void CreateRenderTarget(IMGUIContext* pCtx);
-static void CleanupRenderTarget(IMGUIContext* pCtx);
 static LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // ------------------------------------------------------------
@@ -58,9 +54,9 @@ int IMGUIInterface(IMGUIContext* pCtx,
         pCtx->width, pCtx->height,
         nullptr, nullptr, wc.hInstance, pCtx);
 
-    // Initialize Direct3D
-    if (!CreateDeviceD3D(pCtx, hwnd)) {
-        CleanupDeviceD3D(pCtx);
+    // Initialize Direct3D  
+    if (FAILED(pCtx->renderContext.CreateContext(hwnd))) {
+        pCtx->renderContext.DestroyContext();
         UnregisterClassW(wc.lpszClassName, wc.hInstance);
 
         return 1;
@@ -82,16 +78,13 @@ int IMGUIInterface(IMGUIContext* pCtx,
     pCtx->pIO = &io;
 
     // Setup Dear ImGui style
-    if (pCtx->bDarkMode) {
-        ImGui::StyleColorsDark();
-    }
-    else {
-        ImGui::StyleColorsLight();
-    }
+    if (pCtx->bDarkMode) { ImGui::StyleColorsDark(); }
+    else { ImGui::StyleColorsLight(); }
 
     // Setup Platform/Renderer backends
     ImGui_ImplWin32_Init(hwnd);  
-    ImGui_ImplDX11_Init(pCtx->renderContext.pD3DDevice, pCtx->renderContext.pD3DDeviceContext);
+    ImGui_ImplDX11_Init(pCtx->renderContext.pDevice.Get(),
+        pCtx->renderContext.pDeviceContext.Get());
 
     // Main loop
     bool done = false;
@@ -107,15 +100,8 @@ int IMGUIInterface(IMGUIContext* pCtx,
         }
         if (done) { break; }
 
-        // Handle window resize (we don't resize directly in the WM_SIZE handler)       
-        if (pCtx->renderContext.resizeWidth != 0 && pCtx->renderContext.resizeHeight != 0) {
-            CleanupRenderTarget(pCtx);            
-            pCtx->renderContext.pSwapChain->ResizeBuffers(0, 
-                pCtx->renderContext.resizeWidth, pCtx->renderContext.resizeHeight,
-                DXGI_FORMAT_UNKNOWN, 0);
-            pCtx->renderContext.resizeWidth = pCtx->renderContext.resizeHeight = 0;
-            CreateRenderTarget(pCtx);
-        }
+        // Handle window resize (we don't resize directly in the WM_SIZE handler)   
+        pCtx->renderContext.UpdateResolution(pCtx->resizeWidth, pCtx->resizeHeight);
 
         // Mainloop
         {
@@ -134,17 +120,15 @@ int IMGUIInterface(IMGUIContext* pCtx,
         }
 
         // Rendering
+        const static float ColorRGBA[4]
+            = { pCtx->clear_color.x * pCtx->clear_color.w,
+                pCtx->clear_color.y * pCtx->clear_color.w,
+                pCtx->clear_color.z * pCtx->clear_color.w,
+                pCtx->clear_color.w };
+        pCtx->renderContext.BeginRender(ColorRGBA);
         ImGui::Render();
-        const float clear_color_with_alpha[4]
-    	= { pCtx->clear_color.x * pCtx->clear_color.w,
-            pCtx->clear_color.y * pCtx->clear_color.w,
-            pCtx->clear_color.z * pCtx->clear_color.w,
-            pCtx->clear_color.w };
-        pCtx->renderContext.pD3DDeviceContext->OMSetRenderTargets(1, &pCtx->renderContext.pRenderTargetView, nullptr);
-        pCtx->renderContext.pD3DDeviceContext->ClearRenderTargetView(pCtx->renderContext.pRenderTargetView, clear_color_with_alpha);
         ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());        
-
-        pCtx->renderContext.pSwapChain->Present(pCtx->bVSync ? 1 : 0, 0); 
+        pCtx->renderContext.EndRender(pCtx->bVSync ? 1 : 0);
     }
 
     // Cleanup
@@ -155,7 +139,7 @@ int IMGUIInterface(IMGUIContext* pCtx,
     pCtx->DestroyContext();
     ImGui::DestroyContext();
 
-    CleanupDeviceD3D(pCtx);
+    pCtx->renderContext.DestroyContext();
     DestroyWindow(hwnd);
     UnregisterClassW(wc.lpszClassName, wc.hInstance);
 
@@ -167,113 +151,22 @@ int IMGUIInterface(IMGUIContext* pCtx,
 // ------------------------------------------------------------
 
 // ------------------------------------------
-// D3D
-// ------------------------------------------
-
-bool CreateDeviceD3D(IMGUIContext* pCtx, HWND hWnd) {
-    // Setup swap chain
-    DXGI_SWAP_CHAIN_DESC sd;
-    ZeroMemory(&sd, sizeof(sd));
-    sd.BufferCount = 2;
-    sd.BufferDesc.Width = 0;
-    sd.BufferDesc.Height = 0;
-    sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-    sd.BufferDesc.RefreshRate.Numerator = 60;
-    sd.BufferDesc.RefreshRate.Denominator = 1;
-    sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
-    sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-    sd.OutputWindow = hWnd;
-    sd.SampleDesc.Count = 1;
-    sd.SampleDesc.Quality = 0;
-    sd.Windowed = TRUE;
-    sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
-
-    UINT createDeviceFlags = 0;
-#ifdef _DEBUG
-    createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
-#endif
-    D3D_FEATURE_LEVEL featureLevel;
-    constexpr D3D_FEATURE_LEVEL featureLevelArray[2] = { D3D_FEATURE_LEVEL_11_0, D3D_FEATURE_LEVEL_10_0, };
-    HRESULT res =
-        D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE,
-        nullptr, createDeviceFlags,
-        featureLevelArray, 2,
-        D3D11_SDK_VERSION, &sd,
-        &pCtx->renderContext.pSwapChain, &pCtx->renderContext.pD3DDevice,
-        &featureLevel, &pCtx->renderContext.pD3DDeviceContext);
-
-    // Try high-performance WARP software driver if hardware is not available.
-    if (res == DXGI_ERROR_UNSUPPORTED) {
-        res =
-            D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_WARP,
-            nullptr, createDeviceFlags,
-            featureLevelArray, 2,
-            D3D11_SDK_VERSION, &sd,
-            &pCtx->renderContext.pSwapChain, &pCtx->renderContext.pD3DDevice,
-            &featureLevel, &pCtx->renderContext.pD3DDeviceContext);
-    }
-
-    if (res != S_OK) { return false; }
-
-#ifdef MULTITHREAD
-    pCtx->renderContext.pD3D11Multithread = new MultiThreadHelper{ pCtx->renderContext.pD3DDeviceContext };
-    if (pCtx->renderContext.pD3D11Multithread->hr != S_OK) { return false; }
-#endif
-
-    CreateRenderTarget(pCtx);
-    return true;
-}
-
-void CleanupDeviceD3D(IMGUIContext* pCtx) {
-    CleanupRenderTarget(pCtx);
-
-#ifdef MULTITHREAD
-    if (pCtx->renderContext.pD3D11Multithread) {
-        delete pCtx->renderContext.pD3D11Multithread;
-        pCtx->renderContext.pD3D11Multithread = nullptr;
-    }
-#endif
-
-    if (pCtx->renderContext.pSwapChain) {
-        pCtx->renderContext.pSwapChain->Release();
-        pCtx->renderContext.pSwapChain = nullptr;
-    }
-    if (pCtx->renderContext.pD3DDeviceContext) {
-        pCtx->renderContext.pD3DDeviceContext->Release();
-        pCtx->renderContext.pD3DDeviceContext = nullptr;
-    }
-    if (pCtx->renderContext.pD3DDevice) {
-        pCtx->renderContext.pD3DDevice->Release();
-        pCtx->renderContext.pD3DDevice = nullptr;
-    }
-}
-
-void CreateRenderTarget(IMGUIContext* pCtx) {
-    ID3D11Texture2D* pBackBuffer;    
-    pCtx->renderContext.pSwapChain->GetBuffer(0, IID_PPV_ARGS(&pBackBuffer));
-    pCtx->renderContext.pD3DDevice->CreateRenderTargetView(pBackBuffer, nullptr, &pCtx->renderContext.pRenderTargetView);
-    pBackBuffer->Release();
-}
-
-void CleanupRenderTarget(IMGUIContext* pCtx) {
-    if (pCtx->renderContext.pRenderTargetView) {
-        pCtx->renderContext.pRenderTargetView->Release();
-        pCtx->renderContext.pRenderTargetView = nullptr;
-    }
-}
-
-// ------------------------------------------
 // Window loop
 // ------------------------------------------
 
 // Forward declare message handler from imgui_impl_win32.cpp
-extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd,
+    UINT msg, WPARAM wParam, LPARAM lParam);
 
 // Win32 message handler
-// You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
-// - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application, or clear/overwrite your copy of the mouse data.
-// - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application, or clear/overwrite your copy of the keyboard data.
-// Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
+// You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags 
+// to tell if dear imgui wants to use your inputs.
+// - When io.WantCaptureMouse is true, do not dispatch mouse input data 
+//   to your main application, or clear/overwrite your copy of the mouse data.
+// - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data 
+//   to your main application, or clear/overwrite your copy of the keyboard data.
+// Generally you may always pass all inputs to dear imgui, and hide them from 
+// your application based on those two flags.
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
         return true;
@@ -292,8 +185,8 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     {
         if (wParam == SIZE_MINIMIZED) { return 0; }
 
-        pCtx->renderContext.resizeWidth = static_cast<UINT>(LOWORD(lParam)); // Queue resize
-        pCtx->renderContext.resizeHeight = static_cast<UINT>(HIWORD(lParam));
+        pCtx->resizeWidth = static_cast<UINT>(LOWORD(lParam)); // Queue resize
+        pCtx->resizeHeight = static_cast<UINT>(HIWORD(lParam));
 
         return 0;
     }

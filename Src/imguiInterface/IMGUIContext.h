@@ -1,29 +1,10 @@
 #pragma once
 
-#include "macro.h"
-
-#define NOMINMAX
-#include <d3d11.h>
-#ifdef MULTITHREAD
-#include "D3DUtilities/MultiThreadHelper.h"
-#endif
-
 #include "imgui/imgui.h"
+#include "IMGuiInterface/D3DContext.h"
 
 #include "IMGuiEx/FontEx.h"
 #include "IMGuiEx/I18NInterface.h"
-
-struct D3DContext {
-    ID3D11Device* pD3DDevice = nullptr;
-    ID3D11DeviceContext* pD3DDeviceContext = nullptr;
-#ifdef MULTITHREAD
-    MultiThreadHelper* pD3D11Multithread = nullptr;
-#endif
-    IDXGISwapChain* pSwapChain = nullptr;
-    UINT resizeWidth = 0;
-    UINT resizeHeight = 0;
-    ID3D11RenderTargetView* pRenderTargetView = nullptr;
-};
 
 constexpr static ImGuiTabBarFlags TAB_BAR_FLAGS = ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_TabListPopupButton;
 constexpr static ImGuiSliderFlags SLIDER_FLAGS = ImGuiSliderFlags_AlwaysClamp;
@@ -41,7 +22,10 @@ struct IMGUIContext {
 
     bool bDarkMode = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-    D3DContext renderContext = {};
+
+    UINT resizeWidth = 0;
+    UINT resizeHeight = 0;
+    D3DContextSwapChain renderContext = {};
 
     ImGuiIO* pIO = nullptr;
     FontEx* pFont = nullptr;   

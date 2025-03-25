@@ -226,7 +226,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CPUAffinity\CPUAffinity.cpp" />
-    <ClCompile Include="GUIContent\Components\Basic\ComponentFrameRate.cpp" />
+    <ClCompile Include="GUIContent\Components\Basic\ComponentPerformance.cpp" />
     <ClCompile Include="GUIContent\Components\Config\ComponentConfig.cpp" />
     <ClCompile Include="GUIContent\Components\Config\Device\ComponentConfigDevice.cpp" />
     <ClCompile Include="GUIContent\Components\Config\Device\ComponentConfigParam.cpp" />
@@ -263,6 +263,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="IMGuiEx\IndentHelper.cpp" />
     <ClCompile Include="IMGuiEx\LabelMaker.cpp" />
     <ClCompile Include="IMGuiEx\SliderSpin.cpp" />
+    <ClCompile Include="IMGuiInterface\D3DContext.cpp" />
     <ClCompile Include="imguiInterface\IMGUIContext.cpp" />
     <ClCompile Include="imguiInterface\IMGUIInterface.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_dx11.cpp" />
@@ -316,7 +317,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="CPUAffinity\SKU\Intel\13500H.h" />
     <ClInclude Include="CPUAffinity\SKU\Intel\13700K.h" />
     <ClInclude Include="GUIContent\Components\Basic\ComponentBase.h" />
-    <ClInclude Include="GUIContent\Components\Basic\ComponentFrameRate.h" />
+    <ClInclude Include="GUIContent\Components\Basic\ComponentPerformance.h" />
     <ClInclude Include="GUIContent\Components\Basic\ComponentWindow.h" />
     <ClInclude Include="GUIContent\Components\Config\ComponentConfig.h" />
     <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigCalibrate.h" />
@@ -360,6 +361,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="IMGuiEx\IndentHelper.h" />
     <ClInclude Include="IMGuiEx\LabelMaker.h" />
     <ClInclude Include="IMGuiEx\SliderSpin.h" />
+    <ClInclude Include="IMGuiInterface\D3DContext.h" />
     <ClInclude Include="imguiInterface\IMGUIContext.h" />
     <ClInclude Include="imguiInterface\imguiDemo.h" />
     <ClInclude Include="imguiInterface\IMGUIInterface.h" />

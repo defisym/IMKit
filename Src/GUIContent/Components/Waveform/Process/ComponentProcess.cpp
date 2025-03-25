@@ -98,17 +98,18 @@ static void DisplayWaterfallChat(Ctx* pCtx) {
     IndentHelper indentHelper = {};
 #endif
     auto& handler = pCtx->waterfallChatHandler;
-    auto lockHelper = handler.GetLockHelper();
 
-    handler.CreateRenderTarget((UINT)ImGui::GetContentRegionAvail().x,
+    handler.UpdateRenderTarget((UINT)ImGui::GetContentRegionAvail().x,
         WaterfallChatHandler::RTT_DEFAULT_HEIGHT);
-    handler.BeginRender();
+    handler.UpdateRenderParam();
+    handler.CallRender();
 
-    auto& pSrv = handler.pSrvRTT;
+    handler.CreateSharedTexture();
+    auto& pSrv = handler.pSrvSharedTexture;
+    if (pSrv == nullptr) { return; }
+
     ImGui::Image((ImTextureID)(intptr_t)pSrv.Get(),
         ImVec2((float)handler.rttWidth, (float)handler.rttHeight));
-
-    handler.EndRender();
 }
 
 static void DisplayVibrationLocalization(Ctx* pCtx) {
