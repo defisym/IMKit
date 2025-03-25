@@ -74,7 +74,7 @@
 
 // json crahes in profile mode
 // enable this macro to measure performance
-#define NO_I18N
+//#define NO_I18N
 
 // audio thread will always run and mess the profile result
 //#define NO_AUDIO
