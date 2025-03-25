@@ -26,6 +26,10 @@ void ComponentFrameRate(Ctx* pCtx) {
     const auto helper = performaceParams.GetUILockHelper();
 #endif
 
-    ImGui::Text(I18N("Read Data: %.3f ms, Vibration Localization: %.3f ms, Waveform Restore: %.3f ms"),
-       performaceParams.readTime, performaceParams.vibrationLocalizationTime, performaceParams.waveformRestoreTime);
+    ImGui::Text(I18N("Read Data: %.3f ms"), performaceParams.readTime);
+    ImGui::Text(I18N("Vibration Localization: %.3f ms, Waterfall Chat: %.3f ms, Log: %.3f ms"),
+        performaceParams.vl.processTime, performaceParams.vl.waterfallChatTime, performaceParams.vl.logTime);
+    ImGui::Text(I18N("Waveform Restore: %.3f ms, Peak Restore: %.3f ms, Log UI: %.3f ms, Log: %.3f ms"),
+        performaceParams.wr.processTime, performaceParams.wr.peakProcess,
+        performaceParams.wr.logUITime, performaceParams.wr.logTime);
 }
