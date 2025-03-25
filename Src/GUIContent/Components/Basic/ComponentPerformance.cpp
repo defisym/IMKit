@@ -1,6 +1,11 @@
-#include "ComponentFrameRate.h"
+#include "ComponentPerformance.h"
 
-void ComponentFrameRate(Ctx* pCtx) {    
+void ComponentPerformance(Ctx* pCtx) {    
+    if (!ImGui::CollapsingHeader(I18N("Performance"),
+        ImGuiTreeNodeFlags_DefaultOpen)) {
+        return;
+    }
+
     ImGui::Text(I18N("Application average %.3f ms/frame (%.1f FPS)"),
          1000.0f / pCtx->pIO->Framerate, pCtx->pIO->Framerate);
     ImGui::SameLine();
@@ -21,14 +26,17 @@ void ComponentFrameRate(Ctx* pCtx) {
     }
 
     auto& performaceParams = pCtx->performanceParams;
-
 #ifdef MULTITHREAD
     const auto helper = performaceParams.GetUILockHelper();
 #endif
 
     ImGui::Text(I18N("Read Data: %.3f ms"), performaceParams.readTime);
+    ImGui::SameLine();
+
     ImGui::Text(I18N("Vibration Localization: %.3f ms, Waterfall Chat: %.3f ms, Log: %.3f ms"),
         performaceParams.vl.processTime, performaceParams.vl.waterfallChatTime, performaceParams.vl.logTime);
+    ImGui::SameLine();
+
     ImGui::Text(I18N("Waveform Restore: %.3f ms, Peak Restore: %.3f ms, Log UI: %.3f ms, Log: %.3f ms"),
         performaceParams.wr.processTime, performaceParams.wr.peakProcess,
         performaceParams.wr.logUITime, performaceParams.wr.logTime);
