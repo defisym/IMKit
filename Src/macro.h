@@ -34,6 +34,12 @@
 // multi-thread
 #define MULTITHREAD
 
+#ifdef MULTITHREAD
+// how many frame to read under mulit thread mode
+// should find a balance between speed and wait interval
+#define MULTITHREAD_READ_FRAMECOUNT 2u
+#endif
+
 // set priority to ABOVE_NORMAL_PRIORITY_CLASS
 #define PROCESS_SET_PRIORITY
 
