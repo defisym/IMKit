@@ -41,6 +41,28 @@
 // let operarte system schedule
 #define PROCESS_SET_AFFINITY
 
+// use high performance GPU
+// if not set, the first adaptor will be used
+//#define USE_HIGEPERFORMANCE_GPU
+
+#ifdef USE_HIGEPERFORMANCE_GPU
+// use NVIDIA
+// ref: https://developer.download.nvidia.com/devzone/devcenter/gamegraphics/files/OptimusRenderingPolicies.pdf
+#define USE_NVIDIA_GPU
+
+#ifndef USE_NVIDIA_GPU
+// use AMD
+// ref: https://gpuopen.com/learn/amdpowerxpressrequesthighperformance/
+// #define USE_AMD_GPU
+
+#ifndef USE_AMD_GPU
+// use intel Arc Graphics
+// not implemented
+#define USE_INTEL_GPU
+#endif
+#endif
+#endif
+
 // log debug string to logger 
 #define LOG_DEBUG_STRING
 #if defined(_DEBUG) && defined(LOG_DEBUG_STRING)
@@ -52,10 +74,10 @@
 
 // json crahes in profile mode
 // enable this macro to measure performance
-//#define NO_I18N
+#define NO_I18N
 
 // audio thread will always run and mess the profile result
-#define NO_AUDIO
+//#define NO_AUDIO
 
 // disable vsync
 #ifndef MULTITHREAD
