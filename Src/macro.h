@@ -143,6 +143,12 @@
 #define READER_SKIP_FRAME
 
 #ifdef READER_SKIP_FRAME
+// used in multithread mode, which indicates the percent of data in buffer
+#define READER_SKIP_FRAME_BUFFER_TOLERANCE 0.05
+// used in single thread mode, which indicates the percent of process time 
+// can be longer than standard time
+#define READER_SKIP_FRAME_TIME_TOLERANCE 0.1
+
 // do not skip frame until receive processFrameCount frames
 // if internal frames are dropped, there will be a quick change of waveform
 // and create other frequency in FFT result
