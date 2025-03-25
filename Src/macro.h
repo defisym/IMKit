@@ -85,6 +85,19 @@
 // audio thread will always run and mess the profile result
 //#define NO_AUDIO
 
+// auto set when profiling
+//#define PROFILE
+
+#ifdef PROFILE
+#ifndef NO_I18N
+#define NO_I18N
+#endif
+
+#ifndef NO_AUDIO
+#define NO_AUDIO
+#endif
+#endif
+
 // disable vsync
 #ifndef MULTITHREAD
 // UI uses a spin lock to protect data
