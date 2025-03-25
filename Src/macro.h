@@ -37,7 +37,7 @@
 #ifdef MULTITHREAD
 // how many frame to read under mulit thread mode
 // should find a balance between speed and wait interval
-#define MULTITHREAD_READ_FRAMECOUNT 2u
+#define MULTITHREAD_READ_FRAMECOUNT 1u
 #endif
 
 // set priority to ABOVE_NORMAL_PRIORITY_CLASS
@@ -145,6 +145,10 @@
 #ifdef READER_SKIP_FRAME
 // used in multithread mode, which indicates the percent of data in buffer
 #define READER_SKIP_FRAME_BUFFER_TOLERANCE 0.05
+
+// used in multithread mode, which indicates how many time to drain before drop data
+#define READER_SKIP_FRAME_DRAIN_COUNT 1u
+
 // used in single thread mode, which indicates the percent of process time 
 // can be longer than standard time
 #define READER_SKIP_FRAME_TIME_TOLERANCE 0.1
