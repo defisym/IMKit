@@ -8,6 +8,8 @@
 #pragma comment(lib, "SDL2.lib")
 #pragma comment(lib, "SDL2_mixer_ext.lib")
 
+#include "macro.h"
+
 AudioData::AudioChunk::AudioChunk() {
     pChunk = Mix_QuickLoad_RAW(chunk, CHUNK_SIZE);
     if (pChunk) { return; }
@@ -20,10 +22,12 @@ AudioData::AudioChunk::~AudioChunk() {
 }
 
 void AudioData::AddData(const DataConverter::SourceInfo& sourceInfo) {
+#ifndef NO_AUDIO
     dataConverter.ConvertData(sourceInfo);
     const auto convBuf = dataConverter._destInfo;
 
     ringBuffer.WriteData(convBuf.pBuffer, convBuf.bufferSz);
+#endif
 }
 
 bool AudioPlayer::InitAudio() {

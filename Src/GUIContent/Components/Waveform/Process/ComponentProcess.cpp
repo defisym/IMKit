@@ -8,6 +8,10 @@
 #include "IMGuiEx/IndentHelper.h"
 #endif
 
+// ------------------------------------------------
+// General
+// ------------------------------------------------
+
 #if !defined (VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT) || !defined (WAVEFORM_RESTORE_ONLY_SHOW_RESULT) 
 // do not display more than MAX_DISPLAY_FRAME
 // for raw data -> nobody cares!
@@ -16,6 +20,35 @@ static size_t GetDisplayFrame(const size_t frameCount) {
     return std::min(frameCount, MAX_DISPLAY_FRAME);
 }
 #endif
+
+// display this first, or other lines will be overlapped
+static void DisplayLoggerThreshold(const Ctx* pCtx) {
+#ifdef VIBRATION_LOCALIZATION_SHOW_LOGGER_THRESHOLD
+    PlotInfo plotInfo = {};
+#ifdef VIBRATION_LOCALIZATION_USE_METER
+    plotInfo.xUpdater = [&] (const double index) {
+        return index * pCtx->deviceHandler.deviceParams.resolution;
+        };
+#endif
+
+    const auto& deviceParams = pCtx->deviceHandler.deviceParams;
+    const auto frameSize = static_cast<int>(deviceParams.pointNumProcess);
+
+    struct ThresholdData {
+        OTDRProcessValueType threshold;
+        PlotInfo* plotInfo = nullptr;
+    } thresholdData
+        = { .threshold = pCtx->loggerHandler.loggerParams.threshold,
+            .plotInfo = &plotInfo };
+
+    ImPlot::PlotLineG(I18N("Threshold", "DisplayLoggerThreshold"),
+        [] (int idx, void* pData) {
+            const auto pThresholdData = static_cast<ThresholdData*>(pData);
+            return ImPlotPoint{ (*pThresholdData->plotInfo->GetXUpdater())(idx),
+                pThresholdData->threshold };
+        }, &thresholdData, frameSize, ImPlotLineFlags_Shaded);
+#endif
+}
 
 static void RawData(Ctx* pCtx)  {
     if (pCtx->EasyMode()) { return; }
@@ -54,40 +87,34 @@ static void RawData(Ctx* pCtx)  {
     ImGui::EndTabItem();
 }
 
-// display this first, or other lines will be overlapped
-static void DisplayLoggerThreshold(const Ctx* pCtx) {
-#ifdef VIBRATION_LOCALIZATION_SHOW_LOGGER_THRESHOLD
-    PlotInfo plotInfo = {};
-#ifdef VIBRATION_LOCALIZATION_USE_METER
-    plotInfo.xUpdater = [&] (const double index) {
-        return index * pCtx->deviceHandler.deviceParams.resolution;
-        };
+// ------------------------------------------------
+// Vibration Localization
+// ------------------------------------------------
+
+static void DisplayWaterfallChat(Ctx* pCtx) {
+    const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Waterfall Chat")), ImGui::EndTabItem };
+    if (!tabHelper.State()) { return; }
+#ifdef INDENT_INSIDE_TAB
+    IndentHelper indentHelper = {};
 #endif
+    auto& handler = pCtx->waterfallChatHandler;
 
-    const auto& deviceParams = pCtx->deviceHandler.deviceParams;
-    const auto frameSize = static_cast<int>(deviceParams.pointNumProcess);
+    handler.UpdateRenderTarget((UINT)ImGui::GetContentRegionAvail().x,
+        WaterfallChatHandler::RTT_DEFAULT_HEIGHT);
+    handler.UpdateRenderParam();
+    handler.CallRender();
 
-    struct ThresholdData {
-        OTDRProcessValueType threshold;
-        PlotInfo* plotInfo = nullptr;
-    } thresholdData
-        = { .threshold = pCtx->loggerHandler.loggerParams.threshold,
-            .plotInfo = &plotInfo };
+    handler.CreateSharedTexture();
+    auto& pSrv = handler.pSrvSharedTexture;
+    if (pSrv == nullptr) { return; }
 
-    ImPlot::PlotLineG(I18N("Threshold", "DisplayLoggerThreshold"),
-        [] (int idx, void* pData) {
-            const auto pThresholdData = static_cast<ThresholdData*>(pData);
-            return ImPlotPoint{ (*pThresholdData->plotInfo->GetXUpdater())(idx),
-                pThresholdData->threshold };
-        }, &thresholdData, frameSize, ImPlotLineFlags_Shaded);
-#endif
+    ImGui::Image((ImTextureID)(intptr_t)pSrv.Get(),
+        ImVec2((float)handler.rttWidth, (float)handler.rttHeight));
 }
 
-static void VibrationLocalization(Ctx* pCtx) {
-    const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Vibration Localization")), ImGui::EndTabItem };
+static void DisplayVibrationLocalization(Ctx* pCtx) {
+    const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Localization Display")), ImGui::EndTabItem };
     if (!tabHelper.State()) { return; }
-
-    const auto helper = pCtx->threadHandler.GetVibrationUILockHelper();
 #ifdef INDENT_INSIDE_TAB
     IndentHelper indentHelper = {};
 #endif
@@ -101,7 +128,7 @@ static void VibrationLocalization(Ctx* pCtx) {
         ImGui::TextUnformatted(I18N("Data not enough"));
         return;
     }
-
+    
     std::string xLabel =
 #ifdef VIBRATION_LOCALIZATION_USE_METER
         I18N("Meter");
@@ -111,7 +138,7 @@ static void VibrationLocalization(Ctx* pCtx) {
     PlotInfo plotInfo = {};
 #ifdef VIBRATION_LOCALIZATION_USE_METER
     plotInfo.xUpdater = [&] (const double index) {
-        return index * pCtx->deviceHandler.deviceParams.resolution;
+        return index * deviceParams.resolution;
         };
 #endif
 
@@ -170,6 +197,28 @@ static void VibrationLocalization(Ctx* pCtx) {
     }
 #endif
 }
+
+static void VibrationLocalization(Ctx* pCtx) {
+    const EmbraceHelper tabHelper = { ImGui::BeginTabItem(I18N("Vibration Localization")), ImGui::EndTabItem };
+    if (!tabHelper.State()) { return; }
+
+#ifdef INDENT_INSIDE_TAB
+    IndentHelper indentHelper = {};
+#endif
+
+    const EmbraceHelper tabBarHelper
+        = { ImGui::BeginTabBar("Waveform/Process/Tab/VibrationLocalization", TAB_BAR_FLAGS), ImGui::EndTabBar };
+    if (!tabBarHelper.State()) { return; }
+
+    const auto helper = pCtx->threadHandler.GetVibrationUILockHelper();
+
+    DisplayVibrationLocalization(pCtx);
+    DisplayWaterfallChat(pCtx);
+}
+
+// ------------------------------------------------
+// Waveform Restore
+// ------------------------------------------------
 
 // display waveform and it's FFT
 static void DisplayWaveformRestoreOutput(const Ctx* pCtx, const char* pTitle, const WaveformRestoreOutput& waveform) {
@@ -373,6 +422,10 @@ static void WaveformRestore(Ctx* pCtx) {
         ImGui::EndTabBar();
     }
 }
+
+// ------------------------------------------------
+// Component Process
+// ------------------------------------------------
 
 void ComponentProcess(Ctx* pCtx) {
     switch (pCtx->deviceHandler.readerState) {

@@ -34,12 +34,40 @@
 // multi-thread
 #define MULTITHREAD
 
+#ifdef MULTITHREAD
+// how many frame to read under mulit thread mode
+// should find a balance between speed and wait interval
+#define MULTITHREAD_READ_FRAMECOUNT 1u
+#endif
+
 // set priority to ABOVE_NORMAL_PRIORITY_CLASS
 #define PROCESS_SET_PRIORITY
 
 // bind process to given CPU core instead of 
 // let operarte system schedule
 #define PROCESS_SET_AFFINITY
+
+// use high performance GPU
+// if not set, the first adaptor will be used
+//#define USE_HIGEPERFORMANCE_GPU
+
+#ifdef USE_HIGEPERFORMANCE_GPU
+// use NVIDIA
+// ref: https://developer.download.nvidia.com/devzone/devcenter/gamegraphics/files/OptimusRenderingPolicies.pdf
+#define USE_NVIDIA_GPU
+
+#ifndef USE_NVIDIA_GPU
+// use AMD
+// ref: https://gpuopen.com/learn/amdpowerxpressrequesthighperformance/
+// #define USE_AMD_GPU
+
+#ifndef USE_AMD_GPU
+// use intel Arc Graphics
+// not implemented
+#define USE_INTEL_GPU
+#endif
+#endif
+#endif
 
 // log debug string to logger 
 #define LOG_DEBUG_STRING
@@ -53,6 +81,22 @@
 // json crahes in profile mode
 // enable this macro to measure performance
 //#define NO_I18N
+
+// audio thread will always run and mess the profile result
+//#define NO_AUDIO
+
+// auto set when profiling
+//#define PROFILE
+
+#ifdef PROFILE
+#ifndef NO_I18N
+#define NO_I18N
+#endif
+
+#ifndef NO_AUDIO
+#define NO_AUDIO
+#endif
+#endif
 
 // disable vsync
 #ifndef MULTITHREAD
@@ -112,6 +156,16 @@
 #define READER_SKIP_FRAME
 
 #ifdef READER_SKIP_FRAME
+// used in multithread mode, which indicates the percent of data in buffer
+#define READER_SKIP_FRAME_BUFFER_TOLERANCE 0.05
+
+// used in multithread mode, which indicates how many time to drain before drop data
+#define READER_SKIP_FRAME_DRAIN_COUNT 1u
+
+// used in single thread mode, which indicates the percent of process time 
+// can be longer than standard time
+#define READER_SKIP_FRAME_TIME_TOLERANCE 0.1
+
 // do not skip frame until receive processFrameCount frames
 // if internal frames are dropped, there will be a quick change of waveform
 // and create other frequency in FFT result
