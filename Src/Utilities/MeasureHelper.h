@@ -19,6 +19,8 @@ struct MeasureHelper {
 
     float* pTime = nullptr;
     TimeStamp start = {};
-    MeasureHelper(float* p) :pTime(p), start(GetNow()) {}
+    MeasureHelper(float* p, bool bReset = true) :pTime(p), start(GetNow()) {
+        if (bReset) { *p = 0.0f; }
+    }
     ~MeasureHelper() { *pTime = GetIntervalMs(start); }
 };
