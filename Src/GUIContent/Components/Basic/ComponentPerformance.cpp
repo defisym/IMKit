@@ -29,54 +29,30 @@ void ComponentPerformance(Ctx* pCtx) {
 #ifdef MULTITHREAD
     const auto helper = performaceParams.GetUILockHelper();
 #endif
-    {
-        ImGui::TextUnformatted(I18N("Current: "));
+
+    auto displayPerformanceParam = [] (const PerformanceParams::ReadPerformance& read,
+        const PerformanceParams::VibrationLocalizationPerformance& vl,
+        const PerformanceParams::WaveformRestorePerformance& wr) {
+            ImGui::Text(I18N("Read Data: %.3f ms"), read.readTime);
+            ImGui::SameLine();
+            ImGui::Text(I18N("Vibration Localization: %.3f ms, Waterfall Chat: %.3f ms, Log: %.3f ms"),
+                vl.processTime, vl.waterfallChatTime, vl.logTime);
+            ImGui::SameLine();
+            ImGui::Text(I18N("Waveform Restore: %.3f ms, Peak Restore: %.3f ms, Log UI: %.3f ms, Log: %.3f ms"),
+                wr.processTime, wr.peakProcess, wr.logUITime, wr.logTime);
+        };
+
+        ImGui::TextUnformatted(I18N("Current:"));
         ImGui::SameLine();
-        ImGui::Text(I18N("Read Data: %.3f ms"), performaceParams.read.cur.readTime);
-        ImGui::SameLine();
+        displayPerformanceParam(performaceParams.read.cur, performaceParams.vl.cur, performaceParams.wr.cur);
         
-        ImGui::TextUnformatted(I18N("Average: "));
+        ImGui::TextUnformatted(I18N("Average:"));
         ImGui::SameLine();
-        ImGui::Text(I18N("Read Data: %.3f ms"), performaceParams.read.avg.readTime);
-        ImGui::SameLine();
-     
-        ImGui::TextUnformatted(I18N("Slowest: "));
-        ImGui::SameLine();
-        ImGui::Text(I18N("Read Data: %.3f ms"), performaceParams.read.slowest.readTime);
-    }
-    {
-        ImGui::TextUnformatted(I18N("Current: "));
-        ImGui::SameLine();
-        ImGui::Text(I18N("Vibration Localization: %.3f ms, Waterfall Chat: %.3f ms, Log: %.3f ms"),
-            performaceParams.vl.cur.processTime, performaceParams.vl.cur.waterfallChatTime, performaceParams.vl.cur.logTime);
+        displayPerformanceParam(performaceParams.read.avg, performaceParams.vl.avg, performaceParams.wr.avg);
 
-        ImGui::TextUnformatted(I18N("Average: "));
+        ImGui::TextUnformatted(I18N("Slowest:"));
         ImGui::SameLine();
-        ImGui::Text(I18N("Vibration Localization: %.3f ms, Waterfall Chat: %.3f ms, Log: %.3f ms"),
-            performaceParams.vl.avg.processTime, performaceParams.vl.avg.waterfallChatTime, performaceParams.vl.avg.logTime);
-        
-        ImGui::TextUnformatted(I18N("Slowest: "));
-        ImGui::SameLine();
-        ImGui::Text(I18N("Vibration Localization: %.3f ms, Waterfall Chat: %.3f ms, Log: %.3f ms"),
-            performaceParams.vl.slowest.processTime, performaceParams.vl.slowest.waterfallChatTime, performaceParams.vl.slowest.logTime);
-    }
-    {
-        ImGui::TextUnformatted(I18N("Current: "));
-        ImGui::SameLine();
-        ImGui::Text(I18N("Waveform Restore: %.3f ms, Peak Restore: %.3f ms, Log UI: %.3f ms, Log: %.3f ms"),
-            performaceParams.wr.cur.processTime, performaceParams.wr.cur.peakProcess,
-            performaceParams.wr.cur.logUITime, performaceParams.wr.cur.logTime);
+        displayPerformanceParam(performaceParams.read.slowest, performaceParams.vl.slowest, performaceParams.wr.slowest);
 
-        ImGui::TextUnformatted(I18N("Average: "));
-        ImGui::SameLine();
-        ImGui::Text(I18N("Waveform Restore: %.3f ms, Peak Restore: %.3f ms, Log UI: %.3f ms, Log: %.3f ms"),
-            performaceParams.wr.avg.processTime, performaceParams.wr.avg.peakProcess,
-            performaceParams.wr.avg.logUITime, performaceParams.wr.avg.logTime);
-
-        ImGui::TextUnformatted(I18N("Slowest: "));
-        ImGui::SameLine();
-        ImGui::Text(I18N("Waveform Restore: %.3f ms, Peak Restore: %.3f ms, Log UI: %.3f ms, Log: %.3f ms"),
-            performaceParams.wr.slowest.processTime, performaceParams.wr.slowest.peakProcess,
-            performaceParams.wr.slowest.logUITime, performaceParams.wr.slowest.logTime);
-    }
+        if (ImGui::Button(I18N("Reset"))) { performaceParams = {}; }
 }
