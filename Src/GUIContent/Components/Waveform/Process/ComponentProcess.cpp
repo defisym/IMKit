@@ -101,7 +101,6 @@ static void DisplayWaterfallChat(Ctx* pCtx) {
 
     handler.UpdateRenderTarget((UINT)ImGui::GetContentRegionAvail().x,
         WaterfallChatHandler::RTT_DEFAULT_HEIGHT);
-    handler.UpdateRenderParam();
     handler.CallRender();
 
     handler.CreateSharedTexture();
