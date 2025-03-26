@@ -126,8 +126,11 @@ int IMGUIInterface(IMGUIContext* pCtx,
                 pCtx->clear_color.z * pCtx->clear_color.w,
                 pCtx->clear_color.w };
         pCtx->renderContext.BeginRender(ColorRGBA);
-        ImGui::Render();
-        ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());        
+        {
+            auto helper = MeasureHelper{ &pCtx->renderTime };
+            ImGui::Render();
+            ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+        }
         pCtx->renderContext.EndRender(pCtx->bVSync ? 1 : 0);
     }
 

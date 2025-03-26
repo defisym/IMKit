@@ -14,11 +14,11 @@ void ComponentPerformance(Ctx* pCtx) {
     ImGui::Text(I18N("Last frame: %.3f ms"), ms);
     ImGui::SameLine();
 
-    ImGui::Text(I18N("Main loop: %.3f ms, GUI: %.3f ms"),
-       pCtx->mainLoopTime, pCtx->guiTime);
+    ImGui::Text(I18N("Main loop: %.3f ms, GUI: %.3f ms, Render: %.3f ms"),
+       pCtx->mainLoopTime, pCtx->guiTime, pCtx->renderTime);
     ImGui::SameLine();
 
-    const auto other = ms - (pCtx->mainLoopTime + pCtx->guiTime);
+    const auto other = ms - (pCtx->mainLoopTime + pCtx->guiTime + pCtx->renderTime);
     if (pCtx->bVSync) {
         ImGui::Text(I18N("V-sync wait & other process: %.3f ms"), other);
     }else {
