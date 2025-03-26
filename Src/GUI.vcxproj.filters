@@ -237,9 +237,6 @@
     <ClCompile Include="GUIContent\GUIContent.cpp">
       <Filter>源文件\GUIContent</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\Basic\ComponentFrameRate.cpp">
-      <Filter>源文件\GUIContent\Components\Basic</Filter>
-    </ClCompile>
     <ClCompile Include="GUIContent\Components\Config\ComponentConfig.cpp">
       <Filter>源文件\GUIContent\Components\Config</Filter>
     </ClCompile>
@@ -366,9 +363,6 @@
     <ClCompile Include="Worker\WaveformThread.cpp">
       <Filter>源文件\Worker</Filter>
     </ClCompile>
-    <ClCompile Include="Worker\RestoreThread.cpp">
-      <Filter>源文件\Worker</Filter>
-    </ClCompile>
     <ClCompile Include="GUIContext\Param\FibreParams.cpp">
       <Filter>源文件\GUIContext\Param</Filter>
     </ClCompile>
@@ -395,6 +389,9 @@
     </ClCompile>
     <ClCompile Include="IMGuiInterface\D3DContext.cpp">
       <Filter>源文件\IMGuiInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\Basic\ComponentPerformance.cpp">
+      <Filter>源文件\GUIContent\Components\Basic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -456,9 +453,6 @@
       <Filter>头文件\GUIContent\Components\Basic</Filter>
     </ClInclude>
     <ClInclude Include="GUIContent\Components\Basic\ComponentWindow.h">
-      <Filter>头文件\GUIContent\Components\Basic</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Basic\ComponentFrameRate.h">
       <Filter>头文件\GUIContent\Components\Basic</Filter>
     </ClInclude>
     <ClInclude Include="GUIContent\Components\Config\ComponentConfig.h">
@@ -614,9 +608,6 @@
     <ClInclude Include="Worker\WaveformThread.h">
       <Filter>头文件\Worker</Filter>
     </ClInclude>
-    <ClInclude Include="Worker\RestoreThread.h">
-      <Filter>头文件\Worker</Filter>
-    </ClInclude>
     <ClInclude Include="IMGuiEx\SliderSpin.h">
       <Filter>头文件\IMGuiEx</Filter>
     </ClInclude>
@@ -640,6 +631,9 @@
     </ClInclude>
     <ClInclude Include="IMGuiInterface\D3DContext.h">
       <Filter>头文件\IMGuiInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\Basic\ComponentPerformance.h">
+      <Filter>头文件\GUIContent\Components\Basic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
