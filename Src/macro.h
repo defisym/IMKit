@@ -160,6 +160,8 @@
 #define READER_SKIP_FRAME_BUFFER_TOLERANCE 0.05
 
 // used in multithread mode, which indicates how many time to drain before drop data
+// e.g., for waveform, most time is just copy and fill buffer, process only triggered 
+// when buffer is full, drain can reduce data lose
 #define READER_SKIP_FRAME_DRAIN_COUNT 1u
 
 // used in single thread mode, which indicates the percent of process time 
