@@ -59,7 +59,7 @@ inline void DisplayPlot(const char* pLabel,
             pYUpdater = pInfo->GetYUpdater();
         }
 
-        ImPlotPoint GetCoord(const int idx) {
+        ImPlotPoint GetCoord(const int idx) const {
             auto pElement = pData + static_cast<size_t>(std::floor(idx * coordCoef)) * pInfo->stride;
 
             return { (*pXUpdater)(idx * coordCoef),
