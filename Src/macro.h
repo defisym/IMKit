@@ -38,6 +38,10 @@
 // how many frame to read under mulit thread mode
 // should find a balance between speed and wait interval
 #define MULTITHREAD_READ_FRAMECOUNT 1u
+
+// process thread will sleep when no data for an estimated delay
+// can reduce CPU usage
+#define MULTITHREAD_SLEEP_WHEN_NODATA
 #endif
 
 // set priority to ABOVE_NORMAL_PRIORITY_CLASS
