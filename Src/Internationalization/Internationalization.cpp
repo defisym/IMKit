@@ -32,7 +32,7 @@ Internationalization::Internationalization() {
         if (tokenName.empty()) { continue; }
         if (tokenMap.contains(tokenName)) {
 #ifdef _DEBUG
-            OutputDebugStringA(std::format("Duplicate token: {}",
+            OutputDebugStringA(std::format("Duplicate token: {}\n",
                 tokenNameSrc).c_str());
 #endif
             continue;
@@ -49,7 +49,7 @@ Internationalization::Internationalization() {
             if (langName.empty()) { continue; }
             if (languageMap.contains(langName)) {
 #ifdef _DEBUG
-                OutputDebugStringA(std::format("Duplicate token {} localization: {}",
+                OutputDebugStringA(std::format("Duplicate token {} localization: {}\n",
                     tokenNameSrc, langNameSrc).c_str());
 #endif
                 continue;

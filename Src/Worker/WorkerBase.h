@@ -4,7 +4,12 @@
 
 #include "LockHelper.h"
 
+#include "macro.h"
+
 #include "Thread/ThreadBase.h"
+#ifdef MULTITHREAD_SLEEP_WHEN_NODATA
+#include "Utilities/WaitTimer.h"
+#endif
 
 struct Ctx;
 
@@ -19,4 +24,8 @@ struct WorkerBase : ThreadHibernate {
 
     WorkerBase(Ctx* p, CallbackType cb);
     void ExecuteCallback() override;
+
+#ifdef MULTITHREAD_SLEEP_WHEN_NODATA
+    WaitTimer timer = {};
+#endif
 };

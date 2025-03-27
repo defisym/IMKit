@@ -635,6 +635,9 @@
     <ClInclude Include="GUIContent\Components\Basic\ComponentPerformance.h">
       <Filter>头文件\GUIContent\Components\Basic</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities\WaitTimer.h">
+      <Filter>头文件\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GUI.rc">

@@ -385,6 +385,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Utilities\ThreadSafeRingBuffer.h" />
     <ClInclude Include="Utilities\TimeStampHelper.h" />
     <ClInclude Include="Utilities\VibrationDataInterface.h" />
+    <ClInclude Include="Utilities\WaitTimer.h" />
     <ClInclude Include="Utilities\WaveformDataInterface.h" />
     <ClInclude Include="Worker\ReaderThread.h" />
     <ClInclude Include="Worker\Thread\ThreadBase.h" />
