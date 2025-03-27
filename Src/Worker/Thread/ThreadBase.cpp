@@ -46,7 +46,7 @@ bool ThreadBase::ReStart(const ThreadInfo& info) {
     Stop(); return Start(info);
 }
 
-inline void ThreadBase::ExecuteCallback() {
+void ThreadBase::ExecuteCallback() {
     threadId = SDL_GetThreadID(pThread);
 
     // permission that can bind CPU core

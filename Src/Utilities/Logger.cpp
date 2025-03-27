@@ -61,11 +61,11 @@ void Logger::AddLog(const char* pLog) {
     lines.emplace_back(pLog);
 }
 
-inline void Logger::AddLog(const std::string& log) {
+void Logger::AddLog(const std::string& log) {
     lines.emplace_back(log);
 }
 
-inline void Logger::AddLog(const std::string&& log) {
+void Logger::AddLog(const std::string&& log) {
     lines.emplace_back(log);
 }
 
