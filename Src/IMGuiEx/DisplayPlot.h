@@ -20,6 +20,8 @@ using CoordUpdater = std::function<double(const double)>;
 
 struct PlotInfo {
     int stride = 1;
+    int threshold = OPTIMIZE_PLOT_DSIPLAY_THRESHOLD;
+
     CoordUpdater xUpdater = nullptr;
     CoordUpdater yUpdater = nullptr;
     ImPlotLineFlags flags = ImPlotLineFlags_None;
@@ -39,8 +41,6 @@ inline void DisplayPlot(const char* pLabel,
     const T* pData, int dataCount, const PlotInfo& info = {}) {    
     if (pData == nullptr) { return; }
     
-    constexpr static auto THRESHOLD = OPTIMIZE_PLOT_DSIPLAY_THRESHOLD;
-
     struct Data {
         const T* pData = nullptr;
         int dataCount = 0;
@@ -54,7 +54,7 @@ inline void DisplayPlot(const char* pLabel,
             :pData(pD), dataCount(sz), pInfo(pI) {
             constexpr static auto MIN_OFFSET = 1.0;
             coordCoef = (std::max)(MIN_OFFSET,
-                static_cast<double>(dataCount) / static_cast<double>(THRESHOLD));
+                static_cast<double>(dataCount) / static_cast<double>(pI->threshold));
             pXUpdater = pInfo->GetXUpdater();
             pYUpdater = pInfo->GetYUpdater();
         }
@@ -71,7 +71,7 @@ inline void DisplayPlot(const char* pLabel,
         [] (int idx, void* pUserData) {
             return static_cast<Data*>(pUserData)->GetCoord(idx);
         },
-        &plotData, (std::min)(dataCount, THRESHOLD), info.flags);
+        &plotData, (std::min)(dataCount, info.threshold), info.flags);
 }
 
 template<typename T>
