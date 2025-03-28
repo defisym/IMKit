@@ -38,8 +38,8 @@ void ComponentPerformance(Ctx* pCtx) {
             ImGui::Text(I18N("Vibration Localization: %.3f ms, Waterfall Chat: %.3f ms, Log: %.3f ms"),
                 vl.processTime, vl.waterfallChatTime, vl.logTime);
             ImGui::SameLine();
-            ImGui::Text(I18N("Waveform Restore: %.3f ms, Peak Restore: %.3f ms, Log UI: %.3f ms, Log: %.3f ms"),
-                wr.processTime, wr.peakProcess, wr.logUITime, wr.logTime);
+            ImGui::Text(I18N("Fill: %.3f ms, Single Restore: %.3f ms, %.3f Peak(s) Restore: %.3f ms, Log UI: %.3f ms, Log: %.3f ms"),
+                wr.addTime, wr.SingleProcess, wr.peakCount, wr.peakProcess, wr.logUITime, wr.logTime);
         };
 
         ImGui::TextUnformatted(I18N("Current:"));
