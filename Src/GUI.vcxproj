@@ -253,6 +253,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContext\Handler\ThreadHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\VibrationLocalizationHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\WaterfallChatHandler.cpp" />
+    <ClCompile Include="GUIContext\Handler\WaveformRestoreData.cpp" />
     <ClCompile Include="GUIContext\Handler\WaveformRestoreDefinition.cpp" />
     <ClCompile Include="GUIContext\Handler\WaveformRestoreHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\WaveformRestoreProcessor.cpp" />
@@ -346,6 +347,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContext\Handler\ThreadHandler.h" />
     <ClInclude Include="GUIContext\Handler\VibrationLocalizationHandler.h" />
     <ClInclude Include="GUIContext\Handler\WaterfallChatHandler.h" />
+    <ClInclude Include="GUIContext\Handler\WaveformRestoreData.h" />
     <ClInclude Include="GUIContext\Handler\WaveformRestoreDefinition.h" />
     <ClInclude Include="GUIContext\Handler\WaveformRestoreHandler.h" />
     <ClInclude Include="GUIContext\Handler\WaveformRestoreProcessor.h" />
