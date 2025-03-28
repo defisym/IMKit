@@ -183,7 +183,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="imguiInterface\IMGUIInterface.cpp">
+    <ClCompile Include="IMGuiInterface\IMGuiInterface.cpp">
       <Filter>源文件\IMGuiInterface</Filter>
     </ClCompile>
     <ClCompile Include="imgui\imgui.cpp">
@@ -297,7 +297,7 @@
     <ClCompile Include="IMGuiEx\FontEx.cpp">
       <Filter>源文件\IMGuiEx</Filter>
     </ClCompile>
-    <ClCompile Include="imguiInterface\IMGUIContext.cpp">
+    <ClCompile Include="IMGuiInterface\IMGuiContext.cpp">
       <Filter>源文件\IMGuiInterface</Filter>
     </ClCompile>
     <ClCompile Include="IMGuiEx\LabelMaker.cpp">
@@ -395,7 +395,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="imguiInterface\IMGUIInterface.h">
+    <ClInclude Include="IMGuiInterface\IMGuiInterface.h">
       <Filter>头文件\IMGuiInterface</Filter>
     </ClInclude>
     <ClInclude Include="imgui\imconfig.h">
@@ -509,7 +509,7 @@
     <ClInclude Include="IMGuiEx\LabelMaker.h">
       <Filter>头文件\IMGuiEx</Filter>
     </ClInclude>
-    <ClInclude Include="imguiInterface\IMGUIContext.h">
+    <ClInclude Include="IMGuiInterface\IMGuiContext.h">
       <Filter>头文件\IMGuiInterface</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
@@ -560,7 +560,7 @@
     <ClInclude Include="GUIContent\Components\Waveform\ComponentWaveform.h">
       <Filter>头文件\GUIContent\Components\Waveform</Filter>
     </ClInclude>
-    <ClInclude Include="imguiInterface\imguiDemo.h">
+    <ClInclude Include="IMGuiInterface\IMGuiDemo.h">
       <Filter>头文件\IMGuiInterface</Filter>
     </ClInclude>
     <ClInclude Include="GUIContent\Components\Config\Inspect\ComponentConfigInspect.h">

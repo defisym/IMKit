@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IMGUIInterface.h"
+#include "IMGuiInterface.h"
 
 inline int imguiDemo() {
     struct DefaultCtx final :IMGUIContext {

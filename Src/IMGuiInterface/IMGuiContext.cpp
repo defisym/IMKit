@@ -1,4 +1,4 @@
-#include "IMGUIContext.h"
+#include "IMGuiContext.h"
 
 bool IMGUIContext::InitContext() {
     pFont = new FontEx{};

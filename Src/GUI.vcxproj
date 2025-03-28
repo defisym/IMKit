@@ -264,8 +264,8 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="IMGuiEx\LabelMaker.cpp" />
     <ClCompile Include="IMGuiEx\SliderSpin.cpp" />
     <ClCompile Include="IMGuiInterface\D3DContext.cpp" />
-    <ClCompile Include="imguiInterface\IMGUIContext.cpp" />
-    <ClCompile Include="imguiInterface\IMGUIInterface.cpp" />
+    <ClCompile Include="IMGuiInterface\IMGuiContext.cpp" />
+    <ClCompile Include="IMGuiInterface\IMGuiInterface.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="imgui\backends\imgui_impl_win32.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
@@ -361,9 +361,9 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="IMGuiEx\LabelMaker.h" />
     <ClInclude Include="IMGuiEx\SliderSpin.h" />
     <ClInclude Include="IMGuiInterface\D3DContext.h" />
-    <ClInclude Include="imguiInterface\IMGUIContext.h" />
-    <ClInclude Include="imguiInterface\imguiDemo.h" />
-    <ClInclude Include="imguiInterface\IMGUIInterface.h" />
+    <ClInclude Include="IMGuiInterface\IMGuiContext.h" />
+    <ClInclude Include="IMGuiInterface\IMGuiDemo.h" />
+    <ClInclude Include="IMGuiInterface\IMGuiInterface.h" />
     <ClInclude Include="imgui\backends\imgui_impl_dx11.h" />
     <ClInclude Include="imgui\backends\imgui_impl_win32.h" />
     <ClInclude Include="imgui\imconfig.h" />
