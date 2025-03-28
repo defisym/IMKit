@@ -253,6 +253,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContext\Handler\ThreadHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\VibrationLocalizationHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\WaterfallChatHandler.cpp" />
+    <ClCompile Include="GUIContext\Handler\WaveformRestoreDefinition.cpp" />
     <ClCompile Include="GUIContext\Handler\WaveformRestoreHandler.cpp" />
     <ClCompile Include="GUIContext\Param\FibreParams.cpp" />
     <ClCompile Include="GUIContext\Param\SoftwareParams.cpp" />
@@ -344,6 +345,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContext\Handler\ThreadHandler.h" />
     <ClInclude Include="GUIContext\Handler\VibrationLocalizationHandler.h" />
     <ClInclude Include="GUIContext\Handler\WaterfallChatHandler.h" />
+    <ClInclude Include="GUIContext\Handler\WaveformRestoreDefinition.h" />
     <ClInclude Include="GUIContext\Handler\WaveformRestoreHandler.h" />
     <ClInclude Include="GUIContext\Param\FibreParams.h" />
     <ClInclude Include="GUIContext\Param\Param.h" />

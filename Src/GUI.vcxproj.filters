@@ -393,6 +393,9 @@
     <ClCompile Include="GUIContent\Components\Basic\ComponentPerformance.cpp">
       <Filter>源文件\GUIContent\Components\Basic</Filter>
     </ClCompile>
+    <ClCompile Include="GUIContext\Handler\WaveformRestoreDefinition.cpp">
+      <Filter>源文件\GUIContext\Handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IMGuiInterface\IMGuiInterface.h">
@@ -637,6 +640,9 @@
     </ClInclude>
     <ClInclude Include="Utilities\WaitTimer.h">
       <Filter>头文件\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContext\Handler\WaveformRestoreDefinition.h">
+      <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
