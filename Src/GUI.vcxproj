@@ -379,6 +379,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="macro.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Utilities\AudioPlayer.h" />
+    <ClInclude Include="Utilities\BackBuffer.h" />
     <ClInclude Include="Utilities\DataConverter.h" />
     <ClInclude Include="Utilities\LoadFileToWStr.h" />
     <ClInclude Include="Utilities\Logger.h" />
