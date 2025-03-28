@@ -283,8 +283,6 @@ static void PeakWaveformRestore(Ctx* pCtx) {
     const auto pPeakHandler = pCtx->processHandler.pPeakWaveformRestoreHandler;
     if (pPeakHandler == nullptr) { return; }
 
-    const auto& peakData = pPeakHandler->GetPeakWaveformRestoreResult();
-
     std::string xLabel =
 #ifdef VIBRATION_LOCALIZATION_USE_METER
         I18N("Meter");
@@ -317,6 +315,7 @@ static void PeakWaveformRestore(Ctx* pCtx) {
         ImPlot::EndSubplots();
     }
 
+    const auto& peakData = pPeakHandler->GetPeakWaveformRestoreResult();
     if (peakData.empty()) {
         ImGui::TextUnformatted(I18N("No peak found"));
     }
