@@ -346,7 +346,8 @@ static void PeakWaveformRestore(Ctx* pCtx) {
 
 static void SpecificWaveformRestore(const Ctx* pCtx) {
     const auto& deviceParams = pCtx->deviceHandler.deviceParams;
-    const auto pHandler = pCtx->processHandler.pWaveformRestoreHandler;
+    const auto pData = pCtx->processHandler.pWaveformRestoreData;
+    const auto pHandler = pCtx->processHandler.pSingleWaveformRestoreHandler;
 
     if (pHandler == nullptr) { return; }
 
@@ -361,7 +362,7 @@ static void SpecificWaveformRestore(const Ctx* pCtx) {
                 frameIdx++) {
                 const std::string plotName = I18NFMT("Plot {}", frameIdx);
                 DisplayPlot(std::format("{}##ImPlot/Wave/Wave Unprocessed/{}", plotName, plotName).c_str(),
-                    Context_GetConstFrameBuffer(pHandler->GetWaveDisplay(),
+                    Context_GetConstFrameBuffer(pData->GetWaveDisplayBuffer(),
                     deviceParams.pointNumPerScan, frameIdx),
                     deviceParams.pointNumPerScan);
             }
