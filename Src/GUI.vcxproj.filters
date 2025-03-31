@@ -205,6 +205,12 @@
     <Filter Include="源文件\Processor\Vibration">
       <UniqueIdentifier>{18943709-7f56-40f5-bc03-d7468ac0594d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\GUIContent\Interface">
+      <UniqueIdentifier>{05ec6182-2ee0-46f7-a236-76b1ce5101a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContent\Interface">
+      <UniqueIdentifier>{e6e0e47f-4789-4524-86d2-a463b7a6da8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IMGuiInterface\IMGuiInterface.cpp">
@@ -455,6 +461,9 @@
     </ClCompile>
     <ClCompile Include="Processor\Waveform\WaveformRestoreProcessor.cpp">
       <Filter>源文件\Processor\Waveform</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Interface\InterfaceLogger.cpp">
+      <Filter>源文件\GUIContent\Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -739,6 +748,9 @@
     </ClInclude>
     <ClInclude Include="Processor\Waveform\WaveformRestoreProcessor.h">
       <Filter>头文件\Processor\Waveform</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Interface\InterfaceLogger.h">
+      <Filter>头文件\GUIContent\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

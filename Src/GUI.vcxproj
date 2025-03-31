@@ -247,6 +247,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessWaveform.cpp" />
     <ClCompile Include="GUIContent\Components\Performance\ComponentPerformance.cpp" />
     <ClCompile Include="GUIContent\GUIContent.cpp" />
+    <ClCompile Include="GUIContent\Interface\InterfaceLogger.cpp" />
     <ClCompile Include="GUIContext\GUIContext.cpp" />
     <ClCompile Include="GUIContext\Handler\AudioHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\CalibrateHandler.cpp" />
@@ -349,6 +350,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessWaveform.h" />
     <ClInclude Include="GUIContent\Components\Performance\ComponentPerformance.h" />
     <ClInclude Include="GUIContent\GUIContent.h" />
+    <ClInclude Include="GUIContent\Interface\InterfaceLogger.h" />
     <ClInclude Include="GUIContext\GUIContext.h" />
     <ClInclude Include="GUIContext\Handler\AudioHandler.h" />
     <ClInclude Include="GUIContext\Handler\CalibrateHandler.h" />
