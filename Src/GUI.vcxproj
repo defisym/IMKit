@@ -282,9 +282,10 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="Internationalization\Internationalization.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Processor\Vibration\VibrationLocalizationHandler.cpp" />
+    <ClCompile Include="Processor\Waveform\SingleWaveformRestoreHandler.cpp" />
     <ClCompile Include="Processor\Waveform\WaveformRestoreData.cpp" />
     <ClCompile Include="Processor\Waveform\WaveformRestoreDefinition.cpp" />
-    <ClCompile Include="Processor\Waveform\WaveformRestoreHandler.cpp" />
+    <ClCompile Include="Processor\Waveform\PeakWaveformRestoreHandler.cpp" />
     <ClCompile Include="Processor\Waveform\WaveformRestoreProcessor.cpp" />
     <ClCompile Include="Tests\AudioTest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -383,8 +384,10 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Internationalization\Internationalization.h" />
     <ClInclude Include="macro.h" />
     <ClInclude Include="Processor\Vibration\VibrationLocalizationHandler.h" />
+    <ClInclude Include="Processor\Waveform\SingleWaveformRestoreHandler.h" />
     <ClInclude Include="Processor\Waveform\WaveformRestoreData.h" />
     <ClInclude Include="Processor\Waveform\WaveformRestoreDefinition.h" />
+    <ClInclude Include="Processor\Waveform\PeakWaveformRestoreHandler.h" />
     <ClInclude Include="Processor\Waveform\WaveformRestoreHandler.h" />
     <ClInclude Include="Processor\Waveform\WaveformRestoreProcessor.h" />
     <ClInclude Include="resource.h" />
