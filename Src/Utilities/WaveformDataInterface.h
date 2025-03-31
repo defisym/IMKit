@@ -3,7 +3,7 @@
 #include "Logger.h"
 #include "OTDRDataInterface.h"
 
-#include "GUIContext/Handler/WaveformRestoreHandler.h"
+#include "Processor/Waveform/WaveformRestoreHandler.h"
 
 struct ShakeInfoStringify {
     std::string result;
