@@ -256,7 +256,6 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContext\Handler\LoggerHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\ThreadHandler.cpp" />
-    <ClCompile Include="GUIContext\Handler\VibrationLocalizationHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\WaterfallChatHandler.cpp" />
     <ClCompile Include="GUIContext\Param\FibreParams.cpp" />
     <ClCompile Include="GUIContext\Param\SoftwareParams.cpp" />
@@ -282,6 +281,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="implot\implot_items.cpp" />
     <ClCompile Include="Internationalization\Internationalization.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Processor\Vibration\VibrationLocalizationHandler.cpp" />
     <ClCompile Include="Processor\Waveform\WaveformRestoreData.cpp" />
     <ClCompile Include="Processor\Waveform\WaveformRestoreDefinition.cpp" />
     <ClCompile Include="Processor\Waveform\WaveformRestoreHandler.cpp" />
@@ -353,7 +353,6 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContext\Handler\LoggerHandler.h" />
     <ClInclude Include="GUIContext\Handler\ProcessHandler.h" />
     <ClInclude Include="GUIContext\Handler\ThreadHandler.h" />
-    <ClInclude Include="GUIContext\Handler\VibrationLocalizationHandler.h" />
     <ClInclude Include="GUIContext\Handler\WaterfallChatHandler.h" />
     <ClInclude Include="GUIContext\Param\FibreParams.h" />
     <ClInclude Include="GUIContext\Param\Param.h" />
@@ -383,6 +382,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="implot\implot_internal.h" />
     <ClInclude Include="Internationalization\Internationalization.h" />
     <ClInclude Include="macro.h" />
+    <ClInclude Include="Processor\Vibration\VibrationLocalizationHandler.h" />
     <ClInclude Include="Processor\Waveform\WaveformRestoreData.h" />
     <ClInclude Include="Processor\Waveform\WaveformRestoreDefinition.h" />
     <ClInclude Include="Processor\Waveform\WaveformRestoreHandler.h" />
