@@ -1,5 +1,4 @@
 #pragma once
 
-#include "GUIContext/GUIContext.h"
-
+struct Ctx;
 void ComponentPerformance(Ctx* pCtx);

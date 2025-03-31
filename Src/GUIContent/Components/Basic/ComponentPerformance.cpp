@@ -1,5 +1,7 @@
 #include "ComponentPerformance.h"
 
+#include "GUIContext/GUIContext.h"
+
 void ComponentPerformance(Ctx* pCtx) {    
     if (!ImGui::CollapsingHeader(I18N("Performance"),
         ImGuiTreeNodeFlags_DefaultOpen)) {
