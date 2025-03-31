@@ -241,6 +241,10 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContent\Components\Display\Inspect\ComponentInspect.cpp" />
     <ClCompile Include="GUIContent\Components\Display\Logger\ComponentLogger.cpp" />
     <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcess.cpp" />
+    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessGeneral.cpp" />
+    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessRawData.cpp" />
+    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessVibration.cpp" />
+    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessWaveform.cpp" />
     <ClCompile Include="GUIContent\GUIContent.cpp" />
     <ClCompile Include="GUIContext\GUIContext.cpp" />
     <ClCompile Include="GUIContext\Handler\AudioHandler.cpp" />
@@ -335,6 +339,10 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContent\Components\Display\Inspect\ComponentInspect.h" />
     <ClInclude Include="GUIContent\Components\Display\Logger\ComponentLogger.h" />
     <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcess.h" />
+    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessGeneral.h" />
+    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessRawData.h" />
+    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessVibration.h" />
+    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessWaveform.h" />
     <ClInclude Include="GUIContent\GUIContent.h" />
     <ClInclude Include="GUIContext\GUIContext.h" />
     <ClInclude Include="GUIContext\Handler\AudioHandler.h" />
