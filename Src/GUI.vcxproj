@@ -226,7 +226,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CPUAffinity\CPUAffinity.cpp" />
-    <ClCompile Include="GUIContent\Components\Basic\ComponentPerformance.cpp" />
+    <ClCompile Include="GUIContent\Components\Basic\ComponentWindow.cpp" />
     <ClCompile Include="GUIContent\Components\Config\ComponentConfig.cpp" />
     <ClCompile Include="GUIContent\Components\Config\Device\ComponentConfigDevice.cpp" />
     <ClCompile Include="GUIContent\Components\Config\Device\ComponentConfigParam.cpp" />
@@ -235,12 +235,17 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContent\Components\Config\Environment\ComponentConfigFiber.cpp" />
     <ClCompile Include="GUIContent\Components\Config\Environment\ComponentConfigSoftware.cpp" />
     <ClCompile Include="GUIContent\Components\Config\Inspect\ComponentConfigInspect.cpp" />
-    <ClCompile Include="GUIContent\Components\Config\Process\ComponentConfigVibrationLocalization.cpp" />
-    <ClCompile Include="GUIContent\Components\Config\Process\ComponentConfigWaveformRestore.cpp" />
-    <ClCompile Include="GUIContent\Components\Waveform\ComponentWaveform.cpp" />
-    <ClCompile Include="GUIContent\Components\Waveform\Inspect\ComponentInspect.cpp" />
-    <ClCompile Include="GUIContent\Components\Waveform\Logger\ComponentLogger.cpp" />
-    <ClCompile Include="GUIContent\Components\Waveform\Process\ComponentProcess.cpp" />
+    <ClCompile Include="GUIContent\Components\Config\Process\ComponentConfigVibration.cpp" />
+    <ClCompile Include="GUIContent\Components\Config\Process\ComponentConfigWaveform.cpp" />
+    <ClCompile Include="GUIContent\Components\Display\ComponentDisplay.cpp" />
+    <ClCompile Include="GUIContent\Components\Display\Inspect\ComponentInspect.cpp" />
+    <ClCompile Include="GUIContent\Components\Display\Logger\ComponentLogger.cpp" />
+    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcess.cpp" />
+    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessGeneral.cpp" />
+    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessRawData.cpp" />
+    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessVibration.cpp" />
+    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessWaveform.cpp" />
+    <ClCompile Include="GUIContent\Components\Performance\ComponentPerformance.cpp" />
     <ClCompile Include="GUIContent\GUIContent.cpp" />
     <ClCompile Include="GUIContext\GUIContext.cpp" />
     <ClCompile Include="GUIContext\Handler\AudioHandler.cpp" />
@@ -251,11 +256,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContext\Handler\LoggerHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\ThreadHandler.cpp" />
-    <ClCompile Include="GUIContext\Handler\VibrationLocalizationHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\WaterfallChatHandler.cpp" />
-    <ClCompile Include="GUIContext\Handler\WaveformRestoreDefinition.cpp" />
-    <ClCompile Include="GUIContext\Handler\WaveformRestoreHandler.cpp" />
-    <ClCompile Include="GUIContext\Handler\WaveformRestoreProcessor.cpp" />
     <ClCompile Include="GUIContext\Param\FibreParams.cpp" />
     <ClCompile Include="GUIContext\Param\SoftwareParams.cpp" />
     <ClCompile Include="IMGuiEx\AddToolTipHint.cpp" />
@@ -280,6 +281,16 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="implot\implot_items.cpp" />
     <ClCompile Include="Internationalization\Internationalization.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Processor\Vibration\ContextVibrationLocalizationProcessor.cpp" />
+    <ClCompile Include="Processor\Vibration\TraditionVibrationLocalizationProcessor.cpp" />
+    <ClCompile Include="Processor\Vibration\VibrationLocalizationDefinition.cpp" />
+    <ClCompile Include="Processor\Vibration\VibrationLocalizationHandler.cpp" />
+    <ClCompile Include="Processor\Vibration\VibrationLocalizationProcessor.cpp" />
+    <ClCompile Include="Processor\Waveform\SingleWaveformRestoreHandler.cpp" />
+    <ClCompile Include="Processor\Waveform\WaveformRestoreData.cpp" />
+    <ClCompile Include="Processor\Waveform\WaveformRestoreDefinition.cpp" />
+    <ClCompile Include="Processor\Waveform\PeakWaveformRestoreHandler.cpp" />
+    <ClCompile Include="Processor\Waveform\WaveformRestoreProcessor.cpp" />
     <ClCompile Include="Tests\AudioTest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -317,8 +328,6 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="CPUAffinity\CPUAffinity.h" />
     <ClInclude Include="CPUAffinity\SKU\Intel\13500H.h" />
     <ClInclude Include="CPUAffinity\SKU\Intel\13700K.h" />
-    <ClInclude Include="GUIContent\Components\Basic\ComponentBase.h" />
-    <ClInclude Include="GUIContent\Components\Basic\ComponentPerformance.h" />
     <ClInclude Include="GUIContent\Components\Basic\ComponentWindow.h" />
     <ClInclude Include="GUIContent\Components\Config\ComponentConfig.h" />
     <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigCalibrate.h" />
@@ -328,12 +337,17 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContent\Components\Config\Device\ComponentConfigParam.h" />
     <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigSoftware.h" />
     <ClInclude Include="GUIContent\Components\Config\Inspect\ComponentConfigInspect.h" />
-    <ClInclude Include="GUIContent\Components\Config\Process\ComponentConfigVibrationLocalization.h" />
-    <ClInclude Include="GUIContent\Components\Config\Process\ComponentConfigWaveformRestore.h" />
-    <ClInclude Include="GUIContent\Components\Waveform\ComponentWaveform.h" />
-    <ClInclude Include="GUIContent\Components\Waveform\Inspect\ComponentInspect.h" />
-    <ClInclude Include="GUIContent\Components\Waveform\Logger\ComponentLogger.h" />
-    <ClInclude Include="GUIContent\Components\Waveform\Process\ComponentProcess.h" />
+    <ClInclude Include="GUIContent\Components\Config\Process\ComponentConfigVibration.h" />
+    <ClInclude Include="GUIContent\Components\Config\Process\ComponentConfigWaveform.h" />
+    <ClInclude Include="GUIContent\Components\Display\ComponentDisplay.h" />
+    <ClInclude Include="GUIContent\Components\Display\Inspect\ComponentInspect.h" />
+    <ClInclude Include="GUIContent\Components\Display\Logger\ComponentLogger.h" />
+    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcess.h" />
+    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessGeneral.h" />
+    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessRawData.h" />
+    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessVibration.h" />
+    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessWaveform.h" />
+    <ClInclude Include="GUIContent\Components\Performance\ComponentPerformance.h" />
     <ClInclude Include="GUIContent\GUIContent.h" />
     <ClInclude Include="GUIContext\GUIContext.h" />
     <ClInclude Include="GUIContext\Handler\AudioHandler.h" />
@@ -344,11 +358,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContext\Handler\LoggerHandler.h" />
     <ClInclude Include="GUIContext\Handler\ProcessHandler.h" />
     <ClInclude Include="GUIContext\Handler\ThreadHandler.h" />
-    <ClInclude Include="GUIContext\Handler\VibrationLocalizationHandler.h" />
     <ClInclude Include="GUIContext\Handler\WaterfallChatHandler.h" />
-    <ClInclude Include="GUIContext\Handler\WaveformRestoreDefinition.h" />
-    <ClInclude Include="GUIContext\Handler\WaveformRestoreHandler.h" />
-    <ClInclude Include="GUIContext\Handler\WaveformRestoreProcessor.h" />
     <ClInclude Include="GUIContext\Param\FibreParams.h" />
     <ClInclude Include="GUIContext\Param\Param.h" />
     <ClInclude Include="GUIContext\Param\PerformanceParams.h" />
@@ -377,8 +387,20 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="implot\implot_internal.h" />
     <ClInclude Include="Internationalization\Internationalization.h" />
     <ClInclude Include="macro.h" />
+    <ClInclude Include="Processor\Vibration\ContextVibrationLocalizationProcessor.h" />
+    <ClInclude Include="Processor\Vibration\TraditionVibrationLocalizationProcessor.h" />
+    <ClInclude Include="Processor\Vibration\VibrationLocalizationDefinition.h" />
+    <ClInclude Include="Processor\Vibration\VibrationLocalizationHandler.h" />
+    <ClInclude Include="Processor\Vibration\VibrationLocalizationProcessor.h" />
+    <ClInclude Include="Processor\Waveform\SingleWaveformRestoreHandler.h" />
+    <ClInclude Include="Processor\Waveform\WaveformRestoreData.h" />
+    <ClInclude Include="Processor\Waveform\WaveformRestoreDefinition.h" />
+    <ClInclude Include="Processor\Waveform\PeakWaveformRestoreHandler.h" />
+    <ClInclude Include="Processor\Waveform\WaveformRestoreHandler.h" />
+    <ClInclude Include="Processor\Waveform\WaveformRestoreProcessor.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Utilities\AudioPlayer.h" />
+    <ClInclude Include="Utilities\BackBuffer.h" />
     <ClInclude Include="Utilities\DataConverter.h" />
     <ClInclude Include="Utilities\LoadFileToWStr.h" />
     <ClInclude Include="Utilities\Logger.h" />
