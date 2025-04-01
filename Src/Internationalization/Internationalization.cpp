@@ -79,11 +79,36 @@ const std::string& Internationalization::GetInternationalization(const std::stri
     const auto lowerToken = ToLower(token);
     const auto& tokenIt = tokenMap.find(lowerToken);
 
-    if (tokenIt == tokenMap.end()) { return token; }
+#ifdef _DEBUG
+    using MapType = std::map<std::string, bool>;
+    static std::map<std::string, MapType> missingMap;
+#endif
+
+    if (tokenIt == tokenMap.end()) { 
+#ifdef _DEBUG
+        if (!missingMap.contains(lowerToken)) {
+            missingMap.insert({ lowerToken ,{} });
+            OutputDebugStringA(std::format("Missing token: {}\n",
+                token).c_str());
+        }
+#endif
+        return token; 
+    }
 
     const auto& languageMap = tokenIt->second;
     const auto& languageIt = languageMap.find(curLang);
-    if (languageIt == languageMap.end()) { return token; }
+    if (languageIt == languageMap.end()) { 
+#ifdef _DEBUG
+        auto& missingLangMap = missingMap[lowerToken];
+
+        if (!missingLangMap.contains(curLang)) {
+            missingLangMap.insert({ curLang,false });
+            OutputDebugStringA(std::format("Missing token {} localization: {}\n",
+                token, curLang).c_str());
+        }       
+#endif
+        return token; 
+    }
 
     return languageIt->second;
 }
