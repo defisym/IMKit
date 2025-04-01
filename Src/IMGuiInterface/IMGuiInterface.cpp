@@ -50,7 +50,7 @@ int IMGUIInterface(IMGUIContext* pCtx,
     HWND hwnd = ::CreateWindowW(wc.lpszClassName,
         pCtx->pWindowName,
         WS_OVERLAPPEDWINDOW,
-        100, 100,
+        CW_USEDEFAULT, CW_USEDEFAULT,
         pCtx->width, pCtx->height,
         nullptr, nullptr, wc.hInstance, pCtx);
 
