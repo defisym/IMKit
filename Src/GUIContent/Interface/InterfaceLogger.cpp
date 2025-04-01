@@ -3,7 +3,10 @@
 #include "GUIContext/GUIContext.h"
 
 void InterfaceLogger(const char* pID,
-    Logger* pLogger, LoggerConfig* pConfig) {
+    Logger* pLogger, LoggerConfig* pConfig,
+    const ImVec2* pSize) {
+    auto size = ImVec2(0, 0);
+    if (pSize != nullptr) { size = *pSize; }
     auto& bAutoScroll = pConfig->bAutoScroll;
 
     //// Options menu
@@ -24,7 +27,7 @@ void InterfaceLogger(const char* pID,
     filter.Draw(I18N("Filter Log"), -100.0f);
     ImGui::Separator();
 
-    if (ImGui::BeginChild("scrolling", ImVec2(0, 0), ImGuiChildFlags_None, ImGuiWindowFlags_HorizontalScrollbar)) {
+    if (ImGui::BeginChild("scrolling", size, ImGuiChildFlags_None, ImGuiWindowFlags_HorizontalScrollbar)) {
         if (bClear) { pLogger->Clear(); }
         if (bCopy) { ImGui::LogToClipboard(); }
 
