@@ -1,6 +1,6 @@
 #pragma once
 
-#include "imgui/imgui.h"
+#include "imgui.h"
 #include "IMGuiInterface/D3DContext.h"
 
 #include "IMGuiEx/FontEx.h"

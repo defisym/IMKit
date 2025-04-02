@@ -216,34 +216,34 @@
     <ClCompile Include="IMGuiInterface\IMGuiInterface.cpp">
       <Filter>源文件\IMGuiInterface</Filter>
     </ClCompile>
-    <ClCompile Include="imgui\imgui.cpp">
+    <ClCompile Include="IMGuiInterface\imgui\imgui.cpp">
       <Filter>源文件\IMGuiInterface\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui\imgui_demo.cpp">
+    <ClCompile Include="IMGuiInterface\imgui\imgui_demo.cpp">
       <Filter>源文件\IMGuiInterface\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui\imgui_draw.cpp">
+    <ClCompile Include="IMGuiInterface\imgui\imgui_draw.cpp">
       <Filter>源文件\IMGuiInterface\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui\imgui_tables.cpp">
+    <ClCompile Include="IMGuiInterface\imgui\imgui_tables.cpp">
       <Filter>源文件\IMGuiInterface\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui\imgui_widgets.cpp">
+    <ClCompile Include="IMGuiInterface\imgui\imgui_widgets.cpp">
       <Filter>源文件\IMGuiInterface\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui\backends\imgui_impl_dx11.cpp">
+    <ClCompile Include="IMGuiInterface\imgui\backends\imgui_impl_dx11.cpp">
       <Filter>源文件\IMGuiInterface\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui\backends\imgui_impl_win32.cpp">
+    <ClCompile Include="IMGuiInterface\imgui\backends\imgui_impl_win32.cpp">
       <Filter>源文件\IMGuiInterface\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="implot\implot.cpp">
+    <ClCompile Include="IMGuiInterface\implot\implot.cpp">
       <Filter>源文件\IMGuiInterface\implot</Filter>
     </ClCompile>
-    <ClCompile Include="implot\implot_demo.cpp">
+    <ClCompile Include="IMGuiInterface\implot\implot_demo.cpp">
       <Filter>源文件\IMGuiInterface\implot</Filter>
     </ClCompile>
-    <ClCompile Include="implot\implot_items.cpp">
+    <ClCompile Include="IMGuiInterface\implot\implot_items.cpp">
       <Filter>源文件\IMGuiInterface\implot</Filter>
     </ClCompile>
     <ClCompile Include="Utilities\LoadFileToWStr.cpp">
@@ -470,25 +470,25 @@
     <ClInclude Include="IMGuiInterface\IMGuiInterface.h">
       <Filter>头文件\IMGuiInterface</Filter>
     </ClInclude>
-    <ClInclude Include="imgui\imconfig.h">
+    <ClInclude Include="IMGuiInterface\imgui\imconfig.h">
       <Filter>头文件\IMGuiInterface\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imgui\imgui.h">
+    <ClInclude Include="IMGuiInterface\imgui\imgui.h">
       <Filter>头文件\IMGuiInterface\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imgui\imgui_internal.h">
+    <ClInclude Include="IMGuiInterface\imgui\imgui_internal.h">
       <Filter>头文件\IMGuiInterface\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imgui\backends\imgui_impl_dx11.h">
+    <ClInclude Include="IMGuiInterface\imgui\backends\imgui_impl_dx11.h">
       <Filter>头文件\IMGuiInterface\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imgui\backends\imgui_impl_win32.h">
+    <ClInclude Include="IMGuiInterface\imgui\backends\imgui_impl_win32.h">
       <Filter>头文件\IMGuiInterface\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="implot\implot.h">
+    <ClInclude Include="IMGuiInterface\implot\implot.h">
       <Filter>头文件\IMGuiInterface\implot</Filter>
     </ClInclude>
-    <ClInclude Include="implot\implot_internal.h">
+    <ClInclude Include="IMGuiInterface\implot\implot_internal.h">
       <Filter>头文件\IMGuiInterface\implot</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\LoadFileToWStr.h">

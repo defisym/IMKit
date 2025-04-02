@@ -6,7 +6,7 @@
 #include <ArithmeticTraits.h>
 
 #include "macro.h"
-#include "implot/implot.h"
+#include "implot.h"
 
 // setup axis with default settings
 void SetupAxis(const char* xLabel = nullptr, const char* yLabel = nullptr);

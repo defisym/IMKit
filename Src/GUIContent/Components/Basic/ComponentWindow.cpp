@@ -1,6 +1,6 @@
 #include "ComponentWindow.h"
 
-#include <imgui.h>
+#include "imgui.h"
 
 // NOLINT(cppcoreguidelines-special-member-functions)
 ComponentWindow::ComponentWindow(const char* pName) {

@@ -100,7 +100,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;imgui;imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;IMGuiInterface\implot;IMGuiInterface\imgui;IMGuiInterface\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -133,7 +133,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;imgui;imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;IMGuiInterface\implot;IMGuiInterface\imgui;IMGuiInterface\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -164,7 +164,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;imgui;imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;IMGuiInterface\implot;IMGuiInterface\imgui;IMGuiInterface\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -197,7 +197,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;imgui;imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;IMGuiInterface\implot;IMGuiInterface\imgui;IMGuiInterface\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -270,16 +270,16 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="IMGuiInterface\D3DContext.cpp" />
     <ClCompile Include="IMGuiInterface\IMGuiContext.cpp" />
     <ClCompile Include="IMGuiInterface\IMGuiInterface.cpp" />
-    <ClCompile Include="imgui\backends\imgui_impl_dx11.cpp" />
-    <ClCompile Include="imgui\backends\imgui_impl_win32.cpp" />
-    <ClCompile Include="imgui\imgui.cpp" />
-    <ClCompile Include="imgui\imgui_demo.cpp" />
-    <ClCompile Include="imgui\imgui_draw.cpp" />
-    <ClCompile Include="imgui\imgui_tables.cpp" />
-    <ClCompile Include="imgui\imgui_widgets.cpp" />
-    <ClCompile Include="implot\implot.cpp" />
-    <ClCompile Include="implot\implot_demo.cpp" />
-    <ClCompile Include="implot\implot_items.cpp" />
+    <ClCompile Include="IMGuiInterface\imgui\backends\imgui_impl_dx11.cpp" />
+    <ClCompile Include="IMGuiInterface\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="IMGuiInterface\imgui\imgui.cpp" />
+    <ClCompile Include="IMGuiInterface\imgui\imgui_demo.cpp" />
+    <ClCompile Include="IMGuiInterface\imgui\imgui_draw.cpp" />
+    <ClCompile Include="IMGuiInterface\imgui\imgui_tables.cpp" />
+    <ClCompile Include="IMGuiInterface\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="IMGuiInterface\implot\implot.cpp" />
+    <ClCompile Include="IMGuiInterface\implot\implot_demo.cpp" />
+    <ClCompile Include="IMGuiInterface\implot\implot_items.cpp" />
     <ClCompile Include="Internationalization\Internationalization.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Processor\Vibration\ContextVibrationLocalizationProcessor.cpp" />
@@ -380,13 +380,13 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="IMGuiInterface\IMGuiContext.h" />
     <ClInclude Include="IMGuiInterface\IMGuiDemo.h" />
     <ClInclude Include="IMGuiInterface\IMGuiInterface.h" />
-    <ClInclude Include="imgui\backends\imgui_impl_dx11.h" />
-    <ClInclude Include="imgui\backends\imgui_impl_win32.h" />
-    <ClInclude Include="imgui\imconfig.h" />
-    <ClInclude Include="imgui\imgui.h" />
-    <ClInclude Include="imgui\imgui_internal.h" />
-    <ClInclude Include="implot\implot.h" />
-    <ClInclude Include="implot\implot_internal.h" />
+    <ClInclude Include="IMGuiInterface\imgui\backends\imgui_impl_dx11.h" />
+    <ClInclude Include="IMGuiInterface\imgui\backends\imgui_impl_win32.h" />
+    <ClInclude Include="IMGuiInterface\imgui\imconfig.h" />
+    <ClInclude Include="IMGuiInterface\imgui\imgui.h" />
+    <ClInclude Include="IMGuiInterface\imgui\imgui_internal.h" />
+    <ClInclude Include="IMGuiInterface\implot\implot.h" />
+    <ClInclude Include="IMGuiInterface\implot\implot_internal.h" />
     <ClInclude Include="Internationalization\Internationalization.h" />
     <ClInclude Include="macro.h" />
     <ClInclude Include="Processor\Vibration\ContextVibrationLocalizationProcessor.h" />
