@@ -73,26 +73,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Obj\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Obj\$(Configuration)\</IntDir>
-    <IncludePath>.\;.\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>.\SDL\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <IncludePath>.\;.\3rdLib\OpenSSL\openssl-3.0\x86\include;.\3rdLib\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>.\3rdLib\OpenSSL\openssl-3.0\x86\lib;.\3rdLib\SDL\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Obj\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Obj\$(Configuration)\</IntDir>
-    <IncludePath>.\;.\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>.\SDL\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <IncludePath>.\;.\3rdLib\OpenSSL\openssl-3.0\x86\include;.\3rdLib\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>.\3rdLib\OpenSSL\openssl-3.0\x86\lib;.\3rdLib\SDL\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Obj\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Obj\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>.\;.\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>.\SDL\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>.\;.\3rdLib\OpenSSL\openssl-3.0\x64\include;.\3rdLib\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>.\3rdLib\OpenSSL\openssl-3.0\x64\lib;.\3rdLib\SDL\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Obj\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Obj\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>.\;.\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>.\SDL\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>.\;.\3rdLib\OpenSSL\openssl-3.0\x64\include;.\3rdLib\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>.\3rdLib\OpenSSL\openssl-3.0\x64\lib;.\3rdLib\SDL\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -118,7 +118,11 @@
       <Command>copy $(OutputPath)$(ProjectName).exe "$(SolutionDir)$(ProjectName).exe"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
+      <Command>copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libcrypto-3.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
+copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
 xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
@@ -153,7 +157,11 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <Command>copy $(OutputPath)$(ProjectName).exe "$(SolutionDir)$(ProjectName).exe"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
+      <Command>copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libcrypto-3.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
+copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
 xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <Message>Copy dll</Message>
     </PreBuildEvent>
@@ -182,7 +190,11 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <Command>copy $(OutputPath)$(ProjectName).exe "$(SolutionDir)$(ProjectName).exe"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
+      <Command>copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libcrypto-3-x64.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"
+copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
 xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
@@ -217,7 +229,11 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <Command>copy $(OutputPath)$(ProjectName).exe "$(SolutionDir)$(ProjectName).exe"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
+      <Command>copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libcrypto-3-x64.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"
+copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
 xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
