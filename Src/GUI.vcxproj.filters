@@ -465,6 +465,9 @@
     <ClCompile Include="GUIContent\Interface\InterfaceLogger.cpp">
       <Filter>源文件\GUIContent\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="Utilities\HttpDownloader.cpp">
+      <Filter>源文件\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IMGuiInterface\IMGuiInterface.h">
@@ -751,6 +754,9 @@
     </ClInclude>
     <ClInclude Include="GUIContent\Interface\InterfaceLogger.h">
       <Filter>头文件\GUIContent\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\HttpDownloader.h">
+      <Filter>头文件\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

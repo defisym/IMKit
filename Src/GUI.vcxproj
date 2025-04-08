@@ -328,6 +328,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     </ClCompile>
     <ClCompile Include="Utilities\AudioPlayer.cpp" />
     <ClCompile Include="Utilities\DataConverter.cpp" />
+    <ClCompile Include="Utilities\HttpDownloader.cpp" />
     <ClCompile Include="Utilities\LoadFileToWStr.cpp" />
     <ClCompile Include="Utilities\Logger.cpp" />
     <ClCompile Include="Utilities\OTDRDataInterface.cpp" />
@@ -420,6 +421,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Utilities\AudioPlayer.h" />
     <ClInclude Include="Utilities\BackBuffer.h" />
     <ClInclude Include="Utilities\DataConverter.h" />
+    <ClInclude Include="Utilities\HttpDownloader.h" />
     <ClInclude Include="Utilities\LoadFileToWStr.h" />
     <ClInclude Include="Utilities\Logger.h" />
     <ClInclude Include="Utilities\MeasureHelper.h" />
