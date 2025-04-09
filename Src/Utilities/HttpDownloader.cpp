@@ -9,11 +9,33 @@
 #include "GUIContext/Param/Param.h"
 
 std::size_t std::hash<ProxyParams>::operator()(ProxyParams const& s) const noexcept {
-    return GetParamHash(s);
+    std::size_t hash = 0xcbf29ce484222325; // FNV-1a
+
+    hash ^= GetStringHash(s.localHost);
+    hash *= 0x100000001b3;  // FNV-1a
+
+    hash ^= std::hash<unsigned short>{}(s.port);
+    hash *= 0x100000001b3;  // FNV-1a
+
+    return hash;
 }
 
 std::size_t std::hash<HttpParams>::operator()(HttpParams const& s) const noexcept {
-    return GetParamHash(s);
+    std::size_t hash = 0xcbf29ce484222325; // FNV-1a
+
+    hash ^= std::hash<bool>{}(s.bHttps);
+    hash *= 0x100000001b3;  // FNV-1a
+
+    hash ^= GetStringHash(s.site);
+    hash *= 0x100000001b3;  // FNV-1a
+
+    hash ^= GetStringHash(s.getFormat);
+    hash *= 0x100000001b3;  // FNV-1a
+
+    hash ^= GetStringHash(s.userAgent);
+    hash *= 0x100000001b3;  // FNV-1a
+
+    return hash;
 }
 
 std::size_t std::hash<DownloaderParams>::operator()(DownloaderParams const& s) const noexcept {

@@ -5,8 +5,10 @@
 #include <memory>
 #include <functional>
 
+constexpr auto SITE_LENGTH = 512;
+
 struct ProxyParams {
-    std::string localHost = "127.0.0.1";
+    char localHost[SITE_LENGTH] = "127.0.0.1";
     unsigned short port = 10808;
 };
 
@@ -22,13 +24,14 @@ struct HttpParams {
     // site without http or https
     // e.g., url is https://www.lovelive-anime.jp/nijigasaki
     // then site here is www.lovelive-anime.jp/nijigasaki
-    std::string site = {};
+    char site[SITE_LENGTH] = {};
     // get request formatter
-    std::string getFormat = {};
+    char getFormat[SITE_LENGTH] = {};
 
+    // User-Agent: <product> / <product-version> <comment>
     // see: 
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent
-    std::string userAgent = "Shizuku/146.0 (OOSAKA)";
+    char userAgent[SITE_LENGTH] = "Shizuku/146.0 (OOSAKA)";
 };
 
 template<>
