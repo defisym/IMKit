@@ -65,7 +65,7 @@ void InterfaceMap(const char* pID,
                     ? ((coord.x % 2 == 0 && coord.y % 2 != 0) || (coord.x % 2 != 0 && coord.y % 2 == 0)) 
                         ? ImVec4(1, 0, 1, 1) 
                         : ImVec4(1, 1, 0, 1) 
-                    : ImVec4(1, 1, 1, 1);
+                    : ImVec4(1, 1, 1, (float)tile->FadeIn());
                 ImPlot::PlotImage("##Tiles",
                     (ImTextureID)(intptr_t)tile->texture.pSrv.Get(),
                     bmin, bmax, { 0,0 }, { 1,1 }, col);

@@ -52,11 +52,19 @@ struct TileManager {
     struct Tile {
         TileState state;
         IMGUITexture texture = {};
+        double alpha = 0.0f;
 
         Tile() :state(TileState::Unavailable) {}
         Tile(TileState s) : state(s) {}
 
-        bool Load(D3DContext* pCtx, const char* pPath);
+        bool Load(D3DContext* pCtx, const char* pPath);        
+        double FadeIn(double step = 0.05) {
+            alpha += step;
+            alpha = std::min(1.0, alpha);
+
+            return alpha;
+        }
+        void FadeComplete() { alpha = 1.0; }
     };
 
     TileManager(D3DContext* pCtx);
