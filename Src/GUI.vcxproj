@@ -283,6 +283,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="IMGuiEx\I18NInterface.cpp" />
     <ClCompile Include="IMGuiEx\IndentHelper.cpp" />
     <ClCompile Include="IMGuiEx\LabelMaker.cpp" />
+    <ClCompile Include="IMGuiEx\LoadTexture.cpp" />
     <ClCompile Include="IMGuiEx\SliderSpin.cpp" />
     <ClCompile Include="IMGuiInterface\D3DContext.cpp" />
     <ClCompile Include="IMGuiInterface\IMGuiContext.cpp" />
@@ -395,6 +396,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="IMGuiEx\I18NInterface.h" />
     <ClInclude Include="IMGuiEx\IndentHelper.h" />
     <ClInclude Include="IMGuiEx\LabelMaker.h" />
+    <ClInclude Include="IMGuiEx\LoadTexture.h" />
     <ClInclude Include="IMGuiEx\SliderSpin.h" />
     <ClInclude Include="IMGuiInterface\D3DContext.h" />
     <ClInclude Include="IMGuiInterface\IMGuiContext.h" />

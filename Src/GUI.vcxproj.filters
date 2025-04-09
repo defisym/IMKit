@@ -474,6 +474,9 @@
     <ClCompile Include="GUIContent\Interface\InterfaceMap.cpp">
       <Filter>源文件\GUIContent\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="IMGuiEx\LoadTexture.cpp">
+      <Filter>源文件\IMGuiEx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IMGuiInterface\IMGuiInterface.h">
@@ -769,6 +772,9 @@
     </ClInclude>
     <ClInclude Include="GUIContent\Interface\InterfaceMap.h">
       <Filter>头文件\GUIContent\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGuiEx\LoadTexture.h">
+      <Filter>头文件\IMGuiEx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
