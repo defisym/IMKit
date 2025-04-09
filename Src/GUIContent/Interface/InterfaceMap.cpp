@@ -4,6 +4,8 @@
 #include "implot.h"
 
 #include "IMGuiEx/I18NInterface.h"
+#include "IMGuiEx/DisplayPlot.h"
+
 #include "Utilities/MapDownloader.h"
 
 void InterfaceMap(TileManager* pTileManager) {
@@ -18,8 +20,13 @@ void InterfaceMap(TileManager* pTileManager) {
             pTileManager->threads_working(), pTileManager->tiles_pending()));
     }
 
-    ImPlotAxisFlags ax_flags = ImPlotAxisFlags_NoLabel | ImPlotAxisFlags_NoTickLabels | ImPlotAxisFlags_NoGridLines | ImPlotAxisFlags_Foreground;
-    if (ImPlot::BeginPlot("##Map", ImVec2(-1, -1), ImPlotFlags_Equal | ImPlotFlags_NoMouseText)) {
+    if (ImPlot::BeginPlot("##Map", ImVec2(-1, -1), 
+        PLOT_FLAGS | ImPlotFlags_Equal | ImPlotFlags_NoMouseText)) {
+        ImPlotAxisFlags ax_flags = AXIS_FLAGS_NOMENU
+            | ImPlotAxisFlags_NoLabel
+            | ImPlotAxisFlags_NoTickLabels
+            | ImPlotAxisFlags_NoGridLines
+            | ImPlotAxisFlags_Foreground; 
         ImPlot::SetupAxes(NULL, NULL, ax_flags, ax_flags | ImPlotAxisFlags_Invert);
         ImPlot::SetupAxesLimits(0, 1, 0, 1);
 
@@ -27,12 +34,14 @@ void InterfaceMap(TileManager* pTileManager) {
         auto size = ImPlot::GetPlotSize();
         auto limits = ImPlot::GetPlotLimits();
         auto& region = pTileManager->get_region(limits, size);
+
         renders = 0;
         if (debug) {
             float ys[] = { 1,1 };
             ImPlot::SetNextFillStyle({ 1,0,0,1 }, 0.5f);
             ImPlot::PlotShaded("##Bounds", ys, 2);
         }
+
         for (auto& pair : region) {
             auto& [coord, tile] = pair;
             auto [bmin, bmax] = coord.bounds();
