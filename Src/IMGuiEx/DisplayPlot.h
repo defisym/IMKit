@@ -8,6 +8,11 @@
 #include "macro.h"
 #include "implot.h"
 
+constexpr static ImVec2 PLOT_SIZE = { -1.0f, 300.0f };
+constexpr static ImPlotFlags PLOT_FLAGS = ImPlotFlags_NoMenus | ImPlotFlags_Crosshairs;
+constexpr static ImPlotAxisFlags AXIS_FLAGS_NOMENU = ImPlotAxisFlags_NoMenus;
+constexpr static ImPlotAxisFlags AXIS_FLAGS = AXIS_FLAGS_NOMENU | ImPlotAxisFlags_AutoFit;
+
 // setup axis with default settings
 void SetupAxis(const char* xLabel = nullptr, const char* yLabel = nullptr);
 // begin plot and impl default settings
