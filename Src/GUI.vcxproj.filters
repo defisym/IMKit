@@ -217,6 +217,12 @@
     <Filter Include="源文件\GUIContent\Components\Display\Map">
       <UniqueIdentifier>{08258c27-c100-4e3d-ada7-071000fb7ed3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\GUIContent\Components\Config\Map">
+      <UniqueIdentifier>{54dbaee3-0a30-4bd1-a5ee-ba6fec534b26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContent\Components\Config\Map">
+      <UniqueIdentifier>{8377935d-2abf-4d91-a25e-fe5cb6b9e734}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IMGuiInterface\IMGuiInterface.cpp">
@@ -485,6 +491,9 @@
     </ClCompile>
     <ClCompile Include="GUIContent\Components\Display\Map\ComponentMap.cpp">
       <Filter>源文件\GUIContent\Components\Display\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\Config\Map\ComponentConfigMap.cpp">
+      <Filter>源文件\GUIContent\Components\Config\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -787,6 +796,9 @@
     </ClInclude>
     <ClInclude Include="GUIContent\Components\Display\Map\ComponentMap.h">
       <Filter>头文件\GUIContent\Components\Display\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\Config\Map\ComponentConfigMap.h">
+      <Filter>头文件\GUIContent\Components\Config\Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
