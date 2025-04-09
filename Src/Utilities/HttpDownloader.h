@@ -10,6 +10,11 @@ struct ProxyParams {
     unsigned short port = 10808;
 };
 
+template<>
+struct std::hash<ProxyParams> {
+    std::size_t operator()(ProxyParams const& s) const noexcept;
+};
+
 struct HttpParams {
     // use https instead of http
     // note: http is force used in proxy mode
@@ -26,10 +31,20 @@ struct HttpParams {
     std::string userAgent = "Shizuku/146.0 (OOSAKA)";
 };
 
+template<>
+struct std::hash<HttpParams> {
+    std::size_t operator()(HttpParams const& s) const noexcept;
+};
+
 struct DownloaderParams {
     bool bProxy = false;
     ProxyParams proxyParams = {};
     HttpParams httpParams = {};
+};
+
+template<>
+struct std::hash<DownloaderParams> {
+    std::size_t operator()(DownloaderParams const& s) const noexcept;
 };
 
 // ------------------------------------------------------

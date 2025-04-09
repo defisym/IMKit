@@ -6,6 +6,20 @@
 #pragma comment(lib,"libcrypto.lib")
 #pragma comment(lib,"libssl.lib")
 
+#include "GUIContext/Param/Param.h"
+
+std::size_t std::hash<ProxyParams>::operator()(ProxyParams const& s) const noexcept {
+    return GetParamHash(s);
+}
+
+std::size_t std::hash<HttpParams>::operator()(HttpParams const& s) const noexcept {
+    return GetParamHash(s);
+}
+
+std::size_t std::hash<DownloaderParams>::operator()(DownloaderParams const& s) const noexcept {
+    return GetParamHash(s);
+}
+
 HttpDownloader::HttpDownloader(const HttpParams& hParams) {
     downloaderParams.httpParams = hParams;
 
