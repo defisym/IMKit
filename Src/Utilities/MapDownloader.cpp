@@ -128,6 +128,11 @@ TileManager::TilePtr TileManager::request_tile(TileCoord coord) {
     return nullptr;
 }
 
+int TileManager::tiles_pending() {
+    std::unique_lock<std::mutex> lock(m_queue_mutex);
+    return (int)m_queue.size();
+}
+
 bool TileManager::append_region(int z, double min_x, double min_y, double size_x, double size_y) {
     auto k = pow(2, z);
     auto xa = min_x * k;

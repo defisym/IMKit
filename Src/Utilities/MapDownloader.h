@@ -71,6 +71,7 @@ struct TileManager {
     int tiles_downloaded() const { return m_downloads; }
     int tiles_cached() const { return m_loads - m_downloads; }
     int tiles_failed() const { return m_fails; }
+    int tiles_pending();
     int threads_working() const { return m_working; }
 
 private:
