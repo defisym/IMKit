@@ -26,6 +26,40 @@ struct HttpParams {
     std::string userAgent = "Shizuku/146.0 (OOSAKA)";
 };
 
+// ------------------------------------------------------
+// Usage:
+// ------------------------------------------------------
+// 
+// ------------------------------------
+//  Download directly:
+// ------------------------------------
+// 
+//    HttpDownloader d = { {.bHttps = true,
+//        .site = "a.tile.opentopomap.org",
+//        .getFormat = "/{}/{}/{}.png",
+//        .userAgent = "HttpDownloader/1.0 (OOSAKA)"} };
+// 
+//    const auto err = d.Get([] (const char* pData, size_t sz) {
+//        std::ofstream ofs("tile_1_1_1.png", std::ios::binary);
+//        ofs.write(pData, sz);
+//        },
+//        1, 1, 1);
+// 
+// ------------------------------------
+//  Download from proxy:
+// ------------------------------------
+// 
+//    HttpDownloader dp = { {.localHost = "127.0.0.1",.port = 10808},
+//        {.bHttps = true,
+//        .site = "tile.openstreetmap.org",
+//        .getFormat = "/{}/{}/{}.png",
+//        .userAgent = "HttpDownloader/1.0 (OOSAKA)"} };
+// 
+//    const auto err = dp.Get([] (const char* pData, size_t sz) {
+//        std::ofstream ofs("ptile_1_1_1.png", std::ios::binary);
+//        ofs.write(pData, sz);
+//        },
+//        1,1,1);
 struct HttpDownloader {
     bool bProxy = false;
     ProxyParams proxyParams = {};
