@@ -3,24 +3,19 @@
 #include "imgui.h"
 #include "implot.h"
 
+#include "IMGuiEx/I18NInterface.h"
 #include "Utilities/MapDownloader.h"
 
 void InterfaceMap(TileManager* pTileManager) {
     static int renders = 0;
     static bool debug = false;
-    if (ImGui::IsKeyPressed(ImGuiKey_A))
-        debug = !debug;
+    if (ImGui::IsKeyPressed(ImGuiKey_A)) { debug = !debug; }
 
-    ImGui::SetNextWindowPos({ 0,0 });
-    ImGui::SetNextWindowSize(ImGui::GetWindowSize());
-    ImGui::Begin("Map", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
     if (debug) {
-        int wk = pTileManager->threads_working();
-        int dl = pTileManager->tiles_downloaded();
-        int ld = pTileManager->tiles_loaded();
-        int ca = pTileManager->tiles_cached();
-        int fa = pTileManager->tiles_failed();
-        ImGui::Text("FPS: %.2f    Working: %d    Downloads: %d    Loads: %d    Caches: %d    Fails: %d    Renders: %d", ImGui::GetIO().Framerate, wk, dl, ld, ca, fa, renders);
+        ImGui::TextUnformatted(I18NFMT("Total Downloads: {}, Total Loads: {}, Total Fails: {}, Renders: {}",
+            pTileManager->tiles_downloaded(), pTileManager->tiles_loaded(), pTileManager->tiles_failed(), renders));
+        ImGui::TextUnformatted(I18NFMT("Working Thread: {}, Pending: {}",
+            pTileManager->threads_working(), pTileManager->tiles_pending()));
     }
 
     ImPlotAxisFlags ax_flags = ImPlotAxisFlags_NoLabel | ImPlotAxisFlags_NoTickLabels | ImPlotAxisFlags_NoGridLines | ImPlotAxisFlags_Foreground;
@@ -64,6 +59,4 @@ void InterfaceMap(TileManager* pTileManager) {
 
         ImPlot::EndPlot();
     }
-
-    ImGui::End();
 }
