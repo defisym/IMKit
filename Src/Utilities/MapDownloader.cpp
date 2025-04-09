@@ -102,7 +102,7 @@ const TileManager::Region& TileManager::get_region(ImPlotRect view, ImVec2 pixel
     return m_region;
 }
 
-std::shared_ptr<Tile> TileManager::request_tile(TileCoord coord) {
+TileManager::TilePtr TileManager::request_tile(TileCoord coord) {
     std::lock_guard<std::mutex> lock(m_tiles_mutex);
 
     if (m_tiles.count(coord)) { return get_tile(coord); }
@@ -150,20 +150,20 @@ void TileManager::download_tile(TileCoord coord) {
     m_condition.notify_one();
 }
 
-std::shared_ptr<Tile> TileManager::get_tile(TileCoord coord) {
+TileManager::TilePtr TileManager::get_tile(TileCoord coord) {
     if (m_tiles[coord]->state == Loaded) { return m_tiles[coord]; }
     else if (m_tiles[coord]->state == OnDisk) { return load_tile(coord); }
 
     return nullptr;
 }
 
-std::shared_ptr<Tile> TileManager::load_tile(TileCoord coord) {
+TileManager::TilePtr TileManager::load_tile(TileCoord coord) {
     auto path = coord.path();
     if (!m_tiles.count(coord)) {
         m_tiles[coord] = std::make_shared<Tile>();
     }
 
-    if (m_tiles[coord]->image.Load(path.c_str())) {
+    if (m_tiles[coord]->Load(path.c_str())) {
         m_tiles[coord]->state = TileState::Loaded;
         m_loads++;
         return m_tiles[coord];

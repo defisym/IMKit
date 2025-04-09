@@ -37,35 +37,31 @@ struct TileCoord {
 
 bool operator<(const TileCoord& l, const TileCoord& r);
 
-enum TileState : int {
-    Unavailable = 0, // tile not available
-    Loaded,          // tile has been loaded into  memory
-    Downloading,     // tile is downloading from server
-    OnDisk           // tile is saved to disk, but not loaded into memory
-};
-
-struct TileImage {
-    void* ID = nullptr;
-    bool Load(const char* pPath) { return false; }
-};
-
-struct Tile {
-    Tile() : state(TileState::Unavailable) {}
-    Tile(TileState s) : state(s) {}
-    TileState state;
-    TileImage image;
-};
-
 struct TileManager {
-    TileManager() {
-        start_workers();
-    }
+    enum TileState : int {
+        Unavailable = 0, // tile not available
+        Loaded,          // tile has been loaded into  memory
+        Downloading,     // tile is downloading from server
+        OnDisk           // tile is saved to disk, but not loaded into memory
+    };
 
+    struct Tile {
+        TileState state;
+        void* image = nullptr;
+
+        Tile() : state(TileState::Unavailable) {}
+        Tile(TileState s) : state(s) {}
+
+        bool Load(const char* pPath) { return false; }
+    };
+
+    TileManager() { start_workers(); }
     ~TileManager();
 
-    using Region = std::vector<std::pair<TileCoord, std::shared_ptr<Tile>>>;
+    using TilePtr = std::shared_ptr<Tile>;
+    using Region = std::vector<std::pair<TileCoord, TilePtr>>;
     const Region& get_region(ImPlotRect view, ImVec2 pixels);
-    std::shared_ptr<Tile> request_tile(TileCoord coord);
+    TilePtr request_tile(TileCoord coord);
 
     int tiles_loaded() const { return m_loads; }
     int tiles_downloaded() const { return m_downloads; }
@@ -76,8 +72,8 @@ struct TileManager {
 private:
     bool append_region(int z, double min_x, double min_y, double size_x, double size_y);
     void download_tile(TileCoord coord);
-    std::shared_ptr<Tile> get_tile(TileCoord coord);
-    std::shared_ptr<Tile> load_tile(TileCoord coord);
+    TilePtr get_tile(TileCoord coord);
+    TilePtr load_tile(TileCoord coord);
     void start_workers();
 
     std::atomic<int> m_loads = 0;
@@ -86,7 +82,7 @@ private:
     std::atomic<int> m_working = 0;
 
     std::mutex m_tiles_mutex;
-    std::map<TileCoord, std::shared_ptr<Tile>> m_tiles;
+    std::map<TileCoord, TilePtr> m_tiles;
     Region m_region;
 
     bool m_stop = false;
