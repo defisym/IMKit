@@ -256,6 +256,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContent\Components\Display\ComponentDisplay.cpp" />
     <ClCompile Include="GUIContent\Components\Display\Inspect\ComponentInspect.cpp" />
     <ClCompile Include="GUIContent\Components\Display\Logger\ComponentLogger.cpp" />
+    <ClCompile Include="GUIContent\Components\Display\Map\ComponentMap.cpp" />
     <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcess.cpp" />
     <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessGeneral.cpp" />
     <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessRawData.cpp" />
@@ -363,6 +364,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContent\Components\Display\ComponentDisplay.h" />
     <ClInclude Include="GUIContent\Components\Display\Inspect\ComponentInspect.h" />
     <ClInclude Include="GUIContent\Components\Display\Logger\ComponentLogger.h" />
+    <ClInclude Include="GUIContent\Components\Display\Map\ComponentMap.h" />
     <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcess.h" />
     <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessGeneral.h" />
     <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessRawData.h" />
