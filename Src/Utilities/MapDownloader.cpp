@@ -219,7 +219,7 @@ void TileManager::start_workers() {
                         m_condition.wait(lock,
                             [this] { return m_stop || !m_queue.empty(); });
 
-                        if (m_stop && m_queue.empty()) {
+                        if (m_stop) {
                             printf("TileManager[%02d]: Thread terminated\n", thrd);
                             return;
                         }
