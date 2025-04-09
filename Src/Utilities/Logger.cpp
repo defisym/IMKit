@@ -89,10 +89,8 @@ std::size_t std::hash<FileLoggerConfig>::operator()(FileLoggerConfig const& s) c
     hash ^= std::hash<size_t>{}(s.interval);
     hash *= 0x100000001b3;  // FNV-1a
 
-    for (char index : s.filePath) {
-        hash ^= std::hash<char>{}(index);
-        hash *= 0x100000001b3;  // FNV-1a
-    }
+    hash ^= GetStringHash(s.filePath);
+    hash *= 0x100000001b3;  // FNV-1a
 
     return hash;
 }
