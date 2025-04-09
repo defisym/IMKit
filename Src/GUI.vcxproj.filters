@@ -211,6 +211,18 @@
     <Filter Include="源文件\GUIContent\Interface">
       <UniqueIdentifier>{e6e0e47f-4789-4524-86d2-a463b7a6da8a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\GUIContent\Components\Display\Map">
+      <UniqueIdentifier>{d7b1679a-7cc2-48da-bbbd-cb7043b9a666}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContent\Components\Display\Map">
+      <UniqueIdentifier>{08258c27-c100-4e3d-ada7-071000fb7ed3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\GUIContent\Components\Config\Map">
+      <UniqueIdentifier>{54dbaee3-0a30-4bd1-a5ee-ba6fec534b26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUIContent\Components\Config\Map">
+      <UniqueIdentifier>{8377935d-2abf-4d91-a25e-fe5cb6b9e734}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IMGuiInterface\IMGuiInterface.cpp">
@@ -464,6 +476,24 @@
     </ClCompile>
     <ClCompile Include="GUIContent\Interface\InterfaceLogger.cpp">
       <Filter>源文件\GUIContent\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\HttpDownloader.cpp">
+      <Filter>源文件\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\MapDownloader.cpp">
+      <Filter>源文件\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Interface\InterfaceMap.cpp">
+      <Filter>源文件\GUIContent\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGuiEx\LoadTexture.cpp">
+      <Filter>源文件\IMGuiEx</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\Display\Map\ComponentMap.cpp">
+      <Filter>源文件\GUIContent\Components\Display\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Components\Config\Map\ComponentConfigMap.cpp">
+      <Filter>源文件\GUIContent\Components\Config\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -751,6 +781,24 @@
     </ClInclude>
     <ClInclude Include="GUIContent\Interface\InterfaceLogger.h">
       <Filter>头文件\GUIContent\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\HttpDownloader.h">
+      <Filter>头文件\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\MapDownloader.h">
+      <Filter>头文件\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Interface\InterfaceMap.h">
+      <Filter>头文件\GUIContent\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGuiEx\LoadTexture.h">
+      <Filter>头文件\IMGuiEx</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\Display\Map\ComponentMap.h">
+      <Filter>头文件\GUIContent\Components\Display\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\Config\Map\ComponentConfigMap.h">
+      <Filter>头文件\GUIContent\Components\Config\Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

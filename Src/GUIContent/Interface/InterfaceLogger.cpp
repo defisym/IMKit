@@ -27,7 +27,7 @@ void InterfaceLogger(const char* pID,
     filter.Draw(I18N("Filter Log"), -100.0f);
     ImGui::Separator();
 
-    if (ImGui::BeginChild("scrolling", size, ImGuiChildFlags_None, ImGuiWindowFlags_HorizontalScrollbar)) {
+    if (ImGui::BeginChild(pID, size, ImGuiChildFlags_None, ImGuiWindowFlags_HorizontalScrollbar)) {
         if (bClear) { pLogger->Clear(); }
         if (bCopy) { ImGui::LogToClipboard(); }
 
@@ -53,5 +53,6 @@ void InterfaceLogger(const char* pID,
             ImGui::SetScrollHereY(1.0f);
         }
     }
+
     ImGui::EndChild();
 }

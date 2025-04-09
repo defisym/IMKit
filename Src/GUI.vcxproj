@@ -73,26 +73,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Obj\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Obj\$(Configuration)\</IntDir>
-    <IncludePath>.\;.\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>.\SDL\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <IncludePath>.\;.\3rdLib\OpenSSL\openssl-3.0\x86\include;.\3rdLib\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>.\3rdLib\OpenSSL\openssl-3.0\x86\lib;.\3rdLib\SDL\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Obj\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Obj\$(Configuration)\</IntDir>
-    <IncludePath>.\;.\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>.\SDL\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <IncludePath>.\;.\3rdLib\OpenSSL\openssl-3.0\x86\include;.\3rdLib\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>.\3rdLib\OpenSSL\openssl-3.0\x86\lib;.\3rdLib\SDL\lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Obj\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Obj\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>.\;.\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>.\SDL\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>.\;.\3rdLib\OpenSSL\openssl-3.0\x64\include;.\3rdLib\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>.\3rdLib\OpenSSL\openssl-3.0\x64\lib;.\3rdLib\SDL\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Obj\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Obj\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>.\;.\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>.\SDL\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>.\;.\3rdLib\OpenSSL\openssl-3.0\x64\include;.\3rdLib\SDL\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>.\3rdLib\OpenSSL\openssl-3.0\x64\lib;.\3rdLib\SDL\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -118,7 +118,11 @@
       <Command>copy $(OutputPath)$(ProjectName).exe "$(SolutionDir)$(ProjectName).exe"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
+      <Command>copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libcrypto-3.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
+copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
 xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
@@ -153,7 +157,11 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <Command>copy $(OutputPath)$(ProjectName).exe "$(SolutionDir)$(ProjectName).exe"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
+      <Command>copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libcrypto-3.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
+copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
 xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <Message>Copy dll</Message>
     </PreBuildEvent>
@@ -182,7 +190,11 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <Command>copy $(OutputPath)$(ProjectName).exe "$(SolutionDir)$(ProjectName).exe"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
+      <Command>copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libcrypto-3-x64.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"
+copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
 xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
@@ -217,7 +229,11 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <Command>copy $(OutputPath)$(ProjectName).exe "$(SolutionDir)$(ProjectName).exe"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
+      <Command>copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libcrypto-3-x64.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)"
+copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"
+copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
 xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
@@ -235,11 +251,13 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContent\Components\Config\Environment\ComponentConfigFiber.cpp" />
     <ClCompile Include="GUIContent\Components\Config\Environment\ComponentConfigSoftware.cpp" />
     <ClCompile Include="GUIContent\Components\Config\Inspect\ComponentConfigInspect.cpp" />
+    <ClCompile Include="GUIContent\Components\Config\Map\ComponentConfigMap.cpp" />
     <ClCompile Include="GUIContent\Components\Config\Process\ComponentConfigVibration.cpp" />
     <ClCompile Include="GUIContent\Components\Config\Process\ComponentConfigWaveform.cpp" />
     <ClCompile Include="GUIContent\Components\Display\ComponentDisplay.cpp" />
     <ClCompile Include="GUIContent\Components\Display\Inspect\ComponentInspect.cpp" />
     <ClCompile Include="GUIContent\Components\Display\Logger\ComponentLogger.cpp" />
+    <ClCompile Include="GUIContent\Components\Display\Map\ComponentMap.cpp" />
     <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcess.cpp" />
     <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessGeneral.cpp" />
     <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessRawData.cpp" />
@@ -248,6 +266,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContent\Components\Performance\ComponentPerformance.cpp" />
     <ClCompile Include="GUIContent\GUIContent.cpp" />
     <ClCompile Include="GUIContent\Interface\InterfaceLogger.cpp" />
+    <ClCompile Include="GUIContent\Interface\InterfaceMap.cpp" />
     <ClCompile Include="GUIContext\GUIContext.cpp" />
     <ClCompile Include="GUIContext\Handler\AudioHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\CalibrateHandler.cpp" />
@@ -266,6 +285,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="IMGuiEx\I18NInterface.cpp" />
     <ClCompile Include="IMGuiEx\IndentHelper.cpp" />
     <ClCompile Include="IMGuiEx\LabelMaker.cpp" />
+    <ClCompile Include="IMGuiEx\LoadTexture.cpp" />
     <ClCompile Include="IMGuiEx\SliderSpin.cpp" />
     <ClCompile Include="IMGuiInterface\D3DContext.cpp" />
     <ClCompile Include="IMGuiInterface\IMGuiContext.cpp" />
@@ -312,8 +332,10 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     </ClCompile>
     <ClCompile Include="Utilities\AudioPlayer.cpp" />
     <ClCompile Include="Utilities\DataConverter.cpp" />
+    <ClCompile Include="Utilities\HttpDownloader.cpp" />
     <ClCompile Include="Utilities\LoadFileToWStr.cpp" />
     <ClCompile Include="Utilities\Logger.cpp" />
+    <ClCompile Include="Utilities\MapDownloader.cpp" />
     <ClCompile Include="Utilities\OTDRDataInterface.cpp" />
     <ClCompile Include="Utilities\StringResult.cpp" />
     <ClCompile Include="Utilities\TimeStampHelper.cpp" />
@@ -338,11 +360,13 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContent\Components\Config\Device\ComponentConfigParam.h" />
     <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigSoftware.h" />
     <ClInclude Include="GUIContent\Components\Config\Inspect\ComponentConfigInspect.h" />
+    <ClInclude Include="GUIContent\Components\Config\Map\ComponentConfigMap.h" />
     <ClInclude Include="GUIContent\Components\Config\Process\ComponentConfigVibration.h" />
     <ClInclude Include="GUIContent\Components\Config\Process\ComponentConfigWaveform.h" />
     <ClInclude Include="GUIContent\Components\Display\ComponentDisplay.h" />
     <ClInclude Include="GUIContent\Components\Display\Inspect\ComponentInspect.h" />
     <ClInclude Include="GUIContent\Components\Display\Logger\ComponentLogger.h" />
+    <ClInclude Include="GUIContent\Components\Display\Map\ComponentMap.h" />
     <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcess.h" />
     <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessGeneral.h" />
     <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessRawData.h" />
@@ -351,6 +375,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContent\Components\Performance\ComponentPerformance.h" />
     <ClInclude Include="GUIContent\GUIContent.h" />
     <ClInclude Include="GUIContent\Interface\InterfaceLogger.h" />
+    <ClInclude Include="GUIContent\Interface\InterfaceMap.h" />
     <ClInclude Include="GUIContext\GUIContext.h" />
     <ClInclude Include="GUIContext\Handler\AudioHandler.h" />
     <ClInclude Include="GUIContext\Handler\CalibrateHandler.h" />
@@ -375,6 +400,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="IMGuiEx\I18NInterface.h" />
     <ClInclude Include="IMGuiEx\IndentHelper.h" />
     <ClInclude Include="IMGuiEx\LabelMaker.h" />
+    <ClInclude Include="IMGuiEx\LoadTexture.h" />
     <ClInclude Include="IMGuiEx\SliderSpin.h" />
     <ClInclude Include="IMGuiInterface\D3DContext.h" />
     <ClInclude Include="IMGuiInterface\IMGuiContext.h" />
@@ -404,8 +430,10 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Utilities\AudioPlayer.h" />
     <ClInclude Include="Utilities\BackBuffer.h" />
     <ClInclude Include="Utilities\DataConverter.h" />
+    <ClInclude Include="Utilities\HttpDownloader.h" />
     <ClInclude Include="Utilities\LoadFileToWStr.h" />
     <ClInclude Include="Utilities\Logger.h" />
+    <ClInclude Include="Utilities\MapDownloader.h" />
     <ClInclude Include="Utilities\MeasureHelper.h" />
     <ClInclude Include="Utilities\OTDRDataInterface.h" />
     <ClInclude Include="Utilities\RingBuffer.h" />
