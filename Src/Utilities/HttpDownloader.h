@@ -26,6 +26,12 @@ struct HttpParams {
     std::string userAgent = "Shizuku/146.0 (OOSAKA)";
 };
 
+struct DownloaderParams {
+    bool bProxy = false;
+    ProxyParams proxyParams = {};
+    HttpParams httpParams = {};
+};
+
 // ------------------------------------------------------
 // Usage:
 // ------------------------------------------------------
@@ -61,9 +67,7 @@ struct HttpParams {
 //        },
 //        1,1,1);
 struct HttpDownloader {
-    bool bProxy = false;
-    ProxyParams proxyParams = {};
-    HttpParams httpParams = {};
+    DownloaderParams downloaderParams = {};
 
     void* pClient = nullptr;
     void* pHeader = nullptr;
@@ -82,6 +86,8 @@ public:
     //  -1  -> No Connection
     template <class... Types>
     int Get(const DataCallback& cb, Types&&... args) {
+        const auto& [bProxy, proxyParams, httpParams] = downloaderParams;
+
         auto path = std::vformat(httpParams.getFormat, std::make_format_args(args...));
         // cpp httplib doesn't support https in proxy mode
         if (bProxy) { path = std::format("http://{}{}", httpParams.site, path); }

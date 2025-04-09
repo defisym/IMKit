@@ -6,8 +6,9 @@
 #pragma comment(lib,"libcrypto.lib")
 #pragma comment(lib,"libssl.lib")
 
-HttpDownloader::HttpDownloader(const HttpParams& hParams)
-    :httpParams(hParams) {
+HttpDownloader::HttpDownloader(const HttpParams& hParams) {
+    downloaderParams.httpParams = hParams;
+
     pClient = new httplib::Client{ hParams.bHttps
         ? std::format("https://{}", hParams.site)
         : std::format("http://{}", hParams.site) };
@@ -15,9 +16,11 @@ HttpDownloader::HttpDownloader(const HttpParams& hParams)
 }
 
 HttpDownloader::HttpDownloader(const ProxyParams& pParams,
-    const HttpParams& hParams)
-    :bProxy(true), proxyParams(pParams),
-    httpParams(hParams) {
+    const HttpParams& hParams) {
+    downloaderParams.bProxy = true;
+    downloaderParams.proxyParams = pParams;
+    downloaderParams.httpParams = hParams;
+
     pClient = new httplib::Client{ pParams.localHost,pParams.port };
     pHeader = new httplib::Headers{ 
         { "Host", hParams.site },
