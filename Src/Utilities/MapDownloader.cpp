@@ -19,7 +19,7 @@ namespace fs = std::filesystem;
 
 constexpr auto TILE_SIZE = 256;     // the expected size of tiles in pixels, e.g. 256x256px;
 constexpr auto MAX_ZOOM = 19;       // the maximum zoom level provided by the server;
-constexpr auto MAX_THREADS = 2;     // the maximum threads to use for downloading tiles (OSC strictly forbids more than 2);
+constexpr auto MAX_THREADS = 4;     // the maximum threads to use for downloading tiles;
 constexpr auto PI = 3.14159265359;
 
 int long2tilex(double lon, int z) {
