@@ -23,20 +23,20 @@ constexpr auto MAX_THREADS = 2;     // the maximum threads to use for downloadin
 constexpr auto PI = 3.14159265359;
 
 int long2tilex(double lon, int z) {
-    return (int)(floor((lon + 180.0) / 360.0 * (1 << z)));
+    return (int)(floor((lon + 180.0) / 360.0 * pow(2, z)));
 }
 
 int lat2tiley(double lat, int z) {
     double latrad = lat * PI / 180.0;
-    return (int)(floor((1.0 - asinh(tan(latrad)) / PI) / 2.0 * (1 << z)));
+    return (int)(floor((1.0 - asinh(tan(latrad)) / PI) / 2.0 * pow(2, z)));
 }
 
 double tilex2long(int x, int z) {
-    return x / (double)(1 << z) * 360.0 - 180;
+    return x / pow(2, z) * 360.0 - 180;
 }
 
 double tiley2lat(int y, int z) {
-    double n = PI - 2.0 * PI * y / (double)(1 << z);
+    double n = PI - 2.0 * PI * y / pow(2, z);
     return 180.0 / PI * atan(0.5 * (exp(n) - exp(-n)));
 }
 
@@ -104,27 +104,28 @@ const TileManager::Region& TileManager::get_region(ImPlotRect view, ImVec2 pixel
 
 std::shared_ptr<Tile> TileManager::request_tile(TileCoord coord) {
     std::lock_guard<std::mutex> lock(m_tiles_mutex);
-    if (m_tiles.count(coord))
-        return get_tile(coord);
-    else if (fs::exists(coord.path()))
-        return load_tile(coord);
-    else
-        download_tile(coord);
+
+    if (m_tiles.count(coord)) { return get_tile(coord); }
+    else if (fs::exists(coord.path())) { return load_tile(coord); }
+    else { download_tile(coord); }
+
     return nullptr;
 }
 
 bool TileManager::append_region(int z, double min_x, double min_y, double size_x, double size_y) {
-    int k = pow(2, z);
-    double r = 1.0 / k;
-    int xa = min_x * k;
-    int xb = xa + ceil(size_x / r) + 1;
-    int ya = min_y * k;
-    int yb = ya + ceil(size_y / r) + 1;
-    xb = std::clamp(xb, 0, k);
-    yb = std::clamp(yb, 0, k);
+    auto k = pow(2, z);
+    auto xa = min_x * k;
+    auto ya = min_y * k;
+
+    auto r = 1.0 / k;
+    auto xb = xa + ceil(size_x / r) + 1;
+    auto yb = ya + ceil(size_y / r) + 1;
+    xb = std::clamp(xb, 0.0, k);
+    yb = std::clamp(yb, 0.0, k);
+    
     bool covered = true;
-    for (int x = xa; x < xb; ++x) {
-        for (int y = ya; y < yb; ++y) {
+    for (int x = (int)xa; x < (int)xb; ++x) {
+        for (int y = (int)ya; y < (int)yb; ++y) {
             TileCoord coord{ z,x,y };
             std::shared_ptr<Tile> tile = request_tile(coord);
             m_region.push_back({ coord,tile });
@@ -132,45 +133,50 @@ bool TileManager::append_region(int z, double min_x, double min_y, double size_x
                 covered = false;
         }
     }
+
     return covered;
 }
 
 void TileManager::download_tile(TileCoord coord) {
     auto dir = coord.dir();
     fs::create_directories(dir);
-    if (fs::exists(dir)) {
-        m_tiles[coord] = std::make_shared<Tile>(Downloading);
-        {
-            std::unique_lock<std::mutex> lock(m_queue_mutex);
-            m_queue.emplace(coord);
-        }
-        m_condition.notify_one();
+    if (!fs::exists(dir)) { return; }
+
+    m_tiles[coord] = std::make_shared<Tile>(Downloading);
+    {
+        std::unique_lock<std::mutex> lock(m_queue_mutex);
+        m_queue.emplace(coord);
     }
+    m_condition.notify_one();
 }
 
 std::shared_ptr<Tile> TileManager::get_tile(TileCoord coord) {
-    if (m_tiles[coord]->state == Loaded)
-        return m_tiles[coord];
-    else if (m_tiles[coord]->state == OnDisk)
-        return load_tile(coord);
+    if (m_tiles[coord]->state == Loaded) { return m_tiles[coord]; }
+    else if (m_tiles[coord]->state == OnDisk) { return load_tile(coord); }
+
     return nullptr;
 }
 
 std::shared_ptr<Tile> TileManager::load_tile(TileCoord coord) {
     auto path = coord.path();
-    if (!m_tiles.count(coord))
+    if (!m_tiles.count(coord)) {
         m_tiles[coord] = std::make_shared<Tile>();
+    }
+
     if (m_tiles[coord]->image.Load(path.c_str())) {
         m_tiles[coord]->state = TileState::Loaded;
         m_loads++;
         return m_tiles[coord];
     }
+
     m_fails++;
     printf("TileManager[00]: Failed to load \"%s\"\n", path.c_str());
-    if (!fs::remove(path))
+    if (!fs::remove(path)) {
         printf("TileManager[00]: Failed to remove \"%s\"\n", path.c_str());
+    }
     printf("TileManager[00]: Removed \"%s\"\n", path.c_str());
     m_tiles.erase(coord);
+
     return nullptr;
 }
 
@@ -186,22 +192,23 @@ void TileManager::start_workers() {
 
                 for (;;) {
                     TileCoord coord;
+
                     {
                         std::unique_lock<std::mutex> lock(m_queue_mutex);
                         m_condition.wait(lock,
                             [this] { return m_stop || !m_queue.empty(); });
+
                         if (m_stop && m_queue.empty()) {
                             printf("TileManager[%02d]: Thread terminated\n", thrd);
                             return;
                         }
+
                         coord = std::move(m_queue.front());
                         m_queue.pop();
                     }
+
                     m_working++;
                     bool success = true;
-                    auto dir = coord.dir();
-                    auto path = coord.path();
-                    auto url = coord.url();
                     const auto err = downloader.Get([&] (const char* pData, size_t sz) {
                         std::ofstream ofs(coord.path(), std::ios::binary);
                         ofs.write(pData, sz);
@@ -209,7 +216,7 @@ void TileManager::start_workers() {
                         coord.z, coord.x, coord.y);
 
                     if (err != 200) {
-                        printf("TileManager[%02d]: Failed to download: \"%s\"\n", thrd, url.c_str());
+                        printf("TileManager[%02d]: Failed to download: \"%s\"\n", thrd, coord.url().c_str());
                         printf("TileManager[%02d]: Response code: %d\n", thrd, err);
                         success = false;
                     }
@@ -224,6 +231,7 @@ void TileManager::start_workers() {
                         std::lock_guard<std::mutex> lock(m_tiles_mutex);
                         m_tiles.erase(coord);
                     }
+
                     m_working--;
                 }
             }

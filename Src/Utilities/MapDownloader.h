@@ -84,12 +84,15 @@ private:
     std::atomic<int> m_downloads = 0;
     std::atomic<int> m_fails = 0;
     std::atomic<int> m_working = 0;
-    std::map<TileCoord, std::shared_ptr<Tile>> m_tiles;
+
     std::mutex m_tiles_mutex;
-    std::vector<std::pair<TileCoord, std::shared_ptr<Tile>>> m_region;
+    std::map<TileCoord, std::shared_ptr<Tile>> m_tiles;
+    Region m_region;
+
+    bool m_stop = false;
     std::vector<std::thread> m_workers;
-    std::queue<TileCoord> m_queue;
+
     std::mutex m_queue_mutex;
     std::condition_variable m_condition;
-    bool m_stop = false;
+    std::queue<TileCoord> m_queue;
 };
