@@ -1,4 +1,6 @@
 #pragma once
 
 struct TileManager;
-void InterfaceMap(TileManager* pTileManager);
+struct MapParams;
+void InterfaceMap(const char* pID, 
+    TileManager* pTileManager, MapParams* pMapParams);

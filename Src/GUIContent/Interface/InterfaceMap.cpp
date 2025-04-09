@@ -7,20 +7,22 @@
 #include "IMGuiEx/DisplayPlot.h"
 
 #include "Utilities/MapDownloader.h"
+#include "GUIContext/Handler/MapHandler.h"
 
-void InterfaceMap(TileManager* pTileManager) {
-    static int renders = 0;
-    static bool debug = false;
+void InterfaceMap(const char* pID,
+    TileManager* pTileManager, MapParams* pMapParams) {    
+    auto& debug = pMapParams->bDebug;
     if (ImGui::IsKeyPressed(ImGuiKey_A)) { debug = !debug; }
-
+    
+    static int renders = 0;
     if (debug) {
         ImGui::TextUnformatted(I18NFMT("Total Downloads: {}, Total Loads: {}, Total Fails: {}, Renders: {}",
             pTileManager->tiles_downloaded(), pTileManager->tiles_loaded(), pTileManager->tiles_failed(), renders));
         ImGui::TextUnformatted(I18NFMT("Working Thread: {}, Pending: {}",
             pTileManager->threads_working(), pTileManager->tiles_pending()));
     }
-
-    if (ImPlot::BeginPlot("##Map", ImVec2(-1, -1), 
+    
+    if (ImPlot::BeginPlot(I18N(pID), ImVec2(-1, -1),
         PLOT_FLAGS | ImPlotFlags_Equal | ImPlotFlags_NoMouseText)) {
         ImPlotAxisFlags ax_flags = AXIS_FLAGS_NOMENU
             | ImPlotAxisFlags_NoLabel
@@ -30,9 +32,21 @@ void InterfaceMap(TileManager* pTileManager) {
         ImPlot::SetupAxes(NULL, NULL, ax_flags, ax_flags | ImPlotAxisFlags_Invert);
         ImPlot::SetupAxesLimits(0, 1, 0, 1);
 
-        auto pos = ImPlot::GetPlotPos();
+        auto& viewPort = pMapParams->viewParams;
+
+        static bool bFirstRun = true;
+        if (bFirstRun) {
+            bFirstRun = false;
+            ImPlot::SetRect({ viewPort.xMin,viewPort.xMax,viewPort.yMin,viewPort.yMax });
+        }
+
         auto size = ImPlot::GetPlotSize();
         auto limits = ImPlot::GetPlotLimits();
+        viewPort.xMin = limits.X.Min;
+        viewPort.xMax = limits.X.Max;
+        viewPort.yMin = limits.Y.Min;
+        viewPort.yMax = limits.Y.Max;
+
         auto& region = pTileManager->get_region(limits, size);
 
         renders = 0;
@@ -47,7 +61,11 @@ void InterfaceMap(TileManager* pTileManager) {
             auto [bmin, bmax] = coord.bounds();
 
             if (tile != nullptr) {
-                auto col = debug ? ((coord.x % 2 == 0 && coord.y % 2 != 0) || (coord.x % 2 != 0 && coord.y % 2 == 0)) ? ImVec4(1, 0, 1, 1) : ImVec4(1, 1, 0, 1) : ImVec4(1, 1, 1, 1);
+                auto col = debug 
+                    ? ((coord.x % 2 == 0 && coord.y % 2 != 0) || (coord.x % 2 != 0 && coord.y % 2 == 0)) 
+                        ? ImVec4(1, 0, 1, 1) 
+                        : ImVec4(1, 1, 0, 1) 
+                    : ImVec4(1, 1, 1, 1);
                 ImPlot::PlotImage("##Tiles",
                     (ImTextureID)(intptr_t)tile->texture.pSrv.Get(),
                     bmin, bmax, { 0,0 }, { 1,1 }, col);
@@ -63,7 +81,11 @@ void InterfaceMap(TileManager* pTileManager) {
         static const char* label = "OpenStreetMap Contributors";
         auto label_size = ImGui::CalcTextSize(label);
         auto label_off = ImPlot::GetStyle().MousePosPadding;
-        ImPlot::GetPlotDrawList()->AddText({ pos.x + label_off.x, pos.y + size.y - label_size.y - label_off.y }, IM_COL32_BLACK, label);
+
+        auto pos = ImPlot::GetPlotPos();
+        ImPlot::GetPlotDrawList()->AddText({ pos.x + label_off.x,
+            pos.y + size.y - label_size.y - label_off.y },
+            IM_COL32_BLACK, label);
         ImPlot::PopPlotClipRect();
 
         ImPlot::EndPlot();
