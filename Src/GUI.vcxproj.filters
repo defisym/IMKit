@@ -468,6 +468,12 @@
     <ClCompile Include="Utilities\HttpDownloader.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Utilities\MapDownloader.cpp">
+      <Filter>源文件\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIContent\Interface\InterfaceMap.cpp">
+      <Filter>源文件\GUIContent\Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IMGuiInterface\IMGuiInterface.h">
@@ -757,6 +763,12 @@
     </ClInclude>
     <ClInclude Include="Utilities\HttpDownloader.h">
       <Filter>头文件\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\MapDownloader.h">
+      <Filter>头文件\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Interface\InterfaceMap.h">
+      <Filter>头文件\GUIContent\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
