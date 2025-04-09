@@ -44,7 +44,9 @@ void InterfaceMap(TileManager* pTileManager) {
 
             if (tile != nullptr) {
                 auto col = debug ? ((coord.x % 2 == 0 && coord.y % 2 != 0) || (coord.x % 2 != 0 && coord.y % 2 == 0)) ? ImVec4(1, 0, 1, 1) : ImVec4(1, 1, 0, 1) : ImVec4(1, 1, 1, 1);
-                ImPlot::PlotImage("##Tiles", (ImTextureID)(intptr_t)tile->image, bmin, bmax, { 0,0 }, { 1,1 }, col);
+                ImPlot::PlotImage("##Tiles",
+                    (ImTextureID)(intptr_t)tile->texture.pSrv.Get(),
+                    bmin, bmax, { 0,0 }, { 1,1 }, col);
             }
             if (debug) {
                 ImPlot::PlotText(coord.label().c_str(), (bmin.x + bmax.x) / 2, (bmin.y + bmax.y) / 2);
@@ -52,13 +54,16 @@ void InterfaceMap(TileManager* pTileManager) {
 
             renders++;
         }
+
         ImPlot::PushPlotClipRect();
         static const char* label = "OpenStreetMap Contributors";
         auto label_size = ImGui::CalcTextSize(label);
         auto label_off = ImPlot::GetStyle().MousePosPadding;
         ImPlot::GetPlotDrawList()->AddText({ pos.x + label_off.x, pos.y + size.y - label_size.y - label_off.y }, IM_COL32_BLACK, label);
         ImPlot::PopPlotClipRect();
+
         ImPlot::EndPlot();
     }
+
     ImGui::End();
 }

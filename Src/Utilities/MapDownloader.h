@@ -14,6 +14,8 @@
 #include <atomic>
 #include <condition_variable>
 
+#include "IMGuiEx/LoadTexture.h"
+
 int long2tilex(double lon, int z);
 
 int lat2tiley(double lat, int z);
@@ -37,6 +39,8 @@ struct TileCoord {
 
 bool operator<(const TileCoord& l, const TileCoord& r);
 
+struct D3DContext;
+
 struct TileManager {
     enum TileState : int {
         Unavailable = 0, // tile not available
@@ -47,15 +51,15 @@ struct TileManager {
 
     struct Tile {
         TileState state;
-        void* image = nullptr;
+        IMGUITexture texture = {};
 
-        Tile() : state(TileState::Unavailable) {}
+        Tile() :state(TileState::Unavailable) {}
         Tile(TileState s) : state(s) {}
 
-        bool Load(const char* pPath) { return false; }
+        bool Load(D3DContext* pCtx, const char* pPath);
     };
 
-    TileManager() { start_workers(); }
+    TileManager(D3DContext* pCtx);
     ~TileManager();
 
     using TilePtr = std::shared_ptr<Tile>;
@@ -75,6 +79,8 @@ private:
     TilePtr get_tile(TileCoord coord);
     TilePtr load_tile(TileCoord coord);
     void start_workers();
+
+    D3DContext* pContext = nullptr;
 
     std::atomic<int> m_loads = 0;
     std::atomic<int> m_downloads = 0;

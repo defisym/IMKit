@@ -67,11 +67,25 @@ bool operator<(const TileCoord& l, const TileCoord& r) {
 // TileManager
 // ------------------------------------------------
 
+bool TileManager::Tile::Load(D3DContext* pCtx, const char* pPath) { 
+    auto texture = LoadTextureFromFile(pCtx->pDevice.Get(), pPath);
+    if (texture.pSrv == nullptr) { return false; }
+    this->texture = texture;
+
+    return true; 
+}
+
+TileManager::TileManager(D3DContext* pCtx)
+    :pContext(pCtx) {
+    start_workers();
+}
+
 TileManager::~TileManager() {
     {
         std::unique_lock<std::mutex> lock(m_queue_mutex);
         m_stop = true;
     }
+
     m_condition.notify_all();
     for (std::thread& worker : m_workers) {
         worker.join();
@@ -91,14 +105,16 @@ const TileManager::Region& TileManager::get_region(ImPlotRect view, ImVec2 pixel
 
     int z = 0;
     double r = 1.0 / pow(2, z);
-    while (r > units_per_tile_x && r > units_per_tile_y && z < MAX_ZOOM)
+    while (r > units_per_tile_x && r > units_per_tile_y && z < MAX_ZOOM) {
         r = 1.0 / pow(2, ++z);
+    }
 
     m_region.clear();
     if (!append_region(z, min_x, min_y, size_x, size_y) && z > 0) {
         append_region(--z, min_x, min_y, size_x, size_y);
         std::reverse(m_region.begin(), m_region.end());
     }
+
     return m_region;
 }
 
@@ -163,7 +179,7 @@ TileManager::TilePtr TileManager::load_tile(TileCoord coord) {
         m_tiles[coord] = std::make_shared<Tile>();
     }
 
-    if (m_tiles[coord]->Load(path.c_str())) {
+    if (m_tiles[coord]->Load(pContext, path.c_str())) {
         m_tiles[coord]->state = TileState::Loaded;
         m_loads++;
         return m_tiles[coord];
@@ -238,3 +254,4 @@ void TileManager::start_workers() {
         );
     }
 }
+
