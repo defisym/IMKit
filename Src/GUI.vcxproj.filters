@@ -495,6 +495,9 @@
     <ClCompile Include="GUIContent\Components\Config\Map\ComponentConfigMap.cpp">
       <Filter>源文件\GUIContent\Components\Config\Map</Filter>
     </ClCompile>
+    <ClCompile Include="GUIContext\Handler\MapHandler.cpp">
+      <Filter>源文件\GUIContext\Handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IMGuiInterface\IMGuiInterface.h">
@@ -799,6 +802,9 @@
     </ClInclude>
     <ClInclude Include="GUIContent\Components\Config\Map\ComponentConfigMap.h">
       <Filter>头文件\GUIContent\Components\Config\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContext\Handler\MapHandler.h">
+      <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

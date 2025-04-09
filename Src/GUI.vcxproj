@@ -274,6 +274,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="GUIContext\Handler\FilterHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\InspectHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\LoggerHandler.cpp" />
+    <ClCompile Include="GUIContext\Handler\MapHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\ThreadHandler.cpp" />
     <ClCompile Include="GUIContext\Handler\WaterfallChatHandler.cpp" />
@@ -383,6 +384,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContext\Handler\FilterHandler.h" />
     <ClInclude Include="GUIContext\Handler\InspectHandler.h" />
     <ClInclude Include="GUIContext\Handler\LoggerHandler.h" />
+    <ClInclude Include="GUIContext\Handler\MapHandler.h" />
     <ClInclude Include="GUIContext\Handler\ProcessHandler.h" />
     <ClInclude Include="GUIContext\Handler\ThreadHandler.h" />
     <ClInclude Include="GUIContext\Handler\WaterfallChatHandler.h" />
