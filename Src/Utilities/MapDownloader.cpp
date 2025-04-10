@@ -263,7 +263,7 @@ void TileManager::start_workers() {
                             return;
                         }
 
-                        coord = std::move(m_queue.front());
+                        coord = std::move(m_queue.top());
                         m_queue.pop();
                     }
 

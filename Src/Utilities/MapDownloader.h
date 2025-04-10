@@ -4,7 +4,7 @@
 #include "implot.h"
 
 #include <map>
-#include <queue>
+#include <stack>
 #include <vector>
 #include <string>
 
@@ -158,5 +158,5 @@ private:
 
     std::mutex m_queue_mutex;
     std::condition_variable m_condition;
-    std::queue<TileCoord> m_queue;
+    std::stack<TileCoord> m_queue;
 };
