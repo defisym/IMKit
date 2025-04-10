@@ -5,6 +5,7 @@
 #include <filesystem>
 
 #include "HttpDownloader.h"
+#include "GUIContext/Param/Param.h"
 
 // Useful Links and Resources
 //
@@ -13,7 +14,31 @@
 // https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
 
 // ------------------------------------------------
-// Coord Conversion
+// MapDownloadParams
+// ------------------------------------------------
+
+std::size_t std::hash<MapSourceParams>::operator()(MapSourceParams const& s) const noexcept {
+    return GetParamHash(s);
+}
+
+std::size_t std::hash<MapSaveParams>::operator()(MapSaveParams const& s) const noexcept {
+    std::size_t hash = 0xcbf29ce484222325; // FNV-1a
+
+    hash ^= GetStringHash(s.basePath);
+    hash *= 0x100000001b3;  // FNV-1a
+
+    hash ^= GetStringHash(s.suffix);
+    hash *= 0x100000001b3;  // FNV-1a
+
+    return hash;
+}
+
+std::size_t std::hash<MapDownloadParams>::operator()(MapDownloadParams const& s) const noexcept {
+    return GetParamHash(s);
+}
+
+// ------------------------------------------------
+// TileCoord
 // ------------------------------------------------
 
 int long2tilex(double lon, int z) {
@@ -33,10 +58,6 @@ double tiley2lat(int y, int z) {
     double n = std::numbers::pi - 2.0 * std::numbers::pi * y / pow(2, z);
     return 180.0 / std::numbers::pi * atan(0.5 * (exp(n) - exp(-n)));
 }
-
-// ------------------------------------------------
-// TileCoord
-// ------------------------------------------------
 
 std::tuple<ImPlotPoint, ImPlotPoint> TileCoord::bounds() const {
     double n = std::pow(2, z);
@@ -61,7 +82,10 @@ bool operator<(const TileCoord& l, const TileCoord& r) {
 // TileManager
 // ------------------------------------------------
 
-namespace fs = std::filesystem;
+
+// ------------------------------------
+// Tile
+// ------------------------------------
 
 bool TileManager::Tile::Load(D3DContext* pCtx, const char* pPath) { 
     auto texture = LoadTextureFromFile(pCtx->pDevice.Get(), pPath);
@@ -70,6 +94,21 @@ bool TileManager::Tile::Load(D3DContext* pCtx, const char* pPath) {
 
     return true; 
 }
+
+double TileManager::Tile::FadeIn(double step) {
+    alpha += step;
+    alpha = std::min(1.0, alpha);
+
+    return alpha;
+}
+
+inline void TileManager::Tile::FadeComplete() { alpha = 1.0; }
+
+// ------------------------------------
+// Tile
+// ------------------------------------
+
+namespace fs = std::filesystem;
 
 TileManager::TileManager(D3DContext* pCtx)
     :pContext(pCtx) {
@@ -89,6 +128,8 @@ TileManager::~TileManager() {
 }
 
 const TileManager::Region& TileManager::get_region(ImPlotRect view, ImVec2 pixels) {
+    const auto& mapSourceParams = mapDownloadParams.mapSourceParams;
+
     double min_x = std::clamp(view.X.Min, 0.0, 1.0);
     double min_y = std::clamp(view.Y.Min, 0.0, 1.0);
     double size_x = std::clamp(view.X.Size(), 0.0, 1.0);
@@ -96,12 +137,12 @@ const TileManager::Region& TileManager::get_region(ImPlotRect view, ImVec2 pixel
 
     double pix_occupied_x = (pixels.x / view.X.Size()) * size_x;
     double pix_occupied_y = (pixels.y / view.Y.Size()) * size_y;
-    double units_per_tile_x = view.X.Size() * (mapDownloadParams.tileSize / pix_occupied_x);
-    double units_per_tile_y = view.Y.Size() * (mapDownloadParams.tileSize / pix_occupied_y);
+    double units_per_tile_x = view.X.Size() * (mapSourceParams.tileSize / pix_occupied_x);
+    double units_per_tile_y = view.Y.Size() * (mapSourceParams.tileSize / pix_occupied_y);
 
     int z = 0;
     double r = 1.0 / pow(2, z);
-    while (r > units_per_tile_x && r > units_per_tile_y && z < mapDownloadParams.maxZoom) {
+    while (r > units_per_tile_x && r > units_per_tile_y && z < mapSourceParams.maxZoom) {
         r = 1.0 / pow(2, ++z);
     }
 
@@ -198,7 +239,8 @@ TileManager::TilePtr TileManager::load_tile(TileCoord coord) {
 }
 
 void TileManager::start_workers() {
-    for (int thrd = 1; thrd < mapDownloadParams.maxThreads + 1; ++thrd) {
+    const auto& maxThreads = mapDownloadParams.mapSourceParams.maxThreads;
+    for (int thrd = 1; thrd < maxThreads + 1; ++thrd) {
         m_workers.emplace_back(
             [this, thrd] {
                 printf("TileManager[%02d]: Thread started\n", thrd);

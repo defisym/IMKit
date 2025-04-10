@@ -16,6 +16,47 @@
 
 #include "IMGuiEx/LoadTexture.h"
 
+// ------------------------------------------------
+// MapDownloadParams
+// ------------------------------------------------
+
+constexpr auto BASEPATH_LENGTH = 512;
+
+struct MapSourceParams {
+    int tileSize = 256;     // the expected size of tiles in pixels, e.g. 256x256px;
+    int maxZoom = 19;       // the maximum zoom level provided by the server;
+    int maxThreads = 4;     // the maximum threads to use for downloading tiles;
+};
+
+template<>
+struct std::hash<MapSourceParams> {
+    std::size_t operator()(MapSourceParams const& s) const noexcept;
+};
+
+struct MapSaveParams {
+    char basePath[BASEPATH_LENGTH] = {};
+    char suffix[BASEPATH_LENGTH] = ".png";
+};
+
+template<>
+struct std::hash<MapSaveParams> {
+    std::size_t operator()(MapSaveParams const& s) const noexcept;
+};
+
+struct MapDownloadParams {
+    MapSourceParams mapSourceParams = {};
+    MapSaveParams mapSaveParams = {};
+};
+
+template<>
+struct std::hash<MapDownloadParams> {
+    std::size_t operator()(MapDownloadParams const& s) const noexcept;
+};
+
+// ------------------------------------------------
+// TileCoord
+// ------------------------------------------------
+
 int long2tilex(double lon, int z);
 
 int lat2tiley(double lat, int z);
@@ -39,15 +80,9 @@ struct TileCoord {
 
 bool operator<(const TileCoord& l, const TileCoord& r);
 
-constexpr auto BASEPATH_LENGTH = 512;
-
-struct MapDownloadParams {
-    int tileSize = 256;      // the expected size of tiles in pixels, e.g. 256x256px;
-    int maxZoom = 19;       // the maximum zoom level provided by the server;
-    int maxThreads = 4;     // the maximum threads to use for downloading tiles;
-    char basePath[BASEPATH_LENGTH] = {};
-    char suffix[BASEPATH_LENGTH] = ".png";
-};
+// ------------------------------------------------
+// TileManager
+// ------------------------------------------------
 
 struct D3DContext;
 
@@ -68,13 +103,8 @@ struct TileManager {
         Tile(TileState s) : state(s) {}
 
         bool Load(D3DContext* pCtx, const char* pPath);        
-        double FadeIn(double step = 0.05) {
-            alpha += step;
-            alpha = std::min(1.0, alpha);
-
-            return alpha;
-        }
-        void FadeComplete() { alpha = 1.0; }
+        double FadeIn(double step = 0.05);
+        void FadeComplete();
     };
 
     TileManager(D3DContext* pCtx);
