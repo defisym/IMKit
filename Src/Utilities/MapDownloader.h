@@ -14,6 +14,7 @@
 #include <atomic>
 #include <condition_variable>
 
+#include "HttpDownloader.h"
 #include "IMGuiEx/LoadTexture.h"
 
 // ------------------------------------------------
@@ -34,7 +35,6 @@ struct std::hash<MapSourceParams> {
 };
 
 struct MapSaveParams {
-    char basePath[BASEPATH_LENGTH] = {};
     char suffix[BASEPATH_LENGTH] = ".png";
 };
 
@@ -44,6 +44,7 @@ struct std::hash<MapSaveParams> {
 };
 
 struct MapDownloadParams {
+    DownloaderParams downloaderParams = {};
     MapSourceParams mapSourceParams = {};
     MapSaveParams mapSaveParams = {};
 };
@@ -69,9 +70,12 @@ struct TileCoord {
     int z; // zoom    [0......20]
     int x; // x index [0...z^2-1]
     int y; // y index [0...z^2-1]
+    std::string folder = "Tiles/";
+    std::string suffix = ".png";
+
     std::string subdir() const { return std::to_string(z) + "/" + std::to_string(x) + "/"; }
-    std::string dir() const { return "Tiles/" + subdir(); }
-    std::string file() const { return std::to_string(y) + ".png"; }
+    std::string dir() const { return folder + subdir(); }
+    std::string file() const { return std::to_string(y) + suffix; }
     std::string path() const { return dir() + file(); }
     std::string url() const { return subdir() + file(); }
     std::string label() const { return subdir() + std::to_string(y); }
@@ -107,7 +111,7 @@ struct TileManager {
         void FadeComplete();
     };
 
-    TileManager(D3DContext* pCtx);
+    TileManager(D3DContext* pCtx, const MapDownloadParams& mdParams);
     ~TileManager();
 
     using TilePtr = std::shared_ptr<Tile>;
@@ -127,10 +131,18 @@ private:
     void download_tile(TileCoord coord);
     TilePtr get_tile(TileCoord coord);
     TilePtr load_tile(TileCoord coord);
+    void update_path();
     void start_workers();
+
+    TileCoord GetCoord(int z = 0, int x = 0, int y = 0) {
+        return TileCoord{ .z = z,.x = x,.y = y,
+            .folder = downloadPath,
+            .suffix = mapDownloadParams.mapSaveParams.suffix };
+    }
 
     D3DContext* pContext = nullptr;
     MapDownloadParams mapDownloadParams = {};
+    std::string downloadPath = {};
 
     std::atomic<int> m_loads = 0;
     std::atomic<int> m_downloads = 0;

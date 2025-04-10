@@ -4,7 +4,6 @@
 #include <fstream>
 #include <filesystem>
 
-#include "HttpDownloader.h"
 #include "GUIContext/Param/Param.h"
 
 // Useful Links and Resources
@@ -22,15 +21,7 @@ std::size_t std::hash<MapSourceParams>::operator()(MapSourceParams const& s) con
 }
 
 std::size_t std::hash<MapSaveParams>::operator()(MapSaveParams const& s) const noexcept {
-    std::size_t hash = 0xcbf29ce484222325; // FNV-1a
-
-    hash ^= GetStringHash(s.basePath);
-    hash *= 0x100000001b3;  // FNV-1a
-
-    hash ^= GetStringHash(s.suffix);
-    hash *= 0x100000001b3;  // FNV-1a
-
-    return hash;
+    return GetStringHash(s.suffix);
 }
 
 std::size_t std::hash<MapDownloadParams>::operator()(MapDownloadParams const& s) const noexcept {
@@ -110,8 +101,9 @@ inline void TileManager::Tile::FadeComplete() { alpha = 1.0; }
 
 namespace fs = std::filesystem;
 
-TileManager::TileManager(D3DContext* pCtx)
-    :pContext(pCtx) {
+TileManager::TileManager(D3DContext* pCtx, const MapDownloadParams& mdParams)
+    :pContext(pCtx), mapDownloadParams(mdParams) {
+    update_path();
     start_workers();
 }
 
@@ -184,7 +176,7 @@ bool TileManager::append_region(int z, double min_x, double min_y, double size_x
     bool covered = true;
     for (int x = (int)xa; x < (int)xb; ++x) {
         for (int y = (int)ya; y < (int)yb; ++y) {
-            TileCoord coord{ z,x,y };
+            auto coord = GetCoord(z, x, y);
             std::shared_ptr<Tile> tile = request_tile(coord);
             m_region.push_back({ coord,tile });
             if (tile == nullptr || tile->state != TileState::Loaded)
@@ -238,19 +230,28 @@ TileManager::TilePtr TileManager::load_tile(TileCoord coord) {
     return nullptr;
 }
 
+void TileManager::update_path() {
+    const auto& httpParams = mapDownloadParams.downloaderParams.httpParams;
+    const auto& site = httpParams.site;
+    const auto& getFormat = httpParams.getFormat;
+
+    const auto traitString = std::string(site) + std::string(getFormat);
+    downloadPath = std::format("Tiles/{}/", std::hash<std::string>{}(traitString));
+}
+
 void TileManager::start_workers() {
     const auto& maxThreads = mapDownloadParams.mapSourceParams.maxThreads;
     for (int thrd = 1; thrd < maxThreads + 1; ++thrd) {
         m_workers.emplace_back(
             [this, thrd] {
                 printf("TileManager[%02d]: Thread started\n", thrd);
-                HttpDownloader downloader = { { .bHttps = true,
-                    .site = "a.tile.opentopomap.org",
-                    .getFormat = "/{}/{}/{}.png",
-                    .userAgent = "HttpDownloader/1.0 (OOSAKA)" } };
+                const auto& dParams = mapDownloadParams.downloaderParams;
+                auto downloader = dParams.bProxy
+                    ? HttpDownloader{ dParams.proxyParams,dParams.httpParams }
+                    : HttpDownloader{ dParams.httpParams };
 
                 for (;;) {
-                    TileCoord coord;
+                    auto coord = GetCoord();
 
                     {
                         std::unique_lock<std::mutex> lock(m_queue_mutex);
@@ -297,4 +298,3 @@ void TileManager::start_workers() {
         );
     }
 }
-
