@@ -10,7 +10,8 @@
 #include "GUIContext/Handler/MapHandler.h"
 
 void InterfaceMap(const char* pID,
-    TileManager* pTileManager, MapParams* pMapParams) {        
+    TileManager* pTileManager, ViewParams* pViewParams,
+    const std::function<void()>& extra) {
     if (ImPlot::BeginPlot(I18N(pID), ImVec2(-1, -1),
         PLOT_FLAGS | ImPlotFlags_Equal | ImPlotFlags_NoMouseText)) {
         ImPlotAxisFlags ax_flags = AXIS_FLAGS_NOMENU
@@ -21,8 +22,7 @@ void InterfaceMap(const char* pID,
         ImPlot::SetupAxes(NULL, NULL, ax_flags, ax_flags | ImPlotAxisFlags_Invert);
         ImPlot::SetupAxesLimits(0, 1, 0, 1);
 
-        const auto& debug = pMapParams->bDebug;
-        auto& viewPort = pMapParams->viewParams;
+        const auto& debug = pViewParams->bDebug;
 
         static double lineX[2] = {};
         static double lineY[2] = {};
@@ -30,19 +30,19 @@ void InterfaceMap(const char* pID,
         static bool bFirstRun = true;
         if (bFirstRun) {
             bFirstRun = false;
-            ImPlot::SetRect({ viewPort.xMin,viewPort.xMax,viewPort.yMin,viewPort.yMax });
-            lineX[0] = viewPort.xMin;
-            lineY[0] = viewPort.yMin;
-            lineX[1] = viewPort.xMax;
-            lineY[1] = viewPort.yMax;
+            ImPlot::SetRect({ pViewParams->xMin, pViewParams->xMax, pViewParams->yMin, pViewParams->yMax });
+            lineX[0] = pViewParams->xMin;
+            lineY[0] = pViewParams->yMin;
+            lineX[1] = pViewParams->xMax;
+            lineY[1] = pViewParams->yMax;
         }
 
         auto size = ImPlot::GetPlotSize();
         auto limits = ImPlot::GetPlotLimits();
-        viewPort.xMin = limits.X.Min;
-        viewPort.xMax = limits.X.Max;
-        viewPort.yMin = limits.Y.Min;
-        viewPort.yMax = limits.Y.Max;
+        pViewParams->xMin = limits.X.Min;
+        pViewParams->xMax = limits.X.Max;
+        pViewParams->yMin = limits.Y.Min;
+        pViewParams->yMax = limits.Y.Max;
 
         auto& region = pTileManager->get_region(limits, size);
 
@@ -86,7 +86,7 @@ void InterfaceMap(const char* pID,
             ImPlot::Annotation(x, y, ImVec4(1, 1, 0, 1), ImVec2(5, 5), true, "ALERT");
         }
 
-        ImPlot::SetNextLineStyle(IMPLOT_AUTO_COL,5);
+        ImPlot::SetNextLineStyle(IMPLOT_AUTO_COL, 5);
         ImPlot::PlotLine("fiber", lineX, lineY, 2);
 
         ImPlot::PushPlotClipRect();

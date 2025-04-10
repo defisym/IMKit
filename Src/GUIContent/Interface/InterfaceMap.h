@@ -1,6 +1,8 @@
 #pragma once
 
-struct TileManager;
-struct MapParams;
+#include <functional>
+
+struct TileManager; struct ViewParams;
 void InterfaceMap(const char* pID, 
-    TileManager* pTileManager, MapParams* pMapParams);
+    TileManager* pTileManager, ViewParams* pViewParams,
+    const std::function<void()>& extra = nullptr);
