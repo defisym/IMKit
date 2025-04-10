@@ -28,12 +28,12 @@ struct TileCoord {
     int z; // zoom    [0......20]
     int x; // x index [0...z^2-1]
     int y; // y index [0...z^2-1]
-    inline std::string subdir() const { return std::to_string(z) + "/" + std::to_string(x) + "/"; }
-    inline std::string dir() const { return "Tiles/" + subdir(); }
-    inline std::string file() const { return std::to_string(y) + ".png"; }
-    inline std::string path() const { return dir() + file(); }
-    inline std::string url() const { return subdir() + file(); }
-    inline std::string label() const { return subdir() + std::to_string(y); }
+    std::string subdir() const { return std::to_string(z) + "/" + std::to_string(x) + "/"; }
+    std::string dir() const { return "Tiles/" + subdir(); }
+    std::string file() const { return std::to_string(y) + ".png"; }
+    std::string path() const { return dir() + file(); }
+    std::string url() const { return subdir() + file(); }
+    std::string label() const { return subdir() + std::to_string(y); }
     std::tuple<ImPlotPoint, ImPlotPoint> bounds() const;
 };
 
