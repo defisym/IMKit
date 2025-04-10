@@ -76,7 +76,7 @@
 // log debug string to logger 
 #define LOG_DEBUG_STRING
 #if defined(_DEBUG) && defined(LOG_DEBUG_STRING)
-#define LOG_DEBUG_STRING_OUTPUT
+//#define LOG_DEBUG_STRING_OUTPUT
 #endif
 
 // indent inside tab
