@@ -1,5 +1,6 @@
 #include "MapDownloader.h"
 
+#include <numbers>
 #include <fstream>
 #include <filesystem>
 
@@ -20,15 +21,14 @@ namespace fs = std::filesystem;
 constexpr auto TILE_SIZE = 256;     // the expected size of tiles in pixels, e.g. 256x256px;
 constexpr auto MAX_ZOOM = 19;       // the maximum zoom level provided by the server;
 constexpr auto MAX_THREADS = 4;     // the maximum threads to use for downloading tiles;
-constexpr auto PI = 3.14159265359;
 
 int long2tilex(double lon, int z) {
     return (int)(floor((lon + 180.0) / 360.0 * pow(2, z)));
 }
 
 int lat2tiley(double lat, int z) {
-    double latrad = lat * PI / 180.0;
-    return (int)(floor((1.0 - asinh(tan(latrad)) / PI) / 2.0 * pow(2, z)));
+    double latrad = lat * std::numbers::pi / 180.0;
+    return (int)(floor((1.0 - asinh(tan(latrad)) / std::numbers::pi) / 2.0 * pow(2, z)));
 }
 
 double tilex2long(int x, int z) {
@@ -36,8 +36,8 @@ double tilex2long(int x, int z) {
 }
 
 double tiley2lat(int y, int z) {
-    double n = PI - 2.0 * PI * y / pow(2, z);
-    return 180.0 / PI * atan(0.5 * (exp(n) - exp(-n)));
+    double n = std::numbers::pi - 2.0 * std::numbers::pi * y / pow(2, z);
+    return 180.0 / std::numbers::pi * atan(0.5 * (exp(n) - exp(-n)));
 }
 
 // ------------------------------------------------
