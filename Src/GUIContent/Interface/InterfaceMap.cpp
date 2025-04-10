@@ -21,7 +21,7 @@ void InterfaceMap(const char* pID,
         ImPlot::SetupAxes(NULL, NULL, ax_flags, ax_flags | ImPlotAxisFlags_Invert);
         ImPlot::SetupAxesLimits(0, 1, 0, 1);
 
-        auto& debug = pMapParams->bDebug;
+        const auto& debug = pMapParams->bDebug;
         auto& viewPort = pMapParams->viewParams;
 
         static double lineX[2] = {};

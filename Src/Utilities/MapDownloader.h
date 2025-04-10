@@ -106,12 +106,12 @@ struct TileManager {
         Tile() :state(TileState::Unavailable) {}
         Tile(TileState s) : state(s) {}
 
-        bool Load(D3DContext* pCtx, const char* pPath);        
+        bool Load(const D3DContext* pCtx, const char* pPath);        
         double FadeIn(double step = 0.05);
         void FadeComplete();
     };
 
-    TileManager(D3DContext* pCtx, const MapDownloadParams& mdParams);
+    TileManager(const D3DContext* pCtx, const MapDownloadParams& mdParams);
     ~TileManager();
 
     using TilePtr = std::shared_ptr<Tile>;
@@ -140,7 +140,7 @@ private:
             .suffix = mapDownloadParams.mapSaveParams.suffix };
     }
 
-    D3DContext* pContext = nullptr;
+    const D3DContext* pContext = nullptr;
     MapDownloadParams mapDownloadParams = {};
     std::string downloadPath = {};
 
