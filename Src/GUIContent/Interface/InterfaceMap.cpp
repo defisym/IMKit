@@ -23,19 +23,20 @@ void InterfaceMap(const char* pID,
         ImPlot::SetupAxesLimits(0, 1, 0, 1);
 
         const auto& debug = pViewParams->bDebug;
+        auto& rect = pViewParams->viewRect;
 
         static bool bFirstRun = true;
-        if (bFirstRun) {
+        if (bFirstRun || pViewParams->bFitOnScreen) {
             bFirstRun = false;
-            ImPlot::SetRect({ pViewParams->xMin, pViewParams->xMax, pViewParams->yMin, pViewParams->yMax });
+            pViewParams->bFitOnScreen = false;
+
+            ImPlot::SetRect({ rect.xMin, rect.xMax, rect.yMin, rect.yMax });
         }
 
         auto size = ImPlot::GetPlotSize();
         auto limits = ImPlot::GetPlotLimits();
-        pViewParams->xMin = limits.X.Min;
-        pViewParams->xMax = limits.X.Max;
-        pViewParams->yMin = limits.Y.Min;
-        pViewParams->yMax = limits.Y.Max;
+        rect.xMin = limits.X.Min; rect.xMax = limits.X.Max;
+        rect.yMin = limits.Y.Min; rect.yMax = limits.Y.Max;
 
         auto& region = pTileManager->get_region(limits, size);
 
