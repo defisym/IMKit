@@ -24,17 +24,10 @@ void InterfaceMap(const char* pID,
 
         const auto& debug = pViewParams->bDebug;
 
-        static double lineX[2] = {};
-        static double lineY[2] = {};
-
         static bool bFirstRun = true;
         if (bFirstRun) {
             bFirstRun = false;
             ImPlot::SetRect({ pViewParams->xMin, pViewParams->xMax, pViewParams->yMin, pViewParams->yMax });
-            lineX[0] = pViewParams->xMin;
-            lineY[0] = pViewParams->yMin;
-            lineX[1] = pViewParams->xMax;
-            lineY[1] = pViewParams->yMax;
         }
 
         auto size = ImPlot::GetPlotSize();
@@ -77,17 +70,7 @@ void InterfaceMap(const char* pID,
             renders++;
         }
 
-        const auto& mp = ImPlot::GetPlotMousePos();
-        ImPlot::Annotation(mp.x, mp.y, ImVec4(1, 1, 0, 1), ImVec2(5, 5), true, "XD");
-
-        for (double step = 0.2; step < 1.0; step += 0.3) {
-            auto x = lineX[0] + (lineX[1] - lineX[0]) * step;
-            auto y = lineY[0] + (lineY[1] - lineY[0]) * step;
-            ImPlot::Annotation(x, y, ImVec4(1, 1, 0, 1), ImVec2(5, 5), true, "ALERT");
-        }
-
-        ImPlot::SetNextLineStyle(IMPLOT_AUTO_COL, 5);
-        ImPlot::PlotLine("fiber", lineX, lineY, 2);
+        extra();
 
         ImPlot::PushPlotClipRect();
         auto pos = ImPlot::GetPlotPos();
