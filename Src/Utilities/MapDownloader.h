@@ -39,6 +39,15 @@ struct TileCoord {
 
 bool operator<(const TileCoord& l, const TileCoord& r);
 
+constexpr auto BASEPATH_LENGTH = 512;
+
+struct MapDownloadParams {
+    int tileSize = 256;      // the expected size of tiles in pixels, e.g. 256x256px;
+    int maxZoom = 19;       // the maximum zoom level provided by the server;
+    int maxThreads = 4;     // the maximum threads to use for downloading tiles;
+    char basePath[BASEPATH_LENGTH] = "Tiles/";
+};
+
 struct D3DContext;
 
 struct TileManager {
@@ -90,6 +99,7 @@ private:
     void start_workers();
 
     D3DContext* pContext = nullptr;
+    MapDownloadParams mapDownloadParams = {};
 
     std::atomic<int> m_loads = 0;
     std::atomic<int> m_downloads = 0;

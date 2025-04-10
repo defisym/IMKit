@@ -13,14 +13,8 @@
 // https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
 
 // ------------------------------------------------
-// General
+// Coord Conversion
 // ------------------------------------------------
-
-namespace fs = std::filesystem;
-
-constexpr auto TILE_SIZE = 256;     // the expected size of tiles in pixels, e.g. 256x256px;
-constexpr auto MAX_ZOOM = 19;       // the maximum zoom level provided by the server;
-constexpr auto MAX_THREADS = 4;     // the maximum threads to use for downloading tiles;
 
 int long2tilex(double lon, int z) {
     return (int)(floor((lon + 180.0) / 360.0 * pow(2, z)));
@@ -67,6 +61,8 @@ bool operator<(const TileCoord& l, const TileCoord& r) {
 // TileManager
 // ------------------------------------------------
 
+namespace fs = std::filesystem;
+
 bool TileManager::Tile::Load(D3DContext* pCtx, const char* pPath) { 
     auto texture = LoadTextureFromFile(pCtx->pDevice.Get(), pPath);
     if (texture.pSrv == nullptr) { return false; }
@@ -100,12 +96,12 @@ const TileManager::Region& TileManager::get_region(ImPlotRect view, ImVec2 pixel
 
     double pix_occupied_x = (pixels.x / view.X.Size()) * size_x;
     double pix_occupied_y = (pixels.y / view.Y.Size()) * size_y;
-    double units_per_tile_x = view.X.Size() * (TILE_SIZE / pix_occupied_x);
-    double units_per_tile_y = view.Y.Size() * (TILE_SIZE / pix_occupied_y);
+    double units_per_tile_x = view.X.Size() * (mapDownloadParams.tileSize / pix_occupied_x);
+    double units_per_tile_y = view.Y.Size() * (mapDownloadParams.tileSize / pix_occupied_y);
 
     int z = 0;
     double r = 1.0 / pow(2, z);
-    while (r > units_per_tile_x && r > units_per_tile_y && z < MAX_ZOOM) {
+    while (r > units_per_tile_x && r > units_per_tile_y && z < mapDownloadParams.maxZoom) {
         r = 1.0 / pow(2, ++z);
     }
 
@@ -202,7 +198,7 @@ TileManager::TilePtr TileManager::load_tile(TileCoord coord) {
 }
 
 void TileManager::start_workers() {
-    for (int thrd = 1; thrd < MAX_THREADS + 1; ++thrd) {
+    for (int thrd = 1; thrd < mapDownloadParams.maxThreads + 1; ++thrd) {
         m_workers.emplace_back(
             [this, thrd] {
                 printf("TileManager[%02d]: Thread started\n", thrd);
