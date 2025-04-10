@@ -9,7 +9,7 @@ constexpr auto SITE_LENGTH = 512;
 
 struct ProxyParams {
     char localHost[SITE_LENGTH] = "127.0.0.1";
-    unsigned short port = 10808;
+    int port = 10808;
 };
 
 template<>
