@@ -94,6 +94,11 @@ struct HttpDownloader {
     HttpDownloader(const ProxyParams& pParams, const HttpParams& hParams);
     ~HttpDownloader();
 
+    HttpDownloader(const HttpDownloader&) = delete;
+    HttpDownloader& operator=(const HttpDownloader&) = delete;
+    HttpDownloader(HttpDownloader&& r) noexcept;
+    HttpDownloader& operator=(HttpDownloader&& r) noexcept;
+
     using DataCallback = std::function<void(const char*, size_t)>;
 
 private:

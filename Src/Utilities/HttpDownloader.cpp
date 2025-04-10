@@ -48,7 +48,7 @@ HttpDownloader::HttpDownloader(const HttpParams& hParams) {
     pClient = new httplib::Client{ hParams.bHttps
         ? std::format("https://{}", hParams.site)
         : std::format("http://{}", hParams.site) };
-    pHeader = new httplib::Headers{ {"User-Agent", hParams.userAgent } };
+    pHeader = new httplib::Headers{ { "User-Agent", hParams.userAgent } };
 }
 
 HttpDownloader::HttpDownloader(const ProxyParams& pParams,
@@ -60,13 +60,25 @@ HttpDownloader::HttpDownloader(const ProxyParams& pParams,
     pClient = new httplib::Client{ pParams.localHost,pParams.port };
     pHeader = new httplib::Headers{ 
         { "Host", hParams.site },
-        {"User-Agent", hParams.userAgent }
+        { "User-Agent", hParams.userAgent }
     };
 }
 
 HttpDownloader::~HttpDownloader() {
     delete (httplib::Client*)pClient;
     delete (httplib::Headers*)pHeader;
+}
+
+HttpDownloader::HttpDownloader(HttpDownloader&& r) noexcept {
+    *this = std::forward<HttpDownloader&&>(r);
+}
+
+HttpDownloader& HttpDownloader::operator=(HttpDownloader&& r) noexcept {
+    downloaderParams = r.downloaderParams;
+    pClient = r.pClient; r.pClient = nullptr;
+    pHeader = r.pHeader; r.pHeader = nullptr;
+
+    return *this;
 }
 
 int HttpDownloader::Get(const DataCallback& cb, const std::string path) {
