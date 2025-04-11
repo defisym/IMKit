@@ -23,21 +23,47 @@ void InterfaceMap(const char* pID,
         ImPlot::SetupAxesLimits(0, 1, 0, 1);
 
         const auto& debug = pViewParams->bDebug;
-        auto& rect = pViewParams->viewRect;
+        auto& newRect = pViewParams->newRect;
+        auto& viewRect = pViewParams->viewRect;
 
         static bool bFirstRun = true;
         if (bFirstRun || pViewParams->bFitOnScreen) {
-            bFirstRun = false;
-            pViewParams->bFitOnScreen = false;
+            bFirstRun = false; 
 
-            ImPlot::SetRect({ rect.xMin, rect.xMax, rect.yMin, rect.yMax });
+            if (pViewParams->bFitOnScreen) {
+                pViewParams->bFitOnScreen = false;
+
+                // offset the new rect by previous rect
+                auto rectRatio = (newRect.xMax - newRect.xMin) / (newRect.yMax - newRect.yMin);
+                auto plotRatio = (viewRect.xMax - viewRect.xMin) / (viewRect.yMax - viewRect.yMin);
+
+                if (plotRatio > rectRatio) {
+                    // plot wider
+                    const auto newWidth = plotRatio * (newRect.yMax - newRect.yMin);
+                    const auto xCenter = (newRect.xMax + newRect.xMin) / 2;
+                    newRect.xMax = xCenter + newWidth / 2;
+                    newRect.xMin = xCenter - newWidth / 2;
+                }
+                else {
+                    // plot higher
+                    const auto newHeight = (1 / plotRatio) * (newRect.xMax - newRect.xMin);
+                    const auto yCenter = (newRect.yMax + newRect.yMin) / 2;
+                    newRect.yMax = yCenter + newHeight / 2;
+                    newRect.yMin = yCenter - newHeight / 2;
+                }
+            }
+            else {
+                newRect = viewRect;
+            }
+
+            ImPlot::SetRect({ newRect.xMin, newRect.xMax, newRect.yMin, newRect.yMax });
         }
 
         auto size = ImPlot::GetPlotSize();
         auto limits = ImPlot::GetPlotLimits();
-        rect.xMin = limits.X.Min; rect.xMax = limits.X.Max;
-        rect.yMin = limits.Y.Min; rect.yMax = limits.Y.Max;
-
+        viewRect.xMin = limits.X.Min; viewRect.xMax = limits.X.Max;
+        viewRect.yMin = limits.Y.Min; viewRect.yMax = limits.Y.Max;
+   
         auto& region = pTileManager->get_region(limits, size);
 
         // renders needs to be reset each call
