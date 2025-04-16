@@ -303,11 +303,13 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="IMGuiInterface\implot\implot_items.cpp" />
     <ClCompile Include="Internationalization\Internationalization.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Processor\VibrationProcess.cpp" />
     <ClCompile Include="Processor\Vibration\ContextVibrationLocalizationProcessor.cpp" />
     <ClCompile Include="Processor\Vibration\TraditionVibrationLocalizationProcessor.cpp" />
     <ClCompile Include="Processor\Vibration\VibrationLocalizationDefinition.cpp" />
     <ClCompile Include="Processor\Vibration\VibrationLocalizationHandler.cpp" />
     <ClCompile Include="Processor\Vibration\VibrationLocalizationProcessor.cpp" />
+    <ClCompile Include="Processor\WaveformProcess.cpp" />
     <ClCompile Include="Processor\Waveform\SingleWaveformRestoreHandler.cpp" />
     <ClCompile Include="Processor\Waveform\WaveformRestoreData.cpp" />
     <ClCompile Include="Processor\Waveform\WaveformRestoreDefinition.cpp" />
@@ -417,11 +419,13 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="IMGuiInterface\implot\implot_internal.h" />
     <ClInclude Include="Internationalization\Internationalization.h" />
     <ClInclude Include="macro.h" />
+    <ClInclude Include="Processor\VibrationProcess.h" />
     <ClInclude Include="Processor\Vibration\ContextVibrationLocalizationProcessor.h" />
     <ClInclude Include="Processor\Vibration\TraditionVibrationLocalizationProcessor.h" />
     <ClInclude Include="Processor\Vibration\VibrationLocalizationDefinition.h" />
     <ClInclude Include="Processor\Vibration\VibrationLocalizationHandler.h" />
     <ClInclude Include="Processor\Vibration\VibrationLocalizationProcessor.h" />
+    <ClInclude Include="Processor\WaveformProcess.h" />
     <ClInclude Include="Processor\Waveform\SingleWaveformRestoreHandler.h" />
     <ClInclude Include="Processor\Waveform\WaveformRestoreData.h" />
     <ClInclude Include="Processor\Waveform\WaveformRestoreDefinition.h" />
