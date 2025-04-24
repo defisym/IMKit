@@ -504,6 +504,9 @@
     <ClCompile Include="Processor\VibrationProcess.cpp">
       <Filter>源文件\Processor</Filter>
     </ClCompile>
+    <ClCompile Include="Worker\FileLogThread.cpp">
+      <Filter>源文件\Worker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IMGuiInterface\IMGuiInterface.h">
@@ -817,6 +820,9 @@
     </ClInclude>
     <ClInclude Include="Processor\VibrationProcess.h">
       <Filter>头文件\Processor</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker\FileLogThread.h">
+      <Filter>头文件\Worker</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
