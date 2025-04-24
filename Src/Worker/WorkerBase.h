@@ -22,7 +22,7 @@ struct WorkerBase : ThreadHibernate {
     using CallbackType = std::function<void()>;
     CallbackType executeCallback;
 
-    WorkerBase(Ctx* p, CallbackType cb);
+    WorkerBase(Ctx* p, CallbackType executeCb);
     void ExecuteCallback() override;
 
 #ifdef MULTITHREAD_SLEEP_WHEN_NODATA
