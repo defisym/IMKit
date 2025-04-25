@@ -243,6 +243,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
   <ItemGroup>
     <ClCompile Include="CPUAffinity\CPUAffinity.cpp" />
     <ClCompile Include="DataInterface\DataInterface.cpp" />
+    <ClCompile Include="DataInterface\FileInterface.cpp" />
     <ClCompile Include="DataInterface\Implements\VibrationDataStringify.cpp" />
     <ClCompile Include="DataInterface\Implements\WaveformDataStringify.cpp" />
     <ClCompile Include="GUIContent\Components\Basic\ComponentWindow.cpp" />
@@ -342,11 +343,8 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="Utilities\LoadFileToWStr.cpp" />
     <ClCompile Include="Utilities\Logger.cpp" />
     <ClCompile Include="Utilities\MapDownloader.cpp" />
-    <ClCompile Include="Utilities\OTDRDataInterface.cpp" />
     <ClCompile Include="Utilities\StringResult.cpp" />
     <ClCompile Include="Utilities\TimeStampHelper.cpp" />
-    <ClCompile Include="Utilities\VibrationDataInterface.cpp" />
-    <ClCompile Include="Utilities\WaveformDataInterface.cpp" />
     <ClCompile Include="Worker\FileLogThread.cpp" />
     <ClCompile Include="Worker\ReaderThread.cpp" />
     <ClCompile Include="Worker\Thread\ThreadBase.cpp" />
@@ -359,6 +357,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="CPUAffinity\SKU\Intel\13500H.h" />
     <ClInclude Include="CPUAffinity\SKU\Intel\13700K.h" />
     <ClInclude Include="DataInterface\DataInterface.h" />
+    <ClInclude Include="DataInterface\FileInterface.h" />
     <ClInclude Include="DataInterface\Implements\VibrationDataStringify.h" />
     <ClInclude Include="DataInterface\Implements\WaveformDataStringify.h" />
     <ClInclude Include="GUIContent\Components\Basic\ComponentWindow.h" />
@@ -448,14 +447,11 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Utilities\Logger.h" />
     <ClInclude Include="Utilities\MapDownloader.h" />
     <ClInclude Include="Utilities\MeasureHelper.h" />
-    <ClInclude Include="Utilities\OTDRDataInterface.h" />
     <ClInclude Include="Utilities\RingBuffer.h" />
     <ClInclude Include="Utilities\StringResult.h" />
     <ClInclude Include="Utilities\ThreadSafeRingBuffer.h" />
     <ClInclude Include="Utilities\TimeStampHelper.h" />
-    <ClInclude Include="Utilities\VibrationDataInterface.h" />
     <ClInclude Include="Utilities\WaitTimer.h" />
-    <ClInclude Include="Utilities\WaveformDataInterface.h" />
     <ClInclude Include="Worker\FileLogThread.h" />
     <ClInclude Include="Worker\ReaderThread.h" />
     <ClInclude Include="Worker\Thread\ThreadBase.h" />

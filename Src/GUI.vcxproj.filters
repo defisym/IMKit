@@ -315,9 +315,6 @@
     <ClCompile Include="Utilities\Logger.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities\OTDRDataInterface.cpp">
-      <Filter>源文件\Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="Tests\LoggerTest.cpp">
       <Filter>源文件\Tests</Filter>
     </ClCompile>
@@ -350,12 +347,6 @@
     </ClCompile>
     <ClCompile Include="GUIContext\Handler\FilterHandler.cpp">
       <Filter>源文件\GUIContext\Handler</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\WaveformDataInterface.cpp">
-      <Filter>源文件\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\VibrationDataInterface.cpp">
-      <Filter>源文件\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="GUIContent\Components\Config\Environment\ComponentConfigSoftware.cpp">
       <Filter>源文件\GUIContent\Components\Config\Environment</Filter>
@@ -528,6 +519,9 @@
     <ClCompile Include="DataInterface\Implements\WaveformDataStringify.cpp">
       <Filter>源文件\DataInterface\Implements</Filter>
     </ClCompile>
+    <ClCompile Include="DataInterface\FileInterface.cpp">
+      <Filter>源文件\DataInterface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IMGuiInterface\IMGuiInterface.h">
@@ -608,9 +602,6 @@
     <ClInclude Include="Utilities\Logger.h">
       <Filter>头文件\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities\OTDRDataInterface.h">
-      <Filter>头文件\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="GUIContext\Handler\LoggerHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
@@ -643,12 +634,6 @@
     </ClInclude>
     <ClInclude Include="GUIContext\Handler\FilterHandler.h">
       <Filter>头文件\GUIContext\Handler</Filter>
-    </ClInclude>
-    <ClInclude Include="Utilities\VibrationDataInterface.h">
-      <Filter>头文件\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="Utilities\WaveformDataInterface.h">
-      <Filter>头文件\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigSoftware.h">
       <Filter>头文件\GUIContent\Components\Config\Environment</Filter>
@@ -853,6 +838,9 @@
     </ClInclude>
     <ClInclude Include="DataInterface\Implements\WaveformDataStringify.h">
       <Filter>头文件\DataInterface\Implements</Filter>
+    </ClInclude>
+    <ClInclude Include="DataInterface\FileInterface.h">
+      <Filter>头文件\DataInterface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
