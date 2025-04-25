@@ -223,6 +223,18 @@
     <Filter Include="源文件\GUIContent\Components\Config\Map">
       <UniqueIdentifier>{8377935d-2abf-4d91-a25e-fe5cb6b9e734}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\DataInterface">
+      <UniqueIdentifier>{7422f186-6456-4235-a985-c2ce8f518f59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\DataInterface">
+      <UniqueIdentifier>{eb620335-e241-4188-8d8c-4a1a17be9398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\DataInterface\Implements">
+      <UniqueIdentifier>{e1e8e310-f23e-418d-ae2d-cca02093a71b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\DataInterface\Implements">
+      <UniqueIdentifier>{c92f6ad8-b4e0-4129-9e03-47a0aac7ec80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IMGuiInterface\IMGuiInterface.cpp">
@@ -506,6 +518,15 @@
     </ClCompile>
     <ClCompile Include="Worker\FileLogThread.cpp">
       <Filter>源文件\Worker</Filter>
+    </ClCompile>
+    <ClCompile Include="DataInterface\DataInterface.cpp">
+      <Filter>源文件\DataInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="DataInterface\Implements\VibrationDataStringify.cpp">
+      <Filter>源文件\DataInterface\Implements</Filter>
+    </ClCompile>
+    <ClCompile Include="DataInterface\Implements\WaveformDataStringify.cpp">
+      <Filter>源文件\DataInterface\Implements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -823,6 +844,15 @@
     </ClInclude>
     <ClInclude Include="Worker\FileLogThread.h">
       <Filter>头文件\Worker</Filter>
+    </ClInclude>
+    <ClInclude Include="DataInterface\DataInterface.h">
+      <Filter>头文件\DataInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="DataInterface\Implements\VibrationDataStringify.h">
+      <Filter>头文件\DataInterface\Implements</Filter>
+    </ClInclude>
+    <ClInclude Include="DataInterface\Implements\WaveformDataStringify.h">
+      <Filter>头文件\DataInterface\Implements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

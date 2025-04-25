@@ -242,6 +242,9 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CPUAffinity\CPUAffinity.cpp" />
+    <ClCompile Include="DataInterface\DataInterface.cpp" />
+    <ClCompile Include="DataInterface\Implements\VibrationDataStringify.cpp" />
+    <ClCompile Include="DataInterface\Implements\WaveformDataStringify.cpp" />
     <ClCompile Include="GUIContent\Components\Basic\ComponentWindow.cpp" />
     <ClCompile Include="GUIContent\Components\Config\ComponentConfig.cpp" />
     <ClCompile Include="GUIContent\Components\Config\Device\ComponentConfigDevice.cpp" />
@@ -355,6 +358,9 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="CPUAffinity\CPUAffinity.h" />
     <ClInclude Include="CPUAffinity\SKU\Intel\13500H.h" />
     <ClInclude Include="CPUAffinity\SKU\Intel\13700K.h" />
+    <ClInclude Include="DataInterface\DataInterface.h" />
+    <ClInclude Include="DataInterface\Implements\VibrationDataStringify.h" />
+    <ClInclude Include="DataInterface\Implements\WaveformDataStringify.h" />
     <ClInclude Include="GUIContent\Components\Basic\ComponentWindow.h" />
     <ClInclude Include="GUIContent\Components\Config\ComponentConfig.h" />
     <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigCalibrate.h" />
