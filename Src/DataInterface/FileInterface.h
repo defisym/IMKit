@@ -41,7 +41,7 @@ public:
     FileInterface(const FileInterfaceConfig& config = {});
     ~FileInterface();
 
-    void UpdateInterval(const size_t interval);
+    void UpdateConfig(const FileInterfaceConfig& config = {});
     // add data to internal 
     void AddData(const std::string& data);
 

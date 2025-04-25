@@ -20,7 +20,13 @@ std::size_t std::hash<FileInterfaceConfig>::operator()(FileInterfaceConfig const
     return hash;
 }
 
-FileInterface::FileInterface(const FileInterfaceConfig& config) {
+inline FileInterface::FileInterface(const FileInterfaceConfig& config) {
+    UpdateConfig();
+}
+
+FileInterface::~FileInterface() { SaveData(); }
+
+void FileInterface::UpdateConfig(const FileInterfaceConfig& config) {
     this->config = config;
 
     do {
@@ -48,12 +54,6 @@ FileInterface::FileInterface(const FileInterfaceConfig& config) {
     } while (false);
 
     bValid = false;
-}
-
-FileInterface::~FileInterface() { SaveData(); }
-
-void FileInterface::UpdateInterval(const size_t interval) {
-    config.interval = interval;
 }
 
 void FileInterface::AddData(const std::string& data) {
