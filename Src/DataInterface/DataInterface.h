@@ -26,7 +26,7 @@ concept ValidDataStringify = requires(DataStringify dataStringify) {
 
 template<typename DataStringify, typename DataType>
     requires ValidDataStringify<DataStringify, DataType>
-class DataInterface final {  // NOLINT(cppcoreguidelines-special-member-functions)
+class DataInterface {  // NOLINT(cppcoreguidelines-special-member-functions)
 protected:
     DataInterfaceConfig config = {};
     DataStringify stringify = {};
@@ -56,4 +56,4 @@ template <typename DataStringify, typename DataType>
 struct is_data_interface<DataInterface<DataStringify, DataType>> : std::true_type {};
 
 template <typename T>
-concept ValidDataInterface = is_data_interface<T>::value;
+concept ValidDataInterfaceEx = is_data_interface<T>::value;
