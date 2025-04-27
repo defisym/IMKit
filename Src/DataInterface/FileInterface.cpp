@@ -75,6 +75,7 @@ bool FileInterface::SaveData() {
         + cache.back().timeStampFormatted
         + ".data";
 
+    namespace fs = std::filesystem;
     const auto path = fs::path{ filePath } / fileName.c_str();
 
     FILE* fp = nullptr;
