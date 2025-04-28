@@ -46,8 +46,8 @@ public:
     void AddData(const std::string& data);
 
     std::string metaData;
-    // add metadata, which is written to the beginning of file
-    void AddMetaData(const std::string& data) { metaData = data; }
+    // set metadata, which is written to the beginning of file
+    void SetMetaData(const std::string& data) { metaData = data; }
 
     // create folder to save files
     bool CreateFolder();
