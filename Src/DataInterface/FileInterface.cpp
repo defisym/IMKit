@@ -27,7 +27,7 @@ std::size_t std::hash<FileInterfaceConfig>::operator()(FileInterfaceConfig const
     return hash;
 }
 
-inline FileInterface::FileInterface(const FileInterfaceConfig& config) {
+FileInterface::FileInterface(const FileInterfaceConfig& config) {
     UpdateConfig();
 }
 
