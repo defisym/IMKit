@@ -39,7 +39,7 @@ public:
     void UpdateConfig(const DataInterfaceConfig& conf = {}) { this->config = conf; }
     [[nodiscard]] const std::string& Compress(const std::string& str) {
         if (!config.bCompress) { return str; }
-        Compress(str, compressed); return compressed;
+        ::Compress(str, compressed); return compressed;
     }
     [[nodiscard]] const std::string& ToString(const DataType& data) { 
         return Compress(stringify.ToString(data, config.bBinary));
