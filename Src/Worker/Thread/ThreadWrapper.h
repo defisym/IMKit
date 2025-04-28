@@ -6,7 +6,7 @@
 #include "ThreadBase.h"
 
 template<typename ThreadType>
-concept ThreadTypeContept = requires(ThreadType buffer) {
+concept ThreadTypeContept = requires(ThreadType thread) {
     std::is_base_of_v<ThreadBase, ThreadType>;
 };
 
