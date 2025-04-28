@@ -110,12 +110,12 @@ public:
 
     // called before thread hibernate
     virtual void HibernateCallback();
-    void Hibernate();
-    void WaitUntilHibernated();
+    virtual void Hibernate();
+    virtual void WaitUntilHibernated();
 
     // called after thread wake, for re-alloc
     virtual void WakeCallback();
-    void Wake();
+    virtual void Wake();
 
     int Worker() override;
     virtual int LoopBody() = 0;
