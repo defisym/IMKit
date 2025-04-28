@@ -12,6 +12,8 @@ struct FileInterfaceConfig {
     // interval to write to disk
     size_t interval = DEFAULT_LOG_INTERVAL;
     char filePath[FILEPATH_LENGTH] = "Log/";
+
+    FileInterfaceConfig GetPathAppendConfig(const char* pSubPath);
 };
 
 template<>

@@ -9,6 +9,13 @@
 #include "GUIContext/Param/Param.h"
 #include "IMGuiEx/I18NInterface.h"
 
+FileInterfaceConfig FileInterfaceConfig::GetPathAppendConfig(const char* pSubPath) {
+    FileInterfaceConfig ret = *this;
+    const auto err = strcat_s(ret.filePath, pSubPath);
+
+    return ret;
+}
+
 std::size_t std::hash<FileInterfaceConfig>::operator()(FileInterfaceConfig const& s) const noexcept {
     std::size_t hash = 0xcbf29ce484222325; // FNV-1a
     hash ^= std::hash<size_t>{}(s.interval);
