@@ -9,7 +9,7 @@
 #include "GUIContext/Param/Param.h"
 #include "IMGuiEx/I18NInterface.h"
 
-FileInterfaceConfig FileInterfaceConfig::GetPathAppendConfig(const char* pSubPath) {
+FileInterfaceConfig FileInterfaceConfig::GetPathAppendConfig(const char* pSubPath) const {
     FileInterfaceConfig ret = *this;
     const auto err = strcat_s(ret.filePath, pSubPath);
 
