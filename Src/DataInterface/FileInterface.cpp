@@ -67,82 +67,64 @@ bool FileInterface::SaveData() {
     if (!CreateFolder()) { return false; }
     if (cache.empty()) { return false; }
 
-    const auto fileName = cache.front().timeStampFormatted
+    const auto fileNameBase = cache.front().timeStampFormatted
         + " ~ "
-        + cache.back().timeStampFormatted
-        + ".data";
+        + cache.back().timeStampFormatted;
+
+    const auto dataFileName = fileNameBase + ".data";
+    const auto mapFileName = fileNameBase + ".map";
 
     namespace fs = std::filesystem;
-    const auto path = fs::path{ filePath } / fileName.c_str();
+    const auto dataPath = fs::path{ filePath } / dataFileName.c_str();
+    const auto mapPath = fs::path{ filePath } / mapFileName.c_str();
 
-    FILE* fp = nullptr;
+    errno_t err = 0;
 
-    const auto err = _wfopen_s(&fp, path.c_str(), L"wb");
-    if (err != 0 || fp == nullptr) { return false; }
+    FILE* datafp = nullptr;
+    err = _wfopen_s(&datafp, dataPath.c_str(), L"wb");
+    if (err != 0 || datafp == nullptr) { return false; }
+
+    FILE* mapfp = nullptr;
+    err = _wfopen_s(&mapfp, mapPath.c_str(), L"wb");
+    if (err != 0 || mapfp == nullptr) { return false; }
 
     size_t elementCount = 0u;
-    auto writeString = [&] (const std::string& str) {
+    auto writeElement = []<typename T> (FILE* fp, const T& element) {
+        return fwrite(&element, sizeof(T), 1, fp);
+        };
+    auto writeString = [] (FILE* fp, const std::string& str) {
         return fwrite(str.data(), str.size(), 1, fp);
         };
 
     if (!metaData.empty()) {
         // write meta data
-        elementCount += writeString("MetaData: ");
-        elementCount += writeString("\r\n");
-        elementCount += writeString(metaData);
-        elementCount += writeString("\r\n");
+        elementCount += writeElement(mapfp, metaData.size());
+        elementCount += writeString(mapfp,metaData);
     }
 
-    // write dummy jump table
-    elementCount += writeString("JumpTable: ");
-    elementCount += writeString("\r\n");
-
-    fpos_t jumpTableStart = 0;
-    if (fgetpos(fp, &jumpTableStart) != 0) { return false; }
-
-    constexpr size_t filePosition = 0;
-    for (size_t index = 0; index < cache.size(); index++) {
-        elementCount += fwrite(&filePosition, sizeof(size_t), 1, fp);
-    }
-    elementCount += writeString("\r\n");
-
-    // data region
-    elementCount += writeString("Data Region: ");
-    elementCount += writeString("\r\n");
-
-    // write cache
-    std::vector<fpos_t> jumpTable;
+    // jump table
+    elementCount += writeElement(mapfp, cache.size());
 
     for (auto& it : cache) {
         // save jump table
         fpos_t curPos = 0;
-        if (fgetpos(fp, &curPos) != 0) { return false; }
-        jumpTable.emplace_back(curPos);
+        if (fgetpos(datafp, &curPos) != 0) { return false; }
+        elementCount += writeElement(mapfp, curPos); // pos
 
         // save cache size
         const auto cacheSize = it.timeStampFormatted.length()
             + it.data.length()
             + 3 * strlen("\r\n");
-        elementCount += fwrite(&cacheSize, sizeof(size_t), 1, fp);
-        elementCount += writeString("\r\n");
-
-        elementCount += writeString(it.timeStampFormatted);
-        elementCount += writeString("\r\n");
-        elementCount += writeString(it.data);
-        elementCount += writeString("\r\n");
-    }
-
-    // write jump table
-    if (fsetpos(fp, &jumpTableStart) != 0) { return false; }
-    for (auto& it : jumpTable) {
-        elementCount += fwrite(&it, sizeof(it), 1, fp);
+        elementCount += writeString(datafp, it.timeStampFormatted);
+        elementCount += writeString(datafp, "\r\n");
+        elementCount += writeString(datafp, it.data);
+        elementCount += writeString(datafp, "\r\n");
+        elementCount += writeString(datafp, "\r\n");
     }
 
     cache.clear();
 
-    const auto ret = fclose(fp);
-
-    return ret == 0;
+    return fclose(datafp) == 0 && fclose(mapfp) == 0;
 }
 
 bool FileInterface::SaveDataWhenNeeded() {
