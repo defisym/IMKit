@@ -5,7 +5,8 @@
 
 #include "DataInterface.h"
 
-constexpr auto DEFAULT_LOG_INTERVAL = 1000;
+// in millisecond
+constexpr auto DEFAULT_LOG_INTERVAL = 600000; // 10 minutes
 constexpr auto FILEPATH_LENGTH = 512;
 
 struct FileInterfaceConfig {
