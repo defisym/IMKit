@@ -45,10 +45,10 @@ public:
     // add data to internal 
     void AddData(const std::string& data);
 
-    using MetaDataCb = std::function<const std::string* ()>;
-    MetaDataCb metaDataCb = nullptr;
+    std::string metaData;
     // add metadata, which is written to the beginning of file
-    void AddMetaData(const MetaDataCb& cb) { metaDataCb = cb; }
+    void AddMetaData(const std::string& data) { metaData = data; }
+
     // create folder to save files
     bool CreateFolder();
     // write cache to disk

@@ -89,11 +89,11 @@ bool FileInterface::SaveData() {
         return fwrite(str.data(), str.size(), 1, fp);
         };
 
-    if (metaDataCb != nullptr) {
+    if (!metaData.empty()) {
         // write meta data
         elementCount += writeString("MetaData: ");
         elementCount += writeString("\r\n");
-        elementCount += writeString(*metaDataCb());
+        elementCount += writeString(metaData);
         elementCount += writeString("\r\n");
     }
 
