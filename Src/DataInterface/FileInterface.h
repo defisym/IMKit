@@ -24,8 +24,6 @@ struct std::hash<FileInterfaceConfig> {
 // log data to the disk
 class FileInterface { // NOLINT(cppcoreguidelines-special-member-functions)
     FileInterfaceConfig config = {};
-
-    bool bValid = false;
     std::string filePath;
 
     using TimeStamp = decltype(std::chrono::system_clock::now());
@@ -51,6 +49,8 @@ public:
     MetaDataCb metaDataCb = nullptr;
     // add metadata, which is written to the beginning of file
     void AddMetaData(const MetaDataCb& cb) { metaDataCb = cb; }
+    // create folder to save files
+    bool CreateFolder();
     // write cache to disk
     // return true if file saved
     bool SaveData();

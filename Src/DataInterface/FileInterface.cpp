@@ -35,32 +35,6 @@ FileInterface::~FileInterface() { SaveData(); }
 
 void FileInterface::UpdateConfig(const FileInterfaceConfig& config) {
     this->config = config;
-
-    do {
-        // get relative path
-        char fullPathName[MAX_PATH] = {};
-        GetFullPathNameA(config.filePath, MAX_PATH, fullPathName, nullptr);
-        filePath = fullPathName;
-
-        // GetFullPathName will normalize / and \\ to \\
-        // if not end with \\ , append it
-        if (!filePath.ends_with('\\')) { filePath += '\\'; }
-
-        // create dir
-        namespace fs = std::filesystem;
-        const auto path = fs::path{ filePath };
-
-        std::error_code ec = {};
-        fs::create_directories(path, ec);
-
-        if (ec.value() != 0) { break; }
-
-        bValid = true;
-
-        return;
-    } while (false);
-
-    bValid = false;
 }
 
 void FileInterface::AddData(const std::string& data) {
@@ -73,8 +47,28 @@ void FileInterface::AddData(const std::string& data) {
         data);
 }
 
+bool FileInterface::CreateFolder() {
+    // get relative path
+    char fullPathName[MAX_PATH] = {};
+    GetFullPathNameA(config.filePath, MAX_PATH, fullPathName, nullptr);
+    filePath = fullPathName;
+
+    // GetFullPathName will normalize / and \\ to \\
+        // if not end with \\ , append it
+    if (!filePath.ends_with('\\')) { filePath += '\\'; }
+
+    // create dir
+    namespace fs = std::filesystem;
+    const auto path = fs::path{ filePath };
+
+    std::error_code ec = {};
+    fs::create_directories(path, ec);
+
+    return ec.value() == 0;
+}
+
 bool FileInterface::SaveData() {
-    if (!bValid) { return false; }
+    if (!CreateFolder()) { return false; }
     if (cache.empty()) { return false; }
 
     const auto fileName = cache.front().timeStampFormatted
