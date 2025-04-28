@@ -44,7 +44,7 @@ public:
 
     void UpdateConfig(const FileInterfaceConfig& config = {});
     // add data to internal 
-    void AddData(const std::string& data);
+    void AddData(const TimeStamp& timeStamp, const std::string& data);
 
     std::string metaData;
     // set metadata, which is written to the beginning of file

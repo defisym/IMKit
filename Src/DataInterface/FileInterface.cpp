@@ -37,13 +37,9 @@ void FileInterface::UpdateConfig(const FileInterfaceConfig& config) {
     this->config = config;
 }
 
-void FileInterface::AddData(const std::string& data) {
-    // update timestamp
-    const auto currentTimeStamp = std::chrono::system_clock::now();
-
-    // update cache
-    cache.emplace_back(currentTimeStamp,
-        GetFormattedTimeStamp(currentTimeStamp),
+void FileInterface::AddData(const TimeStamp& timeStamp, const std::string& data) {
+    cache.emplace_back(timeStamp,
+        GetFormattedTimeStamp(timeStamp),
         data);
 }
 
