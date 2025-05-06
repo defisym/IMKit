@@ -9,10 +9,17 @@
 constexpr auto DEFAULT_LOG_INTERVAL = 600000; // 10 minutes
 constexpr auto FILEPATH_LENGTH = 512;
 
+// in byte
+constexpr size_t GetByteCount(const size_t GB) { return GB * 1024Ui64 * 1024Ui64 * 1024Ui64; }
+constexpr auto DEFAULT_CACHE_SIZE = GetByteCount(16Ui64); // 16GB
+constexpr auto DEFAULT_LEFT_SIZE = GetByteCount(4Ui64); // 16GB
+
 struct FileInterfaceConfig {
     // interval to write to disk
     size_t interval = DEFAULT_LOG_INTERVAL;
     char filePath[FILEPATH_LENGTH] = "Log/";
+    size_t memoryCacheThreshold = DEFAULT_CACHE_SIZE;
+    size_t memoryLeftThreshold = DEFAULT_LEFT_SIZE;
 
     FileInterfaceConfig GetPathAppendConfig(const char* pSubPath) const;
 };

@@ -4,6 +4,7 @@
 #define NOMINMAX
 #include <windows.h>
 #include <filesystem>
+#include <WindowsCommon.h>
 
 #include "Utilities/TimeStampHelper.h"
 #include "GUIContext/Param/Param.h"
@@ -130,16 +131,65 @@ bool FileInterface::SaveData() {
 }
 
 bool FileInterface::SaveDataWhenNeeded() {
-    using namespace std::chrono_literals;
+    // ------------------------------------------------
+    // Condition
+    // ------------------------------------------------
 
-    // update timestamp
-    const auto currentTimeStamp = std::chrono::system_clock::now();
-    if (lastSaveTimeStamp == TimeStamp{}) [[unlikely]] { lastSaveTimeStamp = currentTimeStamp; }
-    const size_t interval = (currentTimeStamp - lastSaveTimeStamp) / 1ms;
+    // ------------------------------------
+    // Definition
+    // ------------------------------------
+    auto conditionMemoryCache = [this] ()->bool {
+        return cacheSize > config.memoryCacheThreshold;
+        };
+    auto conditionMemoryLeft = [this] ()->bool {
+        return GetSystemMemoryInfo() < config.memoryLeftThreshold;
+        };
+    auto conditionTimeStamp = [this] ()->bool {
+        using namespace std::chrono_literals;
 
-    // check interval
-    if (interval < config.interval) { return false; }
-    lastSaveTimeStamp = currentTimeStamp;
+        // update timestamp
+        const auto currentTimeStamp = std::chrono::system_clock::now();
+        if (lastSaveTimeStamp == TimeStamp{}) [[unlikely]] { lastSaveTimeStamp = currentTimeStamp; }
+        const size_t interval = (currentTimeStamp - lastSaveTimeStamp) / 1ms;
 
+        // check interval
+        return interval > config.interval;
+        };
+
+    // ------------------------------------
+    // Process
+    // ------------------------------------
+
+    do {
+        // memory has higher priority than time stamp
+        if (conditionMemoryCache()) { break; }
+        if (conditionMemoryLeft()) { break; }
+        if (conditionTimeStamp()) { break; }
+
+        return false;
+    } while (false);
+    
+    // ------------------------------------------------
+    // Update
+    // ------------------------------------------------
+    
+    // ------------------------------------
+    // Definition
+    // ------------------------------------
+    
+    auto updateTimeStamp = [this] () {
+        lastSaveTimeStamp = std::chrono::system_clock::now();
+        };
+
+    // ------------------------------------
+    // Process
+    // ------------------------------------
+    
+    updateTimeStamp();
+
+    // ------------------------------------------------
+    // Save data
+    // ------------------------------------------------
+    
     return SaveData();
 }
