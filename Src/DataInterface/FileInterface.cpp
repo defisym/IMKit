@@ -150,6 +150,7 @@ void FileInterface::FileWriter::WriteFile(std::vector<CacheData>& cache) {
 bool FileInterface::FileWriter::CloseFile() {
     if (!bFileOpen) { return true; }
     if (datafp == nullptr || mapfp == nullptr) { return true; }
+    if (startTimeStamp.empty()) { return true; } // nothing has been write
 
     do {
         // write size
