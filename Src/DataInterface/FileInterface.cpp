@@ -41,6 +41,7 @@ void FileInterface::AddData(const TimeStamp& timeStamp, const std::string& data)
     cache.emplace_back(timeStamp,
         GetFormattedTimeStamp(timeStamp),
         data);
+    cacheSize += cache.back().GetSize();
 }
 
 bool FileInterface::CreateFolder() {
@@ -123,6 +124,7 @@ bool FileInterface::SaveData() {
     }
 
     cache.clear();
+    cacheSize = 0u;
 
     return fclose(datafp) == 0 && fclose(mapfp) == 0;
 }

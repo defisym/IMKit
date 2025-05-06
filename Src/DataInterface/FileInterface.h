@@ -34,8 +34,15 @@ class FileInterface { // NOLINT(cppcoreguidelines-special-member-functions)
         TimeStamp timeStamp = {};
         std::string timeStampFormatted = {};
         std::string data;
+
+        size_t GetSize() const {
+            return sizeof(std::decay_t<std::remove_pointer_t<decltype(this)>>)
+                + sizeof(char) * timeStampFormatted.length()
+                + sizeof(char) * data.length();
+        }
     };
 
+    size_t cacheSize = 0u;
     std::vector<CacheData> cache;
 
 public:
