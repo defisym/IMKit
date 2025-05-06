@@ -18,7 +18,7 @@ struct FileInterfaceConfig {
     // interval to write to disk
     size_t interval = DEFAULT_LOG_INTERVAL;
     char filePath[FILEPATH_LENGTH] = "Log/";
-    size_t memoryCacheThreshold = DEFAULT_CACHE_SIZE;
+    size_t fileSizeThreshold = DEFAULT_CACHE_SIZE;
     size_t memoryLeftThreshold = DEFAULT_LEFT_SIZE;
 
     FileInterfaceConfig GetPathAppendConfig(const char* pSubPath) const;
@@ -49,7 +49,6 @@ class FileInterface { // NOLINT(cppcoreguidelines-special-member-functions)
         }
     };
 
-    size_t cacheSize = 0u;
     std::vector<CacheData> cache;
 
 public:
@@ -60,12 +59,53 @@ public:
     // add data to internal 
     void AddData(const TimeStamp& timeStamp, const std::string& data);
 
+private:
     std::string metaData;
+
+public:
     // set metadata, which is written to the beginning of file
     void SetMetaData(const std::string& data) { metaData = data; }
+    
+private:
+    struct FileWriter {
+        bool bFileOpen = false;
+        std::string filePath = {};
+        std::string dataTempFileName = {};
+        std::string mapTempFileName = {};
 
-    // create folder to save files
-    bool CreateFolder();
+        FILE* datafp = nullptr;
+        FILE* mapfp = nullptr;
+
+        size_t fileSize = 0u;
+        size_t elementCount = 0u;
+        size_t totalCacheSize = 0u;
+        std::string startTimeStamp = {};
+        std::string endTimeStamp = {};
+
+        static constexpr size_t WRITE_SIZE_THRESHOLD = 16;
+
+        // create new tempfile
+        bool NewFile(const std::string& basePath, const std::string& name = "temp");
+        
+        template<typename T>
+        size_t writeElement(FILE* fp, const T& element) {
+            return fwrite(&element, sizeof(T), 1, fp);
+        };
+        size_t writeString(FILE* fp, const std::string& str) {
+            return fwrite(str.data(), str.size(), 1, fp);
+        };
+
+        // write metadata to tempfile
+        void WriteMetaData(const std::string& metaData);
+        // write data to tempfile
+        void WriteFile(std::vector<CacheData>& cache);
+        // close and rename tempfile
+        bool CloseFile();
+    };
+
+    FileWriter fileWriter = {};
+
+public:
     // write cache to disk
     // return true if file saved
     bool SaveData();

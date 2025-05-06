@@ -42,13 +42,26 @@ void FileInterface::AddData(const TimeStamp& timeStamp, const std::string& data)
     cache.emplace_back(timeStamp,
         GetFormattedTimeStamp(timeStamp),
         data);
-    cacheSize += cache.back().GetSize();
+
+    if (!fileWriter.bFileOpen) { fileWriter.NewFile(config.filePath); }
+    fileWriter.WriteFile(cache);
+    SaveDataWhenNeeded();
 }
 
-bool FileInterface::CreateFolder() {
+bool FileInterface::FileWriter::NewFile(const std::string& basePath, const std::string& name) {
+    // ------------------------------------------------
+    // Reset
+    // ------------------------------------------------
+    
+    if (bFileOpen) { CloseFile(); }
+
+    // ------------------------------------------------
+    // Create folder to save files
+    // ------------------------------------------------
+    
     // get relative path
     char fullPathName[MAX_PATH] = {};
-    GetFullPathNameA(config.filePath, MAX_PATH, fullPathName, nullptr);
+    GetFullPathNameA(basePath.c_str(), MAX_PATH, fullPathName, nullptr);
     filePath = fullPathName;
 
     // GetFullPathName will normalize / and \\ to \\
@@ -62,55 +75,58 @@ bool FileInterface::CreateFolder() {
     std::error_code ec = {};
     fs::create_directories(path, ec);
 
-    return ec.value() == 0;
-}
+    if (ec.value() != 0) { return false; }
 
-bool FileInterface::SaveData() {
-    if (!CreateFolder()) { return false; }
-    if (cache.empty()) { return false; }
+    // ------------------------------------------------
+    // Open file
+    // ------------------------------------------------
 
-    const auto fileNameBase = cache.front().timeStampFormatted
-        + " ~ "
-        + cache.back().timeStampFormatted;
-
-    const auto dataFileName = fileNameBase + ".data";
-    const auto mapFileName = fileNameBase + ".map";
+    dataTempFileName = name + ".data";
+    mapTempFileName = name + ".map";
 
     namespace fs = std::filesystem;
-    const auto dataPath = fs::path{ filePath } / dataFileName.c_str();
-    const auto mapPath = fs::path{ filePath } / mapFileName.c_str();
+    const auto dataPath = fs::path{ filePath } / dataTempFileName.c_str();
+    const auto mapPath = fs::path{ filePath } / mapTempFileName.c_str();
 
     errno_t err = 0;
 
-    FILE* datafp = nullptr;
+    datafp = nullptr;
     err = _wfopen_s(&datafp, dataPath.c_str(), L"wb");
     if (err != 0 || datafp == nullptr) { return false; }
 
-    FILE* mapfp = nullptr;
+    mapfp = nullptr;
     err = _wfopen_s(&mapfp, mapPath.c_str(), L"wb");
     if (err != 0 || mapfp == nullptr) { return false; }
 
-    size_t elementCount = 0u;
-    auto writeElement = []<typename T> (FILE* fp, const T& element) {
-        return fwrite(&element, sizeof(T), 1, fp);
-        };
-    auto writeString = [] (FILE* fp, const std::string& str) {
-        return fwrite(str.data(), str.size(), 1, fp);
-        };
+    // jump table: write dummy size
+    elementCount += writeElement(mapfp, 0);
 
-    if (!metaData.empty()) {
-        // write meta data
-        elementCount += writeElement(mapfp, metaData.size());
-        elementCount += writeString(mapfp,metaData);
-    }
+    bFileOpen = true;
 
-    // jump table
-    elementCount += writeElement(mapfp, cache.size());
+    return true;
+}
+
+void FileInterface::FileWriter::WriteMetaData(const std::string& metaData) {
+    if (!bFileOpen) { return; }
+    if (metaData.empty()) { return; }
+
+    // write meta data
+    elementCount += writeElement(mapfp, metaData.size());
+    elementCount += writeString(mapfp, metaData);
+}
+
+void FileInterface::FileWriter::WriteFile(std::vector<CacheData>& cache) {
+    if (!bFileOpen) { return; }
+    if (cache.size() < WRITE_SIZE_THRESHOLD) { return; }
+    
+    if (startTimeStamp.empty()) { startTimeStamp = cache.front().timeStampFormatted; }
+    endTimeStamp = cache.back().timeStampFormatted;
+    totalCacheSize += cache.size();
 
     for (auto& it : cache) {
         // save jump table
         fpos_t curPos = 0;
-        if (fgetpos(datafp, &curPos) != 0) { return false; }
+        if (fgetpos(datafp, &curPos) != 0) { break; }
         elementCount += writeElement(mapfp, curPos); // pos
 
         // save cache size
@@ -122,12 +138,56 @@ bool FileInterface::SaveData() {
         elementCount += writeString(datafp, it.data);
         elementCount += writeString(datafp, "\r\n");
         elementCount += writeString(datafp, "\r\n");
+
+        fileSize += it.GetSize();
     }
 
     cache.clear();
-    cacheSize = 0u;
 
-    return fclose(datafp) == 0 && fclose(mapfp) == 0;
+    return;
+}
+
+bool FileInterface::FileWriter::CloseFile() {
+    if (!bFileOpen) { return true; }
+    if (datafp == nullptr || mapfp == nullptr) { return true; }
+
+    do {
+        // write size
+        if (fseek(mapfp, 0, SEEK_SET) != 0) { break; }
+        elementCount += writeElement(mapfp, totalCacheSize);
+
+        // close file
+        if (fclose(datafp) != 0) { break; }
+        datafp = nullptr;
+        if (fclose(mapfp) != 0) { break; }
+        mapfp = nullptr;
+
+        // rename
+        const auto name = startTimeStamp + " ~ " + endTimeStamp;
+        const auto dataFileName = name + ".data";
+        const auto mapFileName = name + ".map";
+
+        namespace fs = std::filesystem;
+        const auto dataOldPath = fs::path{ filePath } / dataTempFileName.c_str();
+        const auto dataNewPath = fs::path{ filePath } / dataFileName.c_str();
+        const auto mapOldPath = fs::path{ filePath } / mapTempFileName.c_str();
+        const auto mapNewPath = fs::path{ filePath } / mapFileName.c_str();
+
+        fs::rename(dataOldPath, dataNewPath);
+        fs::rename(mapOldPath, mapNewPath);
+    } while (false);
+
+    // reset
+    bFileOpen = false;
+    filePath = {}; dataTempFileName = {}; mapTempFileName = {};
+    fileSize = 0u; elementCount = 0u; totalCacheSize = 0u;
+    startTimeStamp = {}; endTimeStamp = {};
+
+    return true;
+}
+
+bool FileInterface::SaveData() {
+    return fileWriter.CloseFile();
 }
 
 bool FileInterface::SaveDataWhenNeeded() {
@@ -138,8 +198,8 @@ bool FileInterface::SaveDataWhenNeeded() {
     // ------------------------------------
     // Definition
     // ------------------------------------
-    auto conditionMemoryCache = [this] ()->bool {
-        return cacheSize > config.memoryCacheThreshold;
+    auto conditionFileSize = [this] ()->bool {
+        return fileWriter.fileSize > config.fileSizeThreshold;
         };
     auto conditionMemoryLeft = [this] ()->bool {
         return GetSystemMemoryInfo() < config.memoryLeftThreshold;
@@ -161,8 +221,7 @@ bool FileInterface::SaveDataWhenNeeded() {
     // ------------------------------------
 
     do {
-        // memory has higher priority than time stamp
-        if (conditionMemoryCache()) { break; }
+        if (conditionFileSize()) { break; }
         if (conditionMemoryLeft()) { break; }
         if (conditionTimeStamp()) { break; }
 
@@ -193,3 +252,4 @@ bool FileInterface::SaveDataWhenNeeded() {
     
     return SaveData();
 }
+
