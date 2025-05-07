@@ -84,6 +84,8 @@ private:
 
         static constexpr size_t WRITE_SIZE_THRESHOLD = 16;
 
+        ~FileWriter() { CloseFile(); }
+
         // create new tempfile
         bool NewFile(const std::string& basePath, const std::string& name = "temp");
         
