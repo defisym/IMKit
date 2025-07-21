@@ -315,9 +315,6 @@
     <ClCompile Include="Utilities\Logger.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="Tests\LoggerTest.cpp">
-      <Filter>源文件\Tests</Filter>
-    </ClCompile>
     <ClCompile Include="GUIContext\Handler\LoggerHandler.cpp">
       <Filter>源文件\GUIContext\Handler</Filter>
     </ClCompile>
@@ -521,6 +518,18 @@
     </ClCompile>
     <ClCompile Include="DataInterface\FileInterface.cpp">
       <Filter>源文件\DataInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="DataInterface\Implements\VibrationDataDefinition.cpp">
+      <Filter>源文件\DataInterface\Implements</Filter>
+    </ClCompile>
+    <ClCompile Include="DataInterface\Implements\VibrationDataParse.cpp">
+      <Filter>源文件\DataInterface\Implements</Filter>
+    </ClCompile>
+    <ClCompile Include="DataInterface\Implements\WaveformDataDefinition.cpp">
+      <Filter>源文件\DataInterface\Implements</Filter>
+    </ClCompile>
+    <ClCompile Include="DataInterface\Implements\WaveformDataParse.cpp">
+      <Filter>源文件\DataInterface\Implements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -841,6 +850,18 @@
     </ClInclude>
     <ClInclude Include="DataInterface\FileInterface.h">
       <Filter>头文件\DataInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="DataInterface\Implements\VibrationDataDefinition.h">
+      <Filter>头文件\DataInterface\Implements</Filter>
+    </ClInclude>
+    <ClInclude Include="DataInterface\Implements\VibrationDataParse.h">
+      <Filter>头文件\DataInterface\Implements</Filter>
+    </ClInclude>
+    <ClInclude Include="DataInterface\Implements\WaveformDataDefinition.h">
+      <Filter>头文件\DataInterface\Implements</Filter>
+    </ClInclude>
+    <ClInclude Include="DataInterface\Implements\WaveformDataParse.h">
+      <Filter>头文件\DataInterface\Implements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -244,7 +244,11 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="CPUAffinity\CPUAffinity.cpp" />
     <ClCompile Include="DataInterface\DataInterface.cpp" />
     <ClCompile Include="DataInterface\FileInterface.cpp" />
+    <ClCompile Include="DataInterface\Implements\VibrationDataDefinition.cpp" />
+    <ClCompile Include="DataInterface\Implements\VibrationDataParse.cpp" />
     <ClCompile Include="DataInterface\Implements\VibrationDataStringify.cpp" />
+    <ClCompile Include="DataInterface\Implements\WaveformDataDefinition.cpp" />
+    <ClCompile Include="DataInterface\Implements\WaveformDataParse.cpp" />
     <ClCompile Include="DataInterface\Implements\WaveformDataStringify.cpp" />
     <ClCompile Include="GUIContent\Components\Basic\ComponentWindow.cpp" />
     <ClCompile Include="GUIContent\Components\Config\ComponentConfig.cpp" />
@@ -352,7 +356,11 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="CPUAffinity\SKU\Intel\13700K.h" />
     <ClInclude Include="DataInterface\DataInterface.h" />
     <ClInclude Include="DataInterface\FileInterface.h" />
+    <ClInclude Include="DataInterface\Implements\VibrationDataDefinition.h" />
+    <ClInclude Include="DataInterface\Implements\VibrationDataParse.h" />
     <ClInclude Include="DataInterface\Implements\VibrationDataStringify.h" />
+    <ClInclude Include="DataInterface\Implements\WaveformDataDefinition.h" />
+    <ClInclude Include="DataInterface\Implements\WaveformDataParse.h" />
     <ClInclude Include="DataInterface\Implements\WaveformDataStringify.h" />
     <ClInclude Include="GUIContent\Components\Basic\ComponentWindow.h" />
     <ClInclude Include="GUIContent\Components\Config\ComponentConfig.h" />
