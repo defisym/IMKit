@@ -531,6 +531,12 @@
     <ClCompile Include="DataInterface\Implements\WaveformDataParse.cpp">
       <Filter>源文件\DataInterface\Implements</Filter>
     </ClCompile>
+    <ClCompile Include="Tests\DataInterfaceTest.cpp">
+      <Filter>源文件\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="DataInterface\ParseInterface.cpp">
+      <Filter>源文件\DataInterface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IMGuiInterface\IMGuiInterface.h">
@@ -862,6 +868,12 @@
     </ClInclude>
     <ClInclude Include="DataInterface\Implements\WaveformDataParse.h">
       <Filter>头文件\DataInterface\Implements</Filter>
+    </ClInclude>
+    <ClInclude Include="DataInterface\Implements\Definition.h">
+      <Filter>头文件\DataInterface\Implements</Filter>
+    </ClInclude>
+    <ClInclude Include="DataInterface\ParseInterface.h">
+      <Filter>头文件\DataInterface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
