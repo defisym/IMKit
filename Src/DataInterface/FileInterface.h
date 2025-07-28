@@ -4,10 +4,10 @@
 #include <functional>
 
 #include "DataInterface.h"
+#include "InfDefinition.h"
 
 // in millisecond
 constexpr auto DEFAULT_LOG_INTERVAL = 600000; // 10 minutes
-constexpr auto FILEPATH_LENGTH = 512;
 
 // in byte
 constexpr size_t GetByteCount(const size_t GB) { return GB * 1024Ui64 * 1024Ui64 * 1024Ui64; }

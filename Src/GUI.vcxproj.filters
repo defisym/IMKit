@@ -537,6 +537,9 @@
     <ClCompile Include="DataInterface\ParseInterface.cpp">
       <Filter>源文件\DataInterface</Filter>
     </ClCompile>
+    <ClCompile Include="DataInterface\InfDefinition.cpp">
+      <Filter>源文件\DataInterface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IMGuiInterface\IMGuiInterface.h">
@@ -873,6 +876,9 @@
       <Filter>头文件\DataInterface\Implements</Filter>
     </ClInclude>
     <ClInclude Include="DataInterface\ParseInterface.h">
+      <Filter>头文件\DataInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="DataInterface\InfDefinition.h">
       <Filter>头文件\DataInterface</Filter>
     </ClInclude>
   </ItemGroup>
