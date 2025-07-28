@@ -869,7 +869,7 @@
     <ClInclude Include="DataInterface\Implements\WaveformDataParse.h">
       <Filter>头文件\DataInterface\Implements</Filter>
     </ClInclude>
-    <ClInclude Include="DataInterface\Implements\Definition.h">
+    <ClInclude Include="DataInterface\Implements\ImplDefinition.h">
       <Filter>头文件\DataInterface\Implements</Filter>
     </ClInclude>
     <ClInclude Include="DataInterface\ParseInterface.h">

@@ -363,7 +363,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="CPUAffinity\SKU\Intel\13700K.h" />
     <ClInclude Include="DataInterface\DataInterface.h" />
     <ClInclude Include="DataInterface\FileInterface.h" />
-    <ClInclude Include="DataInterface\Implements\Definition.h" />
+    <ClInclude Include="DataInterface\Implements\ImplDefinition.h" />
     <ClInclude Include="DataInterface\Implements\VibrationDataDefinition.h" />
     <ClInclude Include="DataInterface\Implements\VibrationDataParse.h" />
     <ClInclude Include="DataInterface\Implements\VibrationDataStringify.h" />
