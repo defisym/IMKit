@@ -7,22 +7,28 @@
 #include <WindowsCommon.h>
 
 #include "Utilities/TimeStampHelper.h"
-#include "GUIContext/Param/Param.h"
 #include "IMGuiEx/I18NInterface.h"
 
 FileInterfaceConfig FileInterfaceConfig::GetPathAppendConfig(const char* pSubPath) const {
     FileInterfaceConfig ret = *this;
-    const auto err = strcat_s(ret.filePath, pSubPath);
+    ret.filePath.AppendPath(pSubPath);
 
     return ret;
 }
 
 std::size_t std::hash<FileInterfaceConfig>::operator()(FileInterfaceConfig const& s) const noexcept {
     std::size_t hash = 0xcbf29ce484222325; // FNV-1a
+
+    hash ^= std::hash<FilePathConfig>{}(s.filePath);
+    hash *= 0x100000001b3;  // FNV-1a
+
     hash ^= std::hash<size_t>{}(s.interval);
     hash *= 0x100000001b3;  // FNV-1a
 
-    hash ^= GetStringHash(s.filePath);
+    hash ^= std::hash<size_t>{}(s.fileSizeThreshold);
+    hash *= 0x100000001b3;  // FNV-1a
+
+    hash ^= std::hash<size_t>{}(s.memoryLeftThreshold);
     hash *= 0x100000001b3;  // FNV-1a
 
     return hash;

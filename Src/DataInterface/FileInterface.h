@@ -15,9 +15,8 @@ constexpr auto DEFAULT_CACHE_SIZE = GetByteCount(16Ui64); // 16GB
 constexpr auto DEFAULT_LEFT_SIZE = GetByteCount(4Ui64); // 16GB
 
 struct FileInterfaceConfig {
-    // interval to write to disk
-    size_t interval = DEFAULT_LOG_INTERVAL;
-    char filePath[FILEPATH_LENGTH] = "Log/";
+    FilePathConfig filePath = {}; // path to save file, default is "Log/"
+    size_t interval = DEFAULT_LOG_INTERVAL; // interval to write to disk
     size_t fileSizeThreshold = DEFAULT_CACHE_SIZE;
     size_t memoryLeftThreshold = DEFAULT_LEFT_SIZE;
 
