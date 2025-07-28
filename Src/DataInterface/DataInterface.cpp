@@ -9,19 +9,9 @@ std::size_t std::hash<DataInterfaceConfig>::operator()(DataInterfaceConfig const
 }
 
 bool Compress(const std::string& in, std::string& out) {
-    const auto sz = compressBound(static_cast<uLong>(in.size()));
-    out.clear();
-    out.resize(sz, '\0');
+    return ZLIBI_Compress(in, out);
+}
 
-    uLong compressedSize = sz;
-
-    const auto ret = compress(reinterpret_cast<Bytef*>(out.data()),
-        &compressedSize,
-        reinterpret_cast<const Bytef*>(in.data()),
-        static_cast<uLong>(in.size()));
-
-    if (ret != Z_OK) { compressedSize = 0; }
-    out.resize(compressedSize);
-
-    return ret == Z_OK;
+bool UnCompress(const std::string& in, std::string& out) {
+    return ZLIBI_UnCompress(in, out);
 }

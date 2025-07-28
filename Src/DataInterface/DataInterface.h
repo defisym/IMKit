@@ -17,6 +17,7 @@ struct std::hash<DataInterfaceConfig> {
 };
 
 bool Compress(const std::string& in, std::string& out);
+bool UnCompress(const std::string& in, std::string& out);
 
 template<typename DataStringify, typename DataType>
 concept ValidDataStringify = requires(DataStringify dataStringify) {
