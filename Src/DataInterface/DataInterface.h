@@ -4,6 +4,10 @@
 
 #include "IMGuiEx/I18NInterface.h"
 
+// ------------------------------------------------
+// DataInterfaceBase: Handle compress & uncompress
+// ------------------------------------------------
+
 struct DataInterfaceConfig {
     // save file in binary, otherwise is human-readable
     bool bBinary = false;
@@ -39,6 +43,10 @@ public:
     }
 };
 
+// ------------------------------------------------
+// DataStringifyInterface
+// ------------------------------------------------
+
 template<typename DataStringify, typename DataType>
 concept ValidDataStringify = requires(DataStringify dataStringify) {
     { dataStringify.DataTypeInfo() } -> std::same_as<const char*>;
@@ -64,16 +72,36 @@ public:
 };
 
 template <typename T>
-struct is_data_interface : std::false_type {};
+struct is_data_stringify_interface : std::false_type {};
 
 template <typename DataStringify, typename DataType>
-struct is_data_interface<DataStringifyInterface<DataStringify, DataType>> : std::true_type {};
+struct is_data_stringify_interface<DataStringifyInterface<DataStringify, DataType>> : std::true_type {};
 
 template <typename T>
-concept ValidDataStringifyEx = is_data_interface<T>::value;
+concept ValidDataStringifyEx = is_data_stringify_interface<T>::value;
 
+// ------------------------------------------------
+// DataParseInterface
+// ------------------------------------------------
 
-template<typename DataParse, typename DataType, typename ParseParam>
-concept ValidDataDataParse = requires(DataParse dataStringify) {
-    { dataStringify.ToString(DataType{}, ParseParam{}) } -> std::same_as<DataType>;
+template<typename DataParse, typename DataType>
+concept ValidDataDataParse = requires(DataParse dataParse) {
+    { dataParse.Parse(std::string_view{},
+        typename DataParse::ParamType{}) } -> std::same_as<DataType>;
+};
+
+template<typename DataParse, typename DataType>
+    requires ValidDataDataParse<DataParse, DataType>
+class DataParseInterface :public DataInterfaceBase {  // NOLINT(cppcoreguidelines-special-member-functions)
+protected:
+    //Parse return the RValue object, no cache needed
+
+public:
+    DataParseInterface(const DataInterfaceConfig& conf = {}) :DataInterfaceBase(conf) {}
+    ~DataParseInterface() = default;
+
+    [[nodiscard]] DataType Parse(const std::string_view& string,
+        const DataParse::ParamType& param = {}) {
+        return UnCompress(DataParse{}.Parse(string, param));
+    }
 };
