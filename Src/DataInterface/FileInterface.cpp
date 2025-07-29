@@ -121,7 +121,7 @@ void FileInterface::FileWriter::WriteMetaData(const std::string& metaData) {
     elementCount += writeString(mapfp, metaData);
 }
 
-void FileInterface::FileWriter::WriteFile(std::vector<CacheData>& cache) {
+void FileInterface::FileWriter::WriteFile(std::vector<StringifyCache>& cache) {
     if (!bFileOpen) { return; }
     if (cache.size() < WRITE_SIZE_THRESHOLD) { return; }
     

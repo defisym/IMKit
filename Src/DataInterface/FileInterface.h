@@ -1,6 +1,5 @@
 #pragma once
 
-#include <chrono>
 #include <functional>
 
 #include "DataInterface.h"
@@ -33,22 +32,8 @@ class FileInterface { // NOLINT(cppcoreguidelines-special-member-functions)
     FileInterfaceConfig config = {};
     std::string filePath;
 
-    using TimeStamp = decltype(std::chrono::system_clock::now());
     TimeStamp lastSaveTimeStamp = {};
-
-    struct CacheData {
-        TimeStamp timeStamp = {};
-        std::string timeStampFormatted = {};
-        std::string data;
-
-        size_t GetSize() const {
-            return sizeof(std::decay_t<std::remove_pointer_t<decltype(this)>>)
-                + sizeof(char) * timeStampFormatted.length()
-                + sizeof(char) * data.length();
-        }
-    };
-
-    std::vector<CacheData> cache;
+    std::vector<StringifyCache> cache;
 
 public:
     FileInterface(const FileInterfaceConfig& config = {});
@@ -99,7 +84,7 @@ private:
         // write metadata to tempfile
         void WriteMetaData(const std::string& metaData);
         // write data to tempfile
-        void WriteFile(std::vector<CacheData>& cache);
+        void WriteFile(std::vector<StringifyCache>& cache);
         // close and rename tempfile
         bool CloseFile();
     };
