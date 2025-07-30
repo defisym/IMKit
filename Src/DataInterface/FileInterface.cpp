@@ -68,7 +68,8 @@ bool FileInterface::FileWriter::NewFile(const std::string& basePath, const std::
     if (!FileBase::NewFile(basePath, name)) { return false; }
 
     // jump table: write dummy size at mapfp start
-    elementCount += writeElement(mapfp, 0);
+    totalCacheSize = 0u;
+    elementCount += writeElement(mapfp, totalCacheSize);
 
     return true;
 }
