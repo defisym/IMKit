@@ -44,7 +44,7 @@ struct FileBase {
 
 private:
     bool InitializeFile(const std::string& basePath, const std::string& name,
-        const wchar_t* pMode) final;
+        const wchar_t* pMode);
 public:
     virtual bool NewFile(const std::string& basePath, const std::string& name);
     virtual bool OpenFile(const std::string& basePath, const std::string& name);
