@@ -59,7 +59,7 @@ bool FileInterface::FileWriter::NewFile(const std::string& basePath, const std::
     // Reset
     // ------------------------------------------------
     
-    if (bFileOpen) { CloseFile(); }
+    if (FileOpen()) { CloseFile(); }
 
     // ------------------------------------------------
     // Create folder & Open file
@@ -67,14 +67,14 @@ bool FileInterface::FileWriter::NewFile(const std::string& basePath, const std::
 
     if (!FileBase::NewFile(basePath, name)) { return false; }
 
-    // jump table: write dummy size
+    // jump table: write dummy size at mapfp start
     elementCount += writeElement(mapfp, 0);
 
     return true;
 }
 
 void FileInterface::FileWriter::WriteMetaData(const std::string& metaData) {
-    if (!bFileOpen) { return; }
+    if (!FileOpen()) { return; }
     if (metaData.empty()) { return; }
 
     // write meta data
@@ -83,7 +83,7 @@ void FileInterface::FileWriter::WriteMetaData(const std::string& metaData) {
 }
 
 void FileInterface::FileWriter::WriteFile(std::vector<StringifyCache>& cache) {
-    if (!bFileOpen) { return; }
+    if (!FileOpen()) { return; }
     if (cache.size() < WRITE_SIZE_THRESHOLD) { return; }
     
     if (startTimeStamp.empty()) { startTimeStamp = cache.front().timeStampFormatted; }
