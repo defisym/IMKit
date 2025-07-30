@@ -51,27 +51,13 @@ public:
     void SetMetaData(const std::string& data) { metaData = data; }
     
 private:
-    struct FileWriter {
-        bool bFileOpen = false;
-        std::string filePath = {};
-        std::string dataTempFileName = {};
-        std::string mapTempFileName = {};
-
-        FILE* datafp = nullptr;
-        FILE* mapfp = nullptr;
-
-        size_t fileSize = 0u;
-        size_t elementCount = 0u;
-        size_t totalCacheSize = 0u;
-        std::string startTimeStamp = {};
-        std::string endTimeStamp = {};
-
+    struct FileWriter :FileBase {
         static constexpr size_t WRITE_SIZE_THRESHOLD = 16;
 
-        ~FileWriter() { CloseFile(); }
-
+        ~FileWriter() override { CloseFile(); }
+        
         // create new tempfile
-        bool NewFile(const std::string& basePath, const std::string& name = "temp");
+        bool NewFile(const std::string& basePath, const std::string& name) override;
         
         template<typename T>
         size_t writeElement(FILE* fp, const T& element) {
@@ -86,7 +72,7 @@ private:
         // write data to tempfile
         void WriteFile(std::vector<StringifyCache>& cache);
         // close and rename tempfile
-        bool CloseFile();
+        bool CloseFile() override;
     };
 
     FileWriter fileWriter = {};

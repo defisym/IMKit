@@ -49,7 +49,7 @@ void FileInterface::AddData(const TimeStamp& timeStamp, const std::string& data)
         GetFormattedTimeStamp(timeStamp),
         data);
 
-    if (!fileWriter.bFileOpen) { fileWriter.NewFile(config.filePath); }
+    if (!fileWriter.bFileOpen) { fileWriter.NewFile(config.filePath, "temp"); }
     fileWriter.WriteFile(cache);
     SaveDataWhenNeeded();
 }
@@ -62,45 +62,13 @@ bool FileInterface::FileWriter::NewFile(const std::string& basePath, const std::
     if (bFileOpen) { CloseFile(); }
 
     // ------------------------------------------------
-    // Create folder to save files
-    // ------------------------------------------------
-    
-    filePath = GetAbsolutePathName(basePath);
-       
-    // create dir
-    namespace fs = std::filesystem;
-    const auto path = fs::path{ filePath };
-
-    std::error_code ec = {};
-    fs::create_directories(path, ec);
-
-    if (ec.value() != 0) { return false; }
-
-    // ------------------------------------------------
-    // Open file
+    // Create folder & Open file
     // ------------------------------------------------
 
-    dataTempFileName = name + ".data";
-    mapTempFileName = name + ".map";
-
-    namespace fs = std::filesystem;
-    const auto dataPath = fs::path{ filePath } / dataTempFileName.c_str();
-    const auto mapPath = fs::path{ filePath } / mapTempFileName.c_str();
-
-    errno_t err = 0;
-
-    datafp = nullptr;
-    err = _wfopen_s(&datafp, dataPath.c_str(), L"wb");
-    if (err != 0 || datafp == nullptr) { return false; }
-
-    mapfp = nullptr;
-    err = _wfopen_s(&mapfp, mapPath.c_str(), L"wb");
-    if (err != 0 || mapfp == nullptr) { return false; }
+    if (!FileBase::NewFile(basePath, name)) { return false; }
 
     // jump table: write dummy size
     elementCount += writeElement(mapfp, 0);
-
-    bFileOpen = true;
 
     return true;
 }
@@ -147,8 +115,7 @@ void FileInterface::FileWriter::WriteFile(std::vector<StringifyCache>& cache) {
 }
 
 bool FileInterface::FileWriter::CloseFile() {
-    if (!bFileOpen) { return true; }
-    if (datafp == nullptr || mapfp == nullptr) { return true; }
+    if (!FileOpen()) { return true; }
     if (startTimeStamp.empty()) { return true; } // nothing has been write
 
     do {
@@ -157,10 +124,7 @@ bool FileInterface::FileWriter::CloseFile() {
         elementCount += writeElement(mapfp, totalCacheSize);
 
         // close file
-        if (fclose(datafp) != 0) { break; }
-        datafp = nullptr;
-        if (fclose(mapfp) != 0) { break; }
-        mapfp = nullptr;
+        if (!FileBase::CloseFile()) { break; }
 
         // rename
         const auto name = startTimeStamp + " ~ " + endTimeStamp;
@@ -168,9 +132,9 @@ bool FileInterface::FileWriter::CloseFile() {
         const auto mapFileName = name + ".map";
 
         namespace fs = std::filesystem;
-        const auto dataOldPath = fs::path{ filePath } / dataTempFileName.c_str();
+        const auto dataOldPath = fs::path{ filePath } / dataFileName.c_str();
         const auto dataNewPath = fs::path{ filePath } / dataFileName.c_str();
-        const auto mapOldPath = fs::path{ filePath } / mapTempFileName.c_str();
+        const auto mapOldPath = fs::path{ filePath } / mapFileName.c_str();
         const auto mapNewPath = fs::path{ filePath } / mapFileName.c_str();
 
         fs::rename(dataOldPath, dataNewPath);
@@ -178,10 +142,7 @@ bool FileInterface::FileWriter::CloseFile() {
     } while (false);
 
     // reset
-    bFileOpen = false;
-    filePath = {}; dataTempFileName = {}; mapTempFileName = {};
-    fileSize = 0u; elementCount = 0u; totalCacheSize = 0u;
-    startTimeStamp = {}; endTimeStamp = {};
+    Reset();
 
     return true;
 }

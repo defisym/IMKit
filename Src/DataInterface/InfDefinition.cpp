@@ -6,6 +6,7 @@
 #include <WindowsCommon.h>
 
 #include <string.h>
+#include <filesystem>
 
 #include "GUIContext/Param/Param.h"
 
@@ -39,4 +40,72 @@ std::string GetAbsolutePathName(const std::string& basePath) {
     if (!filePath.ends_with('\\')) { filePath += '\\'; }
 
     return filePath;
+}
+
+void FileBase::Reset() {
+    bFileOpen = false;
+    filePath = {}; dataFileName = {}; mapFileName = {};
+    fileSize = 0u; elementCount = 0u; totalCacheSize = 0u;
+    startTimeStamp = {}; endTimeStamp = {};
+}
+
+bool FileBase::FileOpen() const {
+    if (!bFileOpen) { return false; }
+    if (datafp == nullptr || mapfp == nullptr) { return false; }
+
+    return true;
+}
+
+bool FileBase::NewFile(const std::string& basePath, const std::string& name) {
+    // ------------------------------------------------
+    // Create folder for save files
+    // ------------------------------------------------
+    filePath = GetAbsolutePathName(basePath);
+
+    // create dir
+    namespace fs = std::filesystem;
+    const auto path = fs::path{ filePath };
+
+    std::error_code ec = {};
+    fs::create_directories(path, ec);
+
+    if (ec.value() != 0) { return false; }
+
+    // ------------------------------------------------
+    // Open file
+    // ------------------------------------------------
+
+    dataFileName = name + ".data";
+    mapFileName = name + ".map";
+
+    namespace fs = std::filesystem;
+    const auto dataPath = fs::path{ filePath } / dataFileName.c_str();
+    const auto mapPath = fs::path{ filePath } / mapFileName.c_str();
+
+    errno_t err = 0;
+
+    datafp = nullptr;
+    err = _wfopen_s(&datafp, dataPath.c_str(), L"wb");
+    if (err != 0 || datafp == nullptr) { return false; }
+
+    mapfp = nullptr;
+    err = _wfopen_s(&mapfp, mapPath.c_str(), L"wb");
+    if (err != 0 || mapfp == nullptr) { return false; }
+
+    bFileOpen = true;
+
+    return true;
+}
+
+bool FileBase::CloseFile() {
+    do {
+        if (fclose(datafp) != 0) { break; }
+        datafp = nullptr;
+        if (fclose(mapfp) != 0) { break; }
+        mapfp = nullptr;
+
+        return true;
+    } while (false);
+
+    return false;
 }

@@ -22,6 +22,31 @@ struct std::hash<FilePathConfig> {
     std::size_t operator()(FilePathConfig const& s) const noexcept;
 };
 
+struct FileBase {
+    bool bFileOpen = false;
+    std::string filePath = {};
+    std::string dataFileName = {};
+    std::string mapFileName = {};
+
+    FILE* datafp = nullptr;
+    FILE* mapfp = nullptr;
+
+    size_t fileSize = 0u;
+    size_t elementCount = 0u;
+    size_t totalCacheSize = 0u;
+    std::string startTimeStamp = {};
+    std::string endTimeStamp = {};
+
+    virtual ~FileBase() = default;
+    virtual void Reset();
+
+    bool FileOpen() const;
+
+    virtual bool NewFile(const std::string& basePath, const std::string& name);
+
+    virtual bool CloseFile();
+};
+
 using TimeStamp = decltype(std::chrono::system_clock::now());
 
 struct StringifyCache {
