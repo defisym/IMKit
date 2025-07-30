@@ -15,6 +15,8 @@ struct FilePathConfig {
     FilePathConfig GetPathAppendConfig(const char* pSubPath) const;
 };
 
+std::string GetAbsolutePathName(const std::string& basePath);
+
 template<>
 struct std::hash<FilePathConfig> {
     std::size_t operator()(FilePathConfig const& s) const noexcept;

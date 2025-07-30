@@ -65,15 +65,8 @@ bool FileInterface::FileWriter::NewFile(const std::string& basePath, const std::
     // Create folder to save files
     // ------------------------------------------------
     
-    // get relative path
-    char fullPathName[MAX_PATH] = {};
-    GetFullPathNameA(basePath.c_str(), MAX_PATH, fullPathName, nullptr);
-    filePath = fullPathName;
-
-    // GetFullPathName will normalize / and \\ to \\
-        // if not end with \\ , append it
-    if (!filePath.ends_with('\\')) { filePath += '\\'; }
-
+    filePath = GetAbsolutePathName(basePath);
+       
     // create dir
     namespace fs = std::filesystem;
     const auto path = fs::path{ filePath };
