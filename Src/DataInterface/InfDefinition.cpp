@@ -56,10 +56,11 @@ bool FileBase::FileOpen() const {
     return true;
 }
 
-bool FileBase::NewFile(const std::string& basePath, const std::string& name) {
+bool FileBase::InitializeFile(const std::string& basePath, const std::string& name,
+    const wchar_t* pMode) {
     // ------------------------------------------------
-    // Create folder for save files
-    // ------------------------------------------------
+       // Create folder for save files
+       // ------------------------------------------------
     filePath = GetAbsolutePathName(basePath);
 
     // create dir
@@ -85,16 +86,24 @@ bool FileBase::NewFile(const std::string& basePath, const std::string& name) {
     errno_t err = 0;
 
     datafp = nullptr;
-    err = _wfopen_s(&datafp, dataPath.c_str(), L"wb");
+    err = _wfopen_s(&datafp, dataPath.c_str(), pMode);
     if (err != 0 || datafp == nullptr) { return false; }
 
     mapfp = nullptr;
-    err = _wfopen_s(&mapfp, mapPath.c_str(), L"wb");
+    err = _wfopen_s(&mapfp, mapPath.c_str(), pMode);
     if (err != 0 || mapfp == nullptr) { return false; }
 
     bFileOpen = true;
 
     return true;
+}
+
+bool FileBase::NewFile(const std::string& basePath, const std::string& name) {
+    return InitializeFile(basePath, name, L"wb"); 
+}
+
+bool FileBase::OpenFile(const std::string& basePath, const std::string& name) {
+    return InitializeFile(basePath, name, L"rb");
 }
 
 bool FileBase::CloseFile() {

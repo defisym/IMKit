@@ -42,7 +42,12 @@ struct FileBase {
 
     bool FileOpen() const;
 
+private:
+    bool InitializeFile(const std::string& basePath, const std::string& name,
+        const wchar_t* pMode) final;
+public:
     virtual bool NewFile(const std::string& basePath, const std::string& name);
+    virtual bool OpenFile(const std::string& basePath, const std::string& name);
 
     virtual bool CloseFile();
 };
