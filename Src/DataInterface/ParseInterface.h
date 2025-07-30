@@ -21,38 +21,27 @@ public:
     void UpdateConfig(const ParseInferfaceConfig& config = {});
 
 private:
-    struct FileReader {
-        bool bFileOpen = false;
-        std::string filePath = {};
-
-        FILE* datafp = nullptr;
-        FILE* mapfp = nullptr;
-
-        size_t fileSize = 0u;
-        size_t elementCount = 0u;
-        size_t totalCacheSize = 0u;
-        std::string startTimeStamp = {};
-        std::string endTimeStamp = {};
-
-        ~FileReader() { CloseFile(); }
+    struct FileReader :FileBase {
+        ~FileReader() override { CloseFile(); }
 
         // create new tempfile
-        bool NewFile(const std::string& fileName);
+        bool OpenFile(const std::string& basePath, const std::string& name);
 
         template<typename T>
-        size_t readElement(FILE* fp, const T& element) {
-            return fwrite(&element, sizeof(T), 1, fp);
+        size_t readElement(FILE* fp, T& element) {
+            return fread(&element, sizeof(T), 1, fp);
         };
-        size_t readString(FILE* fp, const std::string& str) {
-            return fwrite(str.data(), str.size(), 1, fp);
+        size_t readString(FILE* fp, size_t length, std::string& str) {
+            str.resize(length);
+            return fread(str.data(), str.size(), 1, fp);
         };
 
-        // write metadata to tempfile
-        void ReadMetaData(const std::string& metaData);
-        // write data to tempfile
+        // read metadata to string
+        void ReadMetaData(std::string& metaData);
+        // read data to cache
         void ReadFile(std::vector<StringifyCache>& cache);
-        // close and rename tempfile
-        bool CloseFile();
+        // close file
+        bool CloseFile() override;
     };
 
     FileReader fileReader = {};
