@@ -28,6 +28,7 @@ public:
     ~ParseInterface();
 
     void UpdateConfig(const ParseInferfaceConfig& config = {});
+    const std::vector<StringifyCache>& GetData() { return cache; }
 
 private:
     struct FileReader :FileBase {
@@ -53,11 +54,10 @@ private:
         bool CloseFile() override;
     };
 
-public: // temp for test, should be private
     FileReader fileReader = {};
 
 public:
     // write cache to disk
     // return true if file saved
-    bool ReadData();
+    bool ReadData(const std::string& name);
 };

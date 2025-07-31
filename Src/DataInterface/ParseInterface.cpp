@@ -22,10 +22,6 @@ void ParseInterface::UpdateConfig(const ParseInferfaceConfig& config) {
     this->config = config;
 }
 
-bool ParseInterface::ReadData() {
-    return false;
-}
-
 bool ParseInterface::FileReader::OpenFile(const std::string& basePath, const std::string& name) {
     // ------------------------------------------------
     // Reset
@@ -94,6 +90,15 @@ void ParseInterface::FileReader::ReadFile(std::vector<StringifyCache>& cache) {
 bool ParseInterface::FileReader::CloseFile() {
     if (!FileOpen()) { return true; }
     if (!FileBase::CloseFile()) { return false; }
+
+    return true;
+}
+
+bool ParseInterface::ReadData(const std::string& name) {
+    if (!fileReader.CloseFile()) { return false; }
+    if (!fileReader.OpenFile(config.filePath, name)) { return false; }
+
+    fileReader.ReadFile(cache);
 
     return true;
 }
