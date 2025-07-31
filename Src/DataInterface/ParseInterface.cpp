@@ -63,12 +63,22 @@ void ParseInterface::FileReader::ReadFile(std::vector<StringifyCache>& cache) {
         offset.push_back(sz);
     }
 
-    for (decltype(offset.cbegin()) start = offset.cbegin(), next = start + 1;
-        next != offset.cend();
-        start++, next++) {
-        StringifyCache item = {};
+    cache.clear();
 
-        const auto sz = *next - *start;
+    // get size of data file
+    fseek(datafp, 0, SEEK_END);
+    const auto dataSize = ftell(datafp);
+    fseek(datafp, 0, SEEK_SET);
+
+    for (decltype(offset.cbegin()) start = offset.cbegin(), next;
+        start != offset.cend();
+        start++) {        
+        next = start + 1;
+        const auto sz = next != offset.cend()
+            ? *next - *start
+            : dataSize - *start;
+        
+        StringifyCache item = {};
         elementCount += readString(datafp, sz, item.data);
 
         item.timeStampFormatted = item.data.substr(0, item.data.find_first_of(FILEINF_NEWLINE));
