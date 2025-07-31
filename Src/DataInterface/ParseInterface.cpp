@@ -44,6 +44,11 @@ bool ParseInterface::FileReader::OpenFile(const std::string& basePath, const std
 
 void ParseInterface::FileReader::ReadMetaData(std::string& metaData) {
     if (!FileOpen()) { return; }
+
+    // read meta data
+    size_t sz = 0u;
+    elementCount += readElement(mapfp, sz);
+    elementCount += readString(mapfp, sz, metaData);
 }
 
 void ParseInterface::FileReader::ReadFile(std::vector<StringifyCache>& cache) {
