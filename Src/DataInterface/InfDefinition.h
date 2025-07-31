@@ -33,7 +33,7 @@ struct FileBase {
 
     size_t fileSize = 0u;
     size_t elementCount = 0u;
-    size_t totalCacheSize = 0u;
+    std::uint32_t totalCacheSize = 0u;
     std::string startTimeStamp = {};
     std::string endTimeStamp = {};
 

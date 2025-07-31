@@ -89,7 +89,7 @@ void FileInterface::FileWriter::WriteFile(std::vector<StringifyCache>& cache) {
     
     if (startTimeStamp.empty()) { startTimeStamp = cache.front().timeStampFormatted; }
     endTimeStamp = cache.back().timeStampFormatted;
-    totalCacheSize += cache.size();
+    totalCacheSize += static_cast<std::uint32_t>(cache.size());
 
     for (auto& it : cache) {
         // save jump table
