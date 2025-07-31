@@ -20,6 +20,9 @@ std::size_t std::hash<FileInterfaceConfig>::operator()(FileInterfaceConfig const
     std::size_t hash = 0xcbf29ce484222325; // FNV-1a
 
     hash ^= std::hash<FilePathConfig>{}(s.filePath);
+    hash *= 0x100000001b3;  // FNV-1a   
+
+    hash ^= std::hash<bool>{}(s.bWriteMetaData);
     hash *= 0x100000001b3;  // FNV-1a
 
     hash ^= std::hash<size_t>{}(s.interval);

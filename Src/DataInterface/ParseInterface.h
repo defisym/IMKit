@@ -5,7 +5,16 @@
 
 #include "InfDefinition.h"
 
-using ParseInferfaceConfig = FilePathConfig;
+struct ParseInferfaceConfig {
+    FilePathConfig filePath = {}; // path to save file, default is "Log/"
+
+    bool bReadMetaData = false; // TODO not implemented
+};
+
+template<>
+struct std::hash<ParseInferfaceConfig> {
+    std::size_t operator()(ParseInferfaceConfig const& s) const noexcept;
+};
 
 // parse data from the disk
 class ParseInterface { // NOLINT(cppcoreguidelines-special-member-functions)

@@ -1,5 +1,17 @@
 #include "ParseInterface.h"
 
+std::size_t std::hash<ParseInferfaceConfig>::operator()(ParseInferfaceConfig const& s) const noexcept {
+    std::size_t hash = 0xcbf29ce484222325; // FNV-1a
+
+    hash ^= std::hash<FilePathConfig>{}(s.filePath);
+    hash *= 0x100000001b3;  // FNV-1a
+
+    hash ^= std::hash<bool>{}(s.bReadMetaData);
+    hash *= 0x100000001b3;  // FNV-1a
+
+    return hash;
+}
+
 ParseInterface::ParseInterface(const ParseInferfaceConfig& config) {
     UpdateConfig();
 }
