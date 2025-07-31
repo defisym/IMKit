@@ -66,6 +66,9 @@ private:
         size_t writeString(FILE* fp, const std::string& str) {
             return fwrite(str.data(), str.size(), 1, fp);
         };
+        size_t writeString(FILE* fp, const char* pStr, const size_t sz) {
+            return fwrite(pStr, sz, 1, fp);
+        };
 
         // write metadata to tempfile
         void WriteMetaData(const std::string& metaData);
