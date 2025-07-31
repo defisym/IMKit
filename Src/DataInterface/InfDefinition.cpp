@@ -10,6 +10,14 @@
 
 #include "GUIContext/Param/Param.h"
 
+void FilePathConfig::SetPath(const char* pPath) {
+    if (pPath == nullptr) { return; }
+
+    const auto length = strlen(pPath);
+    memcpy(filePath, pPath, length * sizeof(char));
+    filePath[length] = '\0'; // ensure null termination
+}
+
 void FilePathConfig::AppendPath(const char* pSubPath) {
     [[maybe_unused]]const auto err = strcat_s(filePath, pSubPath);
 }

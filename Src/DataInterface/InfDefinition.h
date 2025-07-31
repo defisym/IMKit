@@ -11,6 +11,7 @@ struct FilePathConfig {
     operator const char*() const { return filePath; }
     operator const std::string () const { return filePath; }
 
+    void SetPath(const char* pPath);
     void AppendPath(const char* pSubPath);
     FilePathConfig GetPathAppendConfig(const char* pSubPath) const;
 };
