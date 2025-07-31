@@ -100,12 +100,12 @@ void FileInterface::FileWriter::WriteFile(std::vector<StringifyCache>& cache) {
         // save cache size
         const auto cacheSize = it.timeStampFormatted.length()
             + it.data.length()
-            + 3 * strlen("\r\n");
+            + 3 * strlen(FILEINF_NEWLINE);
         elementCount += writeString(datafp, it.timeStampFormatted);
-        elementCount += writeString(datafp, "\r\n");
+        elementCount += writeString(datafp, FILEINF_NEWLINE);
         elementCount += writeString(datafp, it.data);
-        elementCount += writeString(datafp, "\r\n");
-        elementCount += writeString(datafp, "\r\n");
+        elementCount += writeString(datafp, FILEINF_NEWLINE);
+        elementCount += writeString(datafp, FILEINF_NEWLINE);
 
         fileSize += it.GetSize();
     }

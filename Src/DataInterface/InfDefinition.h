@@ -65,3 +65,5 @@ struct StringifyCache {
             + sizeof(char) * data.length();
     }
 };
+
+constexpr auto FILEINF_NEWLINE = "\r\n";
