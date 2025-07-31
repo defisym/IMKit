@@ -38,7 +38,7 @@ std::size_t std::hash<FileInterfaceConfig>::operator()(FileInterfaceConfig const
 }
 
 FileInterface::FileInterface(const FileInterfaceConfig& config) {
-    UpdateConfig();
+    UpdateConfig(config);
 }
 
 FileInterface::~FileInterface() { SaveData(); }

@@ -13,7 +13,7 @@ std::size_t std::hash<ParseInferfaceConfig>::operator()(ParseInferfaceConfig con
 }
 
 ParseInterface::ParseInterface(const ParseInferfaceConfig& config) {
-    UpdateConfig();
+    UpdateConfig(config);
 }
 
 ParseInterface::~ParseInterface() {}
