@@ -10,6 +10,10 @@ void ParseInterface::UpdateConfig(const ParseInferfaceConfig& config) {
     this->config = config;
 }
 
+bool ParseInterface::ReadData() {
+    return false;
+}
+
 bool ParseInterface::FileReader::OpenFile(const std::string& basePath, const std::string& name) {
     // ------------------------------------------------
     // Reset
@@ -33,14 +37,28 @@ void ParseInterface::FileReader::ReadMetaData(std::string& metaData) {
 void ParseInterface::FileReader::ReadFile(std::vector<StringifyCache>& cache) {
     if (!FileOpen()) { return; }
 
-    size_t itemSz = 0u;
-    elementCount += readElement(mapfp, itemSz);
+    elementCount += readElement(mapfp, totalCacheSize);
 
     std::vector<size_t> offset = {};
-    for(size_t index = 0u; index < itemSz; index++) {
+    for(size_t index = 0u; index < totalCacheSize; index++) {
         size_t sz = 0u;
         elementCount += readElement(mapfp, sz);
         offset.push_back(sz);
+    }
+
+    for (decltype(offset.cbegin()) start = offset.cbegin(), next = start + 1;
+        next != offset.cend();
+        start++, next++) {
+        StringifyCache item = {};
+
+        const auto sz = *next - *start;
+        elementCount += readString(datafp, sz, item.data);
+
+        item.timeStampFormatted = item.data.substr(0, item.data.find_first_of(FILEINF_NEWLINE));
+        item.data = item.data.substr(item.timeStampFormatted.length() + strlen(FILEINF_NEWLINE),
+            item.data.length() - item.timeStampFormatted.length() - 3 * strlen(FILEINF_NEWLINE));
+
+        cache.emplace_back(std::move(item));
     }
 
     return;

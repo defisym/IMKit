@@ -44,5 +44,11 @@ private:
         bool CloseFile() override;
     };
 
+public: // temp for test, should be private
     FileReader fileReader = {};
+
+public:
+    // write cache to disk
+    // return true if file saved
+    bool ReadData();
 };
