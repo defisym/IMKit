@@ -1,6 +1,6 @@
 #include "TimeStampHelper.h"
 
-std::string GetFormattedTimeStamp(const decltype(std::chrono::system_clock::now()) timeStamp,
+std::string GetFormattedTimeStamp(const TimeStampHelper::TimeStamp timeStamp,
     char const* pFmt) {
     std::tm time = {};
     const auto t = std::chrono::system_clock::to_time_t(timeStamp);
