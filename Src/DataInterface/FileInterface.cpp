@@ -100,17 +100,17 @@ void FileInterface::FileWriter::WriteFile(std::vector<StringifyCache>& cache) {
         if (fgetpos(datafp, &curPos) != 0) { break; }
         elementCount += writeElement(mapfp, curPos); // pos
 
-        // save cache size
-        const auto cacheSize = it.timeStampFormatted.length()
-            + it.data.length()
-            + 3 * strlen(FILEINF_NEWLINE);
+        // write cache
         elementCount += writeString(datafp, it.timeStampFormatted);
         elementCount += writeString(datafp, FILEINF_NEWLINE);
         elementCount += writeString(datafp, it.data);
         elementCount += writeString(datafp, FILEINF_NEWLINE);
         elementCount += writeString(datafp, FILEINF_NEWLINE);
 
-        fileSize += it.GetSize();
+        // update file size
+        fileSize += it.timeStampFormatted.length()
+            + it.data.length()
+            + 3 * strlen(FILEINF_NEWLINE);
     }
 
     cache.clear();
