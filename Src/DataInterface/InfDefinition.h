@@ -60,8 +60,11 @@ struct StringifyCache {
     std::string timeStampFormatted = {};
     std::string data;
 
+    // return the total memory used of StringifyCache
     size_t GetSize() const {
-        return sizeof(std::decay_t<std::remove_pointer_t<decltype(this)>>)
+        return 
+            // sizeof(StringifyCache)
+            sizeof(std::decay_t<std::remove_pointer_t<decltype(this)>>)
             + sizeof(char) * timeStampFormatted.length()
             + sizeof(char) * data.length();
     }

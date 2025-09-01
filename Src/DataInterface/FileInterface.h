@@ -75,6 +75,13 @@ private:
         // write metadata to tempfile
         void WriteMetaData(const std::string& metaData);
         // write data to tempfile
+        // if cache size is smaller than WRITE_SIZE_THRESHOLD, do nothing
+        // each element is saved in format of:
+        //  - timeStampFormatted
+        //  - FILEINF_NEWLINE
+        //  - ElementFormatted
+        //  - FILEINF_NEWLINE
+        //  - FILEINF_NEWLINE
         void WriteFile(std::vector<StringifyCache>& cache);
         // close and rename tempfile
         bool CloseFile() override;
@@ -83,8 +90,9 @@ private:
     FileWriter fileWriter = {};
 
 public:
-    // write cache to disk
-    // return true if file saved
+    // write element count to temp file
+    // rename temp file in the format of start time ~ end time
+    // return true if file saved correctly
     bool SaveData();
     // similiar as above, but check interval
     bool SaveDataWhenNeeded();

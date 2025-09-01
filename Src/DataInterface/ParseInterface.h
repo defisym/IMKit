@@ -49,6 +49,12 @@ private:
         // read metadata to string
         void ReadMetaData(std::string& metaData);
         // read data to cache
+        // each element is saved in format of:
+        //  - timeStampFormatted
+        //  - FILEINF_NEWLINE
+        //  - ElementFormatted
+        //  - FILEINF_NEWLINE
+        //  - FILEINF_NEWLINE
         void ReadFile(std::vector<StringifyCache>& cache);
         // close file
         bool CloseFile() override;
@@ -57,7 +63,9 @@ private:
     FileReader fileReader = {};
 
 public:
-    // write cache to disk
-    // return true if file saved
+    // read file from disk
+    // name is the file name without path and suffix
+    // then parse data element to internal cache
+    // return true if file load correctly
     bool ReadData(const std::string& name);
 };
