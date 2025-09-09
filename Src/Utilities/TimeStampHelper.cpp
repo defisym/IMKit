@@ -1,5 +1,17 @@
 #include "TimeStampHelper.h"
 
+// Windows Style:
+//    LPSYSTEMTIME lpSystemTime = new SYSTEMTIME;
+//    GetLocalTime(lpSystemTime);
+//
+//    const auto time = std::format(L"{:0>4d}-{:0>2d}-{:0>2d}_{:0>2d}-{:0>2d}-{:0>2d}.csv",
+//        lpSystemTime->wYear,
+//        lpSystemTime->wMonth,
+//        lpSystemTime->wDay,
+//        lpSystemTime->wHour,
+//        lpSystemTime->wMinute,
+//        lpSystemTime->wSecond);
+
 std::string GetFormattedTimeStamp(const TimeStampHelper::TimeStamp timeStamp,
     char const* pFmt) {
     std::tm time = {};
