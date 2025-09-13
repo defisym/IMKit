@@ -124,7 +124,7 @@ copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
 copy $(SolutionDir)..\ORL\Bin\$(Platform)\ORL.dll "$(SolutionDir)"
 copy $(SolutionDir)..\Device\Bin\$(Platform)\Device.dll "$(SolutionDir)"
-xcopy $(SolutionDir)..\Device\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
+xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
@@ -164,7 +164,7 @@ copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
 copy $(SolutionDir)..\ORL\Bin\$(Platform)\ORL.dll "$(SolutionDir)"
 copy $(SolutionDir)..\Device\Bin\$(Platform)\Device.dll "$(SolutionDir)"
-xcopy $(SolutionDir)..\Device\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
+xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
       <Message>Copy dll</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -198,7 +198,7 @@ copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"
 copy $(SolutionDir)..\ORL\Bin\$(Platform)\ORL.dll "$(SolutionDir)"
 copy $(SolutionDir)..\Device\Bin\$(Platform)\Device.dll "$(SolutionDir)"
-xcopy $(SolutionDir)..\Device\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
+xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
@@ -238,7 +238,7 @@ copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"
 copy $(SolutionDir)..\ORL\Bin\$(Platform)\ORL.dll "$(SolutionDir)"
 copy $(SolutionDir)..\Device\Bin\$(Platform)\Device.dll "$(SolutionDir)"
-xcopy $(SolutionDir)..\Device\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
+xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
