@@ -11,7 +11,7 @@
 #define NOMINMAX
 #include <windows.h>
 
-#include "../Src/DLL/include/OTDR.h"
+#include "ORL.h"
 #include "Utilities/AudioPlayer.h"
 #include "GUIContext/Handler/AudioHandler.h"
 

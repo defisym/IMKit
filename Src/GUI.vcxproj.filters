@@ -881,6 +881,9 @@
     <ClInclude Include="DataInterface\InfDefinition.h">
       <Filter>头文件\DataInterface</Filter>
     </ClInclude>
+    <ClInclude Include="ORL.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GUI.rc">

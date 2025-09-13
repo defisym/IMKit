@@ -2,7 +2,8 @@ imgui.ini
 3rdLib/SDL
 
 GUI.exe
-OTDR.dll
+ORL.dll
+Device.dll
 Modules/
 
 SDL2.dll

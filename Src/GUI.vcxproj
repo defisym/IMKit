@@ -100,7 +100,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;IMGuiInterface\implot;IMGuiInterface\imgui;IMGuiInterface\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\..\Device\Src;.\..\Device\Include;.\..\ORL\Src;.\..\ORL\Include;.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;IMGuiInterface\implot;IMGuiInterface\imgui;IMGuiInterface\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -122,8 +122,9 @@
 copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
-copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
-xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
+copy $(SolutionDir)..\ORL\Bin\$(Platform)\ORL.dll "$(SolutionDir)"
+copy $(SolutionDir)..\Device\Bin\$(Platform)\Device.dll "$(SolutionDir)"
+xcopy $(SolutionDir)..\Device\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
@@ -137,7 +138,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;IMGuiInterface\implot;IMGuiInterface\imgui;IMGuiInterface\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\..\Device\Src;.\..\Device\Include;.\..\ORL\Src;.\..\ORL\Include;.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;IMGuiInterface\implot;IMGuiInterface\imgui;IMGuiInterface\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -161,8 +162,9 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
 copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
-copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
-xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
+copy $(SolutionDir)..\ORL\Bin\$(Platform)\ORL.dll "$(SolutionDir)"
+copy $(SolutionDir)..\Device\Bin\$(Platform)\Device.dll "$(SolutionDir)"
+xcopy $(SolutionDir)..\Device\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
       <Message>Copy dll</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -172,7 +174,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;IMGuiInterface\implot;IMGuiInterface\imgui;IMGuiInterface\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\..\Device\Src;.\..\Device\Include;.\..\ORL\Src;.\..\ORL\Include;.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;IMGuiInterface\implot;IMGuiInterface\imgui;IMGuiInterface\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -194,8 +196,9 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
 copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"
-copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
-xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
+copy $(SolutionDir)..\ORL\Bin\$(Platform)\ORL.dll "$(SolutionDir)"
+copy $(SolutionDir)..\Device\Bin\$(Platform)\Device.dll "$(SolutionDir)"
+xcopy $(SolutionDir)..\Device\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
@@ -209,7 +212,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;IMGuiInterface\implot;IMGuiInterface\imgui;IMGuiInterface\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\..\Device\Src;.\..\Device\Include;.\..\ORL\Src;.\..\ORL\Include;.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;IMGuiInterface\implot;IMGuiInterface\imgui;IMGuiInterface\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -233,8 +236,9 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
 copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"
-copy $(SolutionDir)..\Src\DLL\lib\$(Platform)\OTDR.dll "$(SolutionDir)"
-xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
+copy $(SolutionDir)..\ORL\Bin\$(Platform)\ORL.dll "$(SolutionDir)"
+copy $(SolutionDir)..\Device\Bin\$(Platform)\Device.dll "$(SolutionDir)"
+xcopy $(SolutionDir)..\Device\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
@@ -438,6 +442,7 @@ xcopy $(SolutionDir)..\Src\Modules\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="IMGuiInterface\implot\implot_internal.h" />
     <ClInclude Include="Internationalization\Internationalization.h" />
     <ClInclude Include="macro.h" />
+    <ClInclude Include="ORL.h" />
     <ClInclude Include="Processor\VibrationProcess.h" />
     <ClInclude Include="Processor\Vibration\ContextVibrationLocalizationProcessor.h" />
     <ClInclude Include="Processor\Vibration\TraditionVibrationLocalizationProcessor.h" />

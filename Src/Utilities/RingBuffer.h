@@ -4,8 +4,8 @@
 #include <algorithm>
 #include <functional>
 
-#include "./../Src/Module/General/Definition.h"
-#include "./../Src/Utilities/Buffer.h"
+#include "ORL.h"
+#include <Utilities/Buffer.h>
 
 template<typename Type = OTDRProcessValueType>
 struct RingBuffer :Buffer<Type> {
