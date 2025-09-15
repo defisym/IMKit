@@ -650,9 +650,6 @@
     <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigSoftware.h">
       <Filter>头文件\GUIContent\Components\Config\Environment</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContext\Param\Param.h">
-      <Filter>头文件\GUIContext\Param</Filter>
-    </ClInclude>
     <ClInclude Include="GUIContext\Param\SoftwareParams.h">
       <Filter>头文件\GUIContext\Param</Filter>
     </ClInclude>
@@ -877,6 +874,9 @@
     </ClInclude>
     <ClInclude Include="ORL.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Param.h">
+      <Filter>头文件\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -413,7 +413,6 @@ xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="GUIContext\Handler\ThreadHandler.h" />
     <ClInclude Include="GUIContext\Handler\WaterfallChatHandler.h" />
     <ClInclude Include="GUIContext\Param\FibreParams.h" />
-    <ClInclude Include="GUIContext\Param\Param.h" />
     <ClInclude Include="GUIContext\Param\PerformanceParams.h" />
     <ClInclude Include="GUIContext\Param\SoftwareParams.h" />
     <ClInclude Include="IMGuiEx\AddSpin.h" />
@@ -463,6 +462,7 @@ xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Utilities\Logger.h" />
     <ClInclude Include="Utilities\MapDownloader.h" />
     <ClInclude Include="Utilities\MeasureHelper.h" />
+    <ClInclude Include="Utilities\Param.h" />
     <ClInclude Include="Utilities\RingBuffer.h" />
     <ClInclude Include="Utilities\StringResult.h" />
     <ClInclude Include="Utilities\ThreadSafeRingBuffer.h" />
