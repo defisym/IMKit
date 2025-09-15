@@ -270,9 +270,6 @@
     <ClCompile Include="IMGuiInterface\implot\implot_items.cpp">
       <Filter>源文件\IMGuiInterface\implot</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities\LoadFileToWStr.cpp">
-      <Filter>源文件\Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="Utilities\AudioPlayer.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
@@ -565,9 +562,6 @@
     </ClInclude>
     <ClInclude Include="IMGuiInterface\implot\implot_internal.h">
       <Filter>头文件\IMGuiInterface\implot</Filter>
-    </ClInclude>
-    <ClInclude Include="Utilities\LoadFileToWStr.h">
-      <Filter>头文件\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\AudioPlayer.h">
       <Filter>头文件\Utilities</Filter>
