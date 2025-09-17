@@ -1,0 +1,65 @@
+{
+	"title": "Internationalization configuration files",
+	"$schema": "./InternationalizationSchema.json",
+	"language": [
+		"zh-cn"
+	],
+	"internationalization": [
+		{
+			"token": "",
+			"language": [
+				{
+					"zh-cn": ""
+				}
+			]
+		},
+		{
+			"token": "Performance",
+			"language": [
+				{
+					"zh-cn": "性能"
+				}
+			]
+		},
+		{
+			"token": "Application average %.3f ms/frame (%.1f FPS)",
+			"language": [
+				{
+					"zh-cn": "应用程序每帧平均耗时 %.3f 毫秒 (%.1f 帧每秒)"
+				}
+			]
+		},
+		{
+			"token": "Last frame: %.3f ms",
+			"language": [
+				{
+					"zh-cn": "上一帧耗时: %.3f 毫秒"
+				}
+			]
+		},
+		{
+			"token": "Main loop: %.3f ms, GUI: %.3f ms, Render: %.3f ms",
+			"language": [
+				{
+					"zh-cn": "数据处理耗时: %.3f 毫秒, 界面更新耗时: %.3f 毫秒, 渲染耗时: %.3f 毫秒"
+				}
+			]
+		},
+		{
+			"token": "V-sync wait & other process: %.3f ms",
+			"language": [
+				{
+					"zh-cn": "垂直同步等待与其他处理耗时: %.3f 毫秒"
+				}
+			]
+		},
+		{
+			"token": "Other process: %.3f ms",
+			"language": [
+				{
+					"zh-cn": "其他处理耗时: %.3f 毫秒"
+				}
+			]
+		}
+	]
+}
