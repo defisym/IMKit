@@ -883,7 +883,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="GUI.rc">
+    <ResourceCompile Include="IMKit.rc">
       <Filter>资源文件</Filter>
     </ResourceCompile>
   </ItemGroup>

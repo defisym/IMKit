@@ -1,11 +1,7 @@
 imgui.ini
 3rdLib/SDL
 
-GUI.exe
-ORL.dll
-Device.dll
-Modules/
-
+IMKit.exe
 SDL2.dll
 SDL2_mixer_ext.dll
 libcrypto-3.dll
@@ -13,5 +9,4 @@ libcrypto-3-x64.dll
 libssl-3.dll
 libssl-3-x64.dll
 
-freq.csv
 config.data

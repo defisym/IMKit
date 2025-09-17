@@ -22,7 +22,7 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{9c466cdb-479e-4877-8885-0e2cf9cb34e7}</ProjectGuid>
-    <RootNamespace>GUI</RootNamespace>
+    <RootNamespace>IMKit</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -478,7 +478,7 @@ xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Worker\WorkerBase.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="GUI.rc" />
+    <ResourceCompile Include="IMKit.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="icon1.ico" />
