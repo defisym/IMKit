@@ -25,8 +25,6 @@ FontEx::FontEx() {
 #endif
     builder.BuildRanges(&ranges);
 
-    pFontAtlas->TexDesiredWidth = D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION;
-
 #ifdef FONT_LOAD_ALL_FONTS
     // load all fonts in font folder
     //  not work: imgui will merge all char into a texture
@@ -65,7 +63,7 @@ bool FontEx::AddFont(const char* filename, float size_pixels) {
     auto pFont = pFontAtlas->AddFontFromFileTTF(filename, size_pixels, &conf, ranges.Data);
     if (pFont == nullptr) { return false; }
 
-    const auto fontInfo = FontInfo{ filename,size_pixels };
+    const auto fontInfo = FontInfo{ .name=filename, .size=size_pixels };
     fontLib.emplace(fontInfo.GetHash(), pFont);
 
     return true;

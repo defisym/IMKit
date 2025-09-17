@@ -2,12 +2,10 @@
 
 #include <SDL_mixer.h>
 
-#include "ORL.h"
-
 struct DataConverter {  // NOLINT(cppcoreguidelines-special-member-functions)
 	struct SourceInfo {
 		// pBuffer should be normalized to -1.0f ~ 1.0f
-		const OTDRProcessValueType* pBuffer;
+		const float* pBuffer;
 		size_t bufferSz;
 		// in ms
 		size_t duration;

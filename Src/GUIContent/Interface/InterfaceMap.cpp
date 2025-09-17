@@ -7,7 +7,7 @@
 #include "IMGuiEx/DisplayPlot.h"
 
 #include "Utilities/MapDownloader.h"
-#include "GUIContext/Handler/MapHandler.h"
+#include "Utilities/MapHandler.h"
 
 void InterfaceMap(const char* pID,
     TileManager* pTileManager, ViewParams* pViewParams,

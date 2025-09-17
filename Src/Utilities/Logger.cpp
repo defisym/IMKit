@@ -1,7 +1,7 @@
 #include "Logger.h"
 
 #include "TimeStampHelper.h"
-#include "GUIContext/Param/Param.h"
+#include "Utilities/Param.h"
 
 std::size_t std::hash<LoggerConfig>::operator()(LoggerConfig const& s) const noexcept {
     return GetParamHash(s);

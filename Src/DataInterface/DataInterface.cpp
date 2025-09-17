@@ -2,7 +2,7 @@
 
 #include <Compress/zlibInterface.h>
 
-#include "GUIContext/Param/Param.h"
+#include "Utilities/Param.h"
 
 std::size_t std::hash<DataInterfaceConfig>::operator()(DataInterfaceConfig const& s) const noexcept {
     return GetParamHash(s);

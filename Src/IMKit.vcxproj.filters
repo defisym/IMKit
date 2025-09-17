@@ -28,18 +28,6 @@
     <Filter Include="源文件\IMGuiEx">
       <UniqueIdentifier>{c98e1dec-cb25-443b-9f11-6754b6c81dc0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\GUIContext">
-      <UniqueIdentifier>{f413dc41-5a54-42be-9fc5-5c07e9dd3c1d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\GUIContext">
-      <UniqueIdentifier>{56114c6b-d035-45b1-8441-490cc8b2dec2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\GUIContext\Handler">
-      <UniqueIdentifier>{a6980bcc-65a6-4b62-b1dc-3fca81349e36}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\GUIContext\Handler">
-      <UniqueIdentifier>{cab55633-8990-4d16-832f-2b4c72ca5b57}</UniqueIdentifier>
-    </Filter>
     <Filter Include="头文件\GUIContent">
       <UniqueIdentifier>{5a2e1460-a324-4abc-9c94-5559d0ec8fca}</UniqueIdentifier>
     </Filter>
@@ -58,65 +46,11 @@
     <Filter Include="源文件\GUIContent\Components\Basic">
       <UniqueIdentifier>{ddb4bee1-6ac2-428b-8933-62e406bb9282}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\GUIContent\Components\Config">
-      <UniqueIdentifier>{5631afcd-695b-4856-b2fe-34b07edbcabe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\GUIContent\Components\Config">
-      <UniqueIdentifier>{5f7a0835-73f6-4258-a20c-42e3ecaf7810}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\GUIContent\Components\Config\Device">
-      <UniqueIdentifier>{d557e126-5c12-4c0d-bc98-ea8d60ebb37d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\GUIContent\Components\Config\Process">
-      <UniqueIdentifier>{79e63789-d41a-40f8-a229-ee8b802fe8dc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\GUIContent\Components\Config\Process">
-      <UniqueIdentifier>{8a880f70-f377-4e97-b31f-190cf17e23b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\GUIContent\Components\Config\Device">
-      <UniqueIdentifier>{9f076a6b-0b01-423d-bdaf-128c5e422794}</UniqueIdentifier>
-    </Filter>
     <Filter Include="头文件\Internationalization">
       <UniqueIdentifier>{f623151d-53d9-4fd2-a4ef-923ddd85203a}</UniqueIdentifier>
     </Filter>
     <Filter Include="源文件\Internationalization">
       <UniqueIdentifier>{4d03a0cd-af2f-4382-b328-2d10c8a7df5d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\GUIContent\Components\Config\Environment">
-      <UniqueIdentifier>{ddd29d39-01b7-4f3f-a965-c39a6226fc32}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\GUIContent\Components\Config\Environment">
-      <UniqueIdentifier>{bff85f3d-fe8f-44b7-a8ff-0792a6a965ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\GUIContext\Param">
-      <UniqueIdentifier>{de76c6d0-77f3-4d3b-a0ce-f5e3fa10830b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\GUIContext\Param">
-      <UniqueIdentifier>{9cf6c573-e8ba-445a-a8e1-625185a06b8c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\GUIContent\Components\Config\Inspect">
-      <UniqueIdentifier>{2c9f3317-71ce-4d8c-8bb4-829e96d95d4e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\GUIContent\Components\Config\Inspect">
-      <UniqueIdentifier>{fa368774-78b1-4df3-b4b2-115529bdfde7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\GUIContent\Components\Display">
-      <UniqueIdentifier>{bd6fb7ae-29ba-4e1e-8c3e-37d94eabf978}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\GUIContent\Components\Display\Process">
-      <UniqueIdentifier>{308c17a4-4ed3-4847-a211-18f8563e05f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\GUIContent\Components\Display">
-      <UniqueIdentifier>{88e6216a-9981-4c0f-ad17-9f0be70af6cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\GUIContent\Components\Display\Process">
-      <UniqueIdentifier>{aec95022-85a8-42b1-a0f7-6075c60ab23a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\GUIContent\Components\Display\Inspect">
-      <UniqueIdentifier>{e5e8430f-292f-4ae0-b8f9-29c4d8a18108}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\GUIContent\Components\Display\Inspect">
-      <UniqueIdentifier>{2bca413e-c389-427f-8124-c656f6976256}</UniqueIdentifier>
     </Filter>
     <Filter Include="头文件\Worker">
       <UniqueIdentifier>{30b8cf93-8222-421a-bdad-688cfcf7c294}</UniqueIdentifier>
@@ -148,12 +82,6 @@
     <Filter Include="源文件\Worker\Thread">
       <UniqueIdentifier>{aaa306cd-366c-4c04-8c9a-89229dacbbdd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\GUIContent\Components\Display\Logger">
-      <UniqueIdentifier>{65becb63-f35f-4cb8-a121-212e91cecaef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\GUIContent\Components\Display\Logger">
-      <UniqueIdentifier>{477004cd-2756-48ea-9ecf-61f73734e1e8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="着色器">
       <UniqueIdentifier>{94fcf838-006c-4679-87e8-69d15f0fbec6}</UniqueIdentifier>
     </Filter>
@@ -166,20 +94,8 @@
     <Filter Include="头文件\IMGuiInterface">
       <UniqueIdentifier>{7e473558-8fe3-479c-9fe8-47d58700e502}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\IMGuiInterface\imgui">
-      <UniqueIdentifier>{d391f163-c428-42c2-b91c-2d25c3b96096}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\IMGuiInterface\implot">
-      <UniqueIdentifier>{f1cab211-b61f-460e-aac8-b6c26fda1c50}</UniqueIdentifier>
-    </Filter>
     <Filter Include="源文件\IMGuiInterface">
       <UniqueIdentifier>{3bb9812e-bd5a-47a5-b516-e3f6e3c814be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\IMGuiInterface\imgui">
-      <UniqueIdentifier>{8a6314d3-3d22-4bd3-9c38-e7e929e8749f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\IMGuiInterface\implot">
-      <UniqueIdentifier>{3c6639d8-c948-4be6-b4dc-9a5d0ccca639}</UniqueIdentifier>
     </Filter>
     <Filter Include="头文件\Processor">
       <UniqueIdentifier>{cbe6338f-8f8f-4519-a34c-6f7681abc058}</UniqueIdentifier>
@@ -190,38 +106,11 @@
     <Filter Include="头文件\Processor\Vibration">
       <UniqueIdentifier>{18dcf4c5-8004-4db4-ae94-c74e73e9c620}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\GUIContent\Components\Performance">
-      <UniqueIdentifier>{a07c6b36-4d2d-4a2a-b63a-c2bbf66142f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\GUIContent\Components\Performance">
-      <UniqueIdentifier>{dd8d3053-c22d-485c-8358-e7e4b5927d97}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\Processor">
-      <UniqueIdentifier>{42455260-626e-4422-bf2b-14a2f5446287}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\Processor\Waveform">
-      <UniqueIdentifier>{caf0a57b-d9c3-47f8-8aaa-16cde85b0163}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\Processor\Vibration">
-      <UniqueIdentifier>{18943709-7f56-40f5-bc03-d7468ac0594d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="头文件\GUIContent\Interface">
       <UniqueIdentifier>{05ec6182-2ee0-46f7-a236-76b1ce5101a2}</UniqueIdentifier>
     </Filter>
     <Filter Include="源文件\GUIContent\Interface">
       <UniqueIdentifier>{e6e0e47f-4789-4524-86d2-a463b7a6da8a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\GUIContent\Components\Display\Map">
-      <UniqueIdentifier>{d7b1679a-7cc2-48da-bbbd-cb7043b9a666}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\GUIContent\Components\Display\Map">
-      <UniqueIdentifier>{08258c27-c100-4e3d-ada7-071000fb7ed3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\GUIContent\Components\Config\Map">
-      <UniqueIdentifier>{54dbaee3-0a30-4bd1-a5ee-ba6fec534b26}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\GUIContent\Components\Config\Map">
-      <UniqueIdentifier>{8377935d-2abf-4d91-a25e-fe5cb6b9e734}</UniqueIdentifier>
     </Filter>
     <Filter Include="头文件\DataInterface">
       <UniqueIdentifier>{7422f186-6456-4235-a985-c2ce8f518f59}</UniqueIdentifier>
@@ -229,11 +118,17 @@
     <Filter Include="源文件\DataInterface">
       <UniqueIdentifier>{eb620335-e241-4188-8d8c-4a1a17be9398}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\DataInterface\Implements">
-      <UniqueIdentifier>{e1e8e310-f23e-418d-ae2d-cca02093a71b}</UniqueIdentifier>
+    <Filter Include="头文件\IMGuiInterface\IMGui">
+      <UniqueIdentifier>{d391f163-c428-42c2-b91c-2d25c3b96096}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\DataInterface\Implements">
-      <UniqueIdentifier>{c92f6ad8-b4e0-4129-9e03-47a0aac7ec80}</UniqueIdentifier>
+    <Filter Include="头文件\IMGuiInterface\IMPlot">
+      <UniqueIdentifier>{f1cab211-b61f-460e-aac8-b6c26fda1c50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\IMGuiInterface\IMGui">
+      <UniqueIdentifier>{8a6314d3-3d22-4bd3-9c38-e7e929e8749f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\IMGuiInterface\IMPlot">
+      <UniqueIdentifier>{3c6639d8-c948-4be6-b4dc-9a5d0ccca639}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -241,34 +136,34 @@
       <Filter>源文件\IMGuiInterface</Filter>
     </ClCompile>
     <ClCompile Include="IMGuiInterface\imgui\imgui.cpp">
-      <Filter>源文件\IMGuiInterface\imgui</Filter>
+      <Filter>源文件\IMGuiInterface\IMGui</Filter>
     </ClCompile>
     <ClCompile Include="IMGuiInterface\imgui\imgui_demo.cpp">
-      <Filter>源文件\IMGuiInterface\imgui</Filter>
+      <Filter>源文件\IMGuiInterface\IMGui</Filter>
     </ClCompile>
     <ClCompile Include="IMGuiInterface\imgui\imgui_draw.cpp">
-      <Filter>源文件\IMGuiInterface\imgui</Filter>
+      <Filter>源文件\IMGuiInterface\IMGui</Filter>
     </ClCompile>
     <ClCompile Include="IMGuiInterface\imgui\imgui_tables.cpp">
-      <Filter>源文件\IMGuiInterface\imgui</Filter>
+      <Filter>源文件\IMGuiInterface\IMGui</Filter>
     </ClCompile>
     <ClCompile Include="IMGuiInterface\imgui\imgui_widgets.cpp">
-      <Filter>源文件\IMGuiInterface\imgui</Filter>
+      <Filter>源文件\IMGuiInterface\IMGui</Filter>
     </ClCompile>
     <ClCompile Include="IMGuiInterface\imgui\backends\imgui_impl_dx11.cpp">
-      <Filter>源文件\IMGuiInterface\imgui</Filter>
+      <Filter>源文件\IMGuiInterface\IMGui</Filter>
     </ClCompile>
     <ClCompile Include="IMGuiInterface\imgui\backends\imgui_impl_win32.cpp">
-      <Filter>源文件\IMGuiInterface\imgui</Filter>
+      <Filter>源文件\IMGuiInterface\IMGui</Filter>
     </ClCompile>
     <ClCompile Include="IMGuiInterface\implot\implot.cpp">
-      <Filter>源文件\IMGuiInterface\implot</Filter>
+      <Filter>源文件\IMGuiInterface\IMPlot</Filter>
     </ClCompile>
     <ClCompile Include="IMGuiInterface\implot\implot_demo.cpp">
-      <Filter>源文件\IMGuiInterface\implot</Filter>
+      <Filter>源文件\IMGuiInterface\IMPlot</Filter>
     </ClCompile>
     <ClCompile Include="IMGuiInterface\implot\implot_items.cpp">
-      <Filter>源文件\IMGuiInterface\implot</Filter>
+      <Filter>源文件\IMGuiInterface\IMPlot</Filter>
     </ClCompile>
     <ClCompile Include="Utilities\AudioPlayer.cpp">
       <Filter>源文件\Utilities</Filter>
@@ -276,50 +171,14 @@
     <ClCompile Include="Tests\AudioTest.cpp">
       <Filter>源文件\Tests</Filter>
     </ClCompile>
-    <ClCompile Include="Tests\RingBufferTest.cpp">
-      <Filter>源文件\Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContext\Handler\DeviceHandler.cpp">
-      <Filter>源文件\GUIContext\Handler</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContext\Handler\AudioHandler.cpp">
-      <Filter>源文件\GUIContext\Handler</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\GUIContent.cpp">
-      <Filter>源文件\GUIContent</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\ComponentConfig.cpp">
-      <Filter>源文件\GUIContent\Components\Config</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\Environment\ComponentConfigFiber.cpp">
-      <Filter>源文件\GUIContent\Components\Config\Environment</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\Device\ComponentConfigDevice.cpp">
-      <Filter>源文件\GUIContent\Components\Config\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\Device\ComponentConfigParam.cpp">
-      <Filter>源文件\GUIContent\Components\Config\Device</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp">
-      <Filter>源文件\GUIContext\Handler</Filter>
     </ClCompile>
     <ClCompile Include="Utilities\DataConverter.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Utilities\Logger.cpp">
       <Filter>源文件\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContext\Handler\LoggerHandler.cpp">
-      <Filter>源文件\GUIContext\Handler</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\Environment\ComponentConfigLogger.Cpp">
-      <Filter>源文件\GUIContent\Components\Config\Environment</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContext\GUIContext.cpp">
-      <Filter>源文件\GUIContext</Filter>
     </ClCompile>
     <ClCompile Include="IMGuiEx\IndentHelper.cpp">
       <Filter>源文件\IMGuiEx</Filter>
@@ -339,39 +198,6 @@
     <ClCompile Include="IMGuiEx\DisplayPlot.cpp">
       <Filter>源文件\IMGuiEx</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContext\Handler\FilterHandler.cpp">
-      <Filter>源文件\GUIContext\Handler</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\Environment\ComponentConfigSoftware.cpp">
-      <Filter>源文件\GUIContent\Components\Config\Environment</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContext\Param\SoftwareParams.cpp">
-      <Filter>源文件\GUIContext\Param</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContext\Handler\CalibrateHandler.cpp">
-      <Filter>源文件\GUIContext\Handler</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\Environment\ComponentConfigCalibrate.cpp">
-      <Filter>源文件\GUIContent\Components\Config\Environment</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContext\Handler\InspectHandler.cpp">
-      <Filter>源文件\GUIContext\Handler</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcess.cpp">
-      <Filter>源文件\GUIContent\Components\Display\Process</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Display\Inspect\ComponentInspect.cpp">
-      <Filter>源文件\GUIContent\Components\Display\Inspect</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Display\ComponentDisplay.cpp">
-      <Filter>源文件\GUIContent\Components\Display</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\Inspect\ComponentConfigInspect.cpp">
-      <Filter>源文件\GUIContent\Components\Config\Inspect</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContext\Handler\ThreadHandler.cpp">
-      <Filter>源文件\GUIContext\Handler</Filter>
-    </ClCompile>
     <ClCompile Include="CPUAffinity\CPUAffinity.cpp">
       <Filter>源文件\CPUAffinity</Filter>
     </ClCompile>
@@ -380,18 +206,6 @@
     </ClCompile>
     <ClCompile Include="Worker\WorkerBase.cpp">
       <Filter>源文件\Worker</Filter>
-    </ClCompile>
-    <ClCompile Include="Worker\ReaderThread.cpp">
-      <Filter>源文件\Worker</Filter>
-    </ClCompile>
-    <ClCompile Include="Worker\VibrationThread.cpp">
-      <Filter>源文件\Worker</Filter>
-    </ClCompile>
-    <ClCompile Include="Worker\WaveformThread.cpp">
-      <Filter>源文件\Worker</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContext\Param\FibreParams.cpp">
-      <Filter>源文件\GUIContext\Param</Filter>
     </ClCompile>
     <ClCompile Include="IMGuiEx\SliderSpin.cpp">
       <Filter>源文件\IMGuiEx</Filter>
@@ -402,74 +216,17 @@
     <ClCompile Include="Utilities\StringResult.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\Display\Logger\ComponentLogger.cpp">
-      <Filter>源文件\GUIContent\Components\Display\Logger</Filter>
-    </ClCompile>
     <ClCompile Include="Utilities\TimeStampHelper.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="IMGuiEx\I18NInterface.cpp">
       <Filter>源文件\IMGuiEx</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContext\Handler\WaterfallChatHandler.cpp">
-      <Filter>源文件\GUIContext\Handler</Filter>
-    </ClCompile>
     <ClCompile Include="IMGuiInterface\D3DContext.cpp">
       <Filter>源文件\IMGuiInterface</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\Performance\ComponentPerformance.cpp">
-      <Filter>源文件\GUIContent\Components\Performance</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\Process\ComponentConfigVibration.cpp">
-      <Filter>源文件\GUIContent\Components\Config\Process</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\Process\ComponentConfigWaveform.cpp">
-      <Filter>源文件\GUIContent\Components\Config\Process</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessGeneral.cpp">
-      <Filter>源文件\GUIContent\Components\Display\Process</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessRawData.cpp">
-      <Filter>源文件\GUIContent\Components\Display\Process</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessVibration.cpp">
-      <Filter>源文件\GUIContent\Components\Display\Process</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessWaveform.cpp">
-      <Filter>源文件\GUIContent\Components\Display\Process</Filter>
-    </ClCompile>
     <ClCompile Include="GUIContent\Components\Basic\ComponentWindow.cpp">
       <Filter>源文件\GUIContent\Components\Basic</Filter>
-    </ClCompile>
-    <ClCompile Include="Processor\Vibration\ContextVibrationLocalizationProcessor.cpp">
-      <Filter>源文件\Processor\Vibration</Filter>
-    </ClCompile>
-    <ClCompile Include="Processor\Waveform\PeakWaveformRestoreHandler.cpp">
-      <Filter>源文件\Processor\Waveform</Filter>
-    </ClCompile>
-    <ClCompile Include="Processor\Waveform\SingleWaveformRestoreHandler.cpp">
-      <Filter>源文件\Processor\Waveform</Filter>
-    </ClCompile>
-    <ClCompile Include="Processor\Vibration\TraditionVibrationLocalizationProcessor.cpp">
-      <Filter>源文件\Processor\Vibration</Filter>
-    </ClCompile>
-    <ClCompile Include="Processor\Vibration\VibrationLocalizationDefinition.cpp">
-      <Filter>源文件\Processor\Vibration</Filter>
-    </ClCompile>
-    <ClCompile Include="Processor\Vibration\VibrationLocalizationHandler.cpp">
-      <Filter>源文件\Processor\Vibration</Filter>
-    </ClCompile>
-    <ClCompile Include="Processor\Vibration\VibrationLocalizationProcessor.cpp">
-      <Filter>源文件\Processor\Vibration</Filter>
-    </ClCompile>
-    <ClCompile Include="Processor\Waveform\WaveformRestoreData.cpp">
-      <Filter>源文件\Processor\Waveform</Filter>
-    </ClCompile>
-    <ClCompile Include="Processor\Waveform\WaveformRestoreDefinition.cpp">
-      <Filter>源文件\Processor\Waveform</Filter>
-    </ClCompile>
-    <ClCompile Include="Processor\Waveform\WaveformRestoreProcessor.cpp">
-      <Filter>源文件\Processor\Waveform</Filter>
     </ClCompile>
     <ClCompile Include="GUIContent\Interface\InterfaceLogger.cpp">
       <Filter>源文件\GUIContent\Interface</Filter>
@@ -486,50 +243,11 @@
     <ClCompile Include="IMGuiEx\LoadTexture.cpp">
       <Filter>源文件\IMGuiEx</Filter>
     </ClCompile>
-    <ClCompile Include="GUIContent\Components\Display\Map\ComponentMap.cpp">
-      <Filter>源文件\GUIContent\Components\Display\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContent\Components\Config\Map\ComponentConfigMap.cpp">
-      <Filter>源文件\GUIContent\Components\Config\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIContext\Handler\MapHandler.cpp">
-      <Filter>源文件\GUIContext\Handler</Filter>
-    </ClCompile>
-    <ClCompile Include="Processor\WaveformProcess.cpp">
-      <Filter>源文件\Processor</Filter>
-    </ClCompile>
-    <ClCompile Include="Processor\VibrationProcess.cpp">
-      <Filter>源文件\Processor</Filter>
-    </ClCompile>
-    <ClCompile Include="Worker\FileLogThread.cpp">
-      <Filter>源文件\Worker</Filter>
-    </ClCompile>
     <ClCompile Include="DataInterface\DataInterface.cpp">
       <Filter>源文件\DataInterface</Filter>
     </ClCompile>
-    <ClCompile Include="DataInterface\Implements\VibrationDataStringify.cpp">
-      <Filter>源文件\DataInterface\Implements</Filter>
-    </ClCompile>
-    <ClCompile Include="DataInterface\Implements\WaveformDataStringify.cpp">
-      <Filter>源文件\DataInterface\Implements</Filter>
-    </ClCompile>
     <ClCompile Include="DataInterface\FileInterface.cpp">
       <Filter>源文件\DataInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="DataInterface\Implements\VibrationDataDefinition.cpp">
-      <Filter>源文件\DataInterface\Implements</Filter>
-    </ClCompile>
-    <ClCompile Include="DataInterface\Implements\VibrationDataParse.cpp">
-      <Filter>源文件\DataInterface\Implements</Filter>
-    </ClCompile>
-    <ClCompile Include="DataInterface\Implements\WaveformDataDefinition.cpp">
-      <Filter>源文件\DataInterface\Implements</Filter>
-    </ClCompile>
-    <ClCompile Include="DataInterface\Implements\WaveformDataParse.cpp">
-      <Filter>源文件\DataInterface\Implements</Filter>
-    </ClCompile>
-    <ClCompile Include="Tests\DataInterfaceTest.cpp">
-      <Filter>源文件\Tests</Filter>
     </ClCompile>
     <ClCompile Include="DataInterface\ParseInterface.cpp">
       <Filter>源文件\DataInterface</Filter>
@@ -537,31 +255,40 @@
     <ClCompile Include="DataInterface\InfDefinition.cpp">
       <Filter>源文件\DataInterface</Filter>
     </ClCompile>
+    <ClCompile Include="GUIContent\Components\Basic\ComponentPerformanceBase.cpp">
+      <Filter>源文件\GUIContent\Components\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\FilterHandler.cpp">
+      <Filter>源文件\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\MapHandler.cpp">
+      <Filter>源文件\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IMGuiInterface\IMGuiInterface.h">
       <Filter>头文件\IMGuiInterface</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiInterface\imgui\imconfig.h">
-      <Filter>头文件\IMGuiInterface\imgui</Filter>
+      <Filter>头文件\IMGuiInterface\IMGui</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiInterface\imgui\imgui.h">
-      <Filter>头文件\IMGuiInterface\imgui</Filter>
+      <Filter>头文件\IMGuiInterface\IMGui</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiInterface\imgui\imgui_internal.h">
-      <Filter>头文件\IMGuiInterface\imgui</Filter>
+      <Filter>头文件\IMGuiInterface\IMGui</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiInterface\imgui\backends\imgui_impl_dx11.h">
-      <Filter>头文件\IMGuiInterface\imgui</Filter>
+      <Filter>头文件\IMGuiInterface\IMGui</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiInterface\imgui\backends\imgui_impl_win32.h">
-      <Filter>头文件\IMGuiInterface\imgui</Filter>
+      <Filter>头文件\IMGuiInterface\IMGui</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiInterface\implot\implot.h">
-      <Filter>头文件\IMGuiInterface\implot</Filter>
+      <Filter>头文件\IMGuiInterface\IMPlot</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiInterface\implot\implot_internal.h">
-      <Filter>头文件\IMGuiInterface\implot</Filter>
+      <Filter>头文件\IMGuiInterface\IMPlot</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\AudioPlayer.h">
       <Filter>头文件\Utilities</Filter>
@@ -578,29 +305,11 @@
     <ClInclude Include="IMGuiEx\DisplayPlot.h">
       <Filter>头文件\IMGuiEx</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContext\Handler\DeviceHandler.h">
-      <Filter>头文件\GUIContext\Handler</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContext\Handler\AudioHandler.h">
-      <Filter>头文件\GUIContext\Handler</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContext\GUIContext.h">
-      <Filter>头文件\GUIContext</Filter>
-    </ClInclude>
     <ClInclude Include="GUIContent\GUIContent.h">
       <Filter>头文件\GUIContent</Filter>
     </ClInclude>
     <ClInclude Include="GUIContent\Components\Basic\ComponentWindow.h">
       <Filter>头文件\GUIContent\Components\Basic</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\ComponentConfig.h">
-      <Filter>头文件\GUIContent\Components\Config</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\Device\ComponentConfigDevice.h">
-      <Filter>头文件\GUIContent\Components\Config\Device</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\Device\ComponentConfigParam.h">
-      <Filter>头文件\GUIContent\Components\Config\Device</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiEx\EmbraceHelper.h">
       <Filter>头文件\IMGuiEx</Filter>
@@ -608,14 +317,8 @@
     <ClInclude Include="IMGuiEx\ComboEx.h">
       <Filter>头文件\IMGuiEx</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContext\Handler\ProcessHandler.h">
-      <Filter>头文件\GUIContext\Handler</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\Logger.h">
       <Filter>头文件\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContext\Handler\LoggerHandler.h">
-      <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
     <ClInclude Include="macro.h">
       <Filter>头文件</Filter>
@@ -638,56 +341,11 @@
     <ClInclude Include="resource.h">
       <Filter>资源文件</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigFiber.h">
-      <Filter>头文件\GUIContent\Components\Config\Environment</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigLogger.h">
-      <Filter>头文件\GUIContent\Components\Config\Environment</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContext\Handler\FilterHandler.h">
-      <Filter>头文件\GUIContext\Handler</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigSoftware.h">
-      <Filter>头文件\GUIContent\Components\Config\Environment</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContext\Param\SoftwareParams.h">
-      <Filter>头文件\GUIContext\Param</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContext\Param\FibreParams.h">
-      <Filter>头文件\GUIContext\Param</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContext\Handler\CalibrateHandler.h">
-      <Filter>头文件\GUIContext\Handler</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigCalibrate.h">
-      <Filter>头文件\GUIContent\Components\Config\Environment</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContext\Handler\InspectHandler.h">
-      <Filter>头文件\GUIContext\Handler</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcess.h">
-      <Filter>头文件\GUIContent\Components\Display\Process</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Display\Inspect\ComponentInspect.h">
-      <Filter>头文件\GUIContent\Components\Display\Inspect</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Display\ComponentDisplay.h">
-      <Filter>头文件\GUIContent\Components\Display</Filter>
-    </ClInclude>
     <ClInclude Include="IMGuiInterface\IMGuiDemo.h">
       <Filter>头文件\IMGuiInterface</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\Inspect\ComponentConfigInspect.h">
-      <Filter>头文件\GUIContent\Components\Config\Inspect</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContext\Param\PerformanceParams.h">
-      <Filter>头文件\GUIContext\Param</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\MeasureHelper.h">
       <Filter>头文件\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContext\Handler\ThreadHandler.h">
-      <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
     <ClInclude Include="CPUAffinity\CPUAffinity.h">
       <Filter>头文件\CPUAffinity</Filter>
@@ -698,12 +356,6 @@
     <ClInclude Include="CPUAffinity\SKU\Intel\13500H.h">
       <Filter>头文件\CPUAffinity\SKU\Intel</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities\RingBuffer.h">
-      <Filter>头文件\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="Utilities\ThreadSafeRingBuffer.h">
-      <Filter>头文件\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Worker\Thread\ThreadBase.h">
       <Filter>头文件\Worker\Thread</Filter>
     </ClInclude>
@@ -711,15 +363,6 @@
       <Filter>头文件\Worker\Thread</Filter>
     </ClInclude>
     <ClInclude Include="Worker\WorkerBase.h">
-      <Filter>头文件\Worker</Filter>
-    </ClInclude>
-    <ClInclude Include="Worker\ReaderThread.h">
-      <Filter>头文件\Worker</Filter>
-    </ClInclude>
-    <ClInclude Include="Worker\VibrationThread.h">
-      <Filter>头文件\Worker</Filter>
-    </ClInclude>
-    <ClInclude Include="Worker\WaveformThread.h">
       <Filter>头文件\Worker</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiEx\SliderSpin.h">
@@ -731,17 +374,11 @@
     <ClInclude Include="Utilities\StringResult.h">
       <Filter>头文件\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\Display\Logger\ComponentLogger.h">
-      <Filter>头文件\GUIContent\Components\Display\Logger</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\TimeStampHelper.h">
       <Filter>头文件\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiEx\I18NInterface.h">
       <Filter>头文件\IMGuiEx</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContext\Handler\WaterfallChatHandler.h">
-      <Filter>头文件\GUIContext\Handler</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiInterface\D3DContext.h">
       <Filter>头文件\IMGuiInterface</Filter>
@@ -751,27 +388,6 @@
     </ClInclude>
     <ClInclude Include="Utilities\BackBuffer.h">
       <Filter>头文件\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Performance\ComponentPerformance.h">
-      <Filter>头文件\GUIContent\Components\Performance</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\Process\ComponentConfigVibration.h">
-      <Filter>头文件\GUIContent\Components\Config\Process</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\Process\ComponentConfigWaveform.h">
-      <Filter>头文件\GUIContent\Components\Config\Process</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessGeneral.h">
-      <Filter>头文件\GUIContent\Components\Display\Process</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessRawData.h">
-      <Filter>头文件\GUIContent\Components\Display\Process</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessVibration.h">
-      <Filter>头文件\GUIContent\Components\Display\Process</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessWaveform.h">
-      <Filter>头文件\GUIContent\Components\Display\Process</Filter>
     </ClInclude>
     <ClInclude Include="Processor\Vibration\ContextVibrationLocalizationProcessor.h">
       <Filter>头文件\Processor\Vibration</Filter>
@@ -821,50 +437,17 @@
     <ClInclude Include="IMGuiEx\LoadTexture.h">
       <Filter>头文件\IMGuiEx</Filter>
     </ClInclude>
-    <ClInclude Include="GUIContent\Components\Display\Map\ComponentMap.h">
-      <Filter>头文件\GUIContent\Components\Display\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\Components\Config\Map\ComponentConfigMap.h">
-      <Filter>头文件\GUIContent\Components\Config\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContext\Handler\MapHandler.h">
-      <Filter>头文件\GUIContext\Handler</Filter>
-    </ClInclude>
     <ClInclude Include="Processor\WaveformProcess.h">
       <Filter>头文件\Processor</Filter>
     </ClInclude>
     <ClInclude Include="Processor\VibrationProcess.h">
       <Filter>头文件\Processor</Filter>
     </ClInclude>
-    <ClInclude Include="Worker\FileLogThread.h">
-      <Filter>头文件\Worker</Filter>
-    </ClInclude>
     <ClInclude Include="DataInterface\DataInterface.h">
       <Filter>头文件\DataInterface</Filter>
     </ClInclude>
-    <ClInclude Include="DataInterface\Implements\VibrationDataStringify.h">
-      <Filter>头文件\DataInterface\Implements</Filter>
-    </ClInclude>
-    <ClInclude Include="DataInterface\Implements\WaveformDataStringify.h">
-      <Filter>头文件\DataInterface\Implements</Filter>
-    </ClInclude>
     <ClInclude Include="DataInterface\FileInterface.h">
       <Filter>头文件\DataInterface</Filter>
-    </ClInclude>
-    <ClInclude Include="DataInterface\Implements\VibrationDataDefinition.h">
-      <Filter>头文件\DataInterface\Implements</Filter>
-    </ClInclude>
-    <ClInclude Include="DataInterface\Implements\VibrationDataParse.h">
-      <Filter>头文件\DataInterface\Implements</Filter>
-    </ClInclude>
-    <ClInclude Include="DataInterface\Implements\WaveformDataDefinition.h">
-      <Filter>头文件\DataInterface\Implements</Filter>
-    </ClInclude>
-    <ClInclude Include="DataInterface\Implements\WaveformDataParse.h">
-      <Filter>头文件\DataInterface\Implements</Filter>
-    </ClInclude>
-    <ClInclude Include="DataInterface\Implements\ImplDefinition.h">
-      <Filter>头文件\DataInterface\Implements</Filter>
     </ClInclude>
     <ClInclude Include="DataInterface\ParseInterface.h">
       <Filter>头文件\DataInterface</Filter>
@@ -879,6 +462,15 @@
       <Filter>头文件\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\ConfigHandler.h">
+      <Filter>头文件\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIContent\Components\Basic\ComponentPerformanceBase.h">
+      <Filter>头文件\GUIContent\Components\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\FilterHandler.h">
+      <Filter>头文件\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\MapHandler.h">
       <Filter>头文件\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
@@ -897,9 +489,6 @@
       <Filter>着色器\Vertex Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\PS.hlsl">
-      <Filter>着色器\Pixel Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="Shader\Shift.hlsl">
       <Filter>着色器\Pixel Shader</Filter>
     </FxCompile>
   </ItemGroup>

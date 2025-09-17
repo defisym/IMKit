@@ -1,6 +1,7 @@
 #include "InterfaceLogger.h"
 
-#include "GUIContext/GUIContext.h"
+#include "IMGuiInterface/IMGuiContext.h"
+#include "Utilities/Logger.h"
 
 void InterfaceLogger(const char* pID,
     Logger* pLogger, LoggerConfig* pConfig,

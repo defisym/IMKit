@@ -2,7 +2,7 @@
 
 #include <numbers>
 
-#include "GUIContext/Param/Param.h"
+#include "Utilities/Param.h"
 #include "IMGuiInterface/D3DContext.h"
 
 std::size_t std::hash<ViewRect>::operator()(ViewRect const& s) const noexcept {

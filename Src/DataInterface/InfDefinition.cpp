@@ -8,7 +8,7 @@
 #include <string.h>
 #include <filesystem>
 
-#include "GUIContext/Param/Param.h"
+#include "Utilities/Param.h"
 
 void FilePathConfig::SetPath(const char* pPath) {
     if (pPath == nullptr) { return; }

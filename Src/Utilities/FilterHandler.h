@@ -1,7 +1,5 @@
 #pragma once
 
-#include "ORL.h"
-
 #include <type_traits>
 
 constexpr int DEFAULT_FILTER_ORDER = 4;

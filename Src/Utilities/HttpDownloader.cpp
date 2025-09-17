@@ -6,7 +6,7 @@
 #pragma comment(lib,"libcrypto.lib")
 #pragma comment(lib,"libssl.lib")
 
-#include "GUIContext/Param/Param.h"
+#include "Utilities/Param.h"
 
 std::size_t std::hash<ProxyParams>::operator()(ProxyParams const& s) const noexcept {
     std::size_t hash = 0xcbf29ce484222325; // FNV-1a

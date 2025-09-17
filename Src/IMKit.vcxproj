@@ -100,7 +100,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\..\Device\Src;.\..\Device\Include;.\..\ORL\Src;.\..\ORL\Include;.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;IMGuiInterface\implot;IMGuiInterface\imgui;IMGuiInterface\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\Boost;.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -122,9 +122,7 @@
 copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
-copy $(SolutionDir)..\ORL\Bin\$(Platform)\ORL.dll "$(SolutionDir)"
-copy $(SolutionDir)..\Device\Bin\$(Platform)\Device.dll "$(SolutionDir)"
-xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
+</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
@@ -138,7 +136,7 @@ xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\..\Device\Src;.\..\Device\Include;.\..\ORL\Src;.\..\ORL\Include;.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;IMGuiInterface\implot;IMGuiInterface\imgui;IMGuiInterface\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\Boost;.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -162,9 +160,7 @@ xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
 copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
-copy $(SolutionDir)..\ORL\Bin\$(Platform)\ORL.dll "$(SolutionDir)"
-copy $(SolutionDir)..\Device\Bin\$(Platform)\Device.dll "$(SolutionDir)"
-xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
+</Command>
       <Message>Copy dll</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -174,7 +170,7 @@ xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\..\Device\Src;.\..\Device\Include;.\..\ORL\Src;.\..\ORL\Include;.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;IMGuiInterface\implot;IMGuiInterface\imgui;IMGuiInterface\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\Boost;.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -195,10 +191,7 @@ xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
       <Command>copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libcrypto-3-x64.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)"
-copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"
-copy $(SolutionDir)..\ORL\Bin\$(Platform)\ORL.dll "$(SolutionDir)"
-copy $(SolutionDir)..\Device\Bin\$(Platform)\Device.dll "$(SolutionDir)"
-xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
+copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
@@ -212,7 +205,7 @@ xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\..\Device\Src;.\..\Device\Include;.\..\ORL\Src;.\..\ORL\Include;.\..\OpenFusionExamples\Extensions\_3rdLib\Boost;.\..\OpenFusionExamples\Extensions\_3rdLib\;.\..\OpenFusionExamples\Extensions\_DeLib\;.\..\OpenFusionExamples\Extensions\;IMGuiInterface\implot;IMGuiInterface\imgui;IMGuiInterface\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\Boost;.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -235,10 +228,7 @@ xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
       <Command>copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libcrypto-3-x64.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)"
 copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)"
-copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"
-copy $(SolutionDir)..\ORL\Bin\$(Platform)\ORL.dll "$(SolutionDir)"
-copy $(SolutionDir)..\Device\Bin\$(Platform)\Device.dll "$(SolutionDir)"
-xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
+copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
@@ -248,52 +238,12 @@ xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="CPUAffinity\CPUAffinity.cpp" />
     <ClCompile Include="DataInterface\DataInterface.cpp" />
     <ClCompile Include="DataInterface\FileInterface.cpp" />
-    <ClCompile Include="DataInterface\Implements\VibrationDataDefinition.cpp" />
-    <ClCompile Include="DataInterface\Implements\VibrationDataParse.cpp" />
-    <ClCompile Include="DataInterface\Implements\VibrationDataStringify.cpp" />
-    <ClCompile Include="DataInterface\Implements\WaveformDataDefinition.cpp" />
-    <ClCompile Include="DataInterface\Implements\WaveformDataParse.cpp" />
-    <ClCompile Include="DataInterface\Implements\WaveformDataStringify.cpp" />
     <ClCompile Include="DataInterface\InfDefinition.cpp" />
     <ClCompile Include="DataInterface\ParseInterface.cpp" />
+    <ClCompile Include="GUIContent\Components\Basic\ComponentPerformanceBase.cpp" />
     <ClCompile Include="GUIContent\Components\Basic\ComponentWindow.cpp" />
-    <ClCompile Include="GUIContent\Components\Config\ComponentConfig.cpp" />
-    <ClCompile Include="GUIContent\Components\Config\Device\ComponentConfigDevice.cpp" />
-    <ClCompile Include="GUIContent\Components\Config\Device\ComponentConfigParam.cpp" />
-    <ClCompile Include="GUIContent\Components\Config\Environment\ComponentConfigCalibrate.cpp" />
-    <ClCompile Include="GUIContent\Components\Config\Environment\ComponentConfigLogger.Cpp" />
-    <ClCompile Include="GUIContent\Components\Config\Environment\ComponentConfigFiber.cpp" />
-    <ClCompile Include="GUIContent\Components\Config\Environment\ComponentConfigSoftware.cpp" />
-    <ClCompile Include="GUIContent\Components\Config\Inspect\ComponentConfigInspect.cpp" />
-    <ClCompile Include="GUIContent\Components\Config\Map\ComponentConfigMap.cpp" />
-    <ClCompile Include="GUIContent\Components\Config\Process\ComponentConfigVibration.cpp" />
-    <ClCompile Include="GUIContent\Components\Config\Process\ComponentConfigWaveform.cpp" />
-    <ClCompile Include="GUIContent\Components\Display\ComponentDisplay.cpp" />
-    <ClCompile Include="GUIContent\Components\Display\Inspect\ComponentInspect.cpp" />
-    <ClCompile Include="GUIContent\Components\Display\Logger\ComponentLogger.cpp" />
-    <ClCompile Include="GUIContent\Components\Display\Map\ComponentMap.cpp" />
-    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcess.cpp" />
-    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessGeneral.cpp" />
-    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessRawData.cpp" />
-    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessVibration.cpp" />
-    <ClCompile Include="GUIContent\Components\Display\Process\ComponentProcessWaveform.cpp" />
-    <ClCompile Include="GUIContent\Components\Performance\ComponentPerformance.cpp" />
-    <ClCompile Include="GUIContent\GUIContent.cpp" />
     <ClCompile Include="GUIContent\Interface\InterfaceLogger.cpp" />
     <ClCompile Include="GUIContent\Interface\InterfaceMap.cpp" />
-    <ClCompile Include="GUIContext\GUIContext.cpp" />
-    <ClCompile Include="GUIContext\Handler\AudioHandler.cpp" />
-    <ClCompile Include="GUIContext\Handler\CalibrateHandler.cpp" />
-    <ClCompile Include="GUIContext\Handler\DeviceHandler.cpp" />
-    <ClCompile Include="GUIContext\Handler\FilterHandler.cpp" />
-    <ClCompile Include="GUIContext\Handler\InspectHandler.cpp" />
-    <ClCompile Include="GUIContext\Handler\LoggerHandler.cpp" />
-    <ClCompile Include="GUIContext\Handler\MapHandler.cpp" />
-    <ClCompile Include="GUIContext\Handler\ProcessHandler.cpp" />
-    <ClCompile Include="GUIContext\Handler\ThreadHandler.cpp" />
-    <ClCompile Include="GUIContext\Handler\WaterfallChatHandler.cpp" />
-    <ClCompile Include="GUIContext\Param\FibreParams.cpp" />
-    <ClCompile Include="GUIContext\Param\SoftwareParams.cpp" />
     <ClCompile Include="IMGuiEx\AddToolTipHint.cpp" />
     <ClCompile Include="IMGuiEx\DisplayPlot.cpp" />
     <ClCompile Include="IMGuiEx\FontEx.cpp" />
@@ -317,31 +267,7 @@ xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClCompile Include="IMGuiInterface\implot\implot_items.cpp" />
     <ClCompile Include="Internationalization\Internationalization.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Processor\VibrationProcess.cpp" />
-    <ClCompile Include="Processor\Vibration\ContextVibrationLocalizationProcessor.cpp" />
-    <ClCompile Include="Processor\Vibration\TraditionVibrationLocalizationProcessor.cpp" />
-    <ClCompile Include="Processor\Vibration\VibrationLocalizationDefinition.cpp" />
-    <ClCompile Include="Processor\Vibration\VibrationLocalizationHandler.cpp" />
-    <ClCompile Include="Processor\Vibration\VibrationLocalizationProcessor.cpp" />
-    <ClCompile Include="Processor\WaveformProcess.cpp" />
-    <ClCompile Include="Processor\Waveform\SingleWaveformRestoreHandler.cpp" />
-    <ClCompile Include="Processor\Waveform\WaveformRestoreData.cpp" />
-    <ClCompile Include="Processor\Waveform\WaveformRestoreDefinition.cpp" />
-    <ClCompile Include="Processor\Waveform\PeakWaveformRestoreHandler.cpp" />
-    <ClCompile Include="Processor\Waveform\WaveformRestoreProcessor.cpp" />
     <ClCompile Include="Tests\AudioTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Tests\DataInterfaceTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Tests\RingBufferTest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -349,16 +275,14 @@ xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
     </ClCompile>
     <ClCompile Include="Utilities\AudioPlayer.cpp" />
     <ClCompile Include="Utilities\DataConverter.cpp" />
+    <ClCompile Include="Utilities\FilterHandler.cpp" />
     <ClCompile Include="Utilities\HttpDownloader.cpp" />
     <ClCompile Include="Utilities\Logger.cpp" />
     <ClCompile Include="Utilities\MapDownloader.cpp" />
+    <ClCompile Include="Utilities\MapHandler.cpp" />
     <ClCompile Include="Utilities\StringResult.cpp" />
     <ClCompile Include="Utilities\TimeStampHelper.cpp" />
-    <ClCompile Include="Worker\FileLogThread.cpp" />
-    <ClCompile Include="Worker\ReaderThread.cpp" />
     <ClCompile Include="Worker\Thread\ThreadBase.cpp" />
-    <ClCompile Include="Worker\VibrationThread.cpp" />
-    <ClCompile Include="Worker\WaveformThread.cpp" />
     <ClCompile Include="Worker\WorkerBase.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -367,54 +291,13 @@ xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="CPUAffinity\SKU\Intel\13700K.h" />
     <ClInclude Include="DataInterface\DataInterface.h" />
     <ClInclude Include="DataInterface\FileInterface.h" />
-    <ClInclude Include="DataInterface\Implements\ImplDefinition.h" />
-    <ClInclude Include="DataInterface\Implements\VibrationDataDefinition.h" />
-    <ClInclude Include="DataInterface\Implements\VibrationDataParse.h" />
-    <ClInclude Include="DataInterface\Implements\VibrationDataStringify.h" />
-    <ClInclude Include="DataInterface\Implements\WaveformDataDefinition.h" />
-    <ClInclude Include="DataInterface\Implements\WaveformDataParse.h" />
-    <ClInclude Include="DataInterface\Implements\WaveformDataStringify.h" />
     <ClInclude Include="DataInterface\InfDefinition.h" />
     <ClInclude Include="DataInterface\ParseInterface.h" />
+    <ClInclude Include="GUIContent\Components\Basic\ComponentPerformanceBase.h" />
     <ClInclude Include="GUIContent\Components\Basic\ComponentWindow.h" />
-    <ClInclude Include="GUIContent\Components\Config\ComponentConfig.h" />
-    <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigCalibrate.h" />
-    <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigFiber.h" />
-    <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigLogger.h" />
-    <ClInclude Include="GUIContent\Components\Config\Device\ComponentConfigDevice.h" />
-    <ClInclude Include="GUIContent\Components\Config\Device\ComponentConfigParam.h" />
-    <ClInclude Include="GUIContent\Components\Config\Environment\ComponentConfigSoftware.h" />
-    <ClInclude Include="GUIContent\Components\Config\Inspect\ComponentConfigInspect.h" />
-    <ClInclude Include="GUIContent\Components\Config\Map\ComponentConfigMap.h" />
-    <ClInclude Include="GUIContent\Components\Config\Process\ComponentConfigVibration.h" />
-    <ClInclude Include="GUIContent\Components\Config\Process\ComponentConfigWaveform.h" />
-    <ClInclude Include="GUIContent\Components\Display\ComponentDisplay.h" />
-    <ClInclude Include="GUIContent\Components\Display\Inspect\ComponentInspect.h" />
-    <ClInclude Include="GUIContent\Components\Display\Logger\ComponentLogger.h" />
-    <ClInclude Include="GUIContent\Components\Display\Map\ComponentMap.h" />
-    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcess.h" />
-    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessGeneral.h" />
-    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessRawData.h" />
-    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessVibration.h" />
-    <ClInclude Include="GUIContent\Components\Display\Process\ComponentProcessWaveform.h" />
-    <ClInclude Include="GUIContent\Components\Performance\ComponentPerformance.h" />
     <ClInclude Include="GUIContent\GUIContent.h" />
     <ClInclude Include="GUIContent\Interface\InterfaceLogger.h" />
     <ClInclude Include="GUIContent\Interface\InterfaceMap.h" />
-    <ClInclude Include="GUIContext\GUIContext.h" />
-    <ClInclude Include="GUIContext\Handler\AudioHandler.h" />
-    <ClInclude Include="GUIContext\Handler\CalibrateHandler.h" />
-    <ClInclude Include="GUIContext\Handler\DeviceHandler.h" />
-    <ClInclude Include="GUIContext\Handler\FilterHandler.h" />
-    <ClInclude Include="GUIContext\Handler\InspectHandler.h" />
-    <ClInclude Include="GUIContext\Handler\LoggerHandler.h" />
-    <ClInclude Include="GUIContext\Handler\MapHandler.h" />
-    <ClInclude Include="GUIContext\Handler\ProcessHandler.h" />
-    <ClInclude Include="GUIContext\Handler\ThreadHandler.h" />
-    <ClInclude Include="GUIContext\Handler\WaterfallChatHandler.h" />
-    <ClInclude Include="GUIContext\Param\FibreParams.h" />
-    <ClInclude Include="GUIContext\Param\PerformanceParams.h" />
-    <ClInclude Include="GUIContext\Param\SoftwareParams.h" />
     <ClInclude Include="IMGuiEx\AddSpin.h" />
     <ClInclude Include="IMGuiEx\AddToolTipHint.h" />
     <ClInclude Include="IMGuiEx\ComboEx.h" />
@@ -459,22 +342,18 @@ xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
     <ClInclude Include="Utilities\BackBuffer.h" />
     <ClInclude Include="Utilities\ConfigHandler.h" />
     <ClInclude Include="Utilities\DataConverter.h" />
+    <ClInclude Include="Utilities\FilterHandler.h" />
     <ClInclude Include="Utilities\HttpDownloader.h" />
     <ClInclude Include="Utilities\Logger.h" />
     <ClInclude Include="Utilities\MapDownloader.h" />
+    <ClInclude Include="Utilities\MapHandler.h" />
     <ClInclude Include="Utilities\MeasureHelper.h" />
     <ClInclude Include="Utilities\Param.h" />
-    <ClInclude Include="Utilities\RingBuffer.h" />
     <ClInclude Include="Utilities\StringResult.h" />
-    <ClInclude Include="Utilities\ThreadSafeRingBuffer.h" />
     <ClInclude Include="Utilities\TimeStampHelper.h" />
     <ClInclude Include="Utilities\WaitTimer.h" />
-    <ClInclude Include="Worker\FileLogThread.h" />
-    <ClInclude Include="Worker\ReaderThread.h" />
     <ClInclude Include="Worker\Thread\ThreadBase.h" />
     <ClInclude Include="Worker\Thread\ThreadWrapper.h" />
-    <ClInclude Include="Worker\VibrationThread.h" />
-    <ClInclude Include="Worker\WaveformThread.h" />
     <ClInclude Include="Worker\WorkerBase.h" />
   </ItemGroup>
   <ItemGroup>
@@ -485,36 +364,6 @@ xcopy $(SolutionDir)..\Device\Src\Bin\ "$(SolutionDir)Modules\" /S /Y</Command>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\PS.hlsl">
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Main</EntryPointName>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
-      <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PS_%(Filename)</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Shader\Inc\%(Filename).inc</HeaderFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </ObjectFileOutput>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Main</EntryPointName>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
-      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">PS_%(Filename)</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Shader\Inc\%(Filename).inc</HeaderFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </ObjectFileOutput>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Main</EntryPointName>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <VariableName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PS_%(Filename)</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Shader\Inc\%(Filename).inc</HeaderFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </ObjectFileOutput>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Main</EntryPointName>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-      <VariableName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PS_%(Filename)</VariableName>
-      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Shader\Inc\%(Filename).inc</HeaderFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </ObjectFileOutput>
-    </FxCompile>
-    <FxCompile Include="Shader\Shift.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
