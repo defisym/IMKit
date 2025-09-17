@@ -52,7 +52,7 @@ DWORD_PTR CPUAffinity::GetCPUMask(const size_t CPUID) {
     return static_cast<DWORD_PTR>(0x01) << CPUID;
 }
 
-DWORD CPUAffinity::BindToPerformaceCore(const HANDLE hThread, const size_t CPUID) const {
+DWORD CPUAffinity::BindToPerformanceCore(const HANDLE hThread, const size_t CPUID) const {
     if (CPUID >= PCoreMask.size()) { return ERROR_INVALID_PARAMETER; }
 
     return SetThreadAffinity(hThread, PCoreMask[CPUID]);
@@ -63,7 +63,7 @@ DWORD CPUAffinity::BindToEfficiencyCore(const HANDLE hThread, const size_t CPUID
     return SetThreadAffinity(hThread, ECoreMask[CPUID]);
 }
 
-void CPUAffinity::SetPerformaceCoreState(const size_t CPUID, const CoreState state) {
+void CPUAffinity::SetPerformanceCoreState(const size_t CPUID, const CoreState state) {
     if (CPUID >= PCoreState.size()) { return; }
 
     PCoreState[CPUID] = state;
@@ -74,14 +74,14 @@ void CPUAffinity::SetEfficiencyCoreState(const size_t CPUID, const CoreState sta
     ECoreState[CPUID] = state;
 }
 
-DWORD CPUAffinity::BindToFreePerformaceCore(const HANDLE hThread, const CoreState state) {
+DWORD CPUAffinity::BindToFreePerformanceCore(const HANDLE hThread, const CoreState state) {
     const auto it = std::ranges::find(PCoreState, CoreState::Free);
     if (it == PCoreState.end()) { return ERROR_SUCCESS; }
 
     const auto CPUID = std::distance(PCoreState.begin(), it);
 
-    if (state != CoreState::Keep) { SetPerformaceCoreState(CPUID, state); }
-    return BindToPerformaceCore(hThread, CPUID);
+    if (state != CoreState::Keep) { SetPerformanceCoreState(CPUID, state); }
+    return BindToPerformanceCore(hThread, CPUID);
 }
 DWORD CPUAffinity::BindToFreeEfficiencyCore(const HANDLE hThread, const CoreState state) {
     const auto it = std::ranges::find(ECoreState, CoreState::Free);

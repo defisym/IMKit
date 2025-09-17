@@ -6,11 +6,11 @@
 #include "ThreadBase.h"
 
 template<typename ThreadType>
-concept ThreadTypeContept = requires(ThreadType thread) {
+concept ThreadTypeConcept = requires(ThreadType thread) {
     std::is_base_of_v<ThreadBase, ThreadType>;
 };
 
-template<ThreadTypeContept ThreadType>
+template<ThreadTypeConcept ThreadType>
 class ThreadWrapper {
     using Thread = std::unique_ptr<ThreadType>;
     Thread thread;

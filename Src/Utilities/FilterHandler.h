@@ -12,7 +12,7 @@ struct FilterParamBase {
     bool bUpdate = false;
 
     // sample rate is updated automatically according
-    // to the devide param
+    // to the device param
     //double sampleRate = 0.0;
     int order = DEFAULT_FILTER_ORDER;
     // zero phase filter

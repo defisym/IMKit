@@ -25,7 +25,7 @@ using CoordUpdater = std::function<double(const double)>;
 
 struct PlotInfo {
     int stride = 1;
-    int threshold = OPTIMIZE_PLOT_DSIPLAY_THRESHOLD;
+    int threshold = OPTIMIZE_PLOT_DISPLAY_THRESHOLD;
 
     CoordUpdater xUpdater = nullptr;
     CoordUpdater yUpdater = nullptr;

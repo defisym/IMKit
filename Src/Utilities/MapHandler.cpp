@@ -104,7 +104,7 @@ double FiberPointList::GetLongitude(double v) {
     return MAX_LONGITUDE * (v - 0.5);
 }
 
-double FiberPointList::GetLatiitude(double v) {
+double FiberPointList::GetLatitude(double v) {
     // -90 ~ 90
     constexpr static auto MAX_LATITUDE = 180 / 2;
     return MAX_LATITUDE * (v - 0.5);
@@ -112,14 +112,14 @@ double FiberPointList::GetLatiitude(double v) {
 
 // Haversine formula
 // https://mopheiok.github.io/spark/distance_latitude_longitude/
-double FiberPointList::GetDisance(const double lx, const double ly,
+double FiberPointList::GetDistance(const double lx, const double ly,
     const double rx, const double ry) {
     auto deg2rad = [](double deg) { return deg * std::numbers::pi / 180.0; };
 
     const auto lLong = deg2rad(GetLongitude(lx));
-    const auto lLat = deg2rad(GetLatiitude(ly));
+    const auto lLat = deg2rad(GetLatitude(ly));
     const auto rLong = deg2rad(GetLongitude(rx));
-    const auto rLat = deg2rad(GetLatiitude(ry));
+    const auto rLat = deg2rad(GetLatitude(ry));
 
     const auto longDiff = lLong - rLong;
     const auto latDiff = lLat - rLat;
@@ -130,13 +130,13 @@ double FiberPointList::GetDisance(const double lx, const double ly,
     // cos(lLat) * cos(rLat) * sin^2( longDiff/2 )
     const auto b = std::cos(lLat) * std::cos(rLat) * std::pow(std::sin(longDiff / 2), 2);
     // 2 * R * arcsin¡Ì(a + b)
-    const auto disance = 2 * rEarth * std::asin(std::sqrt(a + b));
+    const auto distance = 2 * rEarth * std::asin(std::sqrt(a + b));
 
-    return disance;
+    return distance;
 }
 
-double FiberPointList::GetDisance(const Point& l, const Point& r) {
-    return GetDisance(l.x, l.y, r.x, r.y);
+double FiberPointList::GetDistance(const Point& l, const Point& r) {
+    return GetDistance(l.x, l.y, r.x, r.y);
 }
 
 void FiberPointList::UpdateDistance() {
@@ -146,7 +146,7 @@ void FiberPointList::UpdateDistance() {
         const auto& prev = vec[index - 1];
         auto& cur = vec[index];
 
-        const auto distance = GetDisance(prev, cur);
+        const auto distance = GetDistance(prev, cur);
         cur.distance = prev.distance + (int)distance;
     }
 }

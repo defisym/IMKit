@@ -41,7 +41,7 @@ struct CPUAffinity {
     static DWORD SetThreadAffinity(HANDLE hThread, DWORD_PTR dwThreadAffinityMask);
     static DWORD_PTR GetCPUMask(size_t CPUID);
 
-    DWORD BindToPerformaceCore(HANDLE hThread, size_t CPUID) const;
+    DWORD BindToPerformanceCore(HANDLE hThread, size_t CPUID) const;
     DWORD BindToEfficiencyCore(HANDLE hThread, size_t CPUID) const;
         
     enum class CoreState :std::uint8_t {
@@ -54,9 +54,9 @@ struct CPUAffinity {
     std::vector<CoreState> PCoreState = {};
     std::vector<CoreState> ECoreState = {};
 
-    void SetPerformaceCoreState(size_t CPUID, CoreState state);
+    void SetPerformanceCoreState(size_t CPUID, CoreState state);
     void SetEfficiencyCoreState(size_t CPUID, CoreState state);
 
-    DWORD BindToFreePerformaceCore(HANDLE hThread, CoreState state = CoreState::Keep);
+    DWORD BindToFreePerformanceCore(HANDLE hThread, CoreState state = CoreState::Keep);
     DWORD BindToFreeEfficiencyCore(HANDLE hThread, CoreState state = CoreState::Keep);
 };

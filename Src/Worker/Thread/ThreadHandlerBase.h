@@ -4,16 +4,16 @@
 #include "ThreadWrapper.h"
 
 struct ThreadHandlerBase {
-    template<ThreadTypeContept ThreadType>
+    template<ThreadTypeConcept ThreadType>
     using Thread = std::unique_ptr<ThreadWrapper<ThreadType>>;
 
-	template <ThreadTypeContept ThreadType>
+	template <ThreadTypeConcept ThreadType>
     static HANDLE GetThreadHandle(Thread<ThreadType>& thread) {
         return thread->GetThread()->GetThreadHandle();
     }
 
     // init the thread and hibernate it by default
-    template <ThreadTypeContept ThreadType, class... ParamTypes>
+    template <ThreadTypeConcept ThreadType, class... ParamTypes>
     void InitThread(Thread<ThreadType>& thread,
         const char* pName, ParamTypes&&... args) {
         thread = std::make_unique<ThreadWrapper<ThreadType>>(std::forward<ParamTypes>(args)...);
@@ -22,7 +22,7 @@ struct ThreadHandlerBase {
         thread->GetThread()->Start(infoHibernate);
     }
 
-	template <ThreadTypeContept ThreadType>
+	template <ThreadTypeConcept ThreadType>
     static auto GetUILockHelper(Thread<ThreadType>& thread) {
         return thread->GetThread()->GetUILockHelper();
     }

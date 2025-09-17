@@ -67,10 +67,10 @@ struct FiberPointList {
     Point GetEventPoint(int length);
 
     static double GetLongitude(double v);
-    static double GetLatiitude(double v);
-    static double GetDisance(const double lx, const double ly,
+    static double GetLatitude(double v);
+    static double GetDistance(const double lx, const double ly,
         const double rx, const double ry);
-    static double GetDisance(const Point& l, const Point& r);
+    static double GetDistance(const Point& l, const Point& r);
 
     void UpdateDistance();
 

@@ -208,10 +208,10 @@
 //#define OPTIMIZE_PLOT_DSIPLAY
 
 #ifdef OPTIMIZE_PLOT_DSIPLAY
-#define OPTIMIZE_PLOT_DSIPLAY_THRESHOLD 512
+#define OPTIMIZE_PLOT_DISPLAY_THRESHOLD 512
 #else
 #include <limits.h>
-#define OPTIMIZE_PLOT_DSIPLAY_THRESHOLD INT_MAX
+#define OPTIMIZE_PLOT_DISPLAY_THRESHOLD INT_MAX
 #endif
 
 // using context to calibrate, more accurate

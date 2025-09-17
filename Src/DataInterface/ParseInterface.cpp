@@ -1,6 +1,6 @@
 #include "ParseInterface.h"
 
-std::size_t std::hash<ParseInferfaceConfig>::operator()(ParseInferfaceConfig const& s) const noexcept {
+std::size_t std::hash<ParseInterfaceConfig>::operator()(ParseInterfaceConfig const& s) const noexcept {
     std::size_t hash = 0xcbf29ce484222325; // FNV-1a
 
     hash ^= std::hash<FilePathConfig>{}(s.filePath);
@@ -12,13 +12,13 @@ std::size_t std::hash<ParseInferfaceConfig>::operator()(ParseInferfaceConfig con
     return hash;
 }
 
-ParseInterface::ParseInterface(const ParseInferfaceConfig& config) {
+ParseInterface::ParseInterface(const ParseInterfaceConfig& config) {
     UpdateConfig(config);
 }
 
 ParseInterface::~ParseInterface() {}
 
-void ParseInterface::UpdateConfig(const ParseInferfaceConfig& config) {
+void ParseInterface::UpdateConfig(const ParseInterfaceConfig& config) {
     this->config = config;
 }
 
