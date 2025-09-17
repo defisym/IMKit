@@ -1,0 +1,20 @@
+[submodule "Src/3rdLib/OFE"]
+	path = Src/3rdLib/OFE
+	url = https://github.com/defisym/OpenFusionExamples.git
+	shallow = true
+[submodule "Src/3rdLib/CppHttpLib"]
+	path = Src/3rdLib/CppHttpLib
+	url = https://github.com/yhirose/cpp-httplib.git
+	shallow = true
+[submodule "Src/3rdLib/STB"]
+	path = Src/3rdLib/STB
+	url = https://github.com/nothings/stb.git
+	shallow = true
+[submodule "Src/IMGuiInterface/IMGui"]
+	path = Src/IMGuiInterface/IMGui
+	url = https://github.com/ocornut/imgui.git
+	shallow = true
+[submodule "Src/IMGuiInterface/IMPlot"]
+	path = Src/IMGuiInterface/IMPlot
+	url = https://github.com/defisym/implot.git
+	shallow = true
