@@ -21,11 +21,6 @@
 // show font debug
 //#define FONT_SHOW_FONT_DEBUG
 
-// always show device config even if device not created
-#define CONFIG_ALWAYS_SHOW_DEVICE_PARAM
-
-// always show calibrate config even if device not started
-#define CONFIG_ALWAYS_SHOW_CALIBRATE_PARAM
 #endif
 
 // ------------------------------------
@@ -35,10 +30,6 @@
 #define MULTITHREAD
 
 #ifdef MULTITHREAD
-// how many frame to read under mulit thread mode
-// should find a balance between speed and wait interval
-#define MULTITHREAD_READ_FRAMECOUNT 1u
-
 // process thread will sleep when no data for an estimated delay
 // can reduce CPU usage
 #define MULTITHREAD_SLEEP_WHEN_NODATA
@@ -73,16 +64,10 @@
 #endif
 #endif
 
-// log debug string to logger 
-#define LOG_DEBUG_STRING
-#if defined(_DEBUG) && defined(LOG_DEBUG_STRING)
-//#define LOG_DEBUG_STRING_OUTPUT
-#endif
-
 // indent inside tab
 //#define INDENT_INSIDE_TAB
 
-// json crahes in profile mode
+// json crashes in profile mode
 // enable this macro to measure performance
 //#define NO_I18N
 
@@ -127,7 +112,7 @@
 #define FONT_SIMPLIFIED_CHINESE_ONLY
 #endif
 
-// chech the version by size of param struct
+// check the version by size of param struct
 // disable will use the hash of default param instead
 //#define CONFIG_VERSION_BY_SIZE
 
@@ -136,154 +121,15 @@
 #define CONFIG_TRY_READ_CONFIG
 #endif
 
-// allow custom mode in easy mode
-#define CONFIG_ALLOW_CUSTOM_IN_EASYMODE
-
-// auto create device, if failed, show the divice select part
-#define CONFIG_AUTO_CREATE_DEVICE
-
-// force enable in debug mode
-#ifndef NDEBUG
-#ifndef CONFIG_ALLOW_CUSTOM_IN_EASYMODE
-#define CONFIG_ALLOW_CUSTOM_IN_EASYMODE
-#endif
-#endif
-
-// skip internal points in optical module
-// as it's too complicated to change the process algorithm
-// and comparing to the total length the internal part can be ignored
-// so process those data won't consume much performance
-// so it's just a UI change and nothing modified internally
-#define SKIP_INTERNAL_POINTS
-
-// skip if process takes too long
-#define READER_SKIP_FRAME
-
-#ifdef READER_SKIP_FRAME
-// used in multithread mode, which indicates the percent of data in buffer
-#define READER_SKIP_FRAME_BUFFER_TOLERANCE 0.05
-
-// used in multithread mode, which indicates how many time to drain before drop data
-// e.g., for waveform, most time is just copy and fill buffer, process only triggered 
-// when buffer is full, drain can reduce data lose
-#define READER_SKIP_FRAME_DRAIN_COUNT 1u
-
-// used in single thread mode, which indicates the percent of process time 
-// can be longer than standard time
-#define READER_SKIP_FRAME_TIME_TOLERANCE 0.1
-
-// do not skip frame until receive processFrameCount frames
-// if internal frames are dropped, there will be a quick change of waveform
-// and create other frequency in FFT result
-// especially on low-end PCs
-// 
-// NOTE: 1. disable context has the same effect
-//          but also have side effect in 3.
-//       2. if the macro is defined, and context mode enabled
-//          then the vibration result will be affected, as
-//          internal data are ignored but context mode assume
-//          all data are consecutive
-//       3. drain may cost a long time as buffer may have accumulated too many data
-//          E.g., 1. sample 75000 points, uses 300KB, as one frame 
-//                2. average by 2560 frames, uses 768MB, as one bunch
-//                3. assume PC needs to skip two bunches, uses about 1.5GB
-//                   and PCIe speed of DAQ is 1.5GB/s, skip will take 1000ms
-//                   which causes more delay and more data needs to be skipped
-//          so it's a choice, drop interval frames will affect the result
-//          but won't take long when drain data (E.g., 200 frames, only takes 40ms)
-// Advice: 1. Enable context
-//         2. By a decent PC
-//#define READER_SKIP_FRAME_WHEN_FILLED
-
-// output debug string when skip triggered
-#ifdef LOG_DEBUG_STRING
-#define READER_SKIP_FRAME_LOG_DEBUG_STRING
-#endif
-#endif
-
 // optimize plot display by using threshold, by skip interval points
-// the shape of plot will be changed if the orginal data fluctates dramatically
+// the shape of plot will be changed if the original data fluctuates dramatically
 // and affect zoom in
 // disable it if your want the exactly result, or the target PC is powerful enough
-//#define OPTIMIZE_PLOT_DSIPLAY
+//#define OPTIMIZE_PLOT_DISPLAY
 
-#ifdef OPTIMIZE_PLOT_DSIPLAY
+#ifdef OPTIMIZE_PLOT_DISPLAY
 #define OPTIMIZE_PLOT_DISPLAY_THRESHOLD 512
 #else
 #include <limits.h>
 #define OPTIMIZE_PLOT_DISPLAY_THRESHOLD INT_MAX
 #endif
-
-// using context to calibrate, more accurate
-// note: peak wave restore will process when wave buffer filled
-//       disable it to have the same behaviour
-//#define CALIBRATE_USING_CONTEXT
-
-// normalize result by frame count
-#define VIBRATION_LOCALIZATION_NORMALIZE_RESULT_BY_FRAMECOUNT
-
-// only show the result
-#define VIBRATION_LOCALIZATION_ONLY_SHOW_RESULT
-#define WAVEFORM_RESTORE_ONLY_SHOW_RESULT
-
-// current it will be force enabled and cause crash
-// that's why this macro is disabled for now
-
-// use moving diff
-// this will calculate the stable range's phase change
-// then remove it as white noise
-// 
-// note: param members will not be removed 
-//		 as that will trigger param reset
-#define WAVEFORM_RESTORE_MOVING_DIFF
-#ifdef WAVEFORM_RESTORE_MOVING_DIFF
-// set to 0 equals to not enable
-#define WAVEFORM_RESTORE_MOVING_DIFF_DEFAULTRANGE 0
-#endif
-
-// use rising edge instead of peak
-//#define WAVEFORM_RESTORE_USING_RISING_EDGE
-#ifdef WAVEFORM_RESTORE_USING_RISING_EDGE
-// default percent
-// if shake starts at 0, peak at 10, the point for unwrap 2D is 5
-// aka start + (peak - start) * WAVEFORM_RESTORE_USING_RISING_EDGE_PERCENT
-// set this to 1 is the same as disable this macro
-#define WAVEFORM_RESTORE_USING_RISING_EDGE_PERCENT 0.5
-#endif
-
-// log viberation waveform of the point
-// that exceed the threshold
-#define WAVEFORM_RESTORE_LOG_PEAK_WAVEFORM
-
-#ifdef WAVEFORM_RESTORE_LOG_PEAK_WAVEFORM
-// don't filter raw data
-//#define WAVEFORM_RESTORE_LOG_PEAK_NO_FILTER
-
-#ifndef WAVEFORM_RESTORE_LOG_PEAK_NO_FILTER
-#define WAVEFORM_RESTORE_LOG_PEAK_FILTER_RADIUS 1
-#endif
-
-// don't remove peak that is too small
-//#define WAVEFORM_RESTORE_LOG_PEAK_ALL_PEAK
-
-#ifndef WAVEFORM_RESTORE_LOG_PEAK_ALL_PEAK
-#define WAVEFORM_RESTORE_LOG_PEAK_ALL_PEAK_RANGE 3
-#endif
-
-// display logged waveforms of each peak
-#define WAVEFORM_RESTORE_LOG_PEAK_SHOW_LOGGED_WAVEFORM
-
-// multithread
-//#define WAVEFORM_RESTORE_LOG_PEAK_MULTITHREAD
-
-#endif
-
-// show logger threshold
-#define VIBRATION_LOCALIZATION_SHOW_LOGGER_THRESHOLD
-
-// convert result
-#define VIBRATION_LOCALIZATION_USE_METER
-#define WAVEFORM_RESTORE_USE_MILLISECOND
-
-// display in subplot
-#define WAVEFORM_RESTORE_DISPLAY_WAVE_AND_FFT_IN_SUBPLOT

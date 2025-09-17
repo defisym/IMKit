@@ -455,9 +455,6 @@
     <ClInclude Include="DataInterface\InfDefinition.h">
       <Filter>头文件\DataInterface</Filter>
     </ClInclude>
-    <ClInclude Include="ORL.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\Param.h">
       <Filter>头文件\Utilities</Filter>
     </ClInclude>

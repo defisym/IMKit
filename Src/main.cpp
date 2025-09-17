@@ -69,33 +69,3 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     return 0;
 }
-
-// TODO WaveRestore
-//  1. obvious interference every each second -> why?
-//  2. 800 ~ 1000 Hz interference, is it related to center freq or sample freq
-//      2.1 Adaptive Filter?
-//      2.2 calculate FFT for reference and direct remove it from main signal?
-//  3. loop for a small part if context enabled
-
-// TODO Map
-// Reference:
-// https://github.dev/epezent/implot_demos/blob/master/demos/maps.cpp
-// Download map and cache a set of coords, for display the line info
-
-// TODO Features
-//  1. Zoom the waveform
-//      1.1 the context menu should be internationalized
-//      1.2 fork the implot and add callback for display
-//      1.3 disable display threshold or optimize it
-//  2. review the log data
-//      2.1 organized in yy-mm-dd hh-mm-ss
-//      2.2 link the vibration and waveform
-//          2.2.1 don't need to log vibration, only log waveform 
-//                and the process time vibration
-//          2.2.2 or both, can be viewed in different mode
-//      2.3 review data doesn't affect sampler
-
-// TODO Known issues
-//  1. sometimes device start fails -> wait or reboot
-//  2. sometimes device returns NAN -> reboot
-//      2.1 clear the buffer first before actual reading?

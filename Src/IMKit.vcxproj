@@ -323,7 +323,6 @@ copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"</Comma
     <ClInclude Include="IMGuiInterface\implot\implot_internal.h" />
     <ClInclude Include="Internationalization\Internationalization.h" />
     <ClInclude Include="macro.h" />
-    <ClInclude Include="ORL.h" />
     <ClInclude Include="Processor\VibrationProcess.h" />
     <ClInclude Include="Processor\Vibration\ContextVibrationLocalizationProcessor.h" />
     <ClInclude Include="Processor\Vibration\TraditionVibrationLocalizationProcessor.h" />
