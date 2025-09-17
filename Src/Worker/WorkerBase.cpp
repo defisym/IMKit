@@ -1,6 +1,6 @@
 #include "WorkerBase.h"
 
-WorkerBase::WorkerBase(Ctx* p, CallbackType executeCb)
+WorkerBase::WorkerBase(IMGUIContext* p, CallbackType executeCb)
     :pCtx(p), executeCallback(std::move(executeCb)) {}
 
 void WorkerBase::ExecuteCallback() {
