@@ -233,7 +233,10 @@ copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
       <Command>echo f | copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libcrypto-3.dll "$(SolutionDir)..\Bin\" /y
 echo f | copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)..\Bin\" /y
 echo f | copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)..\Bin\" /y
-echo f | copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\" /y</Command>
+echo f | copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\" /y
+xcopy $(SolutionDir)IMGuiInterface\IMGui\ "$(SolutionDir)..\Include\IMGui\" /S /Y
+xcopy $(SolutionDir)IMGuiInterface\IMPlot\ "$(SolutionDir)..\Include\IMPlot\" /S /Y
+xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
@@ -306,7 +309,10 @@ copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
       <Command>echo f | copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libcrypto-3.dll "$(SolutionDir)..\Bin\" /y
 echo f | copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)..\Bin\" /y
 echo f | copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)..\Bin\" /y
-echo f | copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\" /y</Command>
+echo f | copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\" /y
+xcopy $(SolutionDir)IMGuiInterface\IMGui\ "$(SolutionDir)..\Include\IMGui\" /S /Y
+xcopy $(SolutionDir)IMGuiInterface\IMPlot\ "$(SolutionDir)..\Include\IMPlot\" /S /Y
+xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</Command>
       <Message>Copy dll</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -370,7 +376,10 @@ copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"</Comma
       <Command>echo f | copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libcrypto-3-x64.dll "$(SolutionDir)..\Bin\" /y
 echo f | copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)..\Bin\" /y
 echo f | copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)..\Bin\" /y
-echo f | copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\" /y</Command>
+echo f | copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\" /y
+xcopy $(SolutionDir)IMGuiInterface\IMGui\ "$(SolutionDir)..\Include\IMGui\" /S /Y
+xcopy $(SolutionDir)IMGuiInterface\IMPlot\ "$(SolutionDir)..\Include\IMPlot\" /S /Y
+xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
@@ -444,7 +453,10 @@ copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"</Comma
       <Command>echo f | copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libcrypto-3-x64.dll "$(SolutionDir)..\Bin\" /y
 echo f | copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)..\Bin\" /y
 echo f | copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)..\Bin\" /y
-echo f | copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\" /y</Command>
+echo f | copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\" /y
+xcopy $(SolutionDir)IMGuiInterface\IMGui\ "$(SolutionDir)..\Include\IMGui\" /S /Y
+xcopy $(SolutionDir)IMGuiInterface\IMPlot\ "$(SolutionDir)..\Include\IMPlot\" /S /Y
+xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
