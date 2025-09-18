@@ -264,6 +264,9 @@
     <ClCompile Include="Utilities\MapHandler.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="IMGuiInterface\IMGuiDemo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IMGuiInterface\IMGuiInterface.h">
