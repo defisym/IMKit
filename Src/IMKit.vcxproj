@@ -254,6 +254,7 @@ copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"</Comma
     <ClCompile Include="IMGuiEx\SliderSpin.cpp" />
     <ClCompile Include="IMGuiInterface\D3DContext.cpp" />
     <ClCompile Include="IMGuiInterface\IMGuiContext.cpp" />
+    <ClCompile Include="IMGuiInterface\IMGuiDemo.cpp" />
     <ClCompile Include="IMGuiInterface\IMGuiInterface.cpp" />
     <ClCompile Include="IMGuiInterface\imgui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="IMGuiInterface\imgui\backends\imgui_impl_win32.cpp" />
