@@ -230,10 +230,10 @@ copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
       <Command>echo f | xcopy $(OutputPath)$(ProjectName).lib "$(SolutionDir)..\Lib\$(Platform)\$(ProjectName).lib" /y</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>echo f | copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libcrypto-3.dll "$(SolutionDir)..\Bin\" /y
-echo f | copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)..\Bin\" /y
-echo f | copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)..\Bin\" /y
-echo f | copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\" /y
+      <Command>echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libcrypto-3.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
+echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
+echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
+echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
 xcopy $(SolutionDir)IMGuiInterface\IMGui\ "$(SolutionDir)..\Include\IMGui\" /S /Y
 xcopy $(SolutionDir)IMGuiInterface\IMPlot\ "$(SolutionDir)..\Include\IMPlot\" /S /Y
 xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</Command>
@@ -306,10 +306,10 @@ copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
       <Command>echo f | xcopy $(OutputPath)$(ProjectName).lib "$(SolutionDir)..\Lib\$(Platform)\$(ProjectName).lib" /y</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>echo f | copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libcrypto-3.dll "$(SolutionDir)..\Bin\" /y
-echo f | copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)..\Bin\" /y
-echo f | copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)..\Bin\" /y
-echo f | copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\" /y
+      <Command>echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libcrypto-3.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
+echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
+echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
+echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
 xcopy $(SolutionDir)IMGuiInterface\IMGui\ "$(SolutionDir)..\Include\IMGui\" /S /Y
 xcopy $(SolutionDir)IMGuiInterface\IMPlot\ "$(SolutionDir)..\Include\IMPlot\" /S /Y
 xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</Command>
@@ -373,10 +373,10 @@ copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"</Comma
       <Command>echo f | xcopy $(OutputPath)$(ProjectName).lib "$(SolutionDir)..\Lib\$(Platform)\$(ProjectName).lib" /y</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>echo f | copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libcrypto-3-x64.dll "$(SolutionDir)..\Bin\" /y
-echo f | copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)..\Bin\" /y
-echo f | copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)..\Bin\" /y
-echo f | copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\" /y
+      <Command>echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libcrypto-3-x64.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
+echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
+echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
+echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
 xcopy $(SolutionDir)IMGuiInterface\IMGui\ "$(SolutionDir)..\Include\IMGui\" /S /Y
 xcopy $(SolutionDir)IMGuiInterface\IMPlot\ "$(SolutionDir)..\Include\IMPlot\" /S /Y
 xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</Command>
@@ -450,10 +450,10 @@ copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"</Comma
       <Command>echo f | xcopy $(OutputPath)$(ProjectName).lib "$(SolutionDir)..\Lib\$(Platform)\$(ProjectName).lib" /y</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>echo f | copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libcrypto-3-x64.dll "$(SolutionDir)..\Bin\" /y
-echo f | copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)..\Bin\" /y
-echo f | copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)..\Bin\" /y
-echo f | copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\" /y
+      <Command>echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libcrypto-3-x64.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
+echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
+echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
+echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
 xcopy $(SolutionDir)IMGuiInterface\IMGui\ "$(SolutionDir)..\Include\IMGui\" /S /Y
 xcopy $(SolutionDir)IMGuiInterface\IMPlot\ "$(SolutionDir)..\Include\IMPlot\" /S /Y
 xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</Command>
