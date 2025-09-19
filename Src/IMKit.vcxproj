@@ -473,6 +473,7 @@ xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</C
     <ClCompile Include="GUIContent\Interface\InterfaceLogger.cpp" />
     <ClCompile Include="GUIContent\Interface\InterfaceMap.cpp" />
     <ClCompile Include="IMGuiEx\AddToolTipHint.cpp" />
+    <ClCompile Include="IMGuiEx\DisableHelper.cpp" />
     <ClCompile Include="IMGuiEx\DisplayPlot.cpp" />
     <ClCompile Include="IMGuiEx\FontEx.cpp" />
     <ClCompile Include="IMGuiEx\I18NInterface.cpp" />
