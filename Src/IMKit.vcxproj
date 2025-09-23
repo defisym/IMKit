@@ -196,10 +196,10 @@
       <Command>copy $(OutputPath)$(ProjectName).exe "$(SolutionDir)$(ProjectName).exe"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libcrypto-3.dll "$(SolutionDir)"
-copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)"
-copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)"
-copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
+      <Command>echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libcrypto-3.dll "$(SolutionDir)" /y
+echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)" /y
+echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)" /y
+echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)" /y
 </Command>
     </PreBuildEvent>
     <PreBuildEvent>
@@ -234,9 +234,75 @@ copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
 echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
 echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
 echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
+echo IMGui
 xcopy $(SolutionDir)IMGuiInterface\IMGui\ "$(SolutionDir)..\Include\IMGui\" /S /Y
 xcopy $(SolutionDir)IMGuiInterface\IMPlot\ "$(SolutionDir)..\Include\IMPlot\" /S /Y
-xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</Command>
+echo SDL
+xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y
+echo Macro
+echo f | xcopy $(SolutionDir)macro.h "$(SolutionDir)..\Include\macro.h" /y
+echo CPUAffinity
+echo f | xcopy $(SolutionDir)CPUAffinity\CPUAffinity.h "$(SolutionDir)..\Include\CPUAffinity\CPUAffinity.h" /y
+xcopy $(SolutionDir)CPUAffinity\SKU\ "$(SolutionDir)..\Include\CPUAffinity\SKU\" /S /Y
+echo DataInterface
+echo f | xcopy $(SolutionDir)DataInterface\InfDefinition.h "$(SolutionDir)..\Include\DataInterface\InfDefinition.h" /y
+echo f | xcopy $(SolutionDir)DataInterface\DataInterface.h "$(SolutionDir)..\Include\DataInterface\DataInterface.h" /y
+echo f | xcopy $(SolutionDir)DataInterface\FileInterface.h "$(SolutionDir)..\Include\DataInterface\FileInterface.h" /y
+echo f | xcopy $(SolutionDir)DataInterface\ParseInterface.h "$(SolutionDir)..\Include\DataInterface\ParseInterface.h" /y
+echo GUIContext
+echo f | xcopy $(SolutionDir)GUIContent\Components\Basic\ComponentPerformanceBase.h "$(SolutionDir)..\Include\GUIContent\Components\Basic\ComponentPerformanceBase.h" /y
+echo f | xcopy $(SolutionDir)GUIContent\Components\Basic\ComponentWindow.h "$(SolutionDir)..\Include\GUIContent\Components\Basic\ComponentWindow.h" /y
+echo f | xcopy $(SolutionDir)GUIContent\Interface\InterfaceLogger.h "$(SolutionDir)..\Include\GUIContent\Interface\InterfaceLogger.h" /y
+echo f | xcopy $(SolutionDir)GUIContent\Interface\InterfaceMap.h "$(SolutionDir)..\Include\GUIContent\Interface\InterfaceMap.h" /y
+echo IMGuiEx
+echo f | xcopy $(SolutionDir)IMGuiEx\AddSpin.h "$(SolutionDir)..\Include\IMGuiEx\AddSpin.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\AddToolTipHint.h "$(SolutionDir)..\Include\IMGuiEx\AddToolTipHint.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\ComboEx.h "$(SolutionDir)..\Include\IMGuiEx\ComboEx.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\DisableHelper.h "$(SolutionDir)..\Include\IMGuiEx\DisableHelper.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\EmbraceHelper.h "$(SolutionDir)..\Include\IMGuiEx\EmbraceHelper.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\FontEx.h "$(SolutionDir)..\Include\IMGuiEx\FontEx.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\I18NInterface.h "$(SolutionDir)..\Include\IMGuiEx\I18NInterface.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\IndentHelper.h "$(SolutionDir)..\Include\IMGuiEx\IndentHelper.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\LabelMaker.h "$(SolutionDir)..\Include\IMGuiEx\LabelMaker.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\LoadTexture.h "$(SolutionDir)..\Include\IMGuiEx\LoadTexture.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\SliderSpin.h "$(SolutionDir)..\Include\IMGuiEx\SliderSpin.h" /y
+echo IMGuiInterface
+echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiInterface.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiInterface.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiContext.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiContext.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiDemo.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiDemo.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\D3DContext.h "$(SolutionDir)..\Include\IMGuiInterface\D3DContext.h" /y
+echo Internationalization
+echo f | xcopy $(SolutionDir)Internationalization\Internationalization.h "$(SolutionDir)..\Include\Internationalization\Internationalization.h" /y
+echo Utilities
+echo f | xcopy $(SolutionDir)Utilities\AudioPlayer.h "$(SolutionDir)..\Include\Utilities\AudioPlayer.h" /y
+echo f | xcopy $(SolutionDir)Utilities\BackBuffer.h "$(SolutionDir)..\Include\Utilities\BackBuffer.h" /y
+echo f | xcopy $(SolutionDir)Utilities\ConfigHandler.h "$(SolutionDir)..\Include\Utilities\ConfigHandler.h" /y
+echo f | xcopy $(SolutionDir)Utilities\DataConverter.h "$(SolutionDir)..\Include\Utilities\DataConverter.h" /y
+echo f | xcopy $(SolutionDir)Utilities\FilterHandler.h "$(SolutionDir)..\Include\Utilities\FilterHandler.h" /y
+echo f | xcopy $(SolutionDir)Utilities\HttpDownloader.h "$(SolutionDir)..\Include\Utilities\HttpDownloader.h" /y
+echo f | xcopy $(SolutionDir)Utilities\Logger.h "$(SolutionDir)..\Include\Utilities\Logger.h" /y
+echo f | xcopy $(SolutionDir)Utilities\MapDownloader.h "$(SolutionDir)..\Include\Utilities\MapDownloader.h" /y
+echo f | xcopy $(SolutionDir)Utilities\MapHandler.h "$(SolutionDir)..\Include\Utilities\MapHandler.h" /y
+echo f | xcopy $(SolutionDir)Utilities\MeasureHelper.h "$(SolutionDir)..\Include\Utilities\MeasureHelper.h" /y
+echo f | xcopy $(SolutionDir)Utilities\Param.h "$(SolutionDir)..\Include\Utilities\Param.h" /y
+echo f | xcopy $(SolutionDir)Utilities\StringResult.h "$(SolutionDir)..\Include\Utilities\StringResult.h" /y
+echo f | xcopy $(SolutionDir)Utilities\TimeStampHelper.h "$(SolutionDir)..\Include\Utilities\TimeStampHelper.h" /y
+echo f | xcopy $(SolutionDir)Utilities\WaitTimer.h "$(SolutionDir)..\Include\Utilities\WaitTimer.h" /y
+echo Worker
+echo f | xcopy $(SolutionDir)Worker\WorkerBase.h "$(SolutionDir)..\Include\Worker\WorkerBase.h" /y
+echo f | xcopy $(SolutionDir)Worker\Thread\ThreadBase.h "$(SolutionDir)..\Include\Worker\Thread\ThreadBase.h" /y
+echo f | xcopy $(SolutionDir)Worker\Thread\ThreadWrapper.h "$(SolutionDir)..\Include\Worker\Thread\ThreadWrapper.h" /y
+echo f | xcopy $(SolutionDir)Worker\Thread\ThreadHandlerBase.h "$(SolutionDir)..\Include\Worker\Thread\ThreadHandlerBase.h" /y
+echo 3rdLib Deps
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_3rdLib\Boost\boost\pfr.hpp "$(SolutionDir)..\Include\Utilities\boost\pfr.hpp" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\LockHelper.h "$(SolutionDir)..\Include\Worker\LockHelper.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\HibernateContext.h "$(SolutionDir)..\Include\Worker\HibernateContext.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\ArithmeticTraits.h "$(SolutionDir)..\Include\IMGuiEx\ArithmeticTraits.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\LockHelper.h "$(SolutionDir)..\Include\Utilities\LockHelper.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\Buffer.h "$(SolutionDir)..\Include\Utilities\Buffer.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\RingBuffer.h "$(SolutionDir)..\Include\Utilities\RingBuffer.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\ThreadSafeRingBuffer.h "$(SolutionDir)..\Include\Utilities\ThreadSafeRingBuffer.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_3rdLib\D3DUtilities\D3DDefinition.h "$(SolutionDir)..\Include\IMGuiInterface\D3DUtilities\D3DDefinition.h" /y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
@@ -270,10 +336,10 @@ xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</C
       <Command>copy $(OutputPath)$(ProjectName).exe "$(SolutionDir)$(ProjectName).exe"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libcrypto-3.dll "$(SolutionDir)"
-copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)"
-copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)"
-copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
+      <Command>echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libcrypto-3.dll "$(SolutionDir)" /y
+echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)" /y
+echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)" /y
+echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)" /y
 </Command>
       <Message>Copy dll</Message>
     </PreBuildEvent>
@@ -310,9 +376,75 @@ copy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)"
 echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\bin\libssl-3.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
 echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
 echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
+echo IMGui
 xcopy $(SolutionDir)IMGuiInterface\IMGui\ "$(SolutionDir)..\Include\IMGui\" /S /Y
 xcopy $(SolutionDir)IMGuiInterface\IMPlot\ "$(SolutionDir)..\Include\IMPlot\" /S /Y
-xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</Command>
+echo SDL
+xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y
+echo Macro
+echo f | xcopy $(SolutionDir)macro.h "$(SolutionDir)..\Include\macro.h" /y
+echo CPUAffinity
+echo f | xcopy $(SolutionDir)CPUAffinity\CPUAffinity.h "$(SolutionDir)..\Include\CPUAffinity\CPUAffinity.h" /y
+xcopy $(SolutionDir)CPUAffinity\SKU\ "$(SolutionDir)..\Include\CPUAffinity\SKU\" /S /Y
+echo DataInterface
+echo f | xcopy $(SolutionDir)DataInterface\InfDefinition.h "$(SolutionDir)..\Include\DataInterface\InfDefinition.h" /y
+echo f | xcopy $(SolutionDir)DataInterface\DataInterface.h "$(SolutionDir)..\Include\DataInterface\DataInterface.h" /y
+echo f | xcopy $(SolutionDir)DataInterface\FileInterface.h "$(SolutionDir)..\Include\DataInterface\FileInterface.h" /y
+echo f | xcopy $(SolutionDir)DataInterface\ParseInterface.h "$(SolutionDir)..\Include\DataInterface\ParseInterface.h" /y
+echo GUIContext
+echo f | xcopy $(SolutionDir)GUIContent\Components\Basic\ComponentPerformanceBase.h "$(SolutionDir)..\Include\GUIContent\Components\Basic\ComponentPerformanceBase.h" /y
+echo f | xcopy $(SolutionDir)GUIContent\Components\Basic\ComponentWindow.h "$(SolutionDir)..\Include\GUIContent\Components\Basic\ComponentWindow.h" /y
+echo f | xcopy $(SolutionDir)GUIContent\Interface\InterfaceLogger.h "$(SolutionDir)..\Include\GUIContent\Interface\InterfaceLogger.h" /y
+echo f | xcopy $(SolutionDir)GUIContent\Interface\InterfaceMap.h "$(SolutionDir)..\Include\GUIContent\Interface\InterfaceMap.h" /y
+echo IMGuiEx
+echo f | xcopy $(SolutionDir)IMGuiEx\AddSpin.h "$(SolutionDir)..\Include\IMGuiEx\AddSpin.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\AddToolTipHint.h "$(SolutionDir)..\Include\IMGuiEx\AddToolTipHint.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\ComboEx.h "$(SolutionDir)..\Include\IMGuiEx\ComboEx.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\DisableHelper.h "$(SolutionDir)..\Include\IMGuiEx\DisableHelper.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\EmbraceHelper.h "$(SolutionDir)..\Include\IMGuiEx\EmbraceHelper.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\FontEx.h "$(SolutionDir)..\Include\IMGuiEx\FontEx.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\I18NInterface.h "$(SolutionDir)..\Include\IMGuiEx\I18NInterface.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\IndentHelper.h "$(SolutionDir)..\Include\IMGuiEx\IndentHelper.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\LabelMaker.h "$(SolutionDir)..\Include\IMGuiEx\LabelMaker.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\LoadTexture.h "$(SolutionDir)..\Include\IMGuiEx\LoadTexture.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\SliderSpin.h "$(SolutionDir)..\Include\IMGuiEx\SliderSpin.h" /y
+echo IMGuiInterface
+echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiInterface.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiInterface.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiContext.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiContext.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiDemo.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiDemo.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\D3DContext.h "$(SolutionDir)..\Include\IMGuiInterface\D3DContext.h" /y
+echo Internationalization
+echo f | xcopy $(SolutionDir)Internationalization\Internationalization.h "$(SolutionDir)..\Include\Internationalization\Internationalization.h" /y
+echo Utilities
+echo f | xcopy $(SolutionDir)Utilities\AudioPlayer.h "$(SolutionDir)..\Include\Utilities\AudioPlayer.h" /y
+echo f | xcopy $(SolutionDir)Utilities\BackBuffer.h "$(SolutionDir)..\Include\Utilities\BackBuffer.h" /y
+echo f | xcopy $(SolutionDir)Utilities\ConfigHandler.h "$(SolutionDir)..\Include\Utilities\ConfigHandler.h" /y
+echo f | xcopy $(SolutionDir)Utilities\DataConverter.h "$(SolutionDir)..\Include\Utilities\DataConverter.h" /y
+echo f | xcopy $(SolutionDir)Utilities\FilterHandler.h "$(SolutionDir)..\Include\Utilities\FilterHandler.h" /y
+echo f | xcopy $(SolutionDir)Utilities\HttpDownloader.h "$(SolutionDir)..\Include\Utilities\HttpDownloader.h" /y
+echo f | xcopy $(SolutionDir)Utilities\Logger.h "$(SolutionDir)..\Include\Utilities\Logger.h" /y
+echo f | xcopy $(SolutionDir)Utilities\MapDownloader.h "$(SolutionDir)..\Include\Utilities\MapDownloader.h" /y
+echo f | xcopy $(SolutionDir)Utilities\MapHandler.h "$(SolutionDir)..\Include\Utilities\MapHandler.h" /y
+echo f | xcopy $(SolutionDir)Utilities\MeasureHelper.h "$(SolutionDir)..\Include\Utilities\MeasureHelper.h" /y
+echo f | xcopy $(SolutionDir)Utilities\Param.h "$(SolutionDir)..\Include\Utilities\Param.h" /y
+echo f | xcopy $(SolutionDir)Utilities\StringResult.h "$(SolutionDir)..\Include\Utilities\StringResult.h" /y
+echo f | xcopy $(SolutionDir)Utilities\TimeStampHelper.h "$(SolutionDir)..\Include\Utilities\TimeStampHelper.h" /y
+echo f | xcopy $(SolutionDir)Utilities\WaitTimer.h "$(SolutionDir)..\Include\Utilities\WaitTimer.h" /y
+echo Worker
+echo f | xcopy $(SolutionDir)Worker\WorkerBase.h "$(SolutionDir)..\Include\Worker\WorkerBase.h" /y
+echo f | xcopy $(SolutionDir)Worker\Thread\ThreadBase.h "$(SolutionDir)..\Include\Worker\Thread\ThreadBase.h" /y
+echo f | xcopy $(SolutionDir)Worker\Thread\ThreadWrapper.h "$(SolutionDir)..\Include\Worker\Thread\ThreadWrapper.h" /y
+echo f | xcopy $(SolutionDir)Worker\Thread\ThreadHandlerBase.h "$(SolutionDir)..\Include\Worker\Thread\ThreadHandlerBase.h" /y
+echo 3rdLib Deps
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_3rdLib\Boost\boost\pfr.hpp "$(SolutionDir)..\Include\Utilities\boost\pfr.hpp" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\LockHelper.h "$(SolutionDir)..\Include\Worker\LockHelper.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\HibernateContext.h "$(SolutionDir)..\Include\Worker\HibernateContext.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\ArithmeticTraits.h "$(SolutionDir)..\Include\IMGuiEx\ArithmeticTraits.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\LockHelper.h "$(SolutionDir)..\Include\Utilities\LockHelper.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\Buffer.h "$(SolutionDir)..\Include\Utilities\Buffer.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\RingBuffer.h "$(SolutionDir)..\Include\Utilities\RingBuffer.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\ThreadSafeRingBuffer.h "$(SolutionDir)..\Include\Utilities\ThreadSafeRingBuffer.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_3rdLib\D3DUtilities\D3DDefinition.h "$(SolutionDir)..\Include\IMGuiInterface\D3DUtilities\D3DDefinition.h" /y</Command>
       <Message>Copy dll</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -340,10 +472,10 @@ xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</C
       <Command>copy $(OutputPath)$(ProjectName).exe "$(SolutionDir)$(ProjectName).exe"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libcrypto-3-x64.dll "$(SolutionDir)"
-copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)"
-copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)"
-copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"</Command>
+      <Command>echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libcrypto-3-x64.dll "$(SolutionDir)" /y
+echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)" /y
+echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)" /y
+echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)" /y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
@@ -377,9 +509,75 @@ copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"</Comma
 echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
 echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
 echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
+echo IMGui
 xcopy $(SolutionDir)IMGuiInterface\IMGui\ "$(SolutionDir)..\Include\IMGui\" /S /Y
 xcopy $(SolutionDir)IMGuiInterface\IMPlot\ "$(SolutionDir)..\Include\IMPlot\" /S /Y
-xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</Command>
+echo SDL
+xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y
+echo Macro
+echo f | xcopy $(SolutionDir)macro.h "$(SolutionDir)..\Include\macro.h" /y
+echo CPUAffinity
+echo f | xcopy $(SolutionDir)CPUAffinity\CPUAffinity.h "$(SolutionDir)..\Include\CPUAffinity\CPUAffinity.h" /y
+xcopy $(SolutionDir)CPUAffinity\SKU\ "$(SolutionDir)..\Include\CPUAffinity\SKU\" /S /Y
+echo DataInterface
+echo f | xcopy $(SolutionDir)DataInterface\InfDefinition.h "$(SolutionDir)..\Include\DataInterface\InfDefinition.h" /y
+echo f | xcopy $(SolutionDir)DataInterface\DataInterface.h "$(SolutionDir)..\Include\DataInterface\DataInterface.h" /y
+echo f | xcopy $(SolutionDir)DataInterface\FileInterface.h "$(SolutionDir)..\Include\DataInterface\FileInterface.h" /y
+echo f | xcopy $(SolutionDir)DataInterface\ParseInterface.h "$(SolutionDir)..\Include\DataInterface\ParseInterface.h" /y
+echo GUIContext
+echo f | xcopy $(SolutionDir)GUIContent\Components\Basic\ComponentPerformanceBase.h "$(SolutionDir)..\Include\GUIContent\Components\Basic\ComponentPerformanceBase.h" /y
+echo f | xcopy $(SolutionDir)GUIContent\Components\Basic\ComponentWindow.h "$(SolutionDir)..\Include\GUIContent\Components\Basic\ComponentWindow.h" /y
+echo f | xcopy $(SolutionDir)GUIContent\Interface\InterfaceLogger.h "$(SolutionDir)..\Include\GUIContent\Interface\InterfaceLogger.h" /y
+echo f | xcopy $(SolutionDir)GUIContent\Interface\InterfaceMap.h "$(SolutionDir)..\Include\GUIContent\Interface\InterfaceMap.h" /y
+echo IMGuiEx
+echo f | xcopy $(SolutionDir)IMGuiEx\AddSpin.h "$(SolutionDir)..\Include\IMGuiEx\AddSpin.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\AddToolTipHint.h "$(SolutionDir)..\Include\IMGuiEx\AddToolTipHint.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\ComboEx.h "$(SolutionDir)..\Include\IMGuiEx\ComboEx.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\DisableHelper.h "$(SolutionDir)..\Include\IMGuiEx\DisableHelper.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\EmbraceHelper.h "$(SolutionDir)..\Include\IMGuiEx\EmbraceHelper.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\FontEx.h "$(SolutionDir)..\Include\IMGuiEx\FontEx.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\I18NInterface.h "$(SolutionDir)..\Include\IMGuiEx\I18NInterface.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\IndentHelper.h "$(SolutionDir)..\Include\IMGuiEx\IndentHelper.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\LabelMaker.h "$(SolutionDir)..\Include\IMGuiEx\LabelMaker.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\LoadTexture.h "$(SolutionDir)..\Include\IMGuiEx\LoadTexture.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\SliderSpin.h "$(SolutionDir)..\Include\IMGuiEx\SliderSpin.h" /y
+echo IMGuiInterface
+echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiInterface.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiInterface.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiContext.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiContext.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiDemo.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiDemo.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\D3DContext.h "$(SolutionDir)..\Include\IMGuiInterface\D3DContext.h" /y
+echo Internationalization
+echo f | xcopy $(SolutionDir)Internationalization\Internationalization.h "$(SolutionDir)..\Include\Internationalization\Internationalization.h" /y
+echo Utilities
+echo f | xcopy $(SolutionDir)Utilities\AudioPlayer.h "$(SolutionDir)..\Include\Utilities\AudioPlayer.h" /y
+echo f | xcopy $(SolutionDir)Utilities\BackBuffer.h "$(SolutionDir)..\Include\Utilities\BackBuffer.h" /y
+echo f | xcopy $(SolutionDir)Utilities\ConfigHandler.h "$(SolutionDir)..\Include\Utilities\ConfigHandler.h" /y
+echo f | xcopy $(SolutionDir)Utilities\DataConverter.h "$(SolutionDir)..\Include\Utilities\DataConverter.h" /y
+echo f | xcopy $(SolutionDir)Utilities\FilterHandler.h "$(SolutionDir)..\Include\Utilities\FilterHandler.h" /y
+echo f | xcopy $(SolutionDir)Utilities\HttpDownloader.h "$(SolutionDir)..\Include\Utilities\HttpDownloader.h" /y
+echo f | xcopy $(SolutionDir)Utilities\Logger.h "$(SolutionDir)..\Include\Utilities\Logger.h" /y
+echo f | xcopy $(SolutionDir)Utilities\MapDownloader.h "$(SolutionDir)..\Include\Utilities\MapDownloader.h" /y
+echo f | xcopy $(SolutionDir)Utilities\MapHandler.h "$(SolutionDir)..\Include\Utilities\MapHandler.h" /y
+echo f | xcopy $(SolutionDir)Utilities\MeasureHelper.h "$(SolutionDir)..\Include\Utilities\MeasureHelper.h" /y
+echo f | xcopy $(SolutionDir)Utilities\Param.h "$(SolutionDir)..\Include\Utilities\Param.h" /y
+echo f | xcopy $(SolutionDir)Utilities\StringResult.h "$(SolutionDir)..\Include\Utilities\StringResult.h" /y
+echo f | xcopy $(SolutionDir)Utilities\TimeStampHelper.h "$(SolutionDir)..\Include\Utilities\TimeStampHelper.h" /y
+echo f | xcopy $(SolutionDir)Utilities\WaitTimer.h "$(SolutionDir)..\Include\Utilities\WaitTimer.h" /y
+echo Worker
+echo f | xcopy $(SolutionDir)Worker\WorkerBase.h "$(SolutionDir)..\Include\Worker\WorkerBase.h" /y
+echo f | xcopy $(SolutionDir)Worker\Thread\ThreadBase.h "$(SolutionDir)..\Include\Worker\Thread\ThreadBase.h" /y
+echo f | xcopy $(SolutionDir)Worker\Thread\ThreadWrapper.h "$(SolutionDir)..\Include\Worker\Thread\ThreadWrapper.h" /y
+echo f | xcopy $(SolutionDir)Worker\Thread\ThreadHandlerBase.h "$(SolutionDir)..\Include\Worker\Thread\ThreadHandlerBase.h" /y
+echo 3rdLib Deps
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_3rdLib\Boost\boost\pfr.hpp "$(SolutionDir)..\Include\Utilities\boost\pfr.hpp" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\LockHelper.h "$(SolutionDir)..\Include\Worker\LockHelper.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\HibernateContext.h "$(SolutionDir)..\Include\Worker\HibernateContext.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\ArithmeticTraits.h "$(SolutionDir)..\Include\IMGuiEx\ArithmeticTraits.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\LockHelper.h "$(SolutionDir)..\Include\Utilities\LockHelper.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\Buffer.h "$(SolutionDir)..\Include\Utilities\Buffer.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\RingBuffer.h "$(SolutionDir)..\Include\Utilities\RingBuffer.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\ThreadSafeRingBuffer.h "$(SolutionDir)..\Include\Utilities\ThreadSafeRingBuffer.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_3rdLib\D3DUtilities\D3DDefinition.h "$(SolutionDir)..\Include\IMGuiInterface\D3DUtilities\D3DDefinition.h" /y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
@@ -413,10 +611,10 @@ xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</C
       <Command>copy $(OutputPath)$(ProjectName).exe "$(SolutionDir)$(ProjectName).exe"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libcrypto-3-x64.dll "$(SolutionDir)"
-copy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)"
-copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)"
-copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"</Command>
+      <Command>echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libcrypto-3-x64.dll "$(SolutionDir)" /y
+echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)" /y
+echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)" /y
+echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)" /y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
@@ -454,9 +652,75 @@ copy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)"</Comma
 echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\bin\libssl-3-x64.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
 echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
 echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDir)..\Bin\$(Platform)\" /y
+echo IMGui
 xcopy $(SolutionDir)IMGuiInterface\IMGui\ "$(SolutionDir)..\Include\IMGui\" /S /Y
 xcopy $(SolutionDir)IMGuiInterface\IMPlot\ "$(SolutionDir)..\Include\IMPlot\" /S /Y
-xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</Command>
+echo SDL
+xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y
+echo Macro
+echo f | xcopy $(SolutionDir)macro.h "$(SolutionDir)..\Include\macro.h" /y
+echo CPUAffinity
+echo f | xcopy $(SolutionDir)CPUAffinity\CPUAffinity.h "$(SolutionDir)..\Include\CPUAffinity\CPUAffinity.h" /y
+xcopy $(SolutionDir)CPUAffinity\SKU\ "$(SolutionDir)..\Include\CPUAffinity\SKU\" /S /Y
+echo DataInterface
+echo f | xcopy $(SolutionDir)DataInterface\InfDefinition.h "$(SolutionDir)..\Include\DataInterface\InfDefinition.h" /y
+echo f | xcopy $(SolutionDir)DataInterface\DataInterface.h "$(SolutionDir)..\Include\DataInterface\DataInterface.h" /y
+echo f | xcopy $(SolutionDir)DataInterface\FileInterface.h "$(SolutionDir)..\Include\DataInterface\FileInterface.h" /y
+echo f | xcopy $(SolutionDir)DataInterface\ParseInterface.h "$(SolutionDir)..\Include\DataInterface\ParseInterface.h" /y
+echo GUIContext
+echo f | xcopy $(SolutionDir)GUIContent\Components\Basic\ComponentPerformanceBase.h "$(SolutionDir)..\Include\GUIContent\Components\Basic\ComponentPerformanceBase.h" /y
+echo f | xcopy $(SolutionDir)GUIContent\Components\Basic\ComponentWindow.h "$(SolutionDir)..\Include\GUIContent\Components\Basic\ComponentWindow.h" /y
+echo f | xcopy $(SolutionDir)GUIContent\Interface\InterfaceLogger.h "$(SolutionDir)..\Include\GUIContent\Interface\InterfaceLogger.h" /y
+echo f | xcopy $(SolutionDir)GUIContent\Interface\InterfaceMap.h "$(SolutionDir)..\Include\GUIContent\Interface\InterfaceMap.h" /y
+echo IMGuiEx
+echo f | xcopy $(SolutionDir)IMGuiEx\AddSpin.h "$(SolutionDir)..\Include\IMGuiEx\AddSpin.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\AddToolTipHint.h "$(SolutionDir)..\Include\IMGuiEx\AddToolTipHint.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\ComboEx.h "$(SolutionDir)..\Include\IMGuiEx\ComboEx.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\DisableHelper.h "$(SolutionDir)..\Include\IMGuiEx\DisableHelper.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\EmbraceHelper.h "$(SolutionDir)..\Include\IMGuiEx\EmbraceHelper.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\FontEx.h "$(SolutionDir)..\Include\IMGuiEx\FontEx.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\I18NInterface.h "$(SolutionDir)..\Include\IMGuiEx\I18NInterface.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\IndentHelper.h "$(SolutionDir)..\Include\IMGuiEx\IndentHelper.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\LabelMaker.h "$(SolutionDir)..\Include\IMGuiEx\LabelMaker.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\LoadTexture.h "$(SolutionDir)..\Include\IMGuiEx\LoadTexture.h" /y
+echo f | xcopy $(SolutionDir)IMGuiEx\SliderSpin.h "$(SolutionDir)..\Include\IMGuiEx\SliderSpin.h" /y
+echo IMGuiInterface
+echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiInterface.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiInterface.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiContext.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiContext.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiDemo.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiDemo.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\D3DContext.h "$(SolutionDir)..\Include\IMGuiInterface\D3DContext.h" /y
+echo Internationalization
+echo f | xcopy $(SolutionDir)Internationalization\Internationalization.h "$(SolutionDir)..\Include\Internationalization\Internationalization.h" /y
+echo Utilities
+echo f | xcopy $(SolutionDir)Utilities\AudioPlayer.h "$(SolutionDir)..\Include\Utilities\AudioPlayer.h" /y
+echo f | xcopy $(SolutionDir)Utilities\BackBuffer.h "$(SolutionDir)..\Include\Utilities\BackBuffer.h" /y
+echo f | xcopy $(SolutionDir)Utilities\ConfigHandler.h "$(SolutionDir)..\Include\Utilities\ConfigHandler.h" /y
+echo f | xcopy $(SolutionDir)Utilities\DataConverter.h "$(SolutionDir)..\Include\Utilities\DataConverter.h" /y
+echo f | xcopy $(SolutionDir)Utilities\FilterHandler.h "$(SolutionDir)..\Include\Utilities\FilterHandler.h" /y
+echo f | xcopy $(SolutionDir)Utilities\HttpDownloader.h "$(SolutionDir)..\Include\Utilities\HttpDownloader.h" /y
+echo f | xcopy $(SolutionDir)Utilities\Logger.h "$(SolutionDir)..\Include\Utilities\Logger.h" /y
+echo f | xcopy $(SolutionDir)Utilities\MapDownloader.h "$(SolutionDir)..\Include\Utilities\MapDownloader.h" /y
+echo f | xcopy $(SolutionDir)Utilities\MapHandler.h "$(SolutionDir)..\Include\Utilities\MapHandler.h" /y
+echo f | xcopy $(SolutionDir)Utilities\MeasureHelper.h "$(SolutionDir)..\Include\Utilities\MeasureHelper.h" /y
+echo f | xcopy $(SolutionDir)Utilities\Param.h "$(SolutionDir)..\Include\Utilities\Param.h" /y
+echo f | xcopy $(SolutionDir)Utilities\StringResult.h "$(SolutionDir)..\Include\Utilities\StringResult.h" /y
+echo f | xcopy $(SolutionDir)Utilities\TimeStampHelper.h "$(SolutionDir)..\Include\Utilities\TimeStampHelper.h" /y
+echo f | xcopy $(SolutionDir)Utilities\WaitTimer.h "$(SolutionDir)..\Include\Utilities\WaitTimer.h" /y
+echo Worker
+echo f | xcopy $(SolutionDir)Worker\WorkerBase.h "$(SolutionDir)..\Include\Worker\WorkerBase.h" /y
+echo f | xcopy $(SolutionDir)Worker\Thread\ThreadBase.h "$(SolutionDir)..\Include\Worker\Thread\ThreadBase.h" /y
+echo f | xcopy $(SolutionDir)Worker\Thread\ThreadWrapper.h "$(SolutionDir)..\Include\Worker\Thread\ThreadWrapper.h" /y
+echo f | xcopy $(SolutionDir)Worker\Thread\ThreadHandlerBase.h "$(SolutionDir)..\Include\Worker\Thread\ThreadHandlerBase.h" /y
+echo 3rdLib Deps
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_3rdLib\Boost\boost\pfr.hpp "$(SolutionDir)..\Include\Utilities\boost\pfr.hpp" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\LockHelper.h "$(SolutionDir)..\Include\Worker\LockHelper.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\HibernateContext.h "$(SolutionDir)..\Include\Worker\HibernateContext.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\ArithmeticTraits.h "$(SolutionDir)..\Include\IMGuiEx\ArithmeticTraits.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\LockHelper.h "$(SolutionDir)..\Include\Utilities\LockHelper.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\Buffer.h "$(SolutionDir)..\Include\Utilities\Buffer.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\RingBuffer.h "$(SolutionDir)..\Include\Utilities\RingBuffer.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_DeLib\ThreadSafeRingBuffer.h "$(SolutionDir)..\Include\Utilities\ThreadSafeRingBuffer.h" /y
+echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_3rdLib\D3DUtilities\D3DDefinition.h "$(SolutionDir)..\Include\IMGuiInterface\D3DUtilities\D3DDefinition.h" /y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy dll</Message>
@@ -525,6 +789,7 @@ xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</C
     <ClCompile Include="Worker\WorkerBase.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Include\IMKit.h" />
     <ClInclude Include="CPUAffinity\CPUAffinity.h" />
     <ClInclude Include="CPUAffinity\SKU\Intel\13500H.h" />
     <ClInclude Include="CPUAffinity\SKU\Intel\13700K.h" />
@@ -534,7 +799,6 @@ xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</C
     <ClInclude Include="DataInterface\ParseInterface.h" />
     <ClInclude Include="GUIContent\Components\Basic\ComponentPerformanceBase.h" />
     <ClInclude Include="GUIContent\Components\Basic\ComponentWindow.h" />
-    <ClInclude Include="GUIContent\GUIContent.h" />
     <ClInclude Include="GUIContent\Interface\InterfaceLogger.h" />
     <ClInclude Include="GUIContent\Interface\InterfaceMap.h" />
     <ClInclude Include="IMGuiEx\AddSpin.h" />
@@ -562,19 +826,6 @@ xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</C
     <ClInclude Include="IMGuiInterface\implot\implot_internal.h" />
     <ClInclude Include="Internationalization\Internationalization.h" />
     <ClInclude Include="macro.h" />
-    <ClInclude Include="Processor\VibrationProcess.h" />
-    <ClInclude Include="Processor\Vibration\ContextVibrationLocalizationProcessor.h" />
-    <ClInclude Include="Processor\Vibration\TraditionVibrationLocalizationProcessor.h" />
-    <ClInclude Include="Processor\Vibration\VibrationLocalizationDefinition.h" />
-    <ClInclude Include="Processor\Vibration\VibrationLocalizationHandler.h" />
-    <ClInclude Include="Processor\Vibration\VibrationLocalizationProcessor.h" />
-    <ClInclude Include="Processor\WaveformProcess.h" />
-    <ClInclude Include="Processor\Waveform\SingleWaveformRestoreHandler.h" />
-    <ClInclude Include="Processor\Waveform\WaveformRestoreData.h" />
-    <ClInclude Include="Processor\Waveform\WaveformRestoreDefinition.h" />
-    <ClInclude Include="Processor\Waveform\PeakWaveformRestoreHandler.h" />
-    <ClInclude Include="Processor\Waveform\WaveformRestoreHandler.h" />
-    <ClInclude Include="Processor\Waveform\WaveformRestoreProcessor.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Utilities\AudioPlayer.h" />
     <ClInclude Include="Utilities\BackBuffer.h" />
@@ -591,6 +842,7 @@ xcopy $(SolutionDir)3rdLib\SDL\include\ "$(SolutionDir)..\Include\SDL\" /S /Y</C
     <ClInclude Include="Utilities\TimeStampHelper.h" />
     <ClInclude Include="Utilities\WaitTimer.h" />
     <ClInclude Include="Worker\Thread\ThreadBase.h" />
+    <ClInclude Include="Worker\Thread\ThreadHandlerBase.h" />
     <ClInclude Include="Worker\Thread\ThreadWrapper.h" />
     <ClInclude Include="Worker\WorkerBase.h" />
   </ItemGroup>
