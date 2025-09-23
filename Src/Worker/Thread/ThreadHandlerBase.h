@@ -14,7 +14,7 @@ struct ThreadHandlerBase {
 
     // init the thread and hibernate it by default
     template <ThreadTypeConcept ThreadType, class... ParamTypes>
-    void InitThread(Thread<ThreadType>& thread,
+    static void InitThread(Thread<ThreadType>& thread,
         const char* pName, ParamTypes&&... args) {
         thread = std::make_unique<ThreadWrapper<ThreadType>>(std::forward<ParamTypes>(args)...);
         const ThreadInfo info = { .pName = pName,.bDetach = false };
