@@ -130,6 +130,9 @@
     <Filter Include="源文件\IMGuiInterface\IMPlot">
       <UniqueIdentifier>{3c6639d8-c948-4be6-b4dc-9a5d0ccca639}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{1b986b85-bef2-4012-8f54-dfc2e1e3c278}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IMGuiInterface\IMGuiInterface.cpp">
@@ -264,8 +267,11 @@
     <ClCompile Include="Utilities\MapHandler.cpp">
       <Filter>源文件\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="IMGuiEx\DisableHelper.cpp">
+      <Filter>源文件\IMGuiEx</Filter>
+    </ClCompile>
     <ClCompile Include="IMGuiInterface\IMGuiDemo.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\IMGuiInterface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -307,9 +313,6 @@
     </ClInclude>
     <ClInclude Include="IMGuiEx\DisplayPlot.h">
       <Filter>头文件\IMGuiEx</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIContent\GUIContent.h">
-      <Filter>头文件\GUIContent</Filter>
     </ClInclude>
     <ClInclude Include="GUIContent\Components\Basic\ComponentWindow.h">
       <Filter>头文件\GUIContent\Components\Basic</Filter>
@@ -392,39 +395,6 @@
     <ClInclude Include="Utilities\BackBuffer.h">
       <Filter>头文件\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Processor\Vibration\ContextVibrationLocalizationProcessor.h">
-      <Filter>头文件\Processor\Vibration</Filter>
-    </ClInclude>
-    <ClInclude Include="Processor\Waveform\PeakWaveformRestoreHandler.h">
-      <Filter>头文件\Processor\Waveform</Filter>
-    </ClInclude>
-    <ClInclude Include="Processor\Waveform\SingleWaveformRestoreHandler.h">
-      <Filter>头文件\Processor\Waveform</Filter>
-    </ClInclude>
-    <ClInclude Include="Processor\Vibration\TraditionVibrationLocalizationProcessor.h">
-      <Filter>头文件\Processor\Vibration</Filter>
-    </ClInclude>
-    <ClInclude Include="Processor\Vibration\VibrationLocalizationDefinition.h">
-      <Filter>头文件\Processor\Vibration</Filter>
-    </ClInclude>
-    <ClInclude Include="Processor\Vibration\VibrationLocalizationHandler.h">
-      <Filter>头文件\Processor\Vibration</Filter>
-    </ClInclude>
-    <ClInclude Include="Processor\Vibration\VibrationLocalizationProcessor.h">
-      <Filter>头文件\Processor\Vibration</Filter>
-    </ClInclude>
-    <ClInclude Include="Processor\Waveform\WaveformRestoreData.h">
-      <Filter>头文件\Processor\Waveform</Filter>
-    </ClInclude>
-    <ClInclude Include="Processor\Waveform\WaveformRestoreDefinition.h">
-      <Filter>头文件\Processor\Waveform</Filter>
-    </ClInclude>
-    <ClInclude Include="Processor\Waveform\WaveformRestoreHandler.h">
-      <Filter>头文件\Processor\Waveform</Filter>
-    </ClInclude>
-    <ClInclude Include="Processor\Waveform\WaveformRestoreProcessor.h">
-      <Filter>头文件\Processor\Waveform</Filter>
-    </ClInclude>
     <ClInclude Include="GUIContent\Interface\InterfaceLogger.h">
       <Filter>头文件\GUIContent\Interface</Filter>
     </ClInclude>
@@ -439,12 +409,6 @@
     </ClInclude>
     <ClInclude Include="IMGuiEx\LoadTexture.h">
       <Filter>头文件\IMGuiEx</Filter>
-    </ClInclude>
-    <ClInclude Include="Processor\WaveformProcess.h">
-      <Filter>头文件\Processor</Filter>
-    </ClInclude>
-    <ClInclude Include="Processor\VibrationProcess.h">
-      <Filter>头文件\Processor</Filter>
     </ClInclude>
     <ClInclude Include="DataInterface\DataInterface.h">
       <Filter>头文件\DataInterface</Filter>
@@ -472,6 +436,12 @@
     </ClInclude>
     <ClInclude Include="Utilities\MapHandler.h">
       <Filter>头文件\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker\Thread\ThreadHandlerBase.h">
+      <Filter>头文件\Worker\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\IMKit.h">
+      <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
