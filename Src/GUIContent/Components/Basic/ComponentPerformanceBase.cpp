@@ -2,9 +2,9 @@
 
 #include "IMGuiInterface/IMGuiContext.h"
 
-void ComponentPerformanceBase(IMGUIContext* pCtx){
+bool ComponentPerformanceBase(IMGUIContext* pCtx){
 	if (!ImGui::CollapsingHeader(I18N("Performance"), ImGuiTreeNodeFlags_DefaultOpen)) {
-        return;
+        return false;
     }
 
     ImGui::Text(I18N("Application average %.3f ms/frame (%.1f FPS)"),
@@ -26,4 +26,6 @@ void ComponentPerformanceBase(IMGUIContext* pCtx){
     else {
         ImGui::Text(I18N("Other process: %.3f ms"), other);
     }
+
+    return true;
 }

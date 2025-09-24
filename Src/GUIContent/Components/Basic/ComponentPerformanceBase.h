@@ -1,4 +1,6 @@
 #pragma once
 
 struct IMGUIContext;
-void ComponentPerformanceBase(IMGUIContext* pCtx);
+
+// return false if CollapsingHeader closed
+bool ComponentPerformanceBase(IMGUIContext* pCtx);
