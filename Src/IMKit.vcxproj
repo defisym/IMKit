@@ -228,6 +228,7 @@ echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDi
     </Link>
     <PostBuildEvent>
       <Command>echo f | xcopy $(OutputPath)$(ProjectName).lib "$(SolutionDir)..\Lib\$(Platform)\$(ProjectName)D.lib" /y
+echo f | xcopy $(OutputPath)$(ProjectName).pdb "$(SolutionDir)..\Lib\$(Platform)\$(ProjectName)D.pdb" /y
 echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\lib\libcrypto.lib "$(SolutionDir)..\Lib\$(Platform)\" /y
 echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\lib\libssl.lib "$(SolutionDir)..\Lib\$(Platform)\" /y
 echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.lib "$(SolutionDir)..\Lib\$(Platform)\" /y
@@ -375,6 +376,7 @@ echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDi
     </Link>
     <PostBuildEvent>
       <Command>echo f | xcopy $(OutputPath)$(ProjectName).lib "$(SolutionDir)..\Lib\$(Platform)\$(ProjectName).lib" /y
+echo f | xcopy $(OutputPath)$(ProjectName).pdb "$(SolutionDir)..\Lib\$(Platform)\$(ProjectName).pdb" /y
 echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\lib\libcrypto.lib "$(SolutionDir)..\Lib\$(Platform)\" /y
 echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x86\lib\libssl.lib "$(SolutionDir)..\Lib\$(Platform)\" /y
 echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2.lib "$(SolutionDir)..\Lib\$(Platform)\" /y
@@ -513,6 +515,7 @@ echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDi
     </Link>
     <PostBuildEvent>
       <Command>echo f | xcopy $(OutputPath)$(ProjectName).lib "$(SolutionDir)..\Lib\$(Platform)\$(ProjectName)D.lib" /y
+echo f | xcopy $(OutputPath)$(ProjectName).pdb "$(SolutionDir)..\Lib\$(Platform)\$(ProjectName)D.pdb" /y
 echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\lib\libcrypto.lib "$(SolutionDir)..\Lib\$(Platform)\" /y
 echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\lib\libssl.lib "$(SolutionDir)..\Lib\$(Platform)\" /y
 echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.lib "$(SolutionDir)..\Lib\$(Platform)\" /y
@@ -661,6 +664,7 @@ echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDi
     </Link>
     <PostBuildEvent>
       <Command>echo f | xcopy $(OutputPath)$(ProjectName).lib "$(SolutionDir)..\Lib\$(Platform)\$(ProjectName).lib" /y
+echo f | xcopy $(OutputPath)$(ProjectName).pdb "$(SolutionDir)..\Lib\$(Platform)\$(ProjectName).pdb" /y
 echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\lib\libcrypto.lib "$(SolutionDir)..\Lib\$(Platform)\" /y
 echo f | xcopy $(SolutionDir)3rdLib\OpenSSL\openssl-3.0\x64\lib\libssl.lib "$(SolutionDir)..\Lib\$(Platform)\" /y
 echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2.lib "$(SolutionDir)..\Lib\$(Platform)\" /y
