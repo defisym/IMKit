@@ -98,6 +98,7 @@ bool ParseInterface::ReadData(const std::string& name) {
     if (!fileReader.CloseFile()) { return false; }
     if (!fileReader.OpenFile(config.filePath, name)) { return false; }
 
+    fileReader.ReadMetaData(metaData);
     fileReader.ReadFile(cache);
 
     return true;

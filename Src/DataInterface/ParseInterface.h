@@ -31,6 +31,13 @@ public:
     const std::vector<StringifyCache>& GetData() { return cache; }
 
 private:
+    std::string metaData;
+
+public:
+    // set metadata, which is written to the beginning of file
+    const std::string& GetMetaData() { return metaData; }
+
+private:
     struct FileReader :FileBase {
         ~FileReader() override { CloseFile(); }
 
