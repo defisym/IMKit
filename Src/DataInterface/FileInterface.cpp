@@ -86,9 +86,9 @@ void FileInterface::FileWriter::WriteMetaData(const std::string& metaData) {
     elementCount += writeString(mapfp, metaData);
 }
 
-void FileInterface::FileWriter::WriteFile(std::vector<StringifyCache>& cache) {
+void FileInterface::FileWriter::WriteFile(std::vector<StringifyCache>& cache, bool bIgnoreThreshold) {
     if (!FileOpen()) { return; }
-    if (cache.size() < WRITE_SIZE_THRESHOLD) { return; }
+    if (!bIgnoreThreshold && cache.size() < WRITE_SIZE_THRESHOLD) { return; }
     
     if (startTimeStamp.empty()) { startTimeStamp = cache.front().timeStampFormatted; }
     endTimeStamp = cache.back().timeStampFormatted;

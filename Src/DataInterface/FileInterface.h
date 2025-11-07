@@ -75,14 +75,16 @@ private:
         // write metadata to tempfile
         void WriteMetaData(const std::string& metaData);
         // write data to tempfile
+		// to optimize the IO performance
         // if cache size is smaller than WRITE_SIZE_THRESHOLD, do nothing
+		// use bIgnoreThreshold = true to override this behavior
         // each element is saved in format of:
         //  - timeStampFormatted
         //  - FILEINF_NEWLINE
         //  - ElementFormatted
         //  - FILEINF_NEWLINE
         //  - FILEINF_NEWLINE
-        void WriteFile(std::vector<StringifyCache>& cache);
+        void WriteFile(std::vector<StringifyCache>& cache, bool bIgnoreThreshold = false);
         // close and rename tempfile
         bool CloseFile() override;
     };
