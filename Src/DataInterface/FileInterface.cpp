@@ -41,7 +41,10 @@ FileInterface::FileInterface(const FileInterfaceConfig& config) {
     UpdateConfig(config);
 }
 
-FileInterface::~FileInterface() { SaveData(); }
+FileInterface::~FileInterface() {
+	// write all cache to disk when destruct
+    WriteCache();
+}
 
 void FileInterface::UpdateConfig(const FileInterfaceConfig& config) {
     this->config = config;
@@ -55,6 +58,11 @@ void FileInterface::AddData(const TimeStamp& timeStamp, const std::string& data)
     if (!fileWriter.bFileOpen) { fileWriter.NewFile(config.filePath, "temp"); }
     fileWriter.WriteFile(cache);
     SaveDataWhenNeeded();
+}
+
+void FileInterface::WriteCache() {
+    fileWriter.WriteFile(cache, true);
+    SaveData();
 }
 
 bool FileInterface::FileWriter::NewFile(const std::string& basePath, const std::string& name) {

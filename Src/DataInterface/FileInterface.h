@@ -44,6 +44,8 @@ public:
     void UpdateConfig(const FileInterfaceConfig& config = {});
     // add data to internal 
     void AddData(const TimeStamp& timeStamp, const std::string& data);
+	// write cache to disk, call this if drain needed
+    void WriteCache();
 
 private:
     std::string metaData;
