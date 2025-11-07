@@ -94,6 +94,14 @@ void FileInterface::FileWriter::WriteMetaData(const std::string& metaData) {
     elementCount += writeString(mapfp, metaData);
 }
 
+void FileInterface::FileWriter::WriteJumpTable() {
+    if (!FileOpen()) { return; }
+
+    // jump table: write dummy size at mapfp start
+    totalCacheSize = 0u;
+    elementCount += writeElement(mapfp, totalCacheSize);
+}
+
 void FileInterface::FileWriter::WriteFile(std::vector<StringifyCache>& cache, bool bIgnoreThreshold) {
     if (!FileOpen()) { return; }
     if (!bIgnoreThreshold && cache.size() < WRITE_SIZE_THRESHOLD) { return; }

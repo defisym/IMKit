@@ -76,6 +76,10 @@ private:
 
         // write metadata to tempfile
         void WriteMetaData(const std::string& metaData);
+        // init jumptable to tempfile
+        // write dummy size at mapfp start
+        void WriteJumpTable();
+
         // write data to tempfile
 		// to optimize the IO performance
         // if cache size is smaller than WRITE_SIZE_THRESHOLD, do nothing
