@@ -55,7 +55,12 @@ void FileInterface::AddData(const TimeStamp& timeStamp, const std::string& data)
         GetFormattedTimeStamp(timeStamp),
         data);
 
-    if (!fileWriter.bFileOpen) { fileWriter.NewFile(config.filePath, "temp"); }
+    if (!fileWriter.bFileOpen) { 
+        fileWriter.NewFile(config.filePath, "temp");
+        fileWriter.WriteMetaData(metaData);
+        fileWriter.WriteJumpTable();
+    }
+
     fileWriter.WriteFile(cache);
     SaveDataWhenNeeded();
 }
@@ -77,10 +82,6 @@ bool FileInterface::FileWriter::NewFile(const std::string& basePath, const std::
     // ------------------------------------------------
 
     if (!FileBase::NewFile(basePath, name)) { return false; }
-
-    // jump table: write dummy size at mapfp start
-    totalCacheSize = 0u;
-    elementCount += writeElement(mapfp, totalCacheSize);
 
     return true;
 }
