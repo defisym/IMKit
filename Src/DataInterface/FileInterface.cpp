@@ -147,15 +147,13 @@ bool FileInterface::FileWriter::CloseFile() {
         if (!FileBase::CloseFile()) { break; }
 
         // rename
-        const auto name = startTimeStamp + " ~ " + endTimeStamp;
-        const auto dataFileName = name + ".data";
-        const auto mapFileName = name + ".map";
-
         namespace fs = std::filesystem;
         const auto dataOldPath = fs::path{ filePath } / dataFileName.c_str();
-        const auto dataNewPath = fs::path{ filePath } / dataFileName.c_str();
         const auto mapOldPath = fs::path{ filePath } / mapFileName.c_str();
-        const auto mapNewPath = fs::path{ filePath } / mapFileName.c_str();
+
+        const auto name = startTimeStamp + " ~ " + endTimeStamp;
+        const auto dataNewPath = fs::path{ filePath } / (name + ".data").c_str();
+        const auto mapNewPath = fs::path{ filePath } / (name + ".map").c_str();
 
         fs::rename(dataOldPath, dataNewPath);
         fs::rename(mapOldPath, mapNewPath);
