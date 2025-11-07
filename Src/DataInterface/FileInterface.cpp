@@ -87,9 +87,8 @@ bool FileInterface::FileWriter::NewFile(const std::string& basePath, const std::
 
 void FileInterface::FileWriter::WriteMetaData(const std::string& metaData) {
     if (!FileOpen()) { return; }
-    if (metaData.empty()) { return; }
 
-    // write meta data
+	// write meta data, okay if metaData is empty
     elementCount += writeElement(mapfp, metaData.size());
     elementCount += writeString(mapfp, metaData);
 }
