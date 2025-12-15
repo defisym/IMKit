@@ -3,3 +3,15 @@
 If you are looking for OpenSSL binaries, you can find them [here](https://github.com/openssl/openssl/wiki/Binaries).
 
 [OpenSSL 3.0.16 LTS ZIP x64+x86](https://kb.firedaemon.com/support/solutions/articles/4000121705#Download-OpenSSL) is used in this project.
+
+The file structure should be like this:
+
+openssl-3.0
+ └x64
+  └bin
+  └include
+  └lib
+ └x64
+  └bin
+  └include
+  └lib
