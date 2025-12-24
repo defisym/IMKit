@@ -6,12 +6,14 @@ If you are looking for OpenSSL binaries, you can find them [here](https://github
 
 The file structure should be like this:
 
-openssl-3.0
- └x64
-  └bin
-  └include
-  └lib
- └x64
-  └bin
-  └include
-  └lib
+```plaintext
+openssl-3.0/
+├── x64/
+│   ├── bin/
+│   ├── include/
+│   └── lib/
+└── x86/
+    ├── bin/
+    ├── include/
+    └── lib/
+```
