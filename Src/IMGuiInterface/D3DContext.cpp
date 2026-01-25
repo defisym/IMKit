@@ -1,5 +1,6 @@
 #include "D3DContext.h"
 
+#include <cmath>
 #include <xutility>
 
 // ------------------------------------------------
@@ -140,6 +141,10 @@ HRESULT D3DRendererSwapChain::CreateRenderTarget(UINT width, UINT height) {
     hr = DestroyRenderTarget();
     if (FAILED(hr)) { return hr; }
 
+    // Update resolution
+    hr = D3DRenderer::UpdateResolution(width, height);
+    if (FAILED(hr)) { return hr; }
+
     ComPtr<ID3D11Texture2D> pBackBuffer;
     hr = pSwapChain->GetBuffer(0, IID_PPV_ARGS(&pBackBuffer));
     if (FAILED(hr)) { return hr; }
@@ -188,7 +193,8 @@ void D3DRendererSwapChain::EndRender(UINT SyncInterval) {
 // D3DRendererTexture
 // ------------------------------------------------
 
-HRESULT D3DRendererTexture::Init(D3DContext* p, DXGI_FORMAT fmt) {
+HRESULT D3DRendererTexture::Init(D3DContext* p,
+    const DXGI_FORMAT& fmt, const bool& bShare) {
     HRESULT hr = S_OK;
 
     hr = Destroy();
@@ -197,7 +203,8 @@ HRESULT D3DRendererTexture::Init(D3DContext* p, DXGI_FORMAT fmt) {
     hr = D3DRenderer::Init(p);
     if (FAILED(hr)) { return hr; }
 
-    textureFormat = fmt;
+    this->textureFormat = fmt;
+    this->bShare = bShare;
 
     return S_OK;
 }
@@ -214,6 +221,10 @@ HRESULT D3DRendererTexture::CreateRenderTarget(UINT width, UINT height) {
     hr = DestroyRenderTarget();
     if (FAILED(hr)) { return hr; }
 
+    // Update resolution
+    hr = D3DRenderer::UpdateResolution(width, height);
+    if (FAILED(hr)) { return hr; }
+
     D3D11_TEXTURE2D_DESC desc = {};
     desc.Width = width;
     desc.Height = height;
@@ -223,7 +234,9 @@ HRESULT D3DRendererTexture::CreateRenderTarget(UINT width, UINT height) {
     desc.Usage = D3D11_USAGE_DEFAULT;
     desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
     desc.SampleDesc = { .Count = 1,.Quality = 0 };
-    desc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
+    if (bShare) {
+        desc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
+    }
 
     hr = pCtx->pDevice->CreateTexture2D(&desc, nullptr, &pRTT);
     if (FAILED(hr)) { return hr; }
@@ -275,4 +288,69 @@ HRESULT D3DRendererTexture::UpdateResolution(UINT width, UINT height) {
 void D3DRendererTexture::EndRender(UINT IndexCount) {
     pCtx->pDeviceContext->DrawIndexed(IndexCount, 0, 0);
     D3DRenderer::EndRender();
+}
+
+// ------------------------------------------------
+// D3DRendererTextureArray
+// ------------------------------------------------
+
+HRESULT D3DRendererTextureArray::CreateRenderTarget(UINT width, UINT height) {
+    const auto arrSz = (size_t)std::ceil((float)(width) / D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION);
+    if (arrSz > D3D11_REQ_TEXTURE2D_ARRAY_AXIS_DIMENSION) {
+        return E_INVALIDARG;
+    }
+
+    if (height > D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION) {
+        return E_INVALIDARG;
+    }
+
+    HRESULT hr = S_OK;
+
+    hr = DestroyRenderTarget();
+    if (FAILED(hr)) { return hr; }
+
+    // Update resolution
+    hr = D3DRenderer::UpdateResolution(width, height);
+    if (FAILED(hr)) { return hr; }
+
+    texWidth = (std::min)(width, (UINT)D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION);
+    texHeight = height;
+    arraySize = arrSz;
+
+    D3D11_TEXTURE2D_DESC desc = {};
+    desc.Width = texWidth;
+    desc.Height = texHeight;
+    desc.MipLevels = 1;
+    desc.ArraySize = (UINT)arraySize;
+    desc.Format = textureFormat;
+    desc.Usage = D3D11_USAGE_DEFAULT;
+    desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+    desc.SampleDesc = { .Count = 1,.Quality = 0 };
+    if (bShare) {
+        desc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
+    }
+
+    hr = pCtx->pDevice->CreateTexture2D(&desc, nullptr, &pRTT);
+    if (FAILED(hr)) { return hr; }
+
+    // create srv
+    D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+    srvDesc.Format = textureFormat;
+    srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DARRAY;
+    srvDesc.Texture2DArray.MostDetailedMip = 0;
+    srvDesc.Texture2DArray.MipLevels = 1;
+    srvDesc.Texture2DArray.FirstArraySlice = 0;
+    srvDesc.Texture2DArray.ArraySize = (UINT)arraySize;
+
+    hr = pCtx->pDevice->CreateShaderResourceView(pRTT.Get(), &srvDesc, &pSrvRTT);
+    if (FAILED(hr)) { return hr; }
+
+    D3D11_RENDER_TARGET_VIEW_DESC rttDesc = {};
+    rttDesc.Format = textureFormat;
+    rttDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
+    rttDesc.Texture2DArray.MipSlice = 0;
+    rttDesc.Texture2DArray.FirstArraySlice = 0;
+    rttDesc.Texture2DArray.ArraySize = (UINT)arraySize;
+
+    return pCtx->pDevice->CreateRenderTargetView(pRTT.Get(), &rttDesc, &pRenderTargetView);
 }

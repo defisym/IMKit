@@ -57,13 +57,15 @@ struct D3DRendererSwapChain : D3DRenderer {
 
 struct D3DRendererTexture :D3DRenderer {
 	DXGI_FORMAT textureFormat = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM;
+    bool bShare = true;
 
     ComPtr<ID3D11Texture2D> pRTT = nullptr;
     ComPtr<ID3D11ShaderResourceView> pSrvRTT = nullptr;    
     ComPtr<ID3D11RenderTargetView> pRenderTargetView = nullptr;
 
     HRESULT Init(D3DContext* p,
-        DXGI_FORMAT fmt = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
+        const DXGI_FORMAT& fmt = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM,
+        const bool& bShare = true);
     HRESULT Destroy() override;
 
     HRESULT CreateRenderTarget(UINT width, UINT height) override;
@@ -73,4 +75,13 @@ struct D3DRendererTexture :D3DRenderer {
     HRESULT UpdateResolution(UINT width, UINT height) override;
 
     void EndRender(UINT IndexCount);
+};
+
+struct D3DRendererTextureArray :D3DRendererTexture {
+    UINT texWidth = 0;      // width of single texture
+                            // if not match the witdh then 16384
+    UINT texHeight = 0;     // height of single texture
+    size_t arraySize = 0;   // ceil(totalWidth / width)
+
+    HRESULT CreateRenderTarget(UINT width, UINT height) override;
 };
