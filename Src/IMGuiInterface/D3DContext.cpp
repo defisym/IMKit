@@ -53,7 +53,7 @@ HRESULT D3DContext::DestroyContext() {
 // D3DRenderer
 // ------------------------------------------------
 
-HRESULT D3DRenderer::Init(D3DContext* p) {
+HRESULT D3DRenderer::Init(const D3DContext* p) {
     auto hr = Destroy();
     if (FAILED(hr)) { return hr; }
 
@@ -97,7 +97,7 @@ void D3DRenderer::BeginRender(const FLOAT ColorRGBA[4]) {
 // D3DRendererSwapChain
 // ------------------------------------------------
 
-HRESULT D3DRendererSwapChain::Init(D3DContext* p, HWND hWnd) {
+HRESULT D3DRendererSwapChain::Init(const D3DContext* p, HWND hWnd) {
     HRESULT hr = S_OK;
 
     hr = Destroy();
@@ -193,7 +193,7 @@ void D3DRendererSwapChain::EndRender(UINT SyncInterval) {
 // D3DRendererTexture
 // ------------------------------------------------
 
-HRESULT D3DRendererTexture::Init(D3DContext* p, const TextureParam& param) {
+HRESULT D3DRendererTexture::Init(const D3DContext* p, const TextureParam& param) {
     HRESULT hr = S_OK;
 
     hr = Destroy();

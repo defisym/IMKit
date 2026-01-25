@@ -19,12 +19,12 @@ struct D3DContext {
 };
 
 struct D3DRenderer {    
-    D3DContext* pCtx = nullptr;
+    const D3DContext* pCtx = nullptr;
 
     UINT width = 0;
     UINT height = 0;
 
-    virtual HRESULT Init(D3DContext* p);
+    virtual HRESULT Init(const D3DContext* p);
     virtual HRESULT Destroy();
 
     virtual HRESULT CreateRenderTarget(UINT width, UINT height) = 0;
@@ -43,7 +43,7 @@ struct D3DRendererSwapChain : D3DRenderer {
     ComPtr<IDXGISwapChain1> pSwapChain = nullptr;
     ComPtr<ID3D11RenderTargetView> pRenderTargetView = nullptr;
 
-    HRESULT Init(D3DContext* p, HWND hWnd);
+    HRESULT Init(const D3DContext* p, HWND hWnd);
     HRESULT Destroy() override;
 
     HRESULT CreateRenderTarget(UINT width, UINT height) override;
@@ -67,7 +67,7 @@ struct D3DRendererTexture :D3DRenderer {
     ComPtr<ID3D11ShaderResourceView> pSrvRTT = nullptr;    
     ComPtr<ID3D11RenderTargetView> pRenderTargetView = nullptr;
 
-    HRESULT Init(D3DContext* p, const TextureParam& param = {});
+    HRESULT Init(const D3DContext* p, const TextureParam& param = {});
     HRESULT Destroy() override;
 
     HRESULT CreateRenderTarget(UINT width, UINT height) override;
