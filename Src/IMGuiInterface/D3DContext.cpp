@@ -193,8 +193,7 @@ void D3DRendererSwapChain::EndRender(UINT SyncInterval) {
 // D3DRendererTexture
 // ------------------------------------------------
 
-HRESULT D3DRendererTexture::Init(D3DContext* p,
-    const DXGI_FORMAT& fmt, const bool& bShare) {
+HRESULT D3DRendererTexture::Init(D3DContext* p, const TextureParam& param) {
     HRESULT hr = S_OK;
 
     hr = Destroy();
@@ -203,14 +202,13 @@ HRESULT D3DRendererTexture::Init(D3DContext* p,
     hr = D3DRenderer::Init(p);
     if (FAILED(hr)) { return hr; }
 
-    this->textureFormat = fmt;
-    this->bShare = bShare;
+    this->param = param;
 
     return S_OK;
 }
 
 HRESULT D3DRendererTexture::Destroy() {
-    textureFormat = DXGI_FORMAT_UNKNOWN;
+    this->param = {};
 
     return D3DRenderer::Destroy();
 }
@@ -230,11 +228,11 @@ HRESULT D3DRendererTexture::CreateRenderTarget(UINT width, UINT height) {
     desc.Height = height;
     desc.MipLevels = 1;
     desc.ArraySize = 1;
-    desc.Format = textureFormat;
+    desc.Format = param.format;
     desc.Usage = D3D11_USAGE_DEFAULT;
     desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
     desc.SampleDesc = { .Count = 1,.Quality = 0 };
-    if (bShare) {
+    if (param.bShare) {
         desc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
     }
 
@@ -243,7 +241,7 @@ HRESULT D3DRendererTexture::CreateRenderTarget(UINT width, UINT height) {
 
     // create srv
     D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-    srvDesc.Format = textureFormat;
+    srvDesc.Format = param.format;
     srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
     srvDesc.Texture2D.MostDetailedMip = 0;
     srvDesc.Texture2D.MipLevels = 1;
@@ -252,7 +250,7 @@ HRESULT D3DRendererTexture::CreateRenderTarget(UINT width, UINT height) {
     if (FAILED(hr)) { return hr; }
 
     D3D11_RENDER_TARGET_VIEW_DESC rttDesc = {};
-    rttDesc.Format = textureFormat;
+    rttDesc.Format = param.format;
     rttDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
     rttDesc.Texture2D = { .MipSlice = 0 };
 
@@ -322,11 +320,11 @@ HRESULT D3DRendererTextureArray::CreateRenderTarget(UINT width, UINT height) {
     desc.Height = texHeight;
     desc.MipLevels = 1;
     desc.ArraySize = (UINT)arraySize;
-    desc.Format = textureFormat;
+    desc.Format = param.format;
     desc.Usage = D3D11_USAGE_DEFAULT;
     desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
     desc.SampleDesc = { .Count = 1,.Quality = 0 };
-    if (bShare) {
+    if (param.bShare) {
         desc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
     }
 
@@ -335,7 +333,7 @@ HRESULT D3DRendererTextureArray::CreateRenderTarget(UINT width, UINT height) {
 
     // create srv
     D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-    srvDesc.Format = textureFormat;
+    srvDesc.Format = param.format;
     srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DARRAY;
     srvDesc.Texture2DArray.MostDetailedMip = 0;
     srvDesc.Texture2DArray.MipLevels = 1;
@@ -346,7 +344,7 @@ HRESULT D3DRendererTextureArray::CreateRenderTarget(UINT width, UINT height) {
     if (FAILED(hr)) { return hr; }
 
     D3D11_RENDER_TARGET_VIEW_DESC rttDesc = {};
-    rttDesc.Format = textureFormat;
+    rttDesc.Format = param.format;
     rttDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
     rttDesc.Texture2DArray.MipSlice = 0;
     rttDesc.Texture2DArray.FirstArraySlice = 0;

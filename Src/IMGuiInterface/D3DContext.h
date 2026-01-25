@@ -55,17 +55,19 @@ struct D3DRendererSwapChain : D3DRenderer {
     void EndRender(UINT SyncInterval);
 };
 
-struct D3DRendererTexture :D3DRenderer {
-	DXGI_FORMAT textureFormat = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM;
+struct TextureParam {
+    DXGI_FORMAT format = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM;
     bool bShare = true;
+};
+
+struct D3DRendererTexture :D3DRenderer {
+    TextureParam param = {};
 
     ComPtr<ID3D11Texture2D> pRTT = nullptr;
     ComPtr<ID3D11ShaderResourceView> pSrvRTT = nullptr;    
     ComPtr<ID3D11RenderTargetView> pRenderTargetView = nullptr;
 
-    HRESULT Init(D3DContext* p,
-        const DXGI_FORMAT& fmt = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM,
-        const bool& bShare = true);
+    HRESULT Init(D3DContext* p, const TextureParam& param = {});
     HRESULT Destroy() override;
 
     HRESULT CreateRenderTarget(UINT width, UINT height) override;
