@@ -314,6 +314,7 @@ HRESULT D3DRendererTextureArray::CreateRenderTarget(UINT width, UINT height) {
     texWidth = (std::min)(width, (UINT)D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION);
     texHeight = height;
     arraySize = arrSz;
+    texLastWidth = width - (UINT)(texWidth * (arraySize - 1));
 
     D3D11_TEXTURE2D_DESC desc = {};
     desc.Width = texWidth;

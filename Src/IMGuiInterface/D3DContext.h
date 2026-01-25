@@ -84,6 +84,7 @@ struct D3DRendererTextureArray :D3DRendererTexture {
                             // if not match the witdh then 16384
     UINT texHeight = 0;     // height of single texture
     size_t arraySize = 0;   // ceil(totalWidth / width)
+    UINT texLastWidth = 0;  // width of last texture in array
 
     HRESULT CreateRenderTarget(UINT width, UINT height) override;
 };
