@@ -78,7 +78,7 @@ bool operator<(const TileCoord& l, const TileCoord& r) {
 // Tile
 // ------------------------------------
 
-bool TileManager::Tile::Load(const D3DContext* pCtx, const char* pPath) { 
+bool TileManager::Tile::Load(const D3DContext* pCtx, const char* pPath) {
     auto texture = LoadTextureFromFile(pCtx->pDevice.Get(), pPath);
     if (texture.pSrv == nullptr) { return false; }
     this->texture = texture;

@@ -54,9 +54,16 @@ int IMGUIInterface(IMGUIContext* pCtx,
         pCtx->width, pCtx->height,
         nullptr, nullptr, wc.hInstance, pCtx);
 
-    // Initialize Direct3D  
-    if (FAILED(pCtx->renderContext.CreateContext(hwnd))) {
-        pCtx->renderContext.DestroyContext();
+    // Initialize Direct3D
+    if (FAILED(pCtx->d3dContext.CreateContext())) {
+        pCtx->d3dContext.DestroyContext();
+        UnregisterClassW(wc.lpszClassName, wc.hInstance);
+
+        return 1;
+    }
+
+    if (FAILED(pCtx->renderContext.Init(&pCtx->d3dContext, hwnd))) {
+        pCtx->renderContext.Destroy();
         UnregisterClassW(wc.lpszClassName, wc.hInstance);
 
         return 1;
@@ -83,8 +90,8 @@ int IMGUIInterface(IMGUIContext* pCtx,
 
     // Setup Platform/Renderer backends
     ImGui_ImplWin32_Init(hwnd);  
-    ImGui_ImplDX11_Init(pCtx->renderContext.pDevice.Get(),
-        pCtx->renderContext.pDeviceContext.Get());
+    ImGui_ImplDX11_Init(pCtx->d3dContext.pDevice.Get(),
+        pCtx->d3dContext.pDeviceContext.Get());
 
     // Main loop
     bool done = false;
@@ -142,7 +149,8 @@ int IMGUIInterface(IMGUIContext* pCtx,
     pCtx->DestroyContext();
     ImGui::DestroyContext();
 
-    pCtx->renderContext.DestroyContext();
+    pCtx->renderContext.Destroy();
+    pCtx->d3dContext.DestroyContext();
     DestroyWindow(hwnd);
     UnregisterClassW(wc.lpszClassName, wc.hInstance);
 

@@ -26,7 +26,8 @@ struct IMGUIContext {
 
     UINT resizeWidth = 0;
     UINT resizeHeight = 0;
-    D3DContextSwapChain renderContext = {};
+    D3DContext d3dContext = {};
+    D3DRendererSwapChain renderContext = {};
 
     ImGuiIO* pIO = nullptr;
     FontEx* pFont = nullptr;   

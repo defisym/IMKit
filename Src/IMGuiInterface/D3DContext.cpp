@@ -48,43 +48,61 @@ HRESULT D3DContext::DestroyContext() {
     return S_OK;
 }
 
-HRESULT D3DContext::DestroyRenderTarget() {
-    pRenderTargetView = nullptr;
+// ------------------------------------------------
+// D3DRenderer
+// ------------------------------------------------
+
+HRESULT D3DRenderer::Init(D3DContext* p) {
+    auto hr = Destroy();
+    if (FAILED(hr)) { return hr; }
+
+    pCtx = p;
+
     return S_OK;
 }
 
-bool D3DContext::ResolutionChanged(UINT width, UINT height) {
+HRESULT D3DRenderer::Destroy() {
+    pCtx = nullptr;
+
+    return S_OK;
+}
+
+bool D3DRenderer::ResolutionChanged(UINT width, UINT height) const {
     if (this->width == width && this->height == height) {
         return false;
     }
 
-    this->width = width;
-    this->height = height;
-
     return true;
 }
 
-void D3DContext::BeginRender() {
-    ID3D11RenderTargetView* rtvArr[] = { pRenderTargetView.Get() };
-    pDeviceContext->OMSetRenderTargets(std::size(rtvArr), rtvArr, nullptr);
+HRESULT D3DRenderer::UpdateResolution(UINT width, UINT height) {
+    this->width = width;
+    this->height = height;
+
+    return S_OK;
 }
 
-void D3DContext::BeginRender(const FLOAT ColorRGBA[4]) {
+void D3DRenderer::BeginRender() {
+    ID3D11RenderTargetView* rtvArr[] = { GetRenderTargetView().Get()};
+    pCtx->pDeviceContext->OMSetRenderTargets(std::size(rtvArr), rtvArr, nullptr);
+}
+
+void D3DRenderer::BeginRender(const FLOAT ColorRGBA[4]) {
     BeginRender();
-    pDeviceContext->ClearRenderTargetView(pRenderTargetView.Get(), ColorRGBA);
+    pCtx->pDeviceContext->ClearRenderTargetView(GetRenderTargetView().Get(), ColorRGBA);
 }
 
 // ------------------------------------------------
-// D3DContextSwapChain
+// D3DRendererSwapChain
 // ------------------------------------------------
 
-HRESULT D3DContextSwapChain::CreateContext(HWND hWnd) {
+HRESULT D3DRendererSwapChain::Init(D3DContext* p, HWND hWnd) {
     HRESULT hr = S_OK;
 
-    hr = DestroyContext();
+    hr = Destroy();
     if (FAILED(hr)) { return hr; }
 
-    hr = D3DContext::CreateContext();
+    hr = D3DRenderer::Init(p);
     if (FAILED(hr)) { return hr; }
 
     DXGI_SWAP_CHAIN_DESC1 swapChainDescriptor = {};
@@ -105,17 +123,18 @@ HRESULT D3DContextSwapChain::CreateContext(HWND hWnd) {
     swapChainFullscreenDescriptor.RefreshRate.Numerator = 60;
     swapChainFullscreenDescriptor.RefreshRate.Denominator = 1;
 
-    return pFactory->CreateSwapChainForHwnd(pDevice.Get(), hWnd,
+    return pCtx->pFactory->CreateSwapChainForHwnd(pCtx->pDevice.Get(), hWnd,
         &swapChainDescriptor, &swapChainFullscreenDescriptor,
         nullptr, &pSwapChain);
 }
 
-HRESULT D3DContextSwapChain::DestroyContext() {
+HRESULT D3DRendererSwapChain::Destroy() {
     pSwapChain = nullptr;
-    return D3DContext::DestroyContext();
+
+    return D3DRenderer::Destroy();
 }
 
-HRESULT D3DContextSwapChain::CreateRenderTarget(UINT width, UINT height) {
+HRESULT D3DRendererSwapChain::CreateRenderTarget(UINT width, UINT height) {
     HRESULT hr = S_OK;
 
     hr = DestroyRenderTarget();
@@ -125,19 +144,29 @@ HRESULT D3DContextSwapChain::CreateRenderTarget(UINT width, UINT height) {
     hr = pSwapChain->GetBuffer(0, IID_PPV_ARGS(&pBackBuffer));
     if (FAILED(hr)) { return hr; }
 
-    return pDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, &pRenderTargetView);
+    return pCtx->pDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, &pRenderTargetView);
 }
 
-HRESULT D3DContextSwapChain::DestroyRenderTarget() {
-    return D3DContext::DestroyRenderTarget();
+HRESULT D3DRendererSwapChain::DestroyRenderTarget() {
+    pRenderTargetView = nullptr;
+    
+    return S_OK;
 }
 
-HRESULT D3DContextSwapChain::UpdateResolution(UINT width, UINT height) {
+ComPtr<ID3D11RenderTargetView> D3DRendererSwapChain::GetRenderTargetView() {
+    return pRenderTargetView;
+}
+
+HRESULT D3DRendererSwapChain::UpdateResolution(UINT width, UINT height) {
     if (!ResolutionChanged(width, height)) {
         return S_OK;
     }
 
     HRESULT hr = S_OK;
+
+    // Update resolution
+    hr = D3DRenderer::UpdateResolution(width, height);
+    if (FAILED(hr)) { return hr; }
 
     // must destroy here, or swap chain cannot be resized
     // unless all outstanding buffer references have been released.
@@ -150,18 +179,36 @@ HRESULT D3DContextSwapChain::UpdateResolution(UINT width, UINT height) {
     return CreateRenderTarget(width, height);
 }
 
-void D3DContextSwapChain::EndRender(UINT SyncInterval) {
+void D3DRendererSwapChain::EndRender(UINT SyncInterval) {
     pSwapChain->Present(SyncInterval, 0);
-    D3DContext::EndRender();
+    D3DRenderer::EndRender();
 }
 
 // ------------------------------------------------
-// D3DContextTexture
+// D3DRendererTexture
 // ------------------------------------------------
 
-D3DContextTexture::D3DContextTexture(DXGI_FORMAT fmt) : textureFormat(fmt) {}
+HRESULT D3DRendererTexture::Init(D3DContext* p, DXGI_FORMAT fmt) {
+    HRESULT hr = S_OK;
 
-HRESULT D3DContextTexture::CreateRenderTarget(UINT width, UINT height) {
+    hr = Destroy();
+    if (FAILED(hr)) { return hr; }
+
+    hr = D3DRenderer::Init(p);
+    if (FAILED(hr)) { return hr; }
+
+    textureFormat = fmt;
+
+    return S_OK;
+}
+
+HRESULT D3DRendererTexture::Destroy() {
+    textureFormat = DXGI_FORMAT_UNKNOWN;
+
+    return D3DRenderer::Destroy();
+}
+
+HRESULT D3DRendererTexture::CreateRenderTarget(UINT width, UINT height) {
     HRESULT hr = S_OK;
 
     hr = DestroyRenderTarget();
@@ -178,7 +225,7 @@ HRESULT D3DContextTexture::CreateRenderTarget(UINT width, UINT height) {
     desc.SampleDesc = { .Count = 1,.Quality = 0 };
     desc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
 
-    hr = pDevice->CreateTexture2D(&desc, nullptr, &pRTT);
+    hr = pCtx->pDevice->CreateTexture2D(&desc, nullptr, &pRTT);
     if (FAILED(hr)) { return hr; }
 
     // create srv
@@ -188,7 +235,7 @@ HRESULT D3DContextTexture::CreateRenderTarget(UINT width, UINT height) {
     srvDesc.Texture2D.MostDetailedMip = 0;
     srvDesc.Texture2D.MipLevels = 1;
 
-    hr = pDevice->CreateShaderResourceView(pRTT.Get(), &srvDesc, &pSrvRTT);
+    hr = pCtx->pDevice->CreateShaderResourceView(pRTT.Get(), &srvDesc, &pSrvRTT);
     if (FAILED(hr)) { return hr; }
 
     D3D11_RENDER_TARGET_VIEW_DESC rttDesc = {};
@@ -196,25 +243,36 @@ HRESULT D3DContextTexture::CreateRenderTarget(UINT width, UINT height) {
     rttDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
     rttDesc.Texture2D = { .MipSlice = 0 };
 
-    return pDevice->CreateRenderTargetView(pRTT.Get(), &rttDesc, &pRenderTargetView);
+    return pCtx->pDevice->CreateRenderTargetView(pRTT.Get(), &rttDesc, &pRenderTargetView);
 }
 
-HRESULT D3DContextTexture::DestroyRenderTarget() {
+HRESULT D3DRendererTexture::DestroyRenderTarget() {
     pRTT = nullptr;
     pSrvRTT = nullptr;
+    pRenderTargetView = nullptr;
 
-    return D3DContext::DestroyRenderTarget();
+    return S_OK;
 }
 
-HRESULT D3DContextTexture::UpdateResolution(UINT width, UINT height) {
+ComPtr<ID3D11RenderTargetView> D3DRendererTexture::GetRenderTargetView() {
+    return pRenderTargetView;
+}
+
+HRESULT D3DRendererTexture::UpdateResolution(UINT width, UINT height) {
     if (!ResolutionChanged(width, height)) {
         return S_OK;
     }
 
+    HRESULT hr = S_OK;
+
+    // Update resolution
+    hr = D3DRenderer::UpdateResolution(width, height);
+    if (FAILED(hr)) { return hr; }
+
     return CreateRenderTarget(width, height);
 }
 
-void D3DContextTexture::EndRender(UINT IndexCount) {
-    pDeviceContext->DrawIndexed(IndexCount, 0, 0);
-    D3DContext::EndRender();
+void D3DRendererTexture::EndRender(UINT IndexCount) {
+    pCtx->pDeviceContext->DrawIndexed(IndexCount, 0, 0);
+    D3DRenderer::EndRender();
 }

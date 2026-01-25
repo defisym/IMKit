@@ -88,8 +88,6 @@ bool operator<(const TileCoord& l, const TileCoord& r);
 // TileManager
 // ------------------------------------------------
 
-struct D3DContext;
-
 struct TileManager {
     enum TileState : int {
         Unavailable = 0, // tile not available
@@ -106,7 +104,7 @@ struct TileManager {
         Tile() :state(TileState::Unavailable) {}
         Tile(TileState s) : state(s) {}
 
-        bool Load(const D3DContext* pCtx, const char* pPath);        
+        bool Load(const D3DContext* pCtx, const char* pPath);
         double FadeIn(double step = 0.05);
         void FadeComplete();
     };
