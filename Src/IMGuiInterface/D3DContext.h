@@ -47,8 +47,11 @@ struct D3DContextSwapChain : D3DContext {
 };
 
 struct D3DContextTexture :D3DContext {
-    ComPtr<ID3D11Texture2D> pRTT = nullptr;
+	DXGI_FORMAT textureFormat = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM;
+	ComPtr<ID3D11Texture2D> pRTT = nullptr;
     ComPtr<ID3D11ShaderResourceView> pSrvRTT = nullptr;    
+
+	D3DContextTexture(DXGI_FORMAT fmt = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
 
     HRESULT CreateRenderTarget(UINT width, UINT height) override;
     HRESULT DestroyRenderTarget() override;

@@ -159,6 +159,8 @@ void D3DContextSwapChain::EndRender(UINT SyncInterval) {
 // D3DContextTexture
 // ------------------------------------------------
 
+D3DContextTexture::D3DContextTexture(DXGI_FORMAT fmt) : textureFormat(fmt) {}
+
 HRESULT D3DContextTexture::CreateRenderTarget(UINT width, UINT height) {
     HRESULT hr = S_OK;
 
@@ -170,7 +172,7 @@ HRESULT D3DContextTexture::CreateRenderTarget(UINT width, UINT height) {
     desc.Height = height;
     desc.MipLevels = 1;
     desc.ArraySize = 1;
-    desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    desc.Format = textureFormat;
     desc.Usage = D3D11_USAGE_DEFAULT;
     desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
     desc.SampleDesc = { .Count = 1,.Quality = 0 };
@@ -181,7 +183,7 @@ HRESULT D3DContextTexture::CreateRenderTarget(UINT width, UINT height) {
 
     // create srv
     D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-    srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    srvDesc.Format = textureFormat;
     srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
     srvDesc.Texture2D.MostDetailedMip = 0;
     srvDesc.Texture2D.MipLevels = 1;
@@ -190,7 +192,7 @@ HRESULT D3DContextTexture::CreateRenderTarget(UINT width, UINT height) {
     if (FAILED(hr)) { return hr; }
 
     D3D11_RENDER_TARGET_VIEW_DESC rttDesc = {};
-    rttDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    rttDesc.Format = textureFormat;
     rttDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
     rttDesc.Texture2D = { .MipSlice = 0 };
 
