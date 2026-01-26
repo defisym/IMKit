@@ -292,6 +292,20 @@ void D3DRendererTexture::EndRender(UINT IndexCount) {
 // D3DRendererTextureArray
 // ------------------------------------------------
 
+void D3DRendererTextureArray::UpdateRenderTargetMerged() {
+    pRenderTargetView = pRTVMerged;
+}
+
+void D3DRendererTextureArray::UpdateRenderTargetSlice(size_t index) {
+    if (index >= arraySize) {
+        pRenderTargetView = pRTVArr.front();
+
+        return;
+    }
+
+    pRenderTargetView = pRTVArr[index];
+}
+
 HRESULT D3DRendererTextureArray::CreateRenderTarget(UINT width, UINT height) {
     const auto arrSz = (size_t)std::ceil((float)(width) / D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION);
     if (arrSz > D3D11_REQ_TEXTURE2D_ARRAY_AXIS_DIMENSION) {
@@ -351,5 +365,29 @@ HRESULT D3DRendererTextureArray::CreateRenderTarget(UINT width, UINT height) {
     rttDesc.Texture2DArray.FirstArraySlice = 0;
     rttDesc.Texture2DArray.ArraySize = (UINT)arraySize;
 
-    return pCtx->pDevice->CreateRenderTargetView(pRTT.Get(), &rttDesc, &pRenderTargetView);
+    hr = pCtx->pDevice->CreateRenderTargetView(pRTT.Get(), &rttDesc, &pRTVMerged);
+    if (FAILED(hr)) { return hr; }
+
+    for (size_t idx = 0; idx < arraySize; idx++) {
+        D3D11_RENDER_TARGET_VIEW_DESC rttDesc = {};
+        rttDesc.Format = param.format;
+        rttDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
+        rttDesc.Texture2DArray.MipSlice = 0;
+        rttDesc.Texture2DArray.FirstArraySlice = (UINT)idx;
+        rttDesc.Texture2DArray.ArraySize = (UINT)1;
+
+        pRTVArr.emplace_back(nullptr);
+        hr = pCtx->pDevice->CreateRenderTargetView(pRTT.Get(), &rttDesc, &pRTVArr.back());
+        if (FAILED(hr)) { return hr; }
+    }
+
+    pRenderTargetView = pRTVArr.front();
+
+    return hr;
+}
+
+HRESULT D3DRendererTextureArray::DestroyRenderTarget() {
+    pRTVMerged = nullptr;
+    pRTVArr.clear();
+    return D3DRendererTexture::DestroyRenderTarget();
 }

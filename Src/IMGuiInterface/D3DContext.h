@@ -7,6 +7,8 @@
 #include <dxgi1_3.h>
 #pragma comment(lib, "dxgi.lib")
 
+#include <vector>
+
 #include "D3DUtilities/D3DDefinition.h"
 
 struct D3DContext {
@@ -86,5 +88,13 @@ struct D3DRendererTextureArray :D3DRendererTexture {
     size_t arraySize = 0;   // ceil(totalWidth / width)
     UINT texLastWidth = 0;  // width of last texture in array
 
+    // merged, for CS/GS
+    ComPtr<ID3D11RenderTargetView> pRTVMerged = nullptr;
+    void UpdateRenderTargetMerged();
+    // slice, for PS
+    std::vector<ComPtr<ID3D11RenderTargetView>> pRTVArr = {};
+    void UpdateRenderTargetSlice(size_t index = 0);
+
     HRESULT CreateRenderTarget(UINT width, UINT height) override;
+    HRESULT DestroyRenderTarget() override;
 };
