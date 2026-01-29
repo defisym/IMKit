@@ -349,6 +349,7 @@ HRESULT D3DRendererTextureArray::CreateRenderTarget(UINT width, UINT height) {
 
     hr = TextureDimensionValid(width, height);
     if (FAILED(hr)) { return hr; }
+    UpdateDimension(width, height);
 
     hr = DestroyRenderTarget();
     if (FAILED(hr)) { return hr; }
@@ -356,11 +357,6 @@ HRESULT D3DRendererTextureArray::CreateRenderTarget(UINT width, UINT height) {
     // Update resolution
     hr = D3DRenderer::UpdateResolution(width, height);
     if (FAILED(hr)) { return hr; }
-
-    texWidth = (std::min)(width, (UINT)D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION);
-    texHeight = height;
-    arraySize = CalcArraySize(width);
-    texLastWidth = width - (UINT)(texWidth * (arraySize - 1));
 
     hr = CreateTexture(texWidth, texHeight);
     if (FAILED(hr)) { return hr; }
