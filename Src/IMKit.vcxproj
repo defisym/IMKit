@@ -277,6 +277,9 @@ echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiInterface.h "$(SolutionDir)..\I
 echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiContext.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiContext.h" /y
 echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiDemo.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiDemo.h" /y
 echo f | xcopy $(SolutionDir)IMGuiInterface\D3DContext.h "$(SolutionDir)..\Include\IMGuiInterface\D3DContext.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\D3DRenderer.h "$(SolutionDir)..\Include\IMGuiInterface\D3DRenderer.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\D3DView.h "$(SolutionDir)..\Include\IMGuiInterface\D3DView.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\D3DTexture.h "$(SolutionDir)..\Include\IMGuiInterface\D3DTexture.h" /y
 echo Internationalization
 echo f | xcopy $(SolutionDir)Internationalization\Internationalization.h "$(SolutionDir)..\Include\Internationalization\Internationalization.h" /y
 echo Utilities
@@ -425,6 +428,9 @@ echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiInterface.h "$(SolutionDir)..\I
 echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiContext.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiContext.h" /y
 echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiDemo.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiDemo.h" /y
 echo f | xcopy $(SolutionDir)IMGuiInterface\D3DContext.h "$(SolutionDir)..\Include\IMGuiInterface\D3DContext.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\D3DRenderer.h "$(SolutionDir)..\Include\IMGuiInterface\D3DRenderer.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\D3DTexture.h "$(SolutionDir)..\Include\IMGuiInterface\D3DTexture.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\D3DView.h "$(SolutionDir)..\Include\IMGuiInterface\D3DView.h" /y
 echo Internationalization
 echo f | xcopy $(SolutionDir)Internationalization\Internationalization.h "$(SolutionDir)..\Include\Internationalization\Internationalization.h" /y
 echo Utilities
@@ -564,6 +570,9 @@ echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiInterface.h "$(SolutionDir)..\I
 echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiContext.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiContext.h" /y
 echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiDemo.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiDemo.h" /y
 echo f | xcopy $(SolutionDir)IMGuiInterface\D3DContext.h "$(SolutionDir)..\Include\IMGuiInterface\D3DContext.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\D3DRenderer.h "$(SolutionDir)..\Include\IMGuiInterface\D3DRenderer.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\D3DTexture.h "$(SolutionDir)..\Include\IMGuiInterface\D3DTexture.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\D3DView.h "$(SolutionDir)..\Include\IMGuiInterface\D3DView.h" /y
 echo Internationalization
 echo f | xcopy $(SolutionDir)Internationalization\Internationalization.h "$(SolutionDir)..\Include\Internationalization\Internationalization.h" /y
 echo Utilities
@@ -713,6 +722,9 @@ echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiInterface.h "$(SolutionDir)..\I
 echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiContext.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiContext.h" /y
 echo f | xcopy $(SolutionDir)IMGuiInterface\IMGuiDemo.h "$(SolutionDir)..\Include\IMGuiInterface\IMGuiDemo.h" /y
 echo f | xcopy $(SolutionDir)IMGuiInterface\D3DContext.h "$(SolutionDir)..\Include\IMGuiInterface\D3DContext.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\D3DRenderer.h "$(SolutionDir)..\Include\IMGuiInterface\D3DRenderer.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\D3DTexture.h "$(SolutionDir)..\Include\IMGuiInterface\D3DTexture.h" /y
+echo f | xcopy $(SolutionDir)IMGuiInterface\D3DView.h "$(SolutionDir)..\Include\IMGuiInterface\D3DView.h" /y
 echo Internationalization
 echo f | xcopy $(SolutionDir)Internationalization\Internationalization.h "$(SolutionDir)..\Include\Internationalization\Internationalization.h" /y
 echo Utilities
@@ -770,6 +782,9 @@ echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_3rdLib\D3DUtilities\D3DDefin
     <ClCompile Include="IMGuiEx\LoadTexture.cpp" />
     <ClCompile Include="IMGuiEx\SliderSpin.cpp" />
     <ClCompile Include="IMGuiInterface\D3DContext.cpp" />
+    <ClCompile Include="IMGuiInterface\D3DRenderer.cpp" />
+    <ClCompile Include="IMGuiInterface\D3DTexture.cpp" />
+    <ClCompile Include="IMGuiInterface\D3DView.cpp" />
     <ClCompile Include="IMGuiInterface\IMGuiContext.cpp" />
     <ClCompile Include="IMGuiInterface\IMGuiDemo.cpp" />
     <ClCompile Include="IMGuiInterface\IMGuiInterface.cpp" />
@@ -838,6 +853,9 @@ echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_3rdLib\D3DUtilities\D3DDefin
     <ClInclude Include="IMGuiEx\LoadTexture.h" />
     <ClInclude Include="IMGuiEx\SliderSpin.h" />
     <ClInclude Include="IMGuiInterface\D3DContext.h" />
+    <ClInclude Include="IMGuiInterface\D3DRenderer.h" />
+    <ClInclude Include="IMGuiInterface\D3DTexture.h" />
+    <ClInclude Include="IMGuiInterface\D3DView.h" />
     <ClInclude Include="IMGuiInterface\IMGuiContext.h" />
     <ClInclude Include="IMGuiInterface\IMGuiDemo.h" />
     <ClInclude Include="IMGuiInterface\IMGuiInterface.h" />

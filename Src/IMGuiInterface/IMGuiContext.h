@@ -2,6 +2,7 @@
 
 #include "imgui.h"
 #include "IMGuiInterface/D3DContext.h"
+#include "IMGuiInterface/D3DRenderer.h"
 
 #include "IMGuiEx/FontEx.h"
 #include "IMGuiEx/I18NInterface.h"
