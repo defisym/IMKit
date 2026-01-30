@@ -189,7 +189,7 @@ HRESULT D3DRendererTexture::Destroy() {
     return D3DRenderer::Destroy();
 }
 
-HRESULT D3DRendererTexture::CreateTexture(UINT width, UINT height) {
+D3D11_TEXTURE2D_DESC D3DRendererTexture::GetDesc(UINT width, UINT height) {
     D3D11_TEXTURE2D_DESC desc = {};
     desc.Width = width;
     desc.Height = height;
@@ -203,6 +203,11 @@ HRESULT D3DRendererTexture::CreateTexture(UINT width, UINT height) {
         desc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
     }
 
+    return desc;
+}
+
+HRESULT D3DRendererTexture::CreateTexture(UINT width, UINT height) {
+    auto desc = GetDesc(width, height);
     return pCtx->pDevice->CreateTexture2D(&desc, nullptr, &pTex);
 }
 
@@ -283,7 +288,7 @@ HRESULT D3DRendererTextureArray::Destroy() {
     return D3DRenderer::Destroy();
 }
 
-HRESULT D3DRendererTextureArray::CreateTexture(UINT width, UINT height) {
+D3D11_TEXTURE2D_DESC D3DRendererTextureArray::GetDesc(UINT width, UINT height) {
     D3D11_TEXTURE2D_DESC desc = {};
     desc.Width = width;
     desc.Height = height;
@@ -297,6 +302,11 @@ HRESULT D3DRendererTextureArray::CreateTexture(UINT width, UINT height) {
         desc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
     }
 
+    return desc;
+}
+
+HRESULT D3DRendererTextureArray::CreateTexture(UINT width, UINT height) {
+    auto desc = GetDesc(width, height);
     return pCtx->pDevice->CreateTexture2D(&desc, nullptr, &pTex);
 }
 

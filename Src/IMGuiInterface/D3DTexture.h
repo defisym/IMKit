@@ -11,7 +11,8 @@ struct TextureParam {
 struct D3DTexture2D {
     TextureParam param = {};
     ComPtr<ID3D11Texture2D> pTex = nullptr;
-
+    
+    virtual D3D11_TEXTURE2D_DESC GetDesc(UINT width, UINT height) = 0;
     virtual HRESULT CreateTexture(UINT width, UINT height) = 0;
 };
 
