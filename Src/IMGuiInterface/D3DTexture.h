@@ -18,7 +18,7 @@ struct D3DTexture2D {
 
 struct D3DTexture2DArray :D3DTexture2D {
     UINT texWidth = 0;      // width of single texture
-                            // if not match the witdh then 16384
+                            // if not match the width then 16384
     UINT texHeight = 0;     // height of single texture
     size_t arraySize = 0;   // ceil(totalWidth / width)
     UINT texLastWidth = 0;  // width of last texture in array
