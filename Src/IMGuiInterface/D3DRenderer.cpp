@@ -189,7 +189,7 @@ HRESULT D3DRendererTexture::Destroy() {
     return D3DRenderer::Destroy();
 }
 
-D3D11_TEXTURE2D_DESC D3DRendererTexture::GetDesc(UINT width, UINT height) {
+D3D11_TEXTURE2D_DESC D3DRendererTexture::GetDesc(UINT width, UINT height) const {
     D3D11_TEXTURE2D_DESC desc = {};
     desc.Width = width;
     desc.Height = height;
@@ -288,7 +288,7 @@ HRESULT D3DRendererTextureArray::Destroy() {
     return D3DRenderer::Destroy();
 }
 
-D3D11_TEXTURE2D_DESC D3DRendererTextureArray::GetDesc(UINT width, UINT height) {
+D3D11_TEXTURE2D_DESC D3DRendererTextureArray::GetDesc(UINT width, UINT height) const {
     D3D11_TEXTURE2D_DESC desc = {};
     desc.Width = width;
     desc.Height = height;

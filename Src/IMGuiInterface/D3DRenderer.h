@@ -53,7 +53,7 @@ struct D3DRendererTexture :D3DRendererTextureBase, D3DTexture2D, View<SRV, RTV> 
     HRESULT Init(const D3DContext* p, const TextureParam& param = {});
     HRESULT Destroy() override;
 
-    D3D11_TEXTURE2D_DESC GetDesc(UINT width, UINT height) override;
+    D3D11_TEXTURE2D_DESC GetDesc(UINT width, UINT height) const override;
     HRESULT CreateTexture(UINT width, UINT height) override;
     HRESULT CreateRenderTargetView() override;
     HRESULT CreateShaderResourceView() override;
@@ -67,7 +67,7 @@ struct D3DRendererTextureArray :D3DRendererTextureBase, D3DTexture2DArray, View<
     HRESULT Init(const D3DContext* p, const TextureParam& param = {});
     HRESULT Destroy() override;
 
-    D3D11_TEXTURE2D_DESC GetDesc(UINT width, UINT height) override;
+    D3D11_TEXTURE2D_DESC GetDesc(UINT width, UINT height) const override;
     HRESULT CreateTexture(UINT width, UINT height) override;
     HRESULT CreateShaderResourceView() override;
     HRESULT CreateRenderTargetView() override;
