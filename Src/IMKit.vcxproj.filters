@@ -279,6 +279,12 @@
     <ClCompile Include="IMGuiInterface\D3DTexture.cpp">
       <Filter>源文件\IMGuiInterface</Filter>
     </ClCompile>
+    <ClCompile Include="IMGuiInterface\D3DReadBack.cpp">
+      <Filter>源文件\IMGuiInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGuiInterface\D3DView.cpp">
+      <Filter>源文件\IMGuiInterface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IMGuiInterface\IMGuiInterface.h">
@@ -453,6 +459,12 @@
       <Filter>头文件\IMGuiInterface</Filter>
     </ClInclude>
     <ClInclude Include="IMGuiInterface\D3DTexture.h">
+      <Filter>头文件\IMGuiInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGuiInterface\D3DReadBack.h">
+      <Filter>头文件\IMGuiInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGuiInterface\D3DView.h">
       <Filter>头文件\IMGuiInterface</Filter>
     </ClInclude>
   </ItemGroup>
