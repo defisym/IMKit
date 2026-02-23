@@ -47,6 +47,19 @@ void D3DReadBackTexture::Map(const UINT subresource,
     bMap = false;
 }
 
+std::unique_ptr<D3DReadBackTexture> GetReadBackTexture(const D3DContext* p, ID3D11Texture2D* pTex) {
+    auto readback = std::make_unique<D3DReadBackTexture>();;
+    if (FAILED(readback->Init(p))) { return nullptr; }
+    
+    D3D11_TEXTURE2D_DESC desc = {};
+    pTex->GetDesc(&desc);
+    if (FAILED(readback->CreateTexture(desc))) { return nullptr; }
+
+    readback->CopyResource(pTex);
+
+    return readback;
+}
+
 // ------------------------------------------------
 // D3DReadBackBuffer
 // ------------------------------------------------
@@ -77,3 +90,17 @@ void D3DReadBackBuffer::Map(const std::function<void(const D3D11_MAPPED_SUBRESOU
     pCtx->pDeviceContext->Unmap(GetResource(), 0);
     bMap = false;
 }
+
+std::unique_ptr<D3DReadBackBuffer> GetReadBackBuffer(const D3DContext* p, ID3D11Buffer* pBuf) {
+    auto readback = std::make_unique<D3DReadBackBuffer>();;
+    if (FAILED(readback->Init(p))) { return nullptr; }
+
+    D3D11_BUFFER_DESC desc = {};
+    pBuf->GetDesc(&desc);
+    if (FAILED(readback->CreateBuffer(desc))) { return nullptr; }
+
+    readback->CopyResource(pBuf);
+
+    return readback;
+}
+

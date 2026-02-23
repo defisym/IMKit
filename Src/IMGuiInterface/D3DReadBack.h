@@ -3,6 +3,7 @@
 #include "D3DContext.h"
 
 #include <atomic>
+#include <memory>
 #include <functional>
 
 struct D3DReadBack {
@@ -24,6 +25,8 @@ struct D3DReadBackTexture :D3DReadBack {
         const std::function<void(const D3D11_MAPPED_SUBRESOURCE& mapped)>& cb);
 };
 
+std::unique_ptr<D3DReadBackTexture> GetReadBackTexture(const D3DContext* p, ID3D11Texture2D* pTex);
+
 struct D3DReadBackBuffer :D3DReadBack {
     ComPtr<ID3D11Buffer> pReadBack = nullptr;
 
@@ -31,3 +34,5 @@ struct D3DReadBackBuffer :D3DReadBack {
     HRESULT CreateBuffer(D3D11_BUFFER_DESC desc);
     void Map(const std::function<void(const D3D11_MAPPED_SUBRESOURCE& mapped)>& cb);
 };
+
+std::unique_ptr<D3DReadBackBuffer> GetReadBackBuffer(const D3DContext* p, ID3D11Buffer* pBuf);
