@@ -33,7 +33,8 @@ HRESULT D3DContext::CreateContext(const AdapterSelector& selector) {
     D3D_FEATURE_LEVEL featureLevel;
     constexpr D3D_FEATURE_LEVEL featureLevelArray[2] = { D3D_FEATURE_LEVEL_11_0, D3D_FEATURE_LEVEL_10_0, };
 
-    hr = D3D11CreateDevice(pAdapter.Get(), D3D_DRIVER_TYPE_HARDWARE,
+    hr = D3D11CreateDevice(pAdapter.Get(), 
+        pAdapter == nullptr ? D3D_DRIVER_TYPE_HARDWARE : D3D_DRIVER_TYPE_UNKNOWN,
         nullptr, createDeviceFlags,
         featureLevelArray, std::size(featureLevelArray),
         D3D11_SDK_VERSION,
