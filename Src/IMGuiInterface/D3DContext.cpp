@@ -7,7 +7,7 @@
 // D3DContext
 // ------------------------------------------------
 
-HRESULT D3DContext::CreateContext() {
+HRESULT D3DContext::CreateContext(const AdapterSelector& selector) {
     HRESULT hr = S_OK;
 
     hr = DestroyContext();
@@ -16,6 +16,16 @@ HRESULT D3DContext::CreateContext() {
     hr = CreateDXGIFactory1(IID_PPV_ARGS(&pFactory));
     if (FAILED(hr)) { return hr; }
 
+    ComPtr<IDXGIAdapter> pAdapter = nullptr;
+
+    if (selector != nullptr) {
+        const auto adapterTypes = GetAdapterTypes();
+        
+        if (!adapterTypes.empty()) {
+            pAdapter = selector(adapterTypes);
+        }
+    }
+
     UINT createDeviceFlags = 0;
 #ifdef _DEBUG
     createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
@@ -23,7 +33,7 @@ HRESULT D3DContext::CreateContext() {
     D3D_FEATURE_LEVEL featureLevel;
     constexpr D3D_FEATURE_LEVEL featureLevelArray[2] = { D3D_FEATURE_LEVEL_11_0, D3D_FEATURE_LEVEL_10_0, };
 
-    hr = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE,
+    hr = D3D11CreateDevice(pAdapter.Get(), D3D_DRIVER_TYPE_HARDWARE,
         nullptr, createDeviceFlags,
         featureLevelArray, std::size(featureLevelArray),
         D3D11_SDK_VERSION,
@@ -47,4 +57,20 @@ HRESULT D3DContext::DestroyContext() {
     pDeviceContext = nullptr;
 
     return S_OK;
+}
+
+D3DContext::AdapterTypes D3DContext::GetAdapterTypes() const {
+    if (pFactory == nullptr) { return {}; }
+
+    AdapterTypes adapterTypes = {};
+
+    ComPtr<IDXGIAdapter> pCurAdapter = nullptr;
+    for (UINT i = 0; pFactory->EnumAdapters(i, &pCurAdapter) != DXGI_ERROR_NOT_FOUND; ++i) {
+        DXGI_ADAPTER_DESC desc;
+        if (FAILED(pCurAdapter->GetDesc(&desc))) { continue; }
+
+        adapterTypes.emplace_back(pCurAdapter, desc);
+    }
+
+    return adapterTypes;
 }

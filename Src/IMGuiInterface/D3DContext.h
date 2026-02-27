@@ -8,6 +8,7 @@
 #pragma comment(lib, "dxgi.lib")
 
 #include <vector>
+#include <functional>
 
 #include "D3DUtilities/D3DDefinition.h"
 
@@ -16,6 +17,16 @@ struct D3DContext {
     ComPtr<ID3D11Device> pDevice = nullptr;
     ComPtr<ID3D11DeviceContext> pDeviceContext = nullptr;
 
-    HRESULT CreateContext();
+    struct AdapterInfo {
+        ComPtr<IDXGIAdapter> pAdapter = nullptr;
+        DXGI_ADAPTER_DESC desc = {};
+    };
+
+    using AdapterTypes = std::vector<AdapterInfo>;
+    using AdapterSelector = std::function<ComPtr<IDXGIAdapter>(const AdapterTypes&)>;
+
+    HRESULT CreateContext(const AdapterSelector& selector = nullptr);
     HRESULT DestroyContext();
+
+    AdapterTypes GetAdapterTypes() const;
 };
