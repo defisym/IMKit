@@ -19,7 +19,7 @@ HRESULT D3DContext::CreateContext(const AdapterSelector& selector) {
     ComPtr<IDXGIAdapter> pAdapter = nullptr;
 
     if (selector != nullptr) {
-        const auto adapterTypes = GetAdapterTypes();
+        const auto adapterTypes = GetAdapterTypes(pFactory);
         
         if (!adapterTypes.empty()) {
             pAdapter = selector(adapterTypes);
@@ -59,13 +59,16 @@ HRESULT D3DContext::DestroyContext() {
     return S_OK;
 }
 
-D3DContext::AdapterTypes D3DContext::GetAdapterTypes() const {
-    if (pFactory == nullptr) { return {}; }
+D3DContext::AdapterTypes D3DContext::GetAdapterTypes(ComPtr<IDXGIFactory2> pEnumFactory) const {
+    if (pEnumFactory == nullptr) {
+        HRESULT hr = CreateDXGIFactory(IID_PPV_ARGS(&pEnumFactory));
+        if (FAILED(hr)) { return {}; }
+    }
 
     AdapterTypes adapterTypes = {};
 
     ComPtr<IDXGIAdapter> pCurAdapter = nullptr;
-    for (UINT i = 0; pFactory->EnumAdapters(i, &pCurAdapter) != DXGI_ERROR_NOT_FOUND; ++i) {
+    for (UINT i = 0; pEnumFactory->EnumAdapters(i, &pCurAdapter) != DXGI_ERROR_NOT_FOUND; ++i) {
         DXGI_ADAPTER_DESC desc;
         if (FAILED(pCurAdapter->GetDesc(&desc))) { continue; }
 

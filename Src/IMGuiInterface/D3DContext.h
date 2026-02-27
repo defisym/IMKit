@@ -28,5 +28,5 @@ struct D3DContext {
     HRESULT CreateContext(const AdapterSelector& selector = nullptr);
     HRESULT DestroyContext();
 
-    AdapterTypes GetAdapterTypes() const;
+    AdapterTypes GetAdapterTypes(ComPtr<IDXGIFactory2> pEnumFactory = nullptr) const;
 };
