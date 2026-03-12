@@ -1,5 +1,6 @@
 #pragma once
 
+#include <boost/version.hpp>
 #include <boost/pfr.hpp>
 
 template <typename T>
