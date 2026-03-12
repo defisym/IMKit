@@ -178,7 +178,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\Boost;.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;.\3rdLib\Boost;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -212,7 +212,7 @@ echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDi
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\Boost;.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;.\3rdLib\Boost;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -326,7 +326,7 @@ echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_3rdLib\D3DUtilities\D3DDefin
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\Boost;.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;.\3rdLib\Boost;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -362,7 +362,7 @@ echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x86\SDL2_mixer_ext.dll "$(SolutionDi
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\Boost;.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;.\3rdLib\Boost;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -474,7 +474,7 @@ echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_3rdLib\D3DUtilities\D3DDefin
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\Boost;.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;.\3rdLib\Boost;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -507,7 +507,7 @@ echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDi
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\Boost;.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;.\3rdLib\Boost;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -621,7 +621,7 @@ echo f | xcopy $(SolutionDir)3rdLib\OFE\Extensions\_3rdLib\D3DUtilities\D3DDefin
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\Boost;.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;.\3rdLib\Boost;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -658,7 +658,7 @@ echo f | xcopy $(SolutionDir)3rdLib\SDL\lib\x64\SDL2_mixer_ext.dll "$(SolutionDi
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\Boost;.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\3rdLib\OFE\Extensions\_3rdLib\;.\3rdLib\OFE\Extensions\_DeLib\;.\3rdLib\OFE\Extensions\;.\3rdLib\Boost;IMGuiInterface\IMPlot;IMGuiInterface\IMGui;IMGuiInterface\IMGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
